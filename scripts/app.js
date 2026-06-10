@@ -5,7 +5,7 @@ import { getAuth, signInWithEmailAndPassword,
          onAuthStateChanged }                     from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import { getFirestore, collection, doc, getDoc,
          getDocs, setDoc, addDoc, updateDoc,
-         deleteDoc, onSnapshot, query, orderBy, where,
+         deleteDoc, onSnapshot, query, orderBy, where, or,
          serverTimestamp, writeBatch }            from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 import { FIREBASE_CONFIG, MASTER_EMAIL, CAMPAIGN_ID,
          CLOUDINARY_CLOUD_NAME,
@@ -132,9 +132,23 @@ async function loadAllPlayers() {
 // ── FIRESTORE SUBSCRIPTIONS ──────────────────────────────────────────────────
 function subscribeToCollection(collName) {
   const ref = collection(db, 'campaigns', CAMPAIGN_ID, collName);
-  const unsub = onSnapshot(ref, snap => {
+
+  let q;
+  if (STATE.isMaster) {
+    q = ref;
+  } else {
+    // Explicit query so Firestore's listener reliably fires when visibility changes,
+    // rather than depending on security-rule re-evaluation (which is unreliable for
+    // documents the player had no previous access to).
+    q = query(ref, or(
+      where('visibility.mode', '==', 'all'),
+      where('visibility.playerIds', 'array-contains', STATE.user.uid)
+    ));
+  }
+
+  const unsub = onSnapshot(q, snap => {
     const items = snap.docs.map(d => ({ ...d.data(), id: d.id }));
-    STATE.data[collName] = STATE.isMaster ? items : items.filter(isItemVisible);
+    STATE.data[collName] = items;
     rerenderSection(collName);
   }, err => console.error(`[${collName}]`, err));
   STATE.unsubscribers.push(unsub);
