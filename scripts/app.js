@@ -7,14 +7,17 @@ import { getFirestore, collection, doc, getDoc,
          getDocs, setDoc, addDoc, updateDoc,
          deleteDoc, onSnapshot, query, orderBy,
          serverTimestamp, writeBatch }            from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { getStorage, ref as storageRef,
+         uploadBytes, getDownloadURL }           from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
 import { FIREBASE_CONFIG, MASTER_EMAIL,
          CAMPAIGN_ID }                           from './firebase-config.js';
 import * as d3                                   from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
 // ── FIREBASE INIT ─────────────────────────────────────────────────────────────
-const fbApp  = initializeApp(FIREBASE_CONFIG);
-const auth   = getAuth(fbApp);
-const db     = getFirestore(fbApp);
+const fbApp   = initializeApp(FIREBASE_CONFIG);
+const auth    = getAuth(fbApp);
+const db      = getFirestore(fbApp);
+const storage = getStorage(fbApp);
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 const STATE = {
@@ -461,6 +464,18 @@ function getEntityName(id, type) {
   return fn?.(id)?.name || id;
 }
 
+// ── ADD NEW BUTTONS ───────────────────────────────────────────────────────────
+function ensureAddBtn(sectionId, type, label) {
+  if (!STATE.isMaster) return;
+  const section = document.getElementById(sectionId);
+  if (!section || section.querySelector('.add-new-btn')) return;
+  const btn = document.createElement('button');
+  btn.className = 'add-new-btn master-only';
+  btn.textContent = `+ ${label}`;
+  btn.addEventListener('click', () => openNewItemModal(type));
+  section.insertBefore(btn, section.firstChild);
+}
+
 // ── CHARACTERS ────────────────────────────────────────────────────────────────
 function renderCharacters() {
   const { name, faction, status, secretsOnly } = STATE.charFilters;
@@ -495,6 +510,7 @@ function renderCharacters() {
   grid.querySelectorAll('.character-card').forEach(card => {
     card.addEventListener('click', () => openModal(card.dataset.id, 'character'));
   });
+  ensureAddBtn('tab-personagens', 'character', 'Adicionar Personagem');
 }
 
 function buildCharacterFilters() {
@@ -564,6 +580,7 @@ function renderLocations() {
   grid.querySelectorAll('.location-card').forEach(card => {
     card.addEventListener('click', () => openModal(card.dataset.id, 'location'));
   });
+  ensureAddBtn('tab-locais', 'location', 'Adicionar Local');
 }
 
 // ── EVENTS ────────────────────────────────────────────────────────────────────
@@ -587,6 +604,7 @@ function renderEvents() {
   timeline.querySelectorAll('.event-card').forEach(card => {
     card.addEventListener('click', () => openModal(card.dataset.id, 'event'));
   });
+  ensureAddBtn('tab-eventos', 'event', 'Adicionar Evento');
 }
 
 // ── FACTIONS ──────────────────────────────────────────────────────────────────
@@ -620,6 +638,7 @@ function renderFactions() {
   grid.querySelectorAll('.faction-card').forEach(card => {
     card.addEventListener('click', () => openModal(card.dataset.id, 'faction'));
   });
+  ensureAddBtn('tab-faccoes', 'faction', 'Adicionar Facção');
   grid.querySelectorAll('.tag-chip').forEach(tag => {
     tag.addEventListener('click', e => {
       e.stopPropagation();
@@ -772,6 +791,13 @@ function openModal(id, type, pushToStack = true) {
   document.getElementById('modal-body').innerHTML = content;
   overlay.classList.add('open');
   panel.classList.add('open');
+
+  // Wire up edit button for master
+  const editBtn = document.getElementById('modal-edit-btn');
+  if (editBtn) {
+    editBtn.innerHTML = '✏ Editar';
+    editBtn.onclick = () => openEditMode(id, type);
+  }
 
   updateBreadcrumb();
   attachModalEvents();
@@ -1205,6 +1231,372 @@ function setupGraphControls() {
     labelsBtn.classList.toggle('active', STATE.graphShowLabels);
     renderGraph();
   });
+}
+
+// ── EDIT SYSTEM ───────────────────────────────────────────────────────────────
+
+function typeLabel(type) {
+  return { character: 'Personagem', location: 'Local', event: 'Evento', faction: 'Facção' }[type] || type;
+}
+
+function typeCollName(type) {
+  return { character: 'characters', location: 'locations', event: 'events', faction: 'factions' }[type];
+}
+
+function getItemById(id, type) {
+  return { character: getCharById, location: getLocationById, event: getEventById, faction: getFactionById }[type]?.(id);
+}
+
+function generateId(name) {
+  return name.toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+    .substring(0, 40);
+}
+
+// ─── Open edit mode (view → form) ────────────────────────────────────────────
+function openEditMode(id, type) {
+  const item = getItemById(id, type) || {};
+  document.getElementById('modal-body').innerHTML = buildEditForm(id, type, item);
+  const editBtn = document.getElementById('modal-edit-btn');
+  if (editBtn) {
+    editBtn.innerHTML = '👁 Ver';
+    editBtn.onclick = () => openModal(id, type, false);
+  }
+  attachEditFormEvents(id, type);
+}
+
+// ─── Open blank form for new item ────────────────────────────────────────────
+function openNewItemModal(type) {
+  STATE.modal.current = { id: '__new__', type };
+  STATE.modal.stack   = [];
+  const overlay = document.getElementById('modal-overlay');
+  const panel   = document.getElementById('modal-panel');
+  document.getElementById('modal-body').innerHTML = buildEditForm(null, type, {});
+  overlay.classList.add('open');
+  panel.classList.add('open');
+  const editBtn = document.getElementById('modal-edit-btn');
+  if (editBtn) editBtn.style.visibility = 'hidden';
+  document.getElementById('modal-breadcrumb').innerHTML =
+    `<span class="bc-item current">Novo ${typeLabel(type)}</span>`;
+  document.getElementById('modal-back-btn').disabled = true;
+  attachEditFormEvents(null, type);
+}
+
+// ─── Build edit form HTML ────────────────────────────────────────────────────
+function buildEditForm(id, type, item) {
+  const isNew = !id;
+  const fields = {
+    character: buildCharEditFields,
+    location:  buildLocationEditFields,
+    event:     buildEventEditFields,
+    faction:   buildFactionEditFields,
+  }[type]?.(item) || '';
+
+  return `<div class="edit-form-container">
+    <form id="edit-form" class="edit-form">
+      ${fields}
+      <div class="edit-form-actions">
+        <button type="submit" class="edit-save-btn">${isNew ? '✚ Criar' : '✔ Salvar Alterações'}</button>
+        <button type="button" class="edit-cancel-btn">Cancelar</button>
+        ${!isNew ? `<button type="button" class="edit-delete-btn">🗑 Excluir ${typeLabel(type)}</button>` : ''}
+      </div>
+    </form>
+  </div>`;
+}
+
+// ─── Per-type field builders ─────────────────────────────────────────────────
+function factionOptions(selected = '') {
+  return STATE.data.factions.map(f =>
+    `<option value="${f.id}" ${f.id === selected ? 'selected' : ''}>${f.name}</option>`
+  ).join('');
+}
+
+function characterOptions(selectedIds = []) {
+  return STATE.data.characters.map(c =>
+    `<option value="${c.id}" ${selectedIds.includes(c.id) ? 'selected' : ''}>${c.name}</option>`
+  ).join('');
+}
+
+function editField(label, html) {
+  return `<div class="edit-field"><label class="edit-label">${label}</label>${html}</div>`;
+}
+
+function editInput(name, value = '', placeholder = '') {
+  return `<input class="edit-input" name="${name}" value="${escHtml(value)}" placeholder="${placeholder}">`;
+}
+
+function editTextarea(name, value = '', placeholder = '', rows = 3) {
+  return `<textarea class="edit-textarea" name="${name}" placeholder="${placeholder}" rows="${rows}">${escHtml(value)}</textarea>`;
+}
+
+function buildCharEditFields(c = {}) {
+  const imgPreview = (c.imageUrl || c.image)
+    ? `<img class="edit-img-preview" id="img-preview" src="${c.imageUrl || `assets/images/characters/${c.image}`}" alt="">`
+    : `<div class="edit-img-placeholder" id="img-preview">Sem imagem</div>`;
+
+  return `
+    <div class="edit-form-section-title">Dados Básicos</div>
+    <div class="edit-row">
+      ${editField('Nome *', editInput('name', c.name, 'Nome do personagem'))}
+      ${editField('Cargo / Papel', editInput('role', c.role, 'Ex: Rei, Comerciante...'))}
+    </div>
+    <div class="edit-row">
+      ${editField('Status', `<select class="edit-select" name="status">
+        ${['Vivo','Morto','Desaparecido'].map(s => `<option ${c.status===s?'selected':''}>${s}</option>`).join('')}
+      </select>`)}
+      ${editField('Facção', `<select class="edit-select" name="faction">
+        <option value="">— Sem facção —</option>${factionOptions(c.faction)}
+      </select>`)}
+    </div>
+
+    <div class="edit-form-section-title">Retrato</div>
+    <div class="edit-field">
+      <label class="edit-label">Imagem do personagem</label>
+      <div class="edit-img-wrap">
+        ${imgPreview}
+        <div class="edit-img-controls">
+          <input class="edit-file-input" type="file" id="img-file" name="imageFile" accept="image/*">
+          <label class="edit-file-label" for="img-file">Escolher arquivo</label>
+          ${editField('Ou cole uma URL', editInput('imageUrl', c.imageUrl || '', 'https://...'))}
+        </div>
+      </div>
+    </div>
+
+    <div class="edit-form-section-title">Descrição</div>
+    ${editField('Descrição Pública', editTextarea('description', c.description, 'Como os jogadores descrevem este personagem...', 4))}
+    ${editField('Personalidade', editTextarea('personality', c.personality, 'Traços, maneiras, forma de falar...', 3))}
+
+    <div class="edit-form-section-title">Segredos do Mestre</div>
+    ${editField('Segredos (apenas você vê)', editTextarea('secrets', c.secrets, 'Informações ocultas...', 4))}
+  `;
+}
+
+function buildLocationEditFields(l = {}) {
+  const poi = (l.pointsOfInterest || []).join('\n');
+  return `
+    <div class="edit-form-section-title">Dados Básicos</div>
+    <div class="edit-row">
+      ${editField('Nome *', editInput('name', l.name, 'Nome do local'))}
+      ${editField('Subtítulo', editInput('subtitle', l.subtitle, 'Ex: A Grande Capital'))}
+    </div>
+    <div class="edit-row">
+      ${editField('Tipo', editInput('type', l.type, 'Ex: Ilha urbana, Capital imperial...'))}
+      ${editField('Facção Controladora', `<select class="edit-select" name="faction">
+        <option value="">— Nenhuma —</option>${factionOptions(l.faction)}
+      </select>`)}
+    </div>
+    ${editField('Tom / Atmosfera', editInput('tone', l.tone, 'Como este local se sente...'))}
+    <div class="edit-row edit-row-check">
+      <label class="edit-checkbox-label">
+        <input type="checkbox" name="featured" ${l.featured ? 'checked' : ''}> Local em destaque (card largo)
+      </label>
+    </div>
+
+    <div class="edit-form-section-title">Descrição</div>
+    ${editField('Descrição Completa', editTextarea('description', l.description, 'Descreva este local...', 5))}
+    ${editField('Pontos de Interesse (um por linha)', editTextarea('pointsOfInterest', poi, 'Ex: O Porto Principal — navios de guerra...', 4))}
+
+    <div class="edit-form-section-title">Segredos do Mestre</div>
+    ${editField('Segredos (apenas você vê)', editTextarea('secrets', l.secrets, 'Informações ocultas sobre este local...', 4))}
+  `;
+}
+
+function buildEventEditFields(e = {}) {
+  return `
+    <div class="edit-form-section-title">Dados Básicos</div>
+    ${editField('Nome *', editInput('name', e.name, 'Nome do evento'))}
+    <div class="edit-row">
+      ${editField('Período / Data', editInput('period', e.period, 'Ex: Há 500 anos, Era da Maré Alta...'))}
+      ${editField('Escala', `<select class="edit-select" name="scale">
+        ${['Mundial','Regional','Local','Pessoal'].map(s => `<option ${e.scale===s?'selected':''}>${s}</option>`).join('')}
+      </select>`)}
+    </div>
+    ${editField('Ordem na timeline', `<input class="edit-input" name="order" type="number" value="${e.order||0}">`)}
+
+    <div class="edit-form-section-title">Descrição</div>
+    ${editField('Descrição Completa', editTextarea('description', e.description, 'O que aconteceu neste evento...', 5))}
+
+    <div class="edit-form-section-title">Segredos do Mestre</div>
+    ${editField('Segredos (apenas você vê)', editTextarea('secrets', e.secrets, 'A verdade por trás do evento...', 4))}
+  `;
+}
+
+function buildFactionEditFields(f = {}) {
+  const memberIds = f.members || [];
+  return `
+    <div class="edit-form-section-title">Dados Básicos</div>
+    <div class="edit-row">
+      ${editField('Nome *', editInput('name', f.name, 'Nome da facção'))}
+      ${editField('Tipo', editInput('type', f.type, 'Ex: Império, Guilda, Família...'))}
+    </div>
+    <div class="edit-row">
+      ${editField('Símbolo (emoji)', editInput('symbol', f.symbol, '⚓'))}
+      ${editField('Cor (hex)', `<div class="edit-color-wrap">
+        <input class="edit-color-picker" type="color" name="colorPicker" value="${f.color || '#5a8ab0'}">
+        <input class="edit-input" name="color" value="${f.color || '#5a8ab0'}" placeholder="#5a8ab0" style="flex:1">
+      </div>`)}
+    </div>
+
+    <div class="edit-form-section-title">Descrição</div>
+    ${editField('Descrição', editTextarea('description', f.description, 'História, objetivos, estrutura da facção...', 4))}
+
+    <div class="edit-form-section-title">Membros</div>
+    <div class="edit-field">
+      <label class="edit-label">Membros notáveis (Ctrl+clique para múltiplos)</label>
+      <select class="edit-select edit-select-multi" name="members" multiple size="5">
+        ${characterOptions(memberIds)}
+      </select>
+    </div>
+
+    <div class="edit-form-section-title">Segredos do Mestre</div>
+    ${editField('Segredos (apenas você vê)', editTextarea('secrets', f.secrets, 'O que esta facção esconde...', 4))}
+  `;
+}
+
+// ─── Attach edit form events ──────────────────────────────────────────────────
+function attachEditFormEvents(id, type) {
+  const form = document.getElementById('edit-form');
+  if (!form) return;
+
+  // Image preview on file select
+  const fileInput = document.getElementById('img-file');
+  if (fileInput) {
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+      const preview = document.getElementById('img-preview');
+      const reader  = new FileReader();
+      reader.onload = e => {
+        preview.outerHTML = `<img class="edit-img-preview" id="img-preview" src="${e.target.result}" alt="">`;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // Sync color picker ↔ text input
+  const colorPicker = form.querySelector('[name="colorPicker"]');
+  const colorInput  = form.querySelector('[name="color"]');
+  if (colorPicker && colorInput) {
+    colorPicker.addEventListener('input', () => { colorInput.value = colorPicker.value; });
+    colorInput.addEventListener('input', () => {
+      if (/^#[0-9a-fA-F]{6}$/.test(colorInput.value)) colorPicker.value = colorInput.value;
+    });
+  }
+
+  // Cancel
+  form.querySelector('.edit-cancel-btn')?.addEventListener('click', () => {
+    if (id) openModal(id, type, false);
+    else closeModal();
+    const editBtn = document.getElementById('modal-edit-btn');
+    if (editBtn) editBtn.style.visibility = '';
+  });
+
+  // Delete
+  form.querySelector('.edit-delete-btn')?.addEventListener('click', async () => {
+    if (!confirm(`Excluir este ${typeLabel(type)} permanentemente? Esta ação não pode ser desfeita.`)) return;
+    await deleteDoc(doc(db, 'campaigns', CAMPAIGN_ID, typeCollName(type), id));
+    closeModal();
+  });
+
+  // Submit (save / create)
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const saveBtn = form.querySelector('.edit-save-btn');
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Salvando...';
+
+    try {
+      const fd = new FormData(form);
+      const data = buildDataFromForm(fd, type);
+
+      // Image upload if file selected
+      const fileInput = document.getElementById('img-file');
+      if (fileInput?.files[0]) {
+        const file    = fileInput.files[0];
+        const itemId  = id || generateId(data.name || Date.now().toString());
+        const imgRef  = storageRef(storage, `characters/${itemId}/${file.name}`);
+        await uploadBytes(imgRef, file);
+        data.imageUrl = await getDownloadURL(imgRef);
+        data.image    = null;
+      }
+
+      if (id) {
+        await updateDoc(doc(db, 'campaigns', CAMPAIGN_ID, typeCollName(type), id), data);
+        // Reopen in view mode after save
+        const editBtn = document.getElementById('modal-edit-btn');
+        if (editBtn) editBtn.style.visibility = '';
+        openModal(id, type, false);
+      } else {
+        const newId = generateId(data.name || typeLabel(type));
+        const docRef = doc(db, 'campaigns', CAMPAIGN_ID, typeCollName(type), newId);
+        await setDoc(docRef, {
+          id: newId,
+          ...data,
+          visibility:        { mode: 'hidden', playerIds: [] },
+          secretsVisibility: { mode: 'hidden', playerIds: [] },
+        });
+        closeModal();
+        const editBtn = document.getElementById('modal-edit-btn');
+        if (editBtn) editBtn.style.visibility = '';
+      }
+    } catch (err) {
+      console.error('Save error:', err);
+      saveBtn.disabled = false;
+      saveBtn.textContent = '✘ Erro — tentar novamente';
+    }
+  });
+}
+
+// ─── Extract clean data from form ────────────────────────────────────────────
+function buildDataFromForm(fd, type) {
+  const get  = k => fd.get(k) || '';
+  const data = {};
+
+  if (type === 'character') {
+    data.name        = get('name').trim();
+    data.role        = get('role').trim();
+    data.status      = get('status');
+    data.faction     = get('faction') || null;
+    data.description = get('description').trim();
+    data.personality = get('personality').trim();
+    data.secrets     = get('secrets').trim();
+    const urlVal = get('imageUrl').trim();
+    if (urlVal) data.imageUrl = urlVal;
+  }
+
+  if (type === 'location') {
+    data.name             = get('name').trim();
+    data.subtitle         = get('subtitle').trim();
+    data.type             = get('type').trim();
+    data.tone             = get('tone').trim();
+    data.faction          = get('faction') || null;
+    data.featured         = fd.get('featured') === 'on';
+    data.description      = get('description').trim();
+    data.pointsOfInterest = get('pointsOfInterest').split('\n').map(l => l.trim()).filter(Boolean);
+    data.secrets          = get('secrets').trim();
+  }
+
+  if (type === 'event') {
+    data.name        = get('name').trim();
+    data.period      = get('period').trim();
+    data.scale       = get('scale');
+    data.order       = parseInt(get('order')) || 0;
+    data.description = get('description').trim();
+    data.secrets     = get('secrets').trim();
+  }
+
+  if (type === 'faction') {
+    data.name        = get('name').trim();
+    data.type        = get('type').trim();
+    data.symbol      = get('symbol').trim() || '◆';
+    data.color       = get('color').trim() || '#5a8ab0';
+    data.description = get('description').trim();
+    data.secrets     = get('secrets').trim();
+    data.members     = fd.getAll('members');
+  }
+
+  return data;
 }
 
 // ── SEED (first-time setup) ───────────────────────────────────────────────────
