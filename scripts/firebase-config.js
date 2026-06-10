@@ -16,3 +16,7 @@ export const MASTER_EMAIL = "cadimabr@gmail.com";
 
 // ID da campanha no Firestore — não altere
 export const CAMPAIGN_ID  = "mares-e-mares";
+
+// Cloudinary — upload de imagens de personagens
+export const CLOUDINARY_CLOUD_NAME    = "dnvifwj08";
+export const CLOUDINARY_UPLOAD_PRESET = "Mares e Marés";

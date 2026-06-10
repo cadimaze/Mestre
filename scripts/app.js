@@ -7,8 +7,9 @@ import { getFirestore, collection, doc, getDoc,
          getDocs, setDoc, addDoc, updateDoc,
          deleteDoc, onSnapshot, query, orderBy,
          serverTimestamp, writeBatch }            from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-import { FIREBASE_CONFIG, MASTER_EMAIL,
-         CAMPAIGN_ID }                           from './firebase-config.js';
+import { FIREBASE_CONFIG, MASTER_EMAIL, CAMPAIGN_ID,
+         CLOUDINARY_CLOUD_NAME,
+         CLOUDINARY_UPLOAD_PRESET }             from './firebase-config.js';
 import * as d3                                   from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
 // ── FIREBASE INIT ─────────────────────────────────────────────────────────────
@@ -1230,6 +1231,19 @@ function setupGraphControls() {
   });
 }
 
+// ── CLOUDINARY IMAGE UPLOAD ───────────────────────────────────────────────────
+async function uploadToCloudinary(file) {
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+  const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+    method: 'POST', body: fd,
+  });
+  if (!res.ok) throw new Error('Falha no upload para Cloudinary');
+  const data = await res.json();
+  return data.secure_url;
+}
+
 // ── EDIT SYSTEM ───────────────────────────────────────────────────────────────
 
 function typeLabel(type) {
@@ -1350,12 +1364,14 @@ function buildCharEditFields(c = {}) {
 
     <div class="edit-form-section-title">Retrato</div>
     <div class="edit-field">
-      <label class="edit-label">URL da imagem</label>
+      <label class="edit-label">Imagem do personagem</label>
       <div class="edit-img-wrap">
         ${imgPreview}
         <div class="edit-img-controls">
-          ${editField('Cole o link da imagem (Imgur, Discord, etc.)', editInput('imageUrl', c.imageUrl || '', 'https://i.imgur.com/...'))}
-          <div class="edit-img-hint">💡 Suba a imagem no <a href="https://imgur.com" target="_blank" style="color:#7abadc">Imgur</a> e cole o link direto aqui.</div>
+          <input class="edit-file-input" type="file" id="img-file" accept="image/*">
+          <label class="edit-file-label" for="img-file">📁 Escolher do PC</label>
+          <div class="edit-img-separator">ou</div>
+          ${editField('Cole uma URL de imagem', editInput('imageUrl', c.imageUrl || '', 'https://i.imgur.com/...'))}
         </div>
       </div>
     </div>
@@ -1456,18 +1472,30 @@ function attachEditFormEvents(id, type) {
   const form = document.getElementById('edit-form');
   if (!form) return;
 
-  // Live preview for image URL input
+  // File input → preview
+  const fileInput = document.getElementById('img-file');
+  if (fileInput) {
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        const p = document.getElementById('img-preview');
+        if (p) p.outerHTML = `<img class="edit-img-preview" id="img-preview" src="${e.target.result}" alt="">`;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // URL input → live preview
   const imgUrlInput = form.querySelector('[name="imageUrl"]');
   if (imgUrlInput) {
     imgUrlInput.addEventListener('input', () => {
-      const url     = imgUrlInput.value.trim();
-      const preview = document.getElementById('img-preview');
-      if (!preview) return;
-      if (url) {
-        preview.outerHTML = `<img class="edit-img-preview" id="img-preview" src="${url}" alt="" onerror="this.style.opacity='.3'">`;
-      } else {
-        preview.outerHTML = `<div class="edit-img-placeholder" id="img-preview">Sem imagem</div>`;
-      }
+      const url = imgUrlInput.value.trim();
+      const p   = document.getElementById('img-preview');
+      if (!p || fileInput?.files[0]) return;
+      if (url) p.outerHTML = `<img class="edit-img-preview" id="img-preview" src="${url}" alt="" onerror="this.style.opacity='.3'">`;
+      else     p.outerHTML = `<div class="edit-img-placeholder" id="img-preview">Sem imagem</div>`;
     });
   }
 
@@ -1506,6 +1534,13 @@ function attachEditFormEvents(id, type) {
     try {
       const fd   = new FormData(form);
       const data = buildDataFromForm(fd, type);
+
+      // Upload de arquivo para Cloudinary (personagens)
+      const fileInput = document.getElementById('img-file');
+      if (type === 'character' && fileInput?.files[0]) {
+        saveBtn.textContent = 'Enviando imagem...';
+        data.imageUrl = await uploadToCloudinary(fileInput.files[0]);
+      }
 
       if (id) {
         await updateDoc(doc(db, 'campaigns', CAMPAIGN_ID, typeCollName(type), id), data);
