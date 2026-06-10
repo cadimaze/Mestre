@@ -854,6 +854,36 @@ function attachModalEvents() {
       openModal(el.dataset.modalId, el.dataset.modalType);
     });
   });
+
+  // Lightbox: click on character portrait to enlarge
+  document.getElementById('modal-body').querySelectorAll('[data-lightbox]').forEach(img => {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', e => {
+      e.stopPropagation();
+      openLightbox(img.dataset.lightbox);
+    });
+  });
+}
+
+function openLightbox(src) {
+  let lb = document.getElementById('lightbox');
+  if (!lb) {
+    lb = document.createElement('div');
+    lb.id = 'lightbox';
+    lb.innerHTML = `<div class="lb-backdrop"></div><img class="lb-img" alt="Retrato">`;
+    document.body.appendChild(lb);
+    lb.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  }
+  lb.querySelector('.lb-img').src = src;
+  lb.classList.add('lb-open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  const lb = document.getElementById('lightbox');
+  if (lb) lb.classList.remove('lb-open');
+  document.body.style.overflow = '';
 }
 
 function buildModalContent(id, type) {
@@ -904,7 +934,10 @@ function buildCharModalContent(id) {
 
   const _imgSrc = charImgSrc(c);
   const imgHtml = _imgSrc
-    ? `<div class="modal-char-avatar"><img src="${_imgSrc}" alt="${c.name}" onerror="this.parentElement.innerHTML='<div class=\\'modal-char-avatar-placeholder\\'>${c.name.charAt(0)}</div>'"></div>`
+    ? `<div class="modal-char-avatar modal-char-avatar-clickable" title="Clique para ampliar">
+         <img src="${_imgSrc}" alt="${c.name}" data-lightbox="${_imgSrc}"
+           onerror="this.parentElement.innerHTML='<div class=\\'modal-char-avatar-placeholder\\'>${c.name.charAt(0)}</div>'">
+       </div>`
     : `<div class="modal-char-avatar"><div class="modal-char-avatar-placeholder">${c.name.charAt(0)}</div></div>`;
 
   return `
