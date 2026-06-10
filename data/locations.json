@@ -1,5 +1,27 @@
 [
   {
+    "id": "pelagos",
+    "name": "Pelágos",
+    "subtitle": "O Continente dos Mil Mares",
+    "type": "Arquipélago-continente",
+    "controlledBy": null,
+    "faction": null,
+    "featured": true,
+    "tone": "Um oceano sem fim — as ilhas são os dentes de um mundo afogado, cada uma com sua própria lei, seus próprios deuses e sua própria maneira de sobreviver",
+    "description": "Não existe terra firme em Pelágos. O que os mapas chamam de continente é um arquipélago sem fim — centenas de ilhas espalhadas por um oceano que não tem fundo conhecido, cada uma com sua própria lei, seus próprios deuses e sua própria maneira de sobreviver. As montanhas mais altas de Pelágos são apenas os dentes do que um dia foi um mundo maior — afogado por um evento tão antigo que virou mito.\n\nEntre as ilhas, o mar é tudo: estrada, fronteira, mercado, cemitério e templo. As civilizações de Pelágos cresceram voltadas para a água, e seus deuses cheiram a sal. Saber navegar não é um talento aqui. É alfabetização.",
+    "pointsOfInterest": [
+      "Kaldera — a maior ilha habitada, coração comercial do arquipélago",
+      "Velmyr — a ilha do trono, sede do Domínio de Velmarch",
+      "Marvosa — território livre, capital do entretenimento e dos segredos",
+      "Reva — ilha pequena e tranquila, oculta mais do que parece",
+      "As Ruínas Submersas — fundações de cidades do mundo anterior visíveis em águas rasas",
+      "O Povo das Torres — estruturas verticais encontradas no fundo oceânico a noroeste de Kaldera"
+    ],
+    "secrets": "SEGREDO DO MESTRE: Sob o oceano de Pelágos, selado a quilômetros de profundidade, está O Peso. Toda a política, toda a história, toda a geografia de Pelágos existe por causa desse selamento. O oceano não é apenas água — é o cárcere de algo que não deveria existir.",
+    "characters": [],
+    "events": ["grande-guerra", "abraco-aguas-eternas", "caca-elfos"]
+  },
+  {
     "id": "kaldera",
     "name": "Kaldera",
     "subtitle": "A Grande Capital",

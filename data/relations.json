@@ -298,5 +298,95 @@
     "type": "secret",
     "secret": true,
     "description": "A Grande Guerra foi causada pelos magistas elfos ao invocarem O Peso numa tentativa de dominar o mundo definitivamente. O que invocaram não obedeceu."
+  },
+  {
+    "sourceId": "abraco-aguas-eternas",
+    "sourceType": "event",
+    "targetId": "pelagos",
+    "targetType": "location",
+    "label": "criou",
+    "type": "historical",
+    "secret": false,
+    "description": "O Abraço das Águas Eternas afogou o continente antigo e criou o arquipélago de Pelágos dos fragmentos que sobraram."
+  },
+  {
+    "sourceId": "grande-guerra",
+    "sourceType": "event",
+    "targetId": "pelagos",
+    "targetType": "location",
+    "label": "devastou o precursor de",
+    "type": "historical",
+    "secret": false,
+    "description": "A Grande Guerra consumiu o mundo anterior — civilizações inteiras desapareceram dos mapas antes da Maré Alta criar Pelágos."
+  },
+  {
+    "sourceId": "caca-elfos",
+    "sourceType": "event",
+    "targetId": "pelagos",
+    "targetType": "location",
+    "label": "aconteceu em",
+    "type": "historical",
+    "secret": false,
+    "description": "A Caça aos Elfos percorreu todo o arquipélago de Pelágos após a Maré Alta."
+  },
+  {
+    "sourceId": "pelagos",
+    "sourceType": "location",
+    "targetId": "kaldera",
+    "targetType": "location",
+    "label": "abriga",
+    "type": "historical",
+    "secret": false,
+    "description": "Kaldera é a maior cidade de Pelágos e seu coração comercial de fato."
+  },
+  {
+    "sourceId": "pelagos",
+    "sourceType": "location",
+    "targetId": "velmyr",
+    "targetType": "location",
+    "label": "abriga",
+    "type": "historical",
+    "secret": false,
+    "description": "Velmyr é a sede do poder imperial de Pelágos — construída no pico onde o mundo foi inundado."
+  },
+  {
+    "sourceId": "pelagos",
+    "sourceType": "location",
+    "targetId": "marvosa",
+    "targetType": "location",
+    "label": "abriga",
+    "type": "historical",
+    "secret": false,
+    "description": "Marvosa é o único território verdadeiramente livre de Pelágos."
+  },
+  {
+    "sourceId": "pelagos",
+    "sourceType": "location",
+    "targetId": "reva",
+    "targetType": "location",
+    "label": "abriga",
+    "type": "historical",
+    "secret": false,
+    "description": "Reva é uma das centenas de ilhas pequenas de Pelágos — aparentemente irrelevante."
+  },
+  {
+    "sourceId": "velmarch",
+    "sourceType": "faction",
+    "targetId": "pelagos",
+    "targetType": "location",
+    "label": "domina parcialmente",
+    "type": "political",
+    "secret": false,
+    "description": "O Domínio de Velmarch controla as principais rotas e ilhas de Pelágos, mas nunca conseguiu dominar o arquipélago completamente."
+  },
+  {
+    "sourceId": "o-peso",
+    "sourceType": "faction",
+    "targetId": "pelagos",
+    "targetType": "location",
+    "label": "selado sob",
+    "type": "secret",
+    "secret": true,
+    "description": "O Peso está selado a quilômetros abaixo do oceano de Pelágos. O arquipélago inteiro existe por causa desse selamento."
   }
 ]

@@ -60,12 +60,29 @@ function avatarHtml(char, size = 64, classes = '') {
   const imgPath = char.image ? `assets/images/characters/${char.image}` : null;
   const initial = char.name ? char.name.charAt(0).toUpperCase() : '?';
   if (imgPath) {
-    return `<div class="char-avatar${classes ? ' ' + classes : ''}" style="width:${size}px;height:${size}px;">
-      <img src="${imgPath}" alt="${char.name}" onerror="this.parentElement.innerHTML='<div class=\\'char-avatar-placeholder\\'>${initial}</div>'">
+    return `<div class="char-avatar${classes ? ' ' + classes : ''}" style="width:${size}px;height:${size}px;border-radius:8px;overflow:hidden;border:2px solid var(--border-accent);">
+      <img src="${imgPath}" alt="${char.name}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='<div class=\\'char-avatar-placeholder\\'>${initial}</div>'">
     </div>`;
   }
-  return `<div class="char-avatar${classes ? ' ' + classes : ''}" style="width:${size}px;height:${size}px;">
+  return `<div class="char-avatar${classes ? ' ' + classes : ''}" style="width:${size}px;height:${size}px;border-radius:8px;overflow:hidden;border:2px solid var(--border-accent);">
     <div class="char-avatar-placeholder">${initial}</div>
+  </div>`;
+}
+
+function charPortraitHtml(c) {
+  const initial = c.name ? c.name.charAt(0).toUpperCase() : '?';
+  const imgPath = c.image ? `assets/images/characters/${c.image}` : null;
+  const imageEl = imgPath
+    ? `<img class="char-portrait-img" src="${imgPath}" alt="${c.name}"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+       <div class="char-portrait-initial" style="display:none">${initial}</div>`
+    : `<div class="char-portrait-initial">${initial}</div>`;
+  return `<div class="char-portrait">
+    ${imageEl}
+    <div class="char-portrait-overlay">
+      ${statusBadgeHtml(c.status)}
+      ${hasSecrets(c) ? '<span class="portrait-secret secret-icon">🔒</span>' : ''}
+    </div>
   </div>`;
 }
 
@@ -148,20 +165,18 @@ function renderCharacters() {
     return;
   }
 
-  grid.innerHTML = chars.map(c => `
-    <div class="character-card" data-id="${c.id}">
-      ${avatarHtml(c, 64)}
+  grid.innerHTML = chars.map(c => {
+    const fc = factionColor(c.faction);
+    return `<div class="character-card" data-id="${c.id}" style="--faction-color:${fc}">
+      ${charPortraitHtml(c)}
       <div class="char-info">
+        <div class="char-faction-strip" style="background:${fc}"></div>
         <div class="char-name">${c.name}</div>
         <div class="char-role">${c.role || ''}</div>
-        <div class="badges">
-          ${statusBadgeHtml(c.status)}
-          ${factionBadgeHtml(c.faction)}
-        </div>
+        <div class="badges">${factionBadgeHtml(c.faction)}</div>
       </div>
-      ${hasSecrets(c) ? '<span class="secret-icon" title="Tem segredos">🔒</span>' : ''}
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 
   grid.querySelectorAll('.character-card').forEach(card => {
     card.addEventListener('click', () => openModal(card.dataset.id, 'character'));
@@ -198,13 +213,34 @@ function renderLocations() {
   const grid = document.getElementById('locations-grid');
   grid.innerHTML = DATA.locations.map(l => {
     const controller = getCharById(l.controlledBy);
-    const controlText = controller ? controller.name : (getFactionById(l.controlledBy)?.name || l.controlledBy);
+    const controlText = controller
+      ? controller.name
+      : (getFactionById(l.controlledBy)?.name || l.controlledBy);
+
+    if (l.featured) {
+      const descWords = (l.description || '').split('\n');
+      const firstPara = descWords[0] || '';
+      const secondPara = descWords.slice(2).join('\n') || '';
+      return `<div class="location-card location-featured" data-id="${l.id}">
+        <div class="location-featured-inner">
+          <div>
+            <div class="location-name">${l.name}</div>
+            <div class="location-subtitle">${l.subtitle || ''}</div>
+            <span class="location-type-badge">${l.type || ''}</span>
+            <div class="location-tone" style="margin-top:10px;">${l.tone || ''}</div>
+            ${hasSecrets(l) ? '<div style="margin-top:10px;"><span class="secret-icon" title="Tem segredos">🔒</span></div>' : ''}
+          </div>
+          <p class="location-featured-desc">${firstPara}</p>
+        </div>
+      </div>`;
+    }
+
     return `<div class="location-card" data-id="${l.id}">
       <div class="location-name">${l.name}</div>
       <div class="location-subtitle">${l.subtitle || ''}</div>
       <span class="location-type-badge">${l.type || ''}</span>
       <div class="location-tone">${l.tone || ''}</div>
-      <div class="location-control">Controlado por: ${controlText || '—'}</div>
+      ${controlText ? `<div class="location-control">Controlado por: ${controlText}</div>` : ''}
       ${hasSecrets(l) ? '<span class="secret-icon" title="Tem segredos">🔒</span>' : ''}
     </div>`;
   }).join('');
@@ -239,26 +275,29 @@ function renderEvents() {
 // ── FACTIONS ─────────────────────────────────────────────────────────────────
 function renderFactions() {
   const grid = document.getElementById('factions-grid');
-  grid.innerHTML = DATA.factions.map(f => `
-    <div class="faction-card" data-id="${f.id}" style="border-color:${f.color}44;">
-      <div class="faction-header">
-        <span class="faction-symbol">${f.symbol || '◆'}</span>
-        <div>
-          <div class="faction-name" style="color:${f.color};">${f.name}</div>
-          <div class="faction-type">${f.type || ''}</div>
+  grid.innerHTML = DATA.factions.map(f => {
+    const memberTags = (f.members || []).map(mid => {
+      const c = getCharById(mid);
+      return c ? `<span class="tag-chip" data-id="${mid}" data-type="character">${c.name}</span>` : '';
+    }).join('');
+    return `<div class="faction-card" data-id="${f.id}">
+      <div class="faction-card-accent" style="background:linear-gradient(to right,${f.color},${f.color}66,transparent)"></div>
+      <div class="faction-card-body">
+        <div class="faction-header">
+          <div class="faction-symbol-wrap" style="background:${f.color}18;border:1px solid ${f.color}33;">
+            <span>${f.symbol || '◆'}</span>
+          </div>
+          <div style="flex:1">
+            <div class="faction-name" style="color:${f.color};">${f.name}</div>
+            <div class="faction-type">${f.type || ''}</div>
+          </div>
+          ${hasSecrets(f) ? '<span class="secret-icon" title="Tem segredos">🔒</span>' : ''}
         </div>
-        ${hasSecrets(f) ? '<span class="secret-icon" title="Tem segredos">🔒</span>' : ''}
+        <div class="faction-desc">${f.description || ''}</div>
+        ${memberTags ? `<div class="faction-label">Membros notáveis</div><div class="tags-list">${memberTags}</div>` : ''}
       </div>
-      <div class="faction-desc">${f.description || ''}</div>
-      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Membros notáveis</div>
-      <div class="tags-list">
-        ${(f.members || []).map(mid => {
-          const c = getCharById(mid);
-          return c ? `<span class="tag-chip" data-id="${mid}" data-type="character">${c.name}</span>` : '';
-        }).join('')}
-      </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 
   grid.querySelectorAll('.faction-card').forEach(card => {
     card.addEventListener('click', () => openModal(card.dataset.id, 'faction'));

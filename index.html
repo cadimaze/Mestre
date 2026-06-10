@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mares e Marés — Pélágos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
@@ -48,22 +51,22 @@
       </div>
 
       <div class="summary-cards">
-        <div class="summary-card">
+        <div class="summary-card" data-icon="⚔️">
           <div class="icon">⚔️</div>
           <div class="count" id="count-chars">0</div>
           <div class="label">Personagens</div>
         </div>
-        <div class="summary-card">
-          <div class="icon">🤿</div>
+        <div class="summary-card" data-icon="🌊">
+          <div class="icon">🌊</div>
           <div class="count" id="count-locations">0</div>
           <div class="label">Locais</div>
         </div>
-        <div class="summary-card">
-          <div class="icon">🏛️</div>
+        <div class="summary-card" data-icon="📜">
+          <div class="icon">📜</div>
           <div class="count" id="count-events">0</div>
           <div class="label">Eventos</div>
         </div>
-        <div class="summary-card">
+        <div class="summary-card" data-icon="⚓">
           <div class="icon">⚓</div>
           <div class="count" id="count-factions">0</div>
           <div class="label">Facções</div>
@@ -72,13 +75,13 @@
 
       <div class="dashboard-grid">
         <div class="dashboard-section">
-          <h3>Conexões Recentes</h3>
+          <div class="section-heading">Conexões Recentes</div>
           <div id="recent-relations"></div>
         </div>
-        <div class="dashboard-section secrets-alert">
-          <h3>⚠ Segredos do Mestre</h3>
+        <div class="secrets-alert">
+          <div class="section-heading">⚠ Segredos do Mestre</div>
           <div class="secrets-count" id="secrets-total">0</div>
-          <div style="font-size:13px;color:#e07070;margin-bottom:8px;">elementos com segredos cadastrados</div>
+          <div style="font-size:13px;color:#e07070;margin-bottom:10px;font-family:var(--font-title);letter-spacing:.5px;">elementos com segredos cadastrados</div>
           <div class="secrets-warning">Lembre-se: segredos visíveis apenas neste painel</div>
         </div>
       </div>
