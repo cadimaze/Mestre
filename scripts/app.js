@@ -477,7 +477,7 @@ function ensureAddBtn(sectionId, type, label) {
   btn.className = 'add-new-btn master-only';
   btn.textContent = `+ ${label}`;
   btn.addEventListener('click', () => openNewItemModal(type));
-  section.insertBefore(btn, section.firstChild);
+  section.appendChild(btn);
 }
 
 // ── CHARACTERS ────────────────────────────────────────────────────────────────
@@ -556,6 +556,7 @@ function renderLocations() {
       const paras = (l.description || '').split('\n');
       const firstPara = paras[0] || '';
       return `<div class="location-card location-featured" data-id="${l.id}" style="position:relative;">
+        ${l.imageUrl ? `<img class="location-card-img location-card-img-featured" src="${l.imageUrl}" alt="${l.name}" onerror="this.remove()">` : ''}
         <div class="location-featured-inner">
           <div>
             <div class="location-name">${l.name}</div>
@@ -571,6 +572,7 @@ function renderLocations() {
     }
 
     return `<div class="location-card" data-id="${l.id}" style="position:relative;">
+      ${l.imageUrl ? `<img class="location-card-img" src="${l.imageUrl}" alt="${l.name}" onerror="this.remove()">` : ''}
       <div class="location-name">${l.name}</div>
       <div class="location-subtitle">${l.subtitle || ''}</div>
       <span class="location-type-badge">${l.type || ''}</span>
@@ -982,6 +984,7 @@ function buildLocationModalContent(id) {
 
   return `
     ${buildVisibilitySection(l, 'locations')}
+    ${l.imageUrl ? `<div class="modal-location-img-wrap"><img class="modal-location-img" src="${l.imageUrl}" alt="${l.name}" onerror="this.parentElement.remove()"></div>` : ''}
     <div class="modal-location-hero">
       <div class="modal-location-name">${l.name}</div>
       <div class="modal-location-subtitle">${l.subtitle || ''}</div>
@@ -1563,11 +1566,23 @@ function buildCharEditFields(c = {}) {
 
     <div class="edit-form-section-title">Segredos do Mestre</div>
     ${editField('Segredos (apenas você vê)', editTextarea('secrets', c.secrets, 'Informações ocultas...', 4))}
+
+    ${c.id ? `
+    <div class="edit-form-section-title">Relações com Personagens</div>
+    <div id="rel-editor" class="rel-editor"></div>
+    <button type="button" class="edit-add-rel-btn">+ Adicionar Relação</button>
+    ` : `<div class="edit-form-section-title">Relações</div>
+    <div style="font-size:12px;color:#5a7a8a;padding:2px 0;">Salve o personagem primeiro para gerenciar relações.</div>`}
   `;
 }
 
 function buildLocationEditFields(l = {}) {
   const poi = (l.pointsOfInterest || []).join('\n');
+  const imgSrc = l.imageUrl || '';
+  const imgPreview = imgSrc
+    ? `<img class="edit-img-preview" id="img-preview" src="${imgSrc}" alt="">`
+    : `<div class="edit-img-placeholder" id="img-preview">Sem imagem</div>`;
+
   return `
     <div class="edit-form-section-title">Dados Básicos</div>
     <div class="edit-row">
@@ -1585,6 +1600,20 @@ function buildLocationEditFields(l = {}) {
       <label class="edit-checkbox-label">
         <input type="checkbox" name="featured" ${l.featured ? 'checked' : ''}> Local em destaque (card largo)
       </label>
+    </div>
+
+    <div class="edit-form-section-title">Imagem</div>
+    <div class="edit-field">
+      <label class="edit-label">Imagem do local</label>
+      <div class="edit-img-wrap">
+        ${imgPreview}
+        <div class="edit-img-controls">
+          <input class="edit-file-input" type="file" id="img-file" accept="image/*">
+          <label class="edit-file-label" for="img-file">📁 Escolher do PC</label>
+          <div class="edit-img-separator">ou</div>
+          ${editField('Cole uma URL de imagem', editInput('imageUrl', l.imageUrl || '', 'https://i.imgur.com/...'))}
+        </div>
+      </div>
     </div>
 
     <div class="edit-form-section-title">Descrição</div>
@@ -1690,6 +1719,52 @@ function attachEditFormEvents(id, type) {
     });
   }
 
+  // Relation editor (existing characters only)
+  let relEdits = [];
+  if (type === 'character' && id) {
+    relEdits = STATE.data.relations
+      .filter(r => r.from === id || r.to === id)
+      .map(r => ({ ...r, _delete: false, _isNew: false }));
+
+    function renderRelRows() {
+      const editor = document.getElementById('rel-editor');
+      if (!editor) return;
+      editor.innerHTML = relEdits
+        .filter(r => !r._delete)
+        .map(r => {
+          const idx     = relEdits.indexOf(r);
+          const otherId = r.from === id ? r.to : r.from;
+          return `<div class="rel-row">
+            <select class="edit-select rel-target" data-idx="${idx}">
+              <option value="">— Selecionar personagem —</option>
+              ${STATE.data.characters.filter(c => c.id !== id)
+                .map(c => `<option value="${c.id}" ${c.id === otherId ? 'selected' : ''}>${c.name}</option>`)
+                .join('')}
+            </select>
+            <input class="edit-input rel-label" data-idx="${idx}" value="${escHtml(r.label || '')}" placeholder="Tipo de relação...">
+            <label class="rel-secret-label"><input type="checkbox" class="rel-secret" data-idx="${idx}" ${r.secret ? 'checked' : ''}> Segredo</label>
+            <button type="button" class="rel-del-btn" data-idx="${idx}">✕</button>
+          </div>`;
+        }).join('');
+
+      editor.querySelectorAll('.rel-del-btn').forEach(btn =>
+        btn.addEventListener('click', () => { relEdits[+btn.dataset.idx]._delete = true; renderRelRows(); }));
+      editor.querySelectorAll('.rel-target').forEach(sel =>
+        sel.addEventListener('change', () => { relEdits[+sel.dataset.idx].to = sel.value; relEdits[+sel.dataset.idx].from = id; }));
+      editor.querySelectorAll('.rel-label').forEach(inp =>
+        inp.addEventListener('input', () => { relEdits[+inp.dataset.idx].label = inp.value; }));
+      editor.querySelectorAll('.rel-secret').forEach(chk =>
+        chk.addEventListener('change', () => { relEdits[+chk.dataset.idx].secret = chk.checked; }));
+    }
+
+    renderRelRows();
+
+    form.querySelector('.edit-add-rel-btn')?.addEventListener('click', () => {
+      relEdits.push({ _isNew: true, _delete: false, from: id, to: '', label: '', secret: false });
+      renderRelRows();
+    });
+  }
+
   // Cancel
   form.querySelector('.edit-cancel-btn')?.addEventListener('click', () => {
     if (id) openModal(id, type, false);
@@ -1718,13 +1793,35 @@ function attachEditFormEvents(id, type) {
 
       // Upload de arquivo para Cloudinary (personagens)
       const fileInput = document.getElementById('img-file');
-      if (type === 'character' && fileInput?.files[0]) {
+      if ((type === 'character' || type === 'location') && fileInput?.files[0]) {
         saveBtn.textContent = 'Enviando imagem...';
         data.imageUrl = await uploadToCloudinary(fileInput.files[0]);
       }
 
       if (id) {
         await updateDoc(doc(db, 'campaigns', CAMPAIGN_ID, typeCollName(type), id), data);
+
+        // Save relation changes (characters only)
+        if (type === 'character' && relEdits.length) {
+          const defaultVis = { mode: 'hidden', playerIds: [] };
+          const relBatch   = writeBatch(db);
+          let changed = false;
+          for (const r of relEdits) {
+            if (r._delete && !r._isNew && r.id) {
+              relBatch.delete(doc(db, 'campaigns', CAMPAIGN_ID, 'relations', r.id));
+              changed = true;
+            } else if (!r._delete && r._isNew && r.to) {
+              const ref = doc(collection(db, 'campaigns', CAMPAIGN_ID, 'relations'));
+              relBatch.set(ref, { from: id, to: r.to, label: r.label || '', secret: !!r.secret, visibility: defaultVis, secretsVisibility: defaultVis });
+              changed = true;
+            } else if (!r._delete && !r._isNew && r.id) {
+              relBatch.update(doc(db, 'campaigns', CAMPAIGN_ID, 'relations', r.id), { label: r.label || '', secret: !!r.secret });
+              changed = true;
+            }
+          }
+          if (changed) await relBatch.commit();
+        }
+
         // Reopen in view mode after save
         const editBtn = document.getElementById('modal-edit-btn');
         if (editBtn) editBtn.style.visibility = '';
@@ -1777,6 +1874,8 @@ function buildDataFromForm(fd, type) {
     data.description      = get('description').trim();
     data.pointsOfInterest = get('pointsOfInterest').split('\n').map(l => l.trim()).filter(Boolean);
     data.secrets          = get('secrets').trim();
+    const locUrlVal = get('imageUrl').trim();
+    if (locUrlVal) data.imageUrl = locUrlVal;
   }
 
   if (type === 'event') {

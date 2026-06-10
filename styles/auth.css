@@ -61,6 +61,90 @@
 .modal-char-avatar-clickable:hover::after { opacity: 1; }
 
 /* ══════════════════════════════════════════════════════════════════════
+   LOCATION IMAGES
+══════════════════════════════════════════════════════════════════════ */
+.location-card-img {
+  width: calc(100% + 52px);
+  height: 130px;
+  object-fit: cover;
+  display: block;
+  margin: -24px -26px 16px;
+  border-radius: 8px 8px 0 0;
+}
+.location-card-img-featured {
+  height: 180px;
+  margin: -32px -36px 20px;
+  width: calc(100% + 72px);
+}
+.modal-location-img-wrap {
+  margin: -1px -1px 0;
+  border-radius: 0;
+  overflow: hidden;
+  max-height: 240px;
+}
+.modal-location-img {
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   RELATION EDITOR
+══════════════════════════════════════════════════════════════════════ */
+.rel-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.rel-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto auto;
+  gap: 8px;
+  align-items: center;
+}
+@media (max-width: 500px) {
+  .rel-row { grid-template-columns: 1fr 1fr; }
+}
+.rel-secret-label {
+  font-size: 12px;
+  color: #8a9db0;
+  white-space: nowrap;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  cursor: pointer;
+}
+.rel-secret-label input { accent-color: #c8a96a; }
+.rel-del-btn {
+  background: none;
+  border: 1px solid rgba(224,112,112,.3);
+  border-radius: 4px;
+  color: #a05050;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 12px;
+  transition: background .2s, border-color .2s;
+}
+.rel-del-btn:hover { background: rgba(200,80,80,.1); border-color: #e07070; }
+
+.edit-add-rel-btn {
+  background: rgba(200,169,106,.07);
+  border: 1px dashed rgba(200,169,106,.3);
+  border-radius: 6px;
+  color: #c8a96a;
+  font-size: 12px;
+  padding: 7px 16px;
+  cursor: pointer;
+  font-family: var(--font-title, 'Cinzel', serif);
+  letter-spacing: .5px;
+  transition: background .2s, border-color .2s;
+  margin-bottom: 4px;
+}
+.edit-add-rel-btn:hover { background: rgba(200,169,106,.15); border-color: rgba(200,169,106,.5); }
+
+/* ══════════════════════════════════════════════════════════════════════
    ADD NEW BUTTON (sections)
 ══════════════════════════════════════════════════════════════════════ */
 .add-new-btn {
