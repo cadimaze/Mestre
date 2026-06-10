@@ -369,8 +369,14 @@ function relTypeColor(type) {
   return { family: '#ffffff', political: '#c8a96a', romantic: '#c07090', secret: '#c03030', historical: '#7a8a9a' }[type] || '#5a7a9a';
 }
 
+function charImgSrc(char) {
+  if (char.imageUrl) return char.imageUrl;
+  if (char.image)    return `assets/images/characters/${char.image}`;
+  return null;
+}
+
 function avatarHtml(char, size = 64) {
-  const imgPath = char.image ? `assets/images/characters/${char.image}` : null;
+  const imgPath = charImgSrc(char);
   const initial = char.name ? char.name.charAt(0).toUpperCase() : '?';
   const inner = imgPath
     ? `<img src="${imgPath}" alt="${char.name}" style="width:100%;height:100%;object-fit:cover;"
@@ -381,7 +387,7 @@ function avatarHtml(char, size = 64) {
 
 function charPortraitHtml(c) {
   const initial = c.name ? c.name.charAt(0).toUpperCase() : '?';
-  const imgPath = c.image ? `assets/images/characters/${c.image}` : null;
+  const imgPath = charImgSrc(c);
   const imageEl = imgPath
     ? `<img class="char-portrait-img" src="${imgPath}" alt="${c.name}"
          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -896,8 +902,9 @@ function buildCharModalContent(id) {
     return loc ? `<div class="modal-link-item" data-modal-id="${lid}" data-modal-type="location">${loc.name}<span class="link-label-text">${loc.subtitle || ''}</span></div>` : '';
   }).join('');
 
-  const imgHtml = c.image
-    ? `<div class="modal-char-avatar"><img src="assets/images/characters/${c.image}" alt="${c.name}" onerror="this.parentElement.innerHTML='<div class=\\'modal-char-avatar-placeholder\\'>${c.name.charAt(0)}</div>'"></div>`
+  const _imgSrc = charImgSrc(c);
+  const imgHtml = _imgSrc
+    ? `<div class="modal-char-avatar"><img src="${_imgSrc}" alt="${c.name}" onerror="this.parentElement.innerHTML='<div class=\\'modal-char-avatar-placeholder\\'>${c.name.charAt(0)}</div>'"></div>`
     : `<div class="modal-char-avatar"><div class="modal-char-avatar-placeholder">${c.name.charAt(0)}</div></div>`;
 
   return `
