@@ -714,8 +714,7 @@ async function renderMeuPersonagem() {
     ? `<img class="pc-portrait-img" id="pc-portrait-img" src="${portraitSrc}" alt="">`
     : `<div class="pc-portrait-placeholder" id="pc-portrait-img">${(pc.name || '?').charAt(0)}</div>`;
 
-  const allPlayersCharHtml = await buildAllPlayersCharHtml();
-
+  // Render form immediately — don't block on async data load
   container.innerHTML = `<div class="my-char-container">
     <div class="my-char-header">
       <div class="my-char-title">Meu Personagem</div>
@@ -791,7 +790,7 @@ async function renderMeuPersonagem() {
 
     </form>
 
-    ${allPlayersCharHtml}
+    <div id="other-players-chars"></div>
   </div>`;
 
   // Image file upload (instant preview + Cloudinary)
@@ -833,6 +832,12 @@ async function renderMeuPersonagem() {
       btn.textContent = 'Salvar Ficha';
     }
   });
+
+  // Load other players async — don't block form rendering
+  buildAllPlayersCharHtml().then(html => {
+    const el = document.getElementById('other-players-chars');
+    if (el) el.innerHTML = html;
+  }).catch(() => {});
 }
 
 async function buildAllPlayersCharHtml() {
