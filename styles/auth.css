@@ -1,0 +1,617 @@
+/* ══════════════════════════════════════════════════════════════════════
+   AUTH OVERLAY
+══════════════════════════════════════════════════════════════════════ */
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 30%, #1a2a3a 0%, #0a1218 100%);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9000;
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+}
+.auth-overlay.visible {
+  display: flex;
+}
+
+.auth-box {
+  background: linear-gradient(135deg, #1a2232 0%, #0f1820 100%);
+  border: 1px solid #2a3a4a;
+  border-radius: 12px;
+  padding: 40px 36px 32px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 24px 64px rgba(0,0,0,.7), 0 0 0 1px rgba(200,169,106,.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-brand { text-align: center; }
+
+.auth-title {
+  font-family: var(--font-display, 'Cinzel Decorative', serif);
+  font-size: 24px;
+  color: #c8a96a;
+  margin: 0 0 6px;
+  text-shadow: 0 0 20px rgba(200,169,106,.4);
+}
+
+.auth-subtitle {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 13px;
+  color: #8a9db0;
+  margin: 0 0 4px;
+  letter-spacing: .5px;
+}
+
+.auth-tagline {
+  font-family: var(--font-flavor, 'IM Fell English', Georgia, serif);
+  font-style: italic;
+  font-size: 12px;
+  color: #5a6a7a;
+  margin: 0;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-input {
+  background: #111a22;
+  border: 1px solid #2a3a4a;
+  border-radius: 6px;
+  padding: 10px 14px;
+  color: #c8d8e8;
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  font-size: 14px;
+  outline: none;
+  transition: border-color .2s;
+}
+.auth-input:focus {
+  border-color: #c8a96a;
+  box-shadow: 0 0 0 2px rgba(200,169,106,.15);
+}
+.auth-input::placeholder { color: #4a5a6a; }
+
+.auth-submit-btn {
+  background: linear-gradient(135deg, #c8a96a 0%, #a07840 100%);
+  color: #0a1218;
+  border: none;
+  border-radius: 6px;
+  padding: 11px;
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: opacity .2s, transform .1s;
+}
+.auth-submit-btn:hover  { opacity: .9; }
+.auth-submit-btn:active { transform: scale(.98); }
+
+.auth-toggle-row {
+  text-align: center;
+  font-size: 13px;
+}
+
+.auth-toggle-btn {
+  background: none;
+  border: none;
+  color: #7a9ab0;
+  cursor: pointer;
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  font-size: 13px;
+  text-decoration: underline;
+  padding: 0;
+}
+.auth-toggle-btn:hover { color: #c8a96a; }
+
+.auth-error {
+  color: #e07070;
+  font-size: 13px;
+  text-align: center;
+  min-height: 18px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   SEED OVERLAY
+══════════════════════════════════════════════════════════════════════ */
+.seed-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,18,24,.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 8000;
+}
+
+.seed-box {
+  background: linear-gradient(135deg, #1a2232 0%, #0f1820 100%);
+  border: 1px solid #2a3a4a;
+  border-radius: 12px;
+  padding: 40px 36px;
+  max-width: 460px;
+  text-align: center;
+  box-shadow: 0 24px 64px rgba(0,0,0,.7);
+}
+
+.seed-icon { font-size: 48px; margin-bottom: 12px; }
+
+.seed-title {
+  font-family: var(--font-display, 'Cinzel Decorative', serif);
+  font-size: 22px;
+  color: #c8a96a;
+  margin: 0 0 16px;
+}
+
+.seed-desc {
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  color: #8a9db0;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.seed-desc strong { color: #c8a96a; }
+
+.seed-btn {
+  background: linear-gradient(135deg, #c8a96a 0%, #a07840 100%);
+  color: #0a1218;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 28px;
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.seed-btn:hover     { opacity: .9; }
+.seed-btn:disabled  { opacity: .5; cursor: not-allowed; }
+
+.seed-status {
+  margin-top: 14px;
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  font-size: 13px;
+  color: #6a9a7a;
+  min-height: 20px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   HEADER ADDITIONS
+══════════════════════════════════════════════════════════════════════ */
+.user-badge {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 12px;
+  color: #7a9ab0;
+  padding: 4px 8px;
+  border: 1px solid #2a3a4a;
+  border-radius: 10px;
+  white-space: nowrap;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.user-badge.is-master { color: #c8a96a; border-color: #c8a96a44; }
+
+.header-logout-btn {
+  background: none;
+  border: 1px solid #2a3a4a;
+  border-radius: 6px;
+  color: #5a6a7a;
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 11px;
+  padding: 4px 10px;
+  cursor: pointer;
+  letter-spacing: .5px;
+  transition: border-color .2s, color .2s;
+}
+.header-logout-btn:hover { border-color: #e07070; color: #e07070; }
+
+/* Role-based visibility */
+.master-only { display: none; }
+.player-only { display: none; }
+body.is-master .master-only { display: revert; }
+body.is-player .player-only { display: revert; }
+/* Nav buttons need flex/inline-flex */
+nav .master-only { display: none; }
+nav .player-only { display: none; }
+body.is-master nav .master-only { display: inline-flex; }
+body.is-player nav .player-only { display: inline-flex; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   VISIBILITY BADGE ON CARDS (master view)
+══════════════════════════════════════════════════════════════════════ */
+.vis-card-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 13px;
+  background: rgba(10,18,24,.7);
+  border-radius: 6px;
+  padding: 2px 5px;
+  line-height: 1;
+  pointer-events: none;
+  display: none;
+}
+body.is-master .vis-card-badge { display: block; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   VISIBILITY SECTION (in modal, master only)
+══════════════════════════════════════════════════════════════════════ */
+.vis-section {
+  border: 1px solid #c8a96a33;
+  border-radius: 8px;
+  background: rgba(200,169,106,.04);
+  padding: 14px 16px;
+}
+
+.vis-controls {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0 12px;
+  flex-wrap: wrap;
+}
+
+.vis-btn {
+  background: #1a2232;
+  border: 1px solid #2a3a4a;
+  border-radius: 6px;
+  color: #8a9db0;
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  font-size: 12px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: border-color .2s, color .2s, background .2s;
+}
+.vis-btn:hover { border-color: #c8a96a55; color: #c8a96a; }
+.vis-btn.active {
+  border-color: #c8a96a;
+  color: #c8a96a;
+  background: rgba(200,169,106,.12);
+}
+.vis-btn-all.active  { border-color: #6aaa7a; color: #6aaa7a; background: rgba(106,170,122,.12); }
+
+.vis-players {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #1a2a3a;
+  transition: opacity .2s;
+}
+.vis-players-hidden { display: none; }
+
+.player-vis-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  font-size: 13px;
+  color: #8a9db0;
+}
+.player-vis-label:hover { color: #c8d8e8; }
+.player-vis-check { accent-color: #c8a96a; width: 14px; height: 14px; cursor: pointer; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   ANNOTATIONS SECTION (in modal)
+══════════════════════════════════════════════════════════════════════ */
+.annotations-section {
+  border-top: 1px solid #1a2a3a;
+}
+
+.annotations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0 14px;
+}
+
+.annotation-empty {
+  color: #4a5a6a;
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  font-style: italic;
+  font-size: 13px;
+  padding: 8px 0;
+}
+
+.annotation-item {
+  background: #111a22;
+  border: 1px solid #1e2e3e;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.annotation-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.annotation-author {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 11px;
+  color: #c8a96a;
+  font-weight: 600;
+  letter-spacing: .5px;
+}
+
+.annotation-date {
+  font-size: 11px;
+  color: #3a4a5a;
+  flex: 1;
+}
+
+.annotation-delete-btn {
+  background: none;
+  border: none;
+  color: #3a4a5a;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 0 2px;
+  line-height: 1;
+  transition: color .2s;
+}
+.annotation-delete-btn:hover { color: #e07070; }
+
+.annotation-text {
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  font-size: 13px;
+  color: #9ab0c8;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.annotation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.annotation-textarea {
+  background: #111a22;
+  border: 1px solid #2a3a4a;
+  border-radius: 6px;
+  color: #c8d8e8;
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  font-size: 13px;
+  padding: 8px 12px;
+  resize: vertical;
+  outline: none;
+  transition: border-color .2s;
+}
+.annotation-textarea:focus {
+  border-color: #c8a96a66;
+  box-shadow: 0 0 0 2px rgba(200,169,106,.1);
+}
+.annotation-textarea::placeholder { color: #3a4a5a; }
+
+.annotation-submit-btn {
+  align-self: flex-end;
+  background: rgba(200,169,106,.15);
+  border: 1px solid #c8a96a44;
+  border-radius: 6px;
+  color: #c8a96a;
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.annotation-submit-btn:hover { background: rgba(200,169,106,.25); border-color: #c8a96a88; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   JOGADORES TAB (master only)
+══════════════════════════════════════════════════════════════════════ */
+.jogadores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  padding: 0 24px 40px;
+}
+
+.jogador-card {
+  background: linear-gradient(135deg, #1a2232 0%, #111820 100%);
+  border: 1px solid #2a3a4a;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.jogador-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2a3a4a, #1a2a3a);
+  border: 2px solid #3a5a7a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 20px;
+  color: #c8a96a;
+}
+
+.jogador-name {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 15px;
+  color: #c8d8e8;
+  font-weight: 600;
+}
+
+.jogador-email {
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  font-size: 11px;
+  color: #4a5a6a;
+}
+
+.jogador-char-info {
+  border-top: 1px solid #1a2a3a;
+  padding-top: 10px;
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  font-size: 12px;
+  color: #6a8a9a;
+}
+
+.jogador-char-name {
+  color: #9ab0c8;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   MEU PERSONAGEM TAB (player only)
+══════════════════════════════════════════════════════════════════════ */
+.my-char-container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px 24px 48px;
+}
+
+.my-char-header {
+  margin-bottom: 28px;
+}
+
+.my-char-title {
+  font-family: var(--font-display, 'Cinzel Decorative', serif);
+  font-size: 22px;
+  color: #c8a96a;
+  margin-bottom: 6px;
+}
+
+.my-char-subtitle {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 13px;
+  color: #5a7a8a;
+}
+
+.my-char-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.my-char-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.my-char-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.my-char-field label {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 11px;
+  color: #7a9ab0;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+.my-char-input,
+.my-char-textarea {
+  background: #111a22;
+  border: 1px solid #2a3a4a;
+  border-radius: 6px;
+  color: #c8d8e8;
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  font-size: 14px;
+  padding: 9px 12px;
+  outline: none;
+  transition: border-color .2s;
+}
+.my-char-input:focus,
+.my-char-textarea:focus {
+  border-color: #c8a96a66;
+  box-shadow: 0 0 0 2px rgba(200,169,106,.1);
+}
+.my-char-input::placeholder,
+.my-char-textarea::placeholder { color: #3a4a5a; }
+.my-char-textarea { resize: vertical; min-height: 80px; }
+
+.my-char-save-btn {
+  align-self: flex-start;
+  background: linear-gradient(135deg, #c8a96a 0%, #a07840 100%);
+  color: #0a1218;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 24px;
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  cursor: pointer;
+  transition: opacity .2s;
+  margin-top: 8px;
+}
+.my-char-save-btn:hover { opacity: .9; }
+
+.my-char-saved-msg {
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  font-size: 13px;
+  color: #6aaa7a;
+  margin-top: 8px;
+  min-height: 18px;
+}
+
+/* All players' characters shown below the form */
+.all-chars-section {
+  margin-top: 40px;
+  border-top: 1px solid #1a2a3a;
+  padding-top: 28px;
+}
+
+.all-chars-title {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 14px;
+  color: #7a9ab0;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.player-char-card {
+  background: #111a22;
+  border: 1px solid #1e2e3e;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.player-char-player {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 11px;
+  color: #5a7a8a;
+  letter-spacing: .5px;
+  margin-bottom: 4px;
+}
+
+.player-char-name {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 16px;
+  color: #c8a96a;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.player-char-details {
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  font-size: 13px;
+  color: #7a9ab0;
+  line-height: 1.6;
+}

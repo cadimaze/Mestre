@@ -1,0 +1,64 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuth() {
+      return request.auth != null;
+    }
+
+    function getUser() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isMaster() {
+      return isAuth() && getUser().role == 'master';
+    }
+
+    function isVisible() {
+      return resource.data.visibility.mode == 'all' ||
+        (resource.data.visibility.mode == 'specific' &&
+          request.auth.uid in resource.data.visibility.playerIds);
+    }
+
+    // Perfis de usuário
+    match /users/{uid} {
+      allow read:   if isAuth() && (request.auth.uid == uid || isMaster());
+      allow create: if isAuth() && request.auth.uid == uid;
+      allow update: if isAuth() && request.auth.uid == uid;
+    }
+
+    // Campanha e sub-coleções
+    match /campaigns/{campaignId} {
+      allow read, write: if isMaster();
+
+      match /characters/{id} {
+        allow read, write: if isMaster();
+        allow read: if isAuth() && isVisible();
+      }
+      match /locations/{id} {
+        allow read, write: if isMaster();
+        allow read: if isAuth() && isVisible();
+      }
+      match /events/{id} {
+        allow read, write: if isMaster();
+        allow read: if isAuth() && isVisible();
+      }
+      match /factions/{id} {
+        allow read, write: if isMaster();
+        allow read: if isAuth() && isVisible();
+      }
+      match /relations/{id} {
+        allow read, write: if isMaster();
+        allow read: if isAuth() && isVisible();
+      }
+
+      // Anotações — todos autenticados podem ler e criar as próprias
+      match /annotations/{id} {
+        allow read:   if isAuth();
+        allow create: if isAuth() && request.resource.data.authorId == request.auth.uid;
+        allow update, delete: if isAuth() &&
+          (isMaster() || resource.data.authorId == request.auth.uid);
+      }
+    }
+  }
+}

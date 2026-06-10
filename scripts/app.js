@@ -1,38 +1,350 @@
-// ── DATA STORE ──────────────────────────────────────────────────────────────
-const DATA = { characters: [], locations: [], events: [], factions: [], relations: [] };
+// ── IMPORTS ──────────────────────────────────────────────────────────────────
+import { initializeApp }                          from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, signInWithEmailAndPassword,
+         createUserWithEmailAndPassword, signOut,
+         onAuthStateChanged }                     from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getFirestore, collection, doc, getDoc,
+         getDocs, setDoc, addDoc, updateDoc,
+         deleteDoc, onSnapshot, query, orderBy,
+         serverTimestamp, writeBatch }            from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { FIREBASE_CONFIG, MASTER_EMAIL,
+         CAMPAIGN_ID }                           from './firebase-config.js';
+import * as d3                                   from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
-async function loadData() {
-  const files = ['characters', 'locations', 'events', 'factions', 'relations'];
-  await Promise.all(files.map(async f => {
-    const r = await fetch(`data/${f}.json`);
-    DATA[f] = await r.json();
-  }));
-}
+// ── FIREBASE INIT ─────────────────────────────────────────────────────────────
+const fbApp  = initializeApp(FIREBASE_CONFIG);
+const auth   = getAuth(fbApp);
+const db     = getFirestore(fbApp);
 
-// ── STATE ────────────────────────────────────────────────────────────────────
+// ── STATE ─────────────────────────────────────────────────────────────────────
 const STATE = {
-  activeTab: 'painel',
-  secretsVisible: localStorage.getItem('secretsVisible') !== 'false',
-  modal: { stack: [], current: null },
-  graphFilters: { character: true, location: true, event: true, faction: true },
+  user:           null,
+  profile:        null,
+  isMaster:       false,
+  players:        [],
+  unsubscribers:  [],
+  data: { characters: [], locations: [], events: [], factions: [], relations: [], annotations: [] },
+
+  activeTab:       'painel',
+  secretsVisible:  localStorage.getItem('secretsVisible') !== 'false',
+  modal:           { stack: [], current: null },
+  graphFilters:    { character: true, location: true, event: true, faction: true },
   graphShowLabels: true,
-  charFilters: { name: '', faction: '', status: '', secretsOnly: false },
+  charFilters:     { name: '', faction: '', status: '', secretsOnly: false },
 };
 
-// ── HELPERS ──────────────────────────────────────────────────────────────────
-function getFactionById(id) { return DATA.factions.find(f => f.id === id); }
-function getCharById(id)    { return DATA.characters.find(c => c.id === id); }
-function getLocationById(id){ return DATA.locations.find(l => l.id === id); }
-function getEventById(id)   { return DATA.events.find(e => e.id === id); }
+// ── AUTH UI ───────────────────────────────────────────────────────────────────
+function showAuthOverlay()  { document.getElementById('auth-overlay').classList.add('visible'); }
+function hideAuthOverlay()  { document.getElementById('auth-overlay').classList.remove('visible'); }
+function showAuthError(msg) { document.getElementById('auth-error').textContent = msg; }
+function clearAuthError()   { document.getElementById('auth-error').textContent = ''; }
+
+function setupAuthUI() {
+  const loginForm      = document.getElementById('login-form');
+  const registerForm   = document.getElementById('register-form');
+  const showRegisterBtn = document.getElementById('show-register');
+  const showLoginBtn   = document.getElementById('show-login');
+
+  showRegisterBtn.addEventListener('click', () => {
+    loginForm.style.display    = 'none';
+    registerForm.style.display = 'flex';
+    showRegisterBtn.style.display = 'none';
+    showLoginBtn.style.display    = 'inline';
+    clearAuthError();
+  });
+
+  showLoginBtn.addEventListener('click', () => {
+    loginForm.style.display    = 'flex';
+    registerForm.style.display = 'none';
+    showRegisterBtn.style.display = 'inline';
+    showLoginBtn.style.display    = 'none';
+    clearAuthError();
+  });
+
+  loginForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth,
+        document.getElementById('login-email').value,
+        document.getElementById('login-password').value
+      );
+      clearAuthError();
+    } catch (err) { showAuthError(authErrMsg(err.code)); }
+  });
+
+  registerForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const name  = document.getElementById('reg-name').value.trim();
+    const email = document.getElementById('reg-email').value;
+    const pass  = document.getElementById('reg-password').value;
+    if (!name) { showAuthError('Informe seu nome.'); return; }
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email, pass);
+      const role = email.toLowerCase() === MASTER_EMAIL.toLowerCase() ? 'master' : 'player';
+      await setDoc(doc(db, 'users', cred.user.uid), {
+        displayName: name,
+        email: email.toLowerCase(),
+        role,
+        campaignId: CAMPAIGN_ID,
+        playerCharacter: null,
+        createdAt: serverTimestamp(),
+      });
+      clearAuthError();
+    } catch (err) { showAuthError(authErrMsg(err.code)); }
+  });
+
+  document.getElementById('logout-btn').addEventListener('click', async () => {
+    STATE.unsubscribers.forEach(u => u());
+    STATE.unsubscribers = [];
+    await signOut(auth);
+  });
+}
+
+function authErrMsg(code) {
+  return ({
+    'auth/user-not-found':      'Usuário não encontrado.',
+    'auth/wrong-password':      'Senha incorreta.',
+    'auth/email-already-in-use':'Este e-mail já está em uso.',
+    'auth/weak-password':       'Senha fraca — use ao menos 6 caracteres.',
+    'auth/invalid-email':       'E-mail inválido.',
+    'auth/invalid-credential':  'E-mail ou senha inválidos.',
+    'auth/too-many-requests':   'Muitas tentativas. Aguarde e tente novamente.',
+  })[code] || 'Erro ao autenticar. Tente novamente.';
+}
+
+// ── USER PROFILE ──────────────────────────────────────────────────────────────
+async function loadUserProfile(uid) {
+  const snap = await getDoc(doc(db, 'users', uid));
+  if (snap.exists()) {
+    STATE.profile  = snap.data();
+    STATE.isMaster = STATE.profile.role === 'master';
+    return STATE.profile;
+  }
+  return null;
+}
+
+async function loadAllPlayers() {
+  if (!STATE.isMaster) return;
+  const snap = await getDocs(collection(db, 'users'));
+  STATE.players = snap.docs.map(d => ({ uid: d.id, ...d.data() }));
+}
+
+// ── FIRESTORE SUBSCRIPTIONS ──────────────────────────────────────────────────
+function subscribeToCollection(collName) {
+  const ref = collection(db, 'campaigns', CAMPAIGN_ID, collName);
+  const unsub = onSnapshot(ref, snap => {
+    const items = snap.docs.map(d => ({ ...d.data(), id: d.id }));
+    STATE.data[collName] = STATE.isMaster ? items : items.filter(isItemVisible);
+    rerenderSection(collName);
+  }, err => console.error(`[${collName}]`, err));
+  STATE.unsubscribers.push(unsub);
+}
+
+function subscribeToAnnotations() {
+  const ref = collection(db, 'campaigns', CAMPAIGN_ID, 'annotations');
+  const q   = query(ref, orderBy('createdAt', 'asc'));
+  const unsub = onSnapshot(q, snap => {
+    STATE.data.annotations = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (STATE.modal.current) refreshModalAnnotations();
+  });
+  STATE.unsubscribers.push(unsub);
+}
+
+function isItemVisible(item) {
+  const v = item.visibility;
+  if (!v) return false;
+  if (v.mode === 'all') return true;
+  if (v.mode === 'specific') return (v.playerIds || []).includes(STATE.user.uid);
+  return false;
+}
+
+function rerenderSection(collName) {
+  switch (collName) {
+    case 'characters': renderPainel(); renderCharacters(); break;
+    case 'locations':  renderPainel(); renderLocations();  break;
+    case 'events':     renderPainel(); renderEvents();     break;
+    case 'factions':   renderPainel(); renderFactions(); buildCharacterFilters(); break;
+    case 'relations':  if (STATE.activeTab === 'relacoes') renderGraph(); break;
+  }
+}
+
+async function setupFirestoreListeners() {
+  subscribeToCollection('characters');
+  subscribeToCollection('locations');
+  subscribeToCollection('events');
+  subscribeToCollection('factions');
+  subscribeToCollection('relations');
+  subscribeToAnnotations();
+}
+
+// ── VISIBILITY ────────────────────────────────────────────────────────────────
+async function updateVisibility(collName, itemId, mode, playerIds = []) {
+  await updateDoc(doc(db, 'campaigns', CAMPAIGN_ID, collName, itemId), {
+    'visibility.mode':      mode,
+    'visibility.playerIds': playerIds,
+  });
+}
+
+function visBadgeEmoji(item) {
+  const m = item.visibility?.mode;
+  if (m === 'all')      return '🌐';
+  if (m === 'specific') return `👁 ${(item.visibility.playerIds || []).length}`;
+  return '🔒';
+}
+
+function buildVisibilitySection(item, collName) {
+  if (!STATE.isMaster) return '';
+  const isAll = item.visibility?.mode === 'all';
+  const isSpec = item.visibility?.mode === 'specific';
+
+  const playerOptions = STATE.players
+    .filter(p => p.role === 'player')
+    .map(p => {
+      const checked = (item.visibility?.playerIds || []).includes(p.uid) ? 'checked' : '';
+      return `<label class="player-vis-label">
+        <input type="checkbox" class="player-vis-check" data-uid="${p.uid}" ${checked}>
+        <span>${p.displayName}</span>
+      </label>`;
+    }).join('') || '<span style="color:#3a4a5a;font-size:12px;font-family:var(--font-body)">Nenhum jogador registrado ainda.</span>';
+
+  return `<div class="modal-section vis-section" id="vis-section"
+               data-item-id="${item.id}" data-coll-name="${collName}">
+    <div class="modal-section-title">Visibilidade para Jogadores</div>
+    <div class="vis-controls">
+      <button class="vis-btn vis-btn-all ${isAll ? 'active' : ''}" data-mode="all">🌐 Todos podem ver</button>
+      <button class="vis-btn vis-btn-specific ${isSpec ? 'active' : ''}" data-mode="specific">👁 Específicos</button>
+      <button class="vis-btn vis-btn-hidden ${!isAll && !isSpec ? 'active' : ''}" data-mode="hidden">🔒 Oculto</button>
+    </div>
+    <div class="vis-players ${isAll ? 'vis-players-hidden' : ''}" id="vis-players">
+      ${playerOptions}
+    </div>
+  </div>`;
+}
+
+function attachVisibilityEvents() {
+  const sec = document.getElementById('vis-section');
+  if (!sec) return;
+  const itemId   = sec.dataset.itemId;
+  const collName = sec.dataset.collName;
+
+  async function save() {
+    const activeBtn = sec.querySelector('.vis-btn.active');
+    const mode = activeBtn ? activeBtn.dataset.mode : 'hidden';
+    const playerIds = mode !== 'all'
+      ? [...sec.querySelectorAll('.player-vis-check:checked')].map(c => c.dataset.uid)
+      : [];
+    await updateVisibility(collName, itemId, mode, playerIds);
+  }
+
+  sec.querySelectorAll('.vis-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      sec.querySelectorAll('.vis-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const playersDiv = document.getElementById('vis-players');
+      if (playersDiv) {
+        if (btn.dataset.mode === 'all') playersDiv.classList.add('vis-players-hidden');
+        else playersDiv.classList.remove('vis-players-hidden');
+      }
+      await save();
+    });
+  });
+
+  sec.querySelectorAll('.player-vis-check').forEach(chk => {
+    chk.addEventListener('change', save);
+  });
+}
+
+// ── ANNOTATIONS ───────────────────────────────────────────────────────────────
+function itemAnnotations(targetId) {
+  return STATE.data.annotations.filter(a => a.targetId === targetId);
+}
+
+function annotationListHtml(targetId) {
+  const anns = itemAnnotations(targetId);
+  if (!anns.length) return '<div class="annotation-empty">Nenhuma anotação ainda.</div>';
+  return anns.map(a => {
+    const date = a.createdAt?.toDate
+      ? a.createdAt.toDate().toLocaleDateString('pt-BR') : '';
+    const canDel = STATE.isMaster || a.authorId === STATE.user?.uid;
+    return `<div class="annotation-item">
+      <div class="annotation-header">
+        <span class="annotation-author">${escHtml(a.authorName)}</span>
+        <span class="annotation-date">${date}</span>
+        ${canDel ? `<button class="annotation-delete-btn" data-ann-id="${a.id}" title="Excluir">✕</button>` : ''}
+      </div>
+      <div class="annotation-text">${escHtml(a.text)}</div>
+    </div>`;
+  }).join('');
+}
+
+function buildAnnotationsSection(targetId, targetType) {
+  return `<div class="modal-section annotations-section" id="annotations-section">
+    <div class="modal-section-title">📝 Anotações</div>
+    <div class="annotations-list" id="annotations-list">${annotationListHtml(targetId)}</div>
+    <div class="annotation-form">
+      <textarea id="annotation-input" class="annotation-textarea"
+        placeholder="Adicionar anotação..." rows="2"></textarea>
+      <button id="annotation-submit" class="annotation-submit-btn"
+        data-target-id="${targetId}" data-target-type="${targetType}">Salvar</button>
+    </div>
+  </div>`;
+}
+
+function attachAnnotationEvents() {
+  const btn = document.getElementById('annotation-submit');
+  if (!btn) return;
+  btn.addEventListener('click', async () => {
+    const text = document.getElementById('annotation-input').value.trim();
+    if (!text) return;
+    await addDoc(collection(db, 'campaigns', CAMPAIGN_ID, 'annotations'), {
+      targetId:   btn.dataset.targetId,
+      targetType: btn.dataset.targetType,
+      text,
+      authorId:   STATE.user.uid,
+      authorName: STATE.profile.displayName,
+      createdAt:  serverTimestamp(),
+    });
+    document.getElementById('annotation-input').value = '';
+  });
+  attachAnnotationDeleteEvents();
+}
+
+function attachAnnotationDeleteEvents() {
+  document.querySelectorAll('.annotation-delete-btn').forEach(btn => {
+    btn.addEventListener('click', async e => {
+      e.stopPropagation();
+      if (confirm('Excluir esta anotação?')) {
+        await deleteDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'annotations', btn.dataset.annId));
+      }
+    });
+  });
+}
+
+function refreshModalAnnotations() {
+  const list = document.getElementById('annotations-list');
+  if (!list || !STATE.modal.current) return;
+  list.innerHTML = annotationListHtml(STATE.modal.current.id);
+  attachAnnotationDeleteEvents();
+}
+
+function escHtml(text) {
+  const d = document.createElement('div');
+  d.appendChild(document.createTextNode(text));
+  return d.innerHTML;
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+const getFactionById  = id => STATE.data.factions.find(f => f.id === id);
+const getCharById     = id => STATE.data.characters.find(c => c.id === id);
+const getLocationById = id => STATE.data.locations.find(l => l.id === id);
+const getEventById    = id => STATE.data.events.find(e => e.id === id);
 
 function factionColor(factionId) {
   const f = getFactionById(factionId);
   return f ? f.color : '#3a5a7a';
 }
 
-function hasSecrets(item) {
-  return item && item.secrets && item.secrets.trim().length > 0;
-}
+function hasSecrets(item) { return item && item.secrets && item.secrets.trim().length > 0; }
 
 function statusBadgeHtml(status) {
   if (!status) return '';
@@ -56,17 +368,14 @@ function relTypeColor(type) {
   return { family: '#ffffff', political: '#c8a96a', romantic: '#c07090', secret: '#c03030', historical: '#7a8a9a' }[type] || '#5a7a9a';
 }
 
-function avatarHtml(char, size = 64, classes = '') {
+function avatarHtml(char, size = 64) {
   const imgPath = char.image ? `assets/images/characters/${char.image}` : null;
   const initial = char.name ? char.name.charAt(0).toUpperCase() : '?';
-  if (imgPath) {
-    return `<div class="char-avatar${classes ? ' ' + classes : ''}" style="width:${size}px;height:${size}px;border-radius:8px;overflow:hidden;border:2px solid var(--border-accent);">
-      <img src="${imgPath}" alt="${char.name}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='<div class=\\'char-avatar-placeholder\\'>${initial}</div>'">
-    </div>`;
-  }
-  return `<div class="char-avatar${classes ? ' ' + classes : ''}" style="width:${size}px;height:${size}px;border-radius:8px;overflow:hidden;border:2px solid var(--border-accent);">
-    <div class="char-avatar-placeholder">${initial}</div>
-  </div>`;
+  const inner = imgPath
+    ? `<img src="${imgPath}" alt="${char.name}" style="width:100%;height:100%;object-fit:cover;"
+         onerror="this.parentElement.innerHTML='<div class=\\'char-avatar-placeholder\\'>${initial}</div>'">`
+    : `<div class="char-avatar-placeholder">${initial}</div>`;
+  return `<div class="char-avatar" style="width:${size}px;height:${size}px;border-radius:8px;overflow:hidden;border:2px solid var(--border-accent);">${inner}</div>`;
 }
 
 function charPortraitHtml(c) {
@@ -81,22 +390,25 @@ function charPortraitHtml(c) {
     ${imageEl}
     <div class="char-portrait-overlay">
       ${statusBadgeHtml(c.status)}
-      ${hasSecrets(c) ? '<span class="portrait-secret secret-icon">🔒</span>' : ''}
+      ${hasSecrets(c) && STATE.isMaster ? '<span class="portrait-secret secret-icon">🔒</span>' : ''}
     </div>
   </div>`;
 }
 
-// ── NAVIGATION ───────────────────────────────────────────────────────────────
+// ── NAVIGATION ────────────────────────────────────────────────────────────────
 function switchTab(tab) {
   STATE.activeTab = tab;
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === `tab-${tab}`));
-  if (tab === 'relacoes') renderGraph();
+  if (tab === 'relacoes')       renderGraph();
+  if (tab === 'jogadores')      renderJogadores();
+  if (tab === 'meu-personagem') renderMeuPersonagem();
 }
 
-// ── SECRETS TOGGLE ───────────────────────────────────────────────────────────
+// ── SECRETS TOGGLE ────────────────────────────────────────────────────────────
 function applySecretsState() {
   const btn = document.getElementById('secrets-float-btn');
+  if (!btn) return;
   if (STATE.secretsVisible) {
     document.body.classList.add('secrets-visible');
     btn.classList.add('active');
@@ -114,19 +426,21 @@ function toggleSecrets() {
   applySecretsState();
 }
 
-// ── PAINEL ───────────────────────────────────────────────────────────────────
+// ── PAINEL ────────────────────────────────────────────────────────────────────
 function renderPainel() {
-  const secretsCount = [...DATA.characters, ...DATA.locations, ...DATA.events, ...DATA.factions]
-    .filter(hasSecrets).length;
+  const d = STATE.data;
+  document.getElementById('count-chars').textContent     = d.characters.length;
+  document.getElementById('count-locations').textContent  = d.locations.length;
+  document.getElementById('count-events').textContent    = d.events.length;
+  document.getElementById('count-factions').textContent   = d.factions.length;
 
-  document.getElementById('count-chars').textContent    = DATA.characters.length;
-  document.getElementById('count-locations').textContent = DATA.locations.length;
-  document.getElementById('count-events').textContent   = DATA.events.length;
-  document.getElementById('count-factions').textContent  = DATA.factions.length;
-  document.getElementById('secrets-total').textContent   = secretsCount;
+  if (STATE.isMaster) {
+    const secretsEl = document.getElementById('secrets-total');
+    if (secretsEl) secretsEl.textContent = [...d.characters, ...d.locations, ...d.events, ...d.factions].filter(hasSecrets).length;
+  }
 
   const relList = document.getElementById('recent-relations');
-  const recent = DATA.relations.slice(-5).reverse();
+  const recent = d.relations.slice(-5).reverse();
   relList.innerHTML = recent.map(r => {
     const sName = getEntityName(r.sourceId, r.sourceType);
     const tName = getEntityName(r.targetId, r.targetType);
@@ -135,7 +449,7 @@ function renderPainel() {
       <span class="rel-label">${r.label}</span>
       <span class="rel-target">${tName}</span>
     </div>`;
-  }).join('') || '<p style="color:var(--text-muted);font-size:13px;">Nenhuma relação cadastrada.</p>';
+  }).join('') || '<p style="color:var(--text-muted);font-size:13px;">Nenhuma relação disponível.</p>';
 
   relList.querySelectorAll('.recent-relation').forEach(el => {
     el.addEventListener('click', () => openModal(el.dataset.id, el.dataset.type));
@@ -143,15 +457,14 @@ function renderPainel() {
 }
 
 function getEntityName(id, type) {
-  const map = { character: getCharById, location: getLocationById, event: getEventById, faction: getFactionById };
-  const item = map[type]?.(id);
-  return item ? item.name : id;
+  const fn = { character: getCharById, location: getLocationById, event: getEventById, faction: getFactionById }[type];
+  return fn?.(id)?.name || id;
 }
 
-// ── CHARACTERS ───────────────────────────────────────────────────────────────
+// ── CHARACTERS ────────────────────────────────────────────────────────────────
 function renderCharacters() {
   const { name, faction, status, secretsOnly } = STATE.charFilters;
-  let chars = DATA.characters.filter(c => {
+  const chars = STATE.data.characters.filter(c => {
     if (name && !c.name.toLowerCase().includes(name.toLowerCase())) return false;
     if (faction && c.faction !== faction) return false;
     if (status && c.status !== status) return false;
@@ -167,7 +480,7 @@ function renderCharacters() {
 
   grid.innerHTML = chars.map(c => {
     const fc = factionColor(c.faction);
-    return `<div class="character-card" data-id="${c.id}" style="--faction-color:${fc}">
+    return `<div class="character-card" data-id="${c.id}" style="--faction-color:${fc};position:relative;">
       ${charPortraitHtml(c)}
       <div class="char-info">
         <div class="char-faction-strip" style="background:${fc}"></div>
@@ -175,6 +488,7 @@ function renderCharacters() {
         <div class="char-role">${c.role || ''}</div>
         <div class="badges">${factionBadgeHtml(c.faction)}</div>
       </div>
+      ${STATE.isMaster ? `<span class="vis-card-badge" title="Visibilidade">${visBadgeEmoji(c)}</span>` : ''}
     </div>`;
   }).join('');
 
@@ -184,64 +498,66 @@ function renderCharacters() {
 }
 
 function buildCharacterFilters() {
-  const factionSelect = document.getElementById('char-filter-faction');
-  factionSelect.innerHTML = '<option value="">Todas as facções</option>' +
-    DATA.factions.map(f => `<option value="${f.id}">${f.name}</option>`).join('');
+  const sel = document.getElementById('char-filter-faction');
+  sel.innerHTML = '<option value="">Todas as facções</option>' +
+    STATE.data.factions.map(f => `<option value="${f.id}">${f.name}</option>`).join('');
+
+  // Only add listeners once
+  if (sel.dataset.ready) return;
+  sel.dataset.ready = '1';
 
   document.getElementById('char-filter-name').addEventListener('input', e => {
-    STATE.charFilters.name = e.target.value;
-    renderCharacters();
+    STATE.charFilters.name = e.target.value; renderCharacters();
   });
-  factionSelect.addEventListener('change', e => {
-    STATE.charFilters.faction = e.target.value;
-    renderCharacters();
+  sel.addEventListener('change', e => {
+    STATE.charFilters.faction = e.target.value; renderCharacters();
   });
   document.getElementById('char-filter-status').addEventListener('change', e => {
-    STATE.charFilters.status = e.target.value;
-    renderCharacters();
+    STATE.charFilters.status = e.target.value; renderCharacters();
   });
-  const secretsToggle = document.getElementById('char-filter-secrets');
-  secretsToggle.addEventListener('click', () => {
+  const secBtn = document.getElementById('char-filter-secrets');
+  if (secBtn) secBtn.addEventListener('click', () => {
     STATE.charFilters.secretsOnly = !STATE.charFilters.secretsOnly;
-    secretsToggle.classList.toggle('active', STATE.charFilters.secretsOnly);
+    secBtn.classList.toggle('active', STATE.charFilters.secretsOnly);
     renderCharacters();
   });
 }
 
-// ── LOCATIONS ────────────────────────────────────────────────────────────────
+// ── LOCATIONS ─────────────────────────────────────────────────────────────────
 function renderLocations() {
   const grid = document.getElementById('locations-grid');
-  grid.innerHTML = DATA.locations.map(l => {
+  grid.innerHTML = STATE.data.locations.map(l => {
     const controller = getCharById(l.controlledBy);
     const controlText = controller
       ? controller.name
       : (getFactionById(l.controlledBy)?.name || l.controlledBy);
 
     if (l.featured) {
-      const descWords = (l.description || '').split('\n');
-      const firstPara = descWords[0] || '';
-      const secondPara = descWords.slice(2).join('\n') || '';
-      return `<div class="location-card location-featured" data-id="${l.id}">
+      const paras = (l.description || '').split('\n');
+      const firstPara = paras[0] || '';
+      return `<div class="location-card location-featured" data-id="${l.id}" style="position:relative;">
         <div class="location-featured-inner">
           <div>
             <div class="location-name">${l.name}</div>
             <div class="location-subtitle">${l.subtitle || ''}</div>
             <span class="location-type-badge">${l.type || ''}</span>
             <div class="location-tone" style="margin-top:10px;">${l.tone || ''}</div>
-            ${hasSecrets(l) ? '<div style="margin-top:10px;"><span class="secret-icon" title="Tem segredos">🔒</span></div>' : ''}
+            ${hasSecrets(l) && STATE.isMaster ? '<div style="margin-top:10px;"><span class="secret-icon" title="Tem segredos">🔒</span></div>' : ''}
           </div>
           <p class="location-featured-desc">${firstPara}</p>
         </div>
+        ${STATE.isMaster ? `<span class="vis-card-badge" title="Visibilidade">${visBadgeEmoji(l)}</span>` : ''}
       </div>`;
     }
 
-    return `<div class="location-card" data-id="${l.id}">
+    return `<div class="location-card" data-id="${l.id}" style="position:relative;">
       <div class="location-name">${l.name}</div>
       <div class="location-subtitle">${l.subtitle || ''}</div>
       <span class="location-type-badge">${l.type || ''}</span>
       <div class="location-tone">${l.tone || ''}</div>
       ${controlText ? `<div class="location-control">Controlado por: ${controlText}</div>` : ''}
-      ${hasSecrets(l) ? '<span class="secret-icon" title="Tem segredos">🔒</span>' : ''}
+      ${hasSecrets(l) && STATE.isMaster ? '<span class="secret-icon" title="Tem segredos">🔒</span>' : ''}
+      ${STATE.isMaster ? `<span class="vis-card-badge" title="Visibilidade">${visBadgeEmoji(l)}</span>` : ''}
     </div>`;
   }).join('');
 
@@ -250,19 +566,20 @@ function renderLocations() {
   });
 }
 
-// ── EVENTS ───────────────────────────────────────────────────────────────────
+// ── EVENTS ────────────────────────────────────────────────────────────────────
 function renderEvents() {
-  const sorted = [...DATA.events].sort((a, b) => (a.order || 0) - (b.order || 0));
+  const sorted = [...STATE.data.events].sort((a, b) => (a.order || 0) - (b.order || 0));
   const timeline = document.getElementById('events-timeline');
   timeline.innerHTML = sorted.map(e => `
     <div class="timeline-item">
       <div class="timeline-dot"></div>
-      <div class="event-card" data-id="${e.id}">
+      <div class="event-card" data-id="${e.id}" style="position:relative;">
         <div class="event-period">${e.period || ''}</div>
         <div class="event-name">${e.name}</div>
         ${scaleBadgeHtml(e.scale)}
-        ${hasSecrets(e) ? '<span class="secret-icon" title="Tem segredos">🔒</span>' : ''}
+        ${hasSecrets(e) && STATE.isMaster ? '<span class="secret-icon" title="Tem segredos">🔒</span>' : ''}
         <div class="event-desc">${e.description || ''}</div>
+        ${STATE.isMaster ? `<span class="vis-card-badge" title="Visibilidade">${visBadgeEmoji(e)}</span>` : ''}
       </div>
     </div>
   `).join('');
@@ -272,15 +589,15 @@ function renderEvents() {
   });
 }
 
-// ── FACTIONS ─────────────────────────────────────────────────────────────────
+// ── FACTIONS ──────────────────────────────────────────────────────────────────
 function renderFactions() {
   const grid = document.getElementById('factions-grid');
-  grid.innerHTML = DATA.factions.map(f => {
+  grid.innerHTML = STATE.data.factions.map(f => {
     const memberTags = (f.members || []).map(mid => {
       const c = getCharById(mid);
       return c ? `<span class="tag-chip" data-id="${mid}" data-type="character">${c.name}</span>` : '';
     }).join('');
-    return `<div class="faction-card" data-id="${f.id}">
+    return `<div class="faction-card" data-id="${f.id}" style="position:relative;">
       <div class="faction-card-accent" style="background:linear-gradient(to right,${f.color},${f.color}66,transparent)"></div>
       <div class="faction-card-body">
         <div class="faction-header">
@@ -291,11 +608,12 @@ function renderFactions() {
             <div class="faction-name" style="color:${f.color};">${f.name}</div>
             <div class="faction-type">${f.type || ''}</div>
           </div>
-          ${hasSecrets(f) ? '<span class="secret-icon" title="Tem segredos">🔒</span>' : ''}
+          ${hasSecrets(f) && STATE.isMaster ? '<span class="secret-icon" title="Tem segredos">🔒</span>' : ''}
         </div>
         <div class="faction-desc">${f.description || ''}</div>
         ${memberTags ? `<div class="faction-label">Membros notáveis</div><div class="tags-list">${memberTags}</div>` : ''}
       </div>
+      ${STATE.isMaster ? `<span class="vis-card-badge" title="Visibilidade">${visBadgeEmoji(f)}</span>` : ''}
     </div>`;
   }).join('');
 
@@ -310,7 +628,135 @@ function renderFactions() {
   });
 }
 
-// ── MODAL ────────────────────────────────────────────────────────────────────
+// ── JOGADORES TAB ─────────────────────────────────────────────────────────────
+async function renderJogadores() {
+  await loadAllPlayers();
+  const grid = document.getElementById('jogadores-grid');
+  const players = STATE.players.filter(p => p.role === 'player');
+
+  if (!players.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">⚓</div><p>Nenhum jogador registrado ainda.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = players.map(p => {
+    const pc = p.playerCharacter;
+    const initial = (p.displayName || '?').charAt(0).toUpperCase();
+    return `<div class="jogador-card">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div class="jogador-avatar">${initial}</div>
+        <div>
+          <div class="jogador-name">${escHtml(p.displayName || '—')}</div>
+          <div class="jogador-email">${escHtml(p.email || '')}</div>
+        </div>
+      </div>
+      ${pc && pc.name
+        ? `<div class="jogador-char-info">
+            <div class="jogador-char-name">${escHtml(pc.name)}</div>
+            <div>${[pc.race, pc.charClass, pc.background].filter(Boolean).map(escHtml).join(' · ')}</div>
+           </div>`
+        : `<div class="jogador-char-info" style="color:#3a4a5a;font-style:italic;">Ficha ainda não preenchida.</div>`
+      }
+    </div>`;
+  }).join('');
+}
+
+// ── MEU PERSONAGEM TAB ────────────────────────────────────────────────────────
+async function renderMeuPersonagem() {
+  const container = document.getElementById('meu-personagem-content');
+  const pc = STATE.profile?.playerCharacter || {};
+
+  const allPlayersCharHtml = await buildAllPlayersCharHtml();
+
+  container.innerHTML = `<div class="my-char-container">
+    <div class="my-char-header">
+      <div class="my-char-title">Meu Personagem</div>
+      <div class="my-char-subtitle">Preencha as informações do seu personagem — visível a todos os jogadores</div>
+    </div>
+
+    <form class="my-char-form" id="my-char-form">
+      <div class="my-char-row">
+        <div class="my-char-field">
+          <label>Nome do Personagem</label>
+          <input class="my-char-input" name="name" value="${escHtml(pc.name || '')}" placeholder="Nome do seu personagem">
+        </div>
+        <div class="my-char-field">
+          <label>Raça</label>
+          <input class="my-char-input" name="race" value="${escHtml(pc.race || '')}" placeholder="Ex: Humano, Elfo...">
+        </div>
+      </div>
+      <div class="my-char-row">
+        <div class="my-char-field">
+          <label>Classe</label>
+          <input class="my-char-input" name="charClass" value="${escHtml(pc.charClass || '')}" placeholder="Ex: Guerreiro, Mago...">
+        </div>
+        <div class="my-char-field">
+          <label>Antecedente</label>
+          <input class="my-char-input" name="background" value="${escHtml(pc.background || '')}" placeholder="Ex: Soldado, Sábio...">
+        </div>
+      </div>
+      <div class="my-char-field">
+        <label>Aparência</label>
+        <textarea class="my-char-textarea" name="appearance" placeholder="Como seu personagem parece...">${escHtml(pc.appearance || '')}</textarea>
+      </div>
+      <div class="my-char-field">
+        <label>Personalidade &amp; Motivações</label>
+        <textarea class="my-char-textarea" name="personality" placeholder="O que seu personagem quer, teme, acredita...">${escHtml(pc.personality || '')}</textarea>
+      </div>
+      <div class="my-char-field">
+        <label>Notas pessoais (visíveis a todos)</label>
+        <textarea class="my-char-textarea" name="notes" placeholder="Anotações sobre sua jornada, segredos descobertos...">${escHtml(pc.notes || '')}</textarea>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <button class="my-char-save-btn" type="submit">Salvar Ficha</button>
+        <span class="my-char-saved-msg" id="my-char-saved-msg"></span>
+      </div>
+    </form>
+
+    ${allPlayersCharHtml}
+  </div>`;
+
+  document.getElementById('my-char-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const charData = {};
+    fd.forEach((v, k) => { charData[k] = v; });
+    await updateDoc(doc(db, 'users', STATE.user.uid), { playerCharacter: charData });
+    STATE.profile.playerCharacter = charData;
+    const msg = document.getElementById('my-char-saved-msg');
+    msg.textContent = '✓ Ficha salva!';
+    setTimeout(() => { msg.textContent = ''; }, 3000);
+  });
+}
+
+async function buildAllPlayersCharHtml() {
+  const snap = await getDocs(collection(db, 'users'));
+  const players = snap.docs
+    .map(d => ({ uid: d.id, ...d.data() }))
+    .filter(p => p.role === 'player' && p.playerCharacter?.name && p.uid !== STATE.user.uid);
+
+  if (!players.length) return '';
+
+  const items = players.map(p => {
+    const pc = p.playerCharacter;
+    return `<div class="player-char-card">
+      <div class="player-char-player">Jogador: ${escHtml(p.displayName)}</div>
+      <div class="player-char-name">${escHtml(pc.name)}</div>
+      <div class="player-char-details">
+        ${[pc.race, pc.charClass, pc.background].filter(Boolean).map(escHtml).join(' · ')}
+        ${pc.appearance ? `<br><em>${escHtml(pc.appearance)}</em>` : ''}
+        ${pc.notes ? `<br>${escHtml(pc.notes)}` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  return `<div class="all-chars-section">
+    <div class="all-chars-title">Personagens dos Outros Jogadores</div>
+    ${items}
+  </div>`;
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────────────────
 function openModal(id, type, pushToStack = true) {
   const overlay = document.getElementById('modal-overlay');
   const panel   = document.getElementById('modal-panel');
@@ -329,13 +775,14 @@ function openModal(id, type, pushToStack = true) {
 
   updateBreadcrumb();
   attachModalEvents();
-  applySecretsToModal();
+  attachVisibilityEvents();
+  attachAnnotationEvents();
 }
 
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
   document.getElementById('modal-panel').classList.remove('open');
-  STATE.modal.stack = [];
+  STATE.modal.stack   = [];
   STATE.modal.current = null;
 }
 
@@ -347,32 +794,27 @@ function modalBack() {
 }
 
 function updateBreadcrumb() {
-  const bc = document.getElementById('modal-breadcrumb');
+  const bc      = document.getElementById('modal-breadcrumb');
   const backBtn = document.getElementById('modal-back-btn');
-  const trail = [...STATE.modal.stack, STATE.modal.current];
+  const trail   = [...STATE.modal.stack, STATE.modal.current];
 
   bc.innerHTML = trail.map((item, i) => {
     const name = item ? getEntityName(item.id, item.type) : '';
-    const isCurrent = i === trail.length - 1;
-    return `<span class="bc-item${isCurrent ? ' current' : ''}" data-idx="${i}">${name}</span>` +
-      (isCurrent ? '' : '<span class="bc-sep">›</span>');
+    const isCurr = i === trail.length - 1;
+    return `<span class="bc-item${isCurr ? ' current' : ''}" data-idx="${i}">${name}</span>` +
+      (isCurr ? '' : '<span class="bc-sep">›</span>');
   }).join('');
 
   backBtn.disabled = STATE.modal.stack.length === 0;
-
   bc.querySelectorAll('.bc-item:not(.current)').forEach(el => {
     el.addEventListener('click', () => {
-      const idx = parseInt(el.dataset.idx);
+      const idx    = parseInt(el.dataset.idx);
       const target = [...STATE.modal.stack, STATE.modal.current][idx];
-      STATE.modal.stack = STATE.modal.stack.slice(0, idx);
+      STATE.modal.stack   = STATE.modal.stack.slice(0, idx);
       STATE.modal.current = target;
       openModal(target.id, target.type, false);
     });
   });
-}
-
-function applySecretsToModal() {
-  // handled by CSS class on body
 }
 
 function attachModalEvents() {
@@ -385,37 +827,38 @@ function attachModalEvents() {
 }
 
 function buildModalContent(id, type) {
-  const builders = {
+  return ({
     character: buildCharModalContent,
     location:  buildLocationModalContent,
     event:     buildEventModalContent,
     faction:   buildFactionModalContent,
-  };
-  return builders[type]?.(id) || '';
+  })[type]?.(id) || '';
 }
 
-// Character modal
+// ── MODAL: CHARACTER ──────────────────────────────────────────────────────────
 function buildCharModalContent(id) {
   const c = getCharById(id);
   if (!c) return '';
 
-  const rels = DATA.relations.filter(r =>
+  const rels = STATE.data.relations.filter(r =>
     (r.sourceId === id && r.sourceType === 'character') ||
     (r.targetId === id && r.targetType === 'character')
-  );
+  ).filter(r => {
+    const otherId   = r.sourceId === id ? r.targetId   : r.sourceId;
+    const otherType = r.sourceId === id ? r.targetType  : r.sourceType;
+    return getEntityName(otherId, otherType) !== otherId; // entity visible
+  });
 
   const relItems = rels.map(r => {
-    const isSource = r.sourceId === id;
+    const isSource  = r.sourceId === id;
     const otherId   = isSource ? r.targetId   : r.sourceId;
     const otherType = isSource ? r.targetType  : r.sourceType;
-    const label     = r.label;
-    const otherName = getEntityName(otherId, otherType);
     const color = relTypeColor(r.type);
     return `<div class="modal-relation-tag" data-modal-id="${otherId}" data-modal-type="${otherType}">
       <div class="rel-type-indicator" style="background:${color}"></div>
-      <span class="rel-target-name">${otherName}</span>
-      <span class="rel-label-text">${label}</span>
-      ${r.secret ? '<span title="Relação secreta" style="opacity:.6;">🔒</span>' : ''}
+      <span class="rel-target-name">${getEntityName(otherId, otherType)}</span>
+      <span class="rel-label-text">${r.label}</span>
+      ${r.secret && STATE.isMaster ? '<span title="Relação secreta" style="opacity:.6;">🔒</span>' : ''}
     </div>`;
   }).join('');
 
@@ -434,6 +877,7 @@ function buildCharModalContent(id) {
     : `<div class="modal-char-avatar"><div class="modal-char-avatar-placeholder">${c.name.charAt(0)}</div></div>`;
 
   return `
+    ${buildVisibilitySection(c, 'characters')}
     <div class="modal-char-hero">
       ${imgHtml}
       <div class="modal-char-info">
@@ -442,36 +886,17 @@ function buildCharModalContent(id) {
         <div class="badges">${statusBadgeHtml(c.status)} ${factionBadgeHtml(c.faction)}</div>
       </div>
     </div>
-    ${c.description ? `<div class="modal-section">
-      <div class="modal-section-title">Descrição Pública</div>
-      <div class="modal-section-text">${c.description}</div>
-    </div>` : ''}
-    ${c.personality ? `<div class="modal-section">
-      <div class="modal-section-title">Personalidade</div>
-      <div class="modal-section-text">${c.personality}</div>
-    </div>` : ''}
-    ${hasSecrets(c) ? `<div class="modal-section secrets-section">
-      <div class="modal-secrets">
-        <div class="modal-section-title">🔒 Segredos do Mestre</div>
-        <div class="modal-section-text">${c.secrets}</div>
-      </div>
-    </div>` : ''}
-    ${relItems ? `<div class="modal-section">
-      <div class="modal-section-title">Relações</div>
-      <div class="modal-relations-list">${relItems}</div>
-    </div>` : ''}
-    ${locItems ? `<div class="modal-section">
-      <div class="modal-section-title">Locais Associados</div>
-      <div class="modal-link-list">${locItems}</div>
-    </div>` : ''}
-    ${eventItems ? `<div class="modal-section">
-      <div class="modal-section-title">Aparece nos Eventos</div>
-      <div class="modal-link-list">${eventItems}</div>
-    </div>` : ''}
+    ${c.description ? `<div class="modal-section"><div class="modal-section-title">Descrição Pública</div><div class="modal-section-text">${c.description}</div></div>` : ''}
+    ${c.personality ? `<div class="modal-section"><div class="modal-section-title">Personalidade</div><div class="modal-section-text">${c.personality}</div></div>` : ''}
+    ${hasSecrets(c) ? `<div class="modal-section secrets-section"><div class="modal-secrets"><div class="modal-section-title">🔒 Segredos do Mestre</div><div class="modal-section-text">${c.secrets}</div></div></div>` : ''}
+    ${relItems ? `<div class="modal-section"><div class="modal-section-title">Relações</div><div class="modal-relations-list">${relItems}</div></div>` : ''}
+    ${locItems ? `<div class="modal-section"><div class="modal-section-title">Locais Associados</div><div class="modal-link-list">${locItems}</div></div>` : ''}
+    ${eventItems ? `<div class="modal-section"><div class="modal-section-title">Aparece nos Eventos</div><div class="modal-link-list">${eventItems}</div></div>` : ''}
+    ${buildAnnotationsSection(id, 'character')}
   `;
 }
 
-// Location modal
+// ── MODAL: LOCATION ───────────────────────────────────────────────────────────
 function buildLocationModalContent(id) {
   const l = getLocationById(id);
   if (!l) return '';
@@ -481,103 +906,66 @@ function buildLocationModalContent(id) {
   const controlId   = controller ? l.controlledBy : null;
   const controlType = controller ? 'character' : (getFactionById(l.controlledBy) ? 'faction' : null);
 
-  const poiHtml = (l.pointsOfInterest || []).map(p => `<li class="poi-item">${p}</li>`).join('');
-
-  const charItems = (l.characters || []).map(cid => {
+  const poiHtml    = (l.pointsOfInterest || []).map(p => `<li class="poi-item">${p}</li>`).join('');
+  const charItems  = (l.characters || []).map(cid => {
     const c = getCharById(cid);
     return c ? `<div class="modal-link-item" data-modal-id="${cid}" data-modal-type="character">${c.name}<span class="link-label-text">${c.role || ''}</span></div>` : '';
   }).join('');
-
   const eventItems = (l.events || []).map(eid => {
     const ev = getEventById(eid);
     return ev ? `<div class="modal-link-item" data-modal-id="${eid}" data-modal-type="event">${ev.name}</div>` : '';
   }).join('');
 
   return `
+    ${buildVisibilitySection(l, 'locations')}
     <div class="modal-location-hero">
       <div class="modal-location-name">${l.name}</div>
       <div class="modal-location-subtitle">${l.subtitle || ''}</div>
-      <div class="badges">
-        <span class="location-type-badge">${l.type || ''}</span>
-        ${factionBadgeHtml(l.faction)}
-      </div>
+      <div class="badges"><span class="location-type-badge">${l.type || ''}</span> ${factionBadgeHtml(l.faction)}</div>
       <div style="margin-top:8px;font-size:13px;color:var(--text-secondary);font-style:italic;">${l.tone || ''}</div>
       ${controlText ? `<div style="margin-top:6px;font-size:12px;color:var(--text-muted);">Controlado por: ${controlId && controlType ? `<span class="tag-chip" data-modal-id="${controlId}" data-modal-type="${controlType}" style="cursor:pointer;">${controlText}</span>` : controlText}</div>` : ''}
     </div>
-    ${l.description ? `<div class="modal-section">
-      <div class="modal-section-title">Descrição</div>
-      <div class="modal-section-text">${l.description}</div>
-    </div>` : ''}
-    ${poiHtml ? `<div class="modal-section">
-      <div class="modal-section-title">Pontos de Interesse</div>
-      <ul class="poi-list">${poiHtml}</ul>
-    </div>` : ''}
-    ${hasSecrets(l) ? `<div class="modal-section secrets-section">
-      <div class="modal-secrets">
-        <div class="modal-section-title">🔒 Segredos do Mestre</div>
-        <div class="modal-section-text">${l.secrets}</div>
-      </div>
-    </div>` : ''}
-    ${charItems ? `<div class="modal-section">
-      <div class="modal-section-title">Personagens Associados</div>
-      <div class="modal-link-list">${charItems}</div>
-    </div>` : ''}
-    ${eventItems ? `<div class="modal-section">
-      <div class="modal-section-title">Eventos que Ocorreram Aqui</div>
-      <div class="modal-link-list">${eventItems}</div>
-    </div>` : ''}
+    ${l.description ? `<div class="modal-section"><div class="modal-section-title">Descrição</div><div class="modal-section-text">${l.description}</div></div>` : ''}
+    ${poiHtml ? `<div class="modal-section"><div class="modal-section-title">Pontos de Interesse</div><ul class="poi-list">${poiHtml}</ul></div>` : ''}
+    ${hasSecrets(l) ? `<div class="modal-section secrets-section"><div class="modal-secrets"><div class="modal-section-title">🔒 Segredos do Mestre</div><div class="modal-section-text">${l.secrets}</div></div></div>` : ''}
+    ${charItems ? `<div class="modal-section"><div class="modal-section-title">Personagens Associados</div><div class="modal-link-list">${charItems}</div></div>` : ''}
+    ${eventItems ? `<div class="modal-section"><div class="modal-section-title">Eventos que Ocorreram Aqui</div><div class="modal-link-list">${eventItems}</div></div>` : ''}
+    ${buildAnnotationsSection(id, 'location')}
   `;
 }
 
-// Event modal
+// ── MODAL: EVENT ──────────────────────────────────────────────────────────────
 function buildEventModalContent(id) {
   const e = getEventById(id);
   if (!e) return '';
 
-  const loc = e.location ? getLocationById(e.location) : null;
-
+  const loc      = e.location ? getLocationById(e.location) : null;
   const charItems = (e.characters || []).map(cid => {
     const c = getCharById(cid);
     return c ? `<div class="modal-link-item" data-modal-id="${cid}" data-modal-type="character">${c.name}</div>` : '';
   }).join('');
-
   const relEventItems = (e.relatedEvents || []).map(eid => {
     const ev = getEventById(eid);
     return ev ? `<div class="modal-link-item" data-modal-id="${eid}" data-modal-type="event">${ev.name}</div>` : '';
   }).join('');
 
   return `
+    ${buildVisibilitySection(e, 'events')}
     <div class="modal-location-hero">
       <div class="event-period" style="margin-bottom:4px;">${e.period || ''}</div>
       <div class="modal-location-name">${e.name}</div>
       <div style="margin-top:8px;">${scaleBadgeHtml(e.scale)}</div>
     </div>
-    <div class="modal-section">
-      <div class="modal-section-title">Descrição Completa</div>
-      <div class="modal-section-text">${e.description || ''}</div>
-    </div>
-    ${hasSecrets(e) ? `<div class="modal-section secrets-section">
-      <div class="modal-secrets">
-        <div class="modal-section-title">🔒 Segredos do Mestre</div>
-        <div class="modal-section-text">${e.secrets}</div>
-      </div>
-    </div>` : ''}
-    ${charItems ? `<div class="modal-section">
-      <div class="modal-section-title">Personagens Presentes</div>
-      <div class="modal-link-list">${charItems}</div>
-    </div>` : ''}
-    ${loc ? `<div class="modal-section">
-      <div class="modal-section-title">Local do Evento</div>
-      <div class="modal-link-list"><div class="modal-link-item" data-modal-id="${loc.id}" data-modal-type="location">${loc.name}</div></div>
-    </div>` : ''}
-    ${relEventItems ? `<div class="modal-section">
-      <div class="modal-section-title">Eventos Relacionados</div>
-      <div class="modal-link-list">${relEventItems}</div>
-    </div>` : ''}
+    <div class="modal-section"><div class="modal-section-title">Descrição Completa</div><div class="modal-section-text">${e.description || ''}</div></div>
+    ${hasSecrets(e) ? `<div class="modal-section secrets-section"><div class="modal-secrets"><div class="modal-section-title">🔒 Segredos do Mestre</div><div class="modal-section-text">${e.secrets}</div></div></div>` : ''}
+    ${charItems ? `<div class="modal-section"><div class="modal-section-title">Personagens Presentes</div><div class="modal-link-list">${charItems}</div></div>` : ''}
+    ${loc ? `<div class="modal-section"><div class="modal-section-title">Local do Evento</div><div class="modal-link-list"><div class="modal-link-item" data-modal-id="${loc.id}" data-modal-type="location">${loc.name}</div></div></div>` : ''}
+    ${relEventItems ? `<div class="modal-section"><div class="modal-section-title">Eventos Relacionados</div><div class="modal-link-list">${relEventItems}</div></div>` : ''}
+    ${buildAnnotationsSection(id, 'event')}
   `;
 }
 
-// Faction modal
+// ── MODAL: FACTION ────────────────────────────────────────────────────────────
 function buildFactionModalContent(id) {
   const f = getFactionById(id);
   if (!f) return '';
@@ -592,26 +980,25 @@ function buildFactionModalContent(id) {
     return l ? `<div class="modal-link-item" data-modal-id="${lid}" data-modal-type="location">${l.name}</div>` : '';
   }).join('');
 
-  const rels = DATA.relations.filter(r =>
+  const rels = STATE.data.relations.filter(r =>
     (r.sourceId === id && r.sourceType === 'faction') ||
     (r.targetId === id && r.targetType === 'faction')
   );
-
   const relItems = rels.map(r => {
-    const isSource = r.sourceId === id;
+    const isSource  = r.sourceId === id;
     const otherId   = isSource ? r.targetId   : r.sourceId;
     const otherType = isSource ? r.targetType  : r.sourceType;
-    const otherName = getEntityName(otherId, otherType);
     const color = relTypeColor(r.type);
     return `<div class="modal-relation-tag" data-modal-id="${otherId}" data-modal-type="${otherType}">
       <div class="rel-type-indicator" style="background:${color}"></div>
-      <span class="rel-target-name">${otherName}</span>
+      <span class="rel-target-name">${getEntityName(otherId, otherType)}</span>
       <span class="rel-label-text">${r.label}</span>
-      ${r.secret ? '<span title="Relação secreta" style="opacity:.6;">🔒</span>' : ''}
+      ${r.secret && STATE.isMaster ? '<span title="Relação secreta" style="opacity:.6;">🔒</span>' : ''}
     </div>`;
   }).join('');
 
   return `
+    ${buildVisibilitySection(f, 'factions')}
     <div class="modal-location-hero" style="border-left:3px solid ${f.color};">
       <div style="display:flex;gap:12px;align-items:center;">
         <span style="font-size:36px;">${f.symbol || '◆'}</span>
@@ -621,42 +1008,26 @@ function buildFactionModalContent(id) {
         </div>
       </div>
     </div>
-    <div class="modal-section">
-      <div class="modal-section-title">Descrição</div>
-      <div class="modal-section-text">${f.description || ''}</div>
-    </div>
-    ${hasSecrets(f) ? `<div class="modal-section secrets-section">
-      <div class="modal-secrets">
-        <div class="modal-section-title">🔒 Segredos do Mestre</div>
-        <div class="modal-section-text">${f.secrets}</div>
-      </div>
-    </div>` : ''}
-    ${memberItems ? `<div class="modal-section">
-      <div class="modal-section-title">Membros</div>
-      <div class="modal-link-list">${memberItems}</div>
-    </div>` : ''}
-    ${locItems ? `<div class="modal-section">
-      <div class="modal-section-title">Locais Controlados</div>
-      <div class="modal-link-list">${locItems}</div>
-    </div>` : ''}
-    ${relItems ? `<div class="modal-section">
-      <div class="modal-section-title">Relações</div>
-      <div class="modal-relations-list">${relItems}</div>
-    </div>` : ''}
+    <div class="modal-section"><div class="modal-section-title">Descrição</div><div class="modal-section-text">${f.description || ''}</div></div>
+    ${hasSecrets(f) ? `<div class="modal-section secrets-section"><div class="modal-secrets"><div class="modal-section-title">🔒 Segredos do Mestre</div><div class="modal-section-text">${f.secrets}</div></div></div>` : ''}
+    ${memberItems ? `<div class="modal-section"><div class="modal-section-title">Membros</div><div class="modal-link-list">${memberItems}</div></div>` : ''}
+    ${locItems ? `<div class="modal-section"><div class="modal-section-title">Locais Controlados</div><div class="modal-link-list">${locItems}</div></div>` : ''}
+    ${relItems ? `<div class="modal-section"><div class="modal-section-title">Relações</div><div class="modal-relations-list">${relItems}</div></div>` : ''}
+    ${buildAnnotationsSection(id, 'faction')}
   `;
 }
 
 // ── GLOBAL SEARCH ─────────────────────────────────────────────────────────────
 function buildSearchIndex() {
   const idx = [];
-  DATA.characters.forEach(c => idx.push({ id: c.id, type: 'character', name: c.name, sub: c.role }));
-  DATA.locations.forEach(l => idx.push({ id: l.id, type: 'location', name: l.name, sub: l.subtitle }));
-  DATA.events.forEach(e => idx.push({ id: e.id, type: 'event', name: e.name, sub: e.period }));
-  DATA.factions.forEach(f => idx.push({ id: f.id, type: 'faction', name: f.name, sub: f.type }));
+  STATE.data.characters.forEach(c => idx.push({ id: c.id, type: 'character', name: c.name, sub: c.role }));
+  STATE.data.locations.forEach(l => idx.push({ id: l.id, type: 'location', name: l.name, sub: l.subtitle }));
+  STATE.data.events.forEach(e => idx.push({ id: e.id, type: 'event', name: e.name, sub: e.period }));
+  STATE.data.factions.forEach(f => idx.push({ id: f.id, type: 'faction', name: f.name, sub: f.type }));
   return idx;
 }
 
-function setupSearch(index) {
+function setupSearch() {
   const overlay = document.getElementById('global-search-overlay');
   const input   = document.getElementById('global-search-input');
   const results = document.getElementById('global-search-results');
@@ -665,11 +1036,7 @@ function setupSearch(index) {
     overlay.classList.add('open');
     setTimeout(() => input.focus(), 50);
   });
-
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) overlay.classList.remove('open');
-  });
-
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') overlay.classList.remove('open');
     if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
@@ -682,18 +1049,14 @@ function setupSearch(index) {
   input.addEventListener('input', () => {
     const q = input.value.toLowerCase().trim();
     if (!q) { results.innerHTML = ''; return; }
-    const hits = index.filter(i => i.name.toLowerCase().includes(q)).slice(0, 12);
-    if (!hits.length) {
-      results.innerHTML = '<div class="search-no-results">Nenhum resultado encontrado.</div>';
-      return;
-    }
+    const hits = buildSearchIndex().filter(i => i.name.toLowerCase().includes(q)).slice(0, 12);
+    if (!hits.length) { results.innerHTML = '<div class="search-no-results">Nenhum resultado.</div>'; return; }
     results.innerHTML = hits.map(h => `
       <div class="search-result-item" data-id="${h.id}" data-type="${h.type}">
         <span class="search-result-type type-${h.type}">${{character:'Personagem',location:'Local',event:'Evento',faction:'Facção'}[h.type]}</span>
         <span class="search-result-name">${h.name}</span>
         <span class="search-result-sub">${h.sub || ''}</span>
-      </div>
-    `).join('');
+      </div>`).join('');
     results.querySelectorAll('.search-result-item').forEach(el => {
       el.addEventListener('click', () => {
         overlay.classList.remove('open');
@@ -712,117 +1075,67 @@ let graphSimulation = null;
 
 function renderGraph() {
   const wrapper = document.getElementById('graph-wrapper');
-  const svg = document.getElementById('graph-svg');
-
-  // Clear previous
+  const svg     = document.getElementById('graph-svg');
   svg.innerHTML = '';
   if (graphSimulation) graphSimulation.stop();
 
   const W = wrapper.clientWidth;
   const H = wrapper.clientHeight;
+  const svgEl = d3.select('#graph-svg').attr('viewBox', `0 0 ${W} ${H}`);
 
-  const svgEl = d3.select('#graph-svg')
-    .attr('viewBox', `0 0 ${W} ${H}`);
-
-  // Defs for arrowheads
   const defs = svgEl.append('defs');
   ['normal','secret','romantic','political','family','historical'].forEach(type => {
     defs.append('marker')
-      .attr('id', `arrow-${type}`)
-      .attr('viewBox', '0 -5 10 10')
-      .attr('refX', 18)
-      .attr('refY', 0)
-      .attr('markerWidth', 6)
-      .attr('markerHeight', 6)
-      .attr('orient', 'auto')
-      .append('path')
-      .attr('d', 'M0,-5L10,0L0,5')
-      .attr('fill', relTypeColor(type));
+      .attr('id', `arrow-${type}`).attr('viewBox', '0 -5 10 10')
+      .attr('refX', 18).attr('refY', 0).attr('markerWidth', 6).attr('markerHeight', 6)
+      .attr('orient', 'auto').append('path').attr('d', 'M0,-5L10,0L0,5').attr('fill', relTypeColor(type));
   });
 
-  const g = svgEl.append('g');
-
-  // Zoom + pan
+  const g    = svgEl.append('g');
   const zoom = d3.zoom().scaleExtent([0.2, 4]).on('zoom', e => g.attr('transform', e.transform));
   svgEl.call(zoom);
 
-  // Build nodes from all entity types
   const { character, location, event, faction } = STATE.graphFilters;
-  const nodes = [];
+  const nodes   = [];
   const nodeMap = {};
+  const addNode = (id, type, name) => { if (!nodeMap[id]) { nodeMap[id] = { id, type, name, degree: 0 }; nodes.push(nodeMap[id]); } };
 
-  const addNode = (id, type, name, degree = 0) => {
-    if (!nodeMap[id]) {
-      nodeMap[id] = { id, type, name, degree };
-      nodes.push(nodeMap[id]);
-    }
-  };
+  if (character) STATE.data.characters.forEach(c => addNode(c.id, 'character', c.name));
+  if (location)  STATE.data.locations.forEach(l => addNode(l.id, 'location', l.name));
+  if (event)     STATE.data.events.forEach(e => addNode(e.id, 'event', e.name));
+  if (faction)   STATE.data.factions.forEach(f => addNode(f.id, 'faction', f.name));
 
-  if (character) DATA.characters.forEach(c => addNode(c.id, 'character', c.name));
-  if (location)  DATA.locations.forEach(l => addNode(l.id, 'location', l.name));
-  if (event)     DATA.events.forEach(e => addNode(e.id, 'event', e.name));
-  if (faction)   DATA.factions.forEach(f => addNode(f.id, 'faction', f.name));
+  const links = STATE.data.relations
+    .filter(r => nodeMap[r.sourceId] && nodeMap[r.targetId])
+    .map(r => ({ source: r.sourceId, target: r.targetId, label: r.label, type: r.type || 'historical', secret: r.secret || false }));
 
-  // Build edges only between visible nodes
-  const links = DATA.relations.filter(r => nodeMap[r.sourceId] && nodeMap[r.targetId]).map(r => ({
-    source: r.sourceId,
-    target: r.targetId,
-    label: r.label,
-    type: r.type || 'historical',
-    secret: r.secret || false,
-  }));
+  links.forEach(l => { if (nodeMap[l.source]) nodeMap[l.source].degree++; if (nodeMap[l.target]) nodeMap[l.target].degree++; });
 
-  // Degree count
-  links.forEach(l => {
-    if (nodeMap[l.source]) nodeMap[l.source].degree++;
-    if (nodeMap[l.target]) nodeMap[l.target].degree++;
-  });
+  const NODE_COLOR = { character: '#c8a96a', location: '#5a8ab0', event: '#7a9a6a', faction: '#9a5a5a' };
+  const getNodeColor = d => d.type === 'faction' ? (getFactionById(d.id)?.color || NODE_COLOR.faction) : (NODE_COLOR[d.type] || '#9a5a5a');
 
-  // Node colors by type — factions use their own color from JSON
-  const NODE_COLOR_BASE = { character: '#c8a96a', location: '#5a8ab0', event: '#7a9a6a', faction: '#9a5a5a' };
-  const getNodeColor = d => {
-    if (d.type === 'faction') {
-      const f = getFactionById(d.id);
-      return f ? f.color : NODE_COLOR_BASE.faction;
-    }
-    return NODE_COLOR_BASE[d.type] || '#9a5a5a';
-  };
-
-  // Simulation
   graphSimulation = d3.forceSimulation(nodes)
     .force('link', d3.forceLink(links).id(d => d.id).distance(110))
     .force('charge', d3.forceManyBody().strength(-280))
     .force('center', d3.forceCenter(W / 2, H / 2))
     .force('collision', d3.forceCollide().radius(30));
 
-  // Links
-  const linkG = g.append('g').attr('class', 'links');
-  const linkEl = linkG.selectAll('.graph-link')
-    .data(links).enter()
-    .append('line')
-    .attr('class', 'graph-link')
+  const linkG  = g.append('g').attr('class', 'links');
+  const linkEl = linkG.selectAll('.graph-link').data(links).enter()
+    .append('line').attr('class', 'graph-link')
     .attr('stroke', d => relTypeColor(d.type))
     .attr('stroke-dasharray', d => d.secret ? '5,4' : null)
     .attr('stroke-opacity', 0.6)
     .attr('marker-end', d => `url(#arrow-${d.type})`);
 
-  // Link labels
-  const linkLabelEl = g.append('g').attr('class', 'link-labels')
-    .selectAll('.graph-link-label')
-    .data(links).enter()
-    .append('text')
-    .attr('class', 'graph-link-label')
-    .attr('text-anchor', 'middle')
-    .attr('dy', -4)
+  const linkLabelEl = g.append('g').attr('class', 'link-labels').selectAll('.graph-link-label')
+    .data(links).enter().append('text').attr('class', 'graph-link-label')
+    .attr('text-anchor', 'middle').attr('dy', -4)
     .text(d => STATE.graphShowLabels ? d.label : '');
 
-  // Nodes
-  const nodeG = g.append('g').attr('class', 'nodes');
-  const nodeEl = nodeG.selectAll('.graph-node')
-    .data(nodes).enter()
-    .append('g')
-    .attr('class', 'graph-node')
-    .style('cursor', 'pointer')
+  const nodeG  = g.append('g').attr('class', 'nodes');
+  const nodeEl = nodeG.selectAll('.graph-node').data(nodes).enter()
+    .append('g').attr('class', 'graph-node').style('cursor', 'pointer')
     .call(d3.drag()
       .on('start', (e, d) => { if (!e.active) graphSimulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on('drag',  (e, d) => { d.fx = e.x; d.fy = e.y; })
@@ -832,47 +1145,36 @@ function renderGraph() {
   nodeEl.append('circle')
     .attr('r', d => Math.max(10, 8 + d.degree * 2.5))
     .attr('fill', d => getNodeColor(d) + '33')
-    .attr('stroke', d => getNodeColor(d))
-    .attr('stroke-width', 2);
+    .attr('stroke', d => getNodeColor(d)).attr('stroke-width', 2);
 
   nodeEl.append('text')
     .attr('text-anchor', 'middle')
     .attr('dy', d => Math.max(10, 8 + d.degree * 2.5) + 14)
     .text(d => d.name.length > 14 ? d.name.substring(0, 13) + '…' : d.name)
-    .attr('fill', '#e8d4a0')
-    .attr('font-size', 10);
+    .attr('fill', '#e8d4a0').attr('font-size', 10);
 
-  // Hover interactions
-  nodeEl.on('mouseover', (e, d) => {
-    const connectedIds = new Set([d.id]);
-    links.forEach(l => {
-      if (l.source.id === d.id || l.source === d.id) connectedIds.add(typeof l.target === 'object' ? l.target.id : l.target);
-      if (l.target.id === d.id || l.target === d.id) connectedIds.add(typeof l.source === 'object' ? l.source.id : l.source);
-    });
-    nodeEl.attr('opacity', n => connectedIds.has(n.id) ? 1 : 0.15);
-    linkEl.attr('opacity', l => {
-      const sid = typeof l.source === 'object' ? l.source.id : l.source;
-      const tid = typeof l.target === 'object' ? l.target.id : l.target;
-      return (sid === d.id || tid === d.id) ? 1 : 0.05;
-    });
-  })
-  .on('mouseout', () => {
-    nodeEl.attr('opacity', 1);
-    linkEl.attr('opacity', 0.6);
-  })
-  .on('click', (e, d) => {
-    e.stopPropagation();
-    openModal(d.id, d.type);
-  });
+  nodeEl
+    .on('mouseover', (e, d) => {
+      const connected = new Set([d.id]);
+      links.forEach(l => {
+        const sid = typeof l.source === 'object' ? l.source.id : l.source;
+        const tid = typeof l.target === 'object' ? l.target.id : l.target;
+        if (sid === d.id) connected.add(tid);
+        if (tid === d.id) connected.add(sid);
+      });
+      nodeEl.attr('opacity', n => connected.has(n.id) ? 1 : 0.15);
+      linkEl.attr('opacity', l => {
+        const sid = typeof l.source === 'object' ? l.source.id : l.source;
+        const tid = typeof l.target === 'object' ? l.target.id : l.target;
+        return (sid === d.id || tid === d.id) ? 1 : 0.05;
+      });
+    })
+    .on('mouseout', () => { nodeEl.attr('opacity', 1); linkEl.attr('opacity', 0.6); })
+    .on('click', (e, d) => { e.stopPropagation(); openModal(d.id, d.type); });
 
-  // Tick
   graphSimulation.on('tick', () => {
-    linkEl
-      .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
-      .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
-    linkLabelEl
-      .attr('x', d => (d.source.x + d.target.x) / 2)
-      .attr('y', d => (d.source.y + d.target.y) / 2);
+    linkEl.attr('x1', d => d.source.x).attr('y1', d => d.source.y).attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+    linkLabelEl.attr('x', d => (d.source.x + d.target.x) / 2).attr('y', d => (d.source.y + d.target.y) / 2);
     nodeEl.attr('transform', d => `translate(${d.x},${d.y})`);
   });
 }
@@ -905,9 +1207,125 @@ function setupGraphControls() {
   });
 }
 
+// ── SEED (first-time setup) ───────────────────────────────────────────────────
+async function seedCampaign() {
+  const statusEl = document.getElementById('seed-status');
+  const seedBtn  = document.getElementById('seed-btn');
+  seedBtn.disabled = true;
+  statusEl.textContent = 'Carregando dados...';
+
+  try {
+    const [characters, locations, events, factions, relations] = await Promise.all([
+      fetch('data/characters.json').then(r => r.json()),
+      fetch('data/locations.json').then(r => r.json()),
+      fetch('data/events.json').then(r => r.json()),
+      fetch('data/factions.json').then(r => r.json()),
+      fetch('data/relations.json').then(r => r.json()),
+    ]);
+
+    statusEl.textContent = 'Criando campanha no banco de dados...';
+    const defaultVis = { mode: 'hidden', playerIds: [] };
+    const campaignRef = doc(db, 'campaigns', CAMPAIGN_ID);
+    const batch = writeBatch(db);
+
+    batch.set(campaignRef, {
+      name:      'Mares e Marés',
+      world:     'Pelágos',
+      masterId:  auth.currentUser.uid,
+      createdAt: serverTimestamp(),
+    });
+
+    const addItems = (coll, items) => items.forEach(item => {
+      batch.set(doc(db, 'campaigns', CAMPAIGN_ID, coll, item.id), {
+        ...item,
+        visibility:        { ...defaultVis },
+        secretsVisibility: { ...defaultVis },
+      });
+    });
+
+    addItems('characters', characters);
+    addItems('locations',  locations);
+    addItems('events',     events);
+    addItems('factions',   factions);
+    addItems('relations',  relations);
+
+    await batch.commit();
+    statusEl.textContent = '✓ Campanha inicializada com sucesso!';
+    setTimeout(() => {
+      document.getElementById('seed-overlay').style.display = 'none';
+    }, 1200);
+
+  } catch (err) {
+    console.error('Seed error:', err);
+    statusEl.style.color = '#e07070';
+    statusEl.textContent = 'Erro ao inicializar. Verifique o console.';
+    seedBtn.disabled = false;
+  }
+}
+
 // ── BOOTSTRAP ────────────────────────────────────────────────────────────────
+function applyRoleUI() {
+  document.body.classList.toggle('is-master', STATE.isMaster);
+  document.body.classList.toggle('is-player', !STATE.isMaster);
+
+  const badge = document.getElementById('user-badge');
+  badge.textContent = `${STATE.isMaster ? '⚓ Mestre' : '⚔ Jogador'} — ${STATE.profile?.displayName || ''}`;
+  badge.classList.toggle('is-master', STATE.isMaster);
+
+  if (STATE.isMaster) applySecretsState();
+}
+
+async function onUserLoggedIn(user) {
+  STATE.user = user;
+
+  const profile = await loadUserProfile(user.uid);
+  if (!profile) {
+    // Profile doesn't exist yet — wait briefly for registration to complete
+    setTimeout(() => window.location.reload(), 500);
+    return;
+  }
+
+  applyRoleUI();
+  hideAuthOverlay();
+
+  // Check if campaign exists in Firestore
+  if (STATE.isMaster) {
+    await loadAllPlayers();
+    const exists = await (async () => {
+      const snap = await getDoc(doc(db, 'campaigns', CAMPAIGN_ID));
+      return snap.exists();
+    })();
+
+    if (!exists) {
+      document.getElementById('seed-overlay').style.display = 'flex';
+      document.getElementById('seed-btn').addEventListener('click', seedCampaign);
+      return;
+    }
+  }
+
+  await setupFirestoreListeners();
+
+  renderPainel();
+  renderCharacters();
+  renderLocations();
+  renderEvents();
+  renderFactions();
+  buildCharacterFilters();
+  setupGraphControls();
+}
+
+function onUserLoggedOut() {
+  STATE.user    = null;
+  STATE.profile = null;
+  STATE.isMaster = false;
+  STATE.data = { characters: [], locations: [], events: [], factions: [], relations: [], annotations: [] };
+  document.body.classList.remove('is-master', 'is-player');
+  showAuthOverlay();
+}
+
 async function init() {
-  await loadData();
+  setupAuthUI();
+  showAuthOverlay();
 
   // Tab navigation
   document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -919,20 +1337,17 @@ async function init() {
   document.getElementById('modal-close').addEventListener('click', closeModal);
   document.getElementById('modal-back-btn').addEventListener('click', modalBack);
 
-  // Secrets toggle
-  document.getElementById('secrets-float-btn').addEventListener('click', toggleSecrets);
+  // Secrets toggle (master only)
+  const secretsBtn = document.getElementById('secrets-float-btn');
+  if (secretsBtn) secretsBtn.addEventListener('click', toggleSecrets);
 
-  // Render all sections
-  renderPainel();
-  renderCharacters();
-  renderLocations();
-  renderEvents();
-  renderFactions();
+  setupSearch();
 
-  buildCharacterFilters();
-  setupSearch(buildSearchIndex());
-  setupGraphControls();
-  applySecretsState();
+  // Firebase auth state listener
+  onAuthStateChanged(auth, user => {
+    if (user) onUserLoggedIn(user);
+    else      onUserLoggedOut();
+  });
 }
 
 document.addEventListener('DOMContentLoaded', init);

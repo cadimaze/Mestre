@@ -8,8 +8,51 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/auth.css">
 </head>
 <body>
+
+<!-- ── AUTH OVERLAY ── -->
+<div id="auth-overlay" class="auth-overlay">
+  <div class="auth-box">
+    <div class="auth-brand">
+      <h2 class="auth-title">Mares e Marés</h2>
+      <p class="auth-subtitle">Pelágos — O Continente dos Mil Mares</p>
+      <p class="auth-tagline">"O mar não guarda segredos para sempre."</p>
+    </div>
+
+    <form id="login-form" class="auth-form">
+      <input class="auth-input" type="email" id="login-email" placeholder="E-mail" required autocomplete="email">
+      <input class="auth-input" type="password" id="login-password" placeholder="Senha" required autocomplete="current-password">
+      <button class="auth-submit-btn" type="submit">Entrar</button>
+    </form>
+
+    <form id="register-form" class="auth-form" style="display:none">
+      <input class="auth-input" type="text" id="reg-name" placeholder="Seu nome (como aparecerá no site)" required>
+      <input class="auth-input" type="email" id="reg-email" placeholder="E-mail" required autocomplete="email">
+      <input class="auth-input" type="password" id="reg-password" placeholder="Senha (mínimo 6 caracteres)" required autocomplete="new-password">
+      <button class="auth-submit-btn" type="submit">Criar Conta</button>
+    </form>
+
+    <div class="auth-toggle-row">
+      <button class="auth-toggle-btn" id="show-register">Não tem conta? Registrar</button>
+      <button class="auth-toggle-btn" id="show-login" style="display:none">Já tem conta? Entrar</button>
+    </div>
+    <div id="auth-error" class="auth-error"></div>
+  </div>
+</div>
+
+<!-- ── SEED OVERLAY (shown when master logs in and DB is empty) ── -->
+<div id="seed-overlay" class="seed-overlay" style="display:none">
+  <div class="seed-box">
+    <div class="seed-icon">⚓</div>
+    <h2 class="seed-title">Bem-vindo, Mestre!</h2>
+    <p class="seed-desc">Nenhuma campanha foi encontrada no banco de dados.<br>Clique abaixo para inicializar a campanha <strong>Mares e Marés</strong> com todos os personagens, locais, eventos e facções.</p>
+    <button id="seed-btn" class="seed-btn">Inicializar Campanha</button>
+    <div id="seed-status" class="seed-status"></div>
+  </div>
+</div>
+
 <div id="app">
 
   <!-- ── HEADER ── -->
@@ -24,10 +67,14 @@
       <button class="nav-btn" data-tab="locais">Locais</button>
       <button class="nav-btn" data-tab="eventos">Eventos</button>
       <button class="nav-btn" data-tab="faccoes">Facções</button>
-      <button class="nav-btn" data-tab="relacoes">Relações</button>
+      <button class="nav-btn master-only" data-tab="relacoes">Relações</button>
+      <button class="nav-btn master-only" data-tab="jogadores">Jogadores</button>
+      <button class="nav-btn player-only" data-tab="meu-personagem">Meu Personagem</button>
     </nav>
     <div class="header-actions">
+      <span class="user-badge" id="user-badge"></span>
       <button class="search-toggle" id="search-toggle" title="Busca global (Ctrl+K)">🔍</button>
+      <button class="header-logout-btn" id="logout-btn" title="Sair da campanha">Sair</button>
     </div>
   </header>
 
@@ -78,11 +125,11 @@
           <div class="section-heading">Conexões Recentes</div>
           <div id="recent-relations"></div>
         </div>
-        <div class="secrets-alert">
+        <div class="secrets-alert master-only">
           <div class="section-heading">⚠ Segredos do Mestre</div>
           <div class="secrets-count" id="secrets-total">0</div>
           <div style="font-size:13px;color:#e07070;margin-bottom:10px;font-family:var(--font-title);letter-spacing:.5px;">elementos com segredos cadastrados</div>
-          <div class="secrets-warning">Lembre-se: segredos visíveis apenas neste painel</div>
+          <div class="secrets-warning">Lembre-se: segredos visíveis apenas para o Mestre</div>
         </div>
       </div>
     </section>
@@ -100,7 +147,7 @@
           <option value="Morto">Morto</option>
           <option value="Desaparecido">Desaparecido</option>
         </select>
-        <button class="filter-toggle" id="char-filter-secrets">🔒 Com segredos</button>
+        <button class="filter-toggle master-only" id="char-filter-secrets">🔒 Com segredos</button>
       </div>
       <div class="characters-grid" id="characters-grid"></div>
     </section>
@@ -120,7 +167,7 @@
       <div class="factions-grid" id="factions-grid"></div>
     </section>
 
-    <!-- RELAÇÕES -->
+    <!-- RELAÇÕES (master only) -->
     <section class="tab-panel" id="tab-relacoes">
       <div class="relations-container">
         <div class="graph-controls">
@@ -137,6 +184,17 @@
       </div>
     </section>
 
+    <!-- JOGADORES (master only) -->
+    <section class="tab-panel" id="tab-jogadores">
+      <div class="section-heading" style="margin:24px 0 16px;">Jogadores Registrados</div>
+      <div id="jogadores-grid" class="jogadores-grid"></div>
+    </section>
+
+    <!-- MEU PERSONAGEM (player only) -->
+    <section class="tab-panel" id="tab-meu-personagem">
+      <div id="meu-personagem-content"></div>
+    </section>
+
   </main>
 </div>
 
@@ -151,11 +209,9 @@
   <div class="modal-body" id="modal-body"></div>
 </aside>
 
-<!-- ── SECRETS FLOAT BTN ── -->
-<button class="secrets-float-btn active" id="secrets-float-btn">🔓 Segredos</button>
+<!-- ── SECRETS FLOAT BTN (master only) ── -->
+<button class="secrets-float-btn master-only active" id="secrets-float-btn">🔓 Segredos</button>
 
-<!-- ── D3.js CDN ── -->
-<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
-<script src="scripts/app.js"></script>
+<script type="module" src="scripts/app.js"></script>
 </body>
 </html>
