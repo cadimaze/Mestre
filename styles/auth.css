@@ -1,4 +1,66 @@
 /* ══════════════════════════════════════════════════════════════════════
+   LIGHTBOX
+══════════════════════════════════════════════════════════════════════ */
+#lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s;
+}
+#lightbox.lb-open {
+  pointer-events: all;
+  opacity: 1;
+}
+.lb-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.88);
+  cursor: zoom-out;
+}
+.lb-img {
+  position: relative;
+  max-width: 88vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 8px 64px rgba(0,0,0,.8), 0 0 0 1px rgba(200,169,106,.2);
+  transform: scale(.92);
+  transition: transform .25s;
+  cursor: zoom-out;
+}
+#lightbox.lb-open .lb-img {
+  transform: scale(1);
+}
+
+/* Clickable avatar hint */
+.modal-char-avatar-clickable {
+  cursor: zoom-in;
+  position: relative;
+}
+.modal-char-avatar-clickable::after {
+  content: '🔍';
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  font-size: 14px;
+  background: rgba(0,0,0,.6);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity .2s;
+}
+.modal-char-avatar-clickable:hover::after { opacity: 1; }
+
+/* ══════════════════════════════════════════════════════════════════════
    ADD NEW BUTTON (sections)
 ══════════════════════════════════════════════════════════════════════ */
 .add-new-btn {
