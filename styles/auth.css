@@ -1229,6 +1229,339 @@ body.is-master .vis-card-badge { display: block; }
   line-height: 1.5;
 }
 
+/* ── Visibility controls (shared: sheet + secrets) ─────────────────────────── */
+.pc-hidden { display: none !important; }
+
+.pc-vis-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.pc-vis-btn {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 20px;
+  color: #7a9ab0;
+  cursor: pointer;
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 10px;
+  letter-spacing: .04em;
+  padding: 5px 14px;
+  transition: background .2s, border-color .2s, color .2s;
+}
+.pc-vis-btn:hover {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(200,169,106,.25);
+  color: #c8a96a;
+}
+.pc-vis-btn.active {
+  background: rgba(200,169,106,.12);
+  border-color: rgba(200,169,106,.35);
+  color: #c8a96a;
+}
+
+.pc-vis-players-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: rgba(0,0,0,.25);
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.06);
+}
+
+.pc-player-check-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  font-size: 12px;
+  color: #8aabb0;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+  transition: background .15s;
+}
+.pc-player-check-label:hover { background: rgba(255,255,255,.07); }
+.pc-player-check { accent-color: #c8a96a; width: 14px; height: 14px; }
+
+.pc-no-players { font-size: 12px; color: #4a6a7a; font-style: italic; }
+
+/* ── Secrets list ───────────────────────────────────────────────────────────── */
+.pc-secrets-empty { font-size: 12px; color: #4a6a7a; font-style: italic; padding: 4px 0; }
+
+.pc-secret-item {
+  background: rgba(0,0,0,.3);
+  border: 1px solid rgba(200,80,80,.12);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.pc-secret-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.pc-secret-num {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 11px;
+  color: #c8a96a;
+  letter-spacing: .05em;
+}
+
+.pc-secret-del {
+  background: none;
+  border: 1px solid rgba(200,80,80,.2);
+  border-radius: 4px;
+  color: #c06060;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 3px 8px;
+  transition: background .15s;
+}
+.pc-secret-del:hover { background: rgba(200,80,80,.1); }
+
+.pc-secret-vis-row {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+
+.pc-secret-vis-label {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 10px;
+  color: #5a7a8a;
+  letter-spacing: .04em;
+}
+
+.pc-add-secret-btn {
+  background: rgba(200,169,106,.06);
+  border: 1px dashed rgba(200,169,106,.25);
+  border-radius: 6px;
+  color: #8a7a5a;
+  cursor: pointer;
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 11px;
+  margin-top: 10px;
+  padding: 8px 16px;
+  transition: background .2s, border-color .2s, color .2s;
+  width: 100%;
+  text-align: center;
+}
+.pc-add-secret-btn:hover {
+  background: rgba(200,169,106,.12);
+  border-color: rgba(200,169,106,.5);
+  color: #c8a96a;
+}
+
+/* ── Other players' shared secrets ──────────────────────────────────────────── */
+.pcc-secrets-block {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(200,80,80,.12);
+}
+.pcc-secrets-label {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 10px;
+  color: #c06060;
+  letter-spacing: .04em;
+  margin-bottom: 4px;
+}
+.pcc-secret-item {
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  font-size: 12px;
+  color: #8a9aaa;
+  padding: 4px 0;
+  font-style: italic;
+}
+
+/* ── Character secrets in edit form ─────────────────────────────────────────── */
+.char-secret-item {
+  background: rgba(0,0,0,.25);
+  border: 1px solid rgba(200,169,106,.1);
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.char-secret-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.char-secret-num {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 10px;
+  color: #c8a96a;
+  letter-spacing: .05em;
+}
+.char-secret-del {
+  background: none;
+  border: 1px solid rgba(200,80,80,.2);
+  border-radius: 4px;
+  color: #c06060;
+  cursor: pointer;
+  font-size: 10px;
+  padding: 2px 7px;
+  transition: background .15s;
+}
+.char-secret-del:hover { background: rgba(200,80,80,.1); }
+.char-secret-vis-row {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,.04);
+}
+.char-secret-vis-label {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 9px;
+  color: #4a6a7a;
+  letter-spacing: .04em;
+  display: block;
+  margin-bottom: 4px;
+}
+.edit-add-secret-btn {
+  background: rgba(200,169,106,.05);
+  border: 1px dashed rgba(200,169,106,.2);
+  border-radius: 5px;
+  color: #7a7a5a;
+  cursor: pointer;
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 10px;
+  margin-top: 8px;
+  padding: 6px 12px;
+  transition: background .2s, color .2s;
+}
+.edit-add-secret-btn:hover { background: rgba(200,169,106,.1); color: #c8a96a; }
+
+/* ── Reveal notification toast ──────────────────────────────────────────────── */
+.reveal-toast-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 8000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .4s;
+}
+.reveal-toast-overlay.visible { opacity: 1; pointer-events: all; }
+
+.reveal-toast {
+  position: relative;
+  background: linear-gradient(135deg, #060e1a 0%, #0a1828 60%, #0d1e30 100%);
+  border-radius: 16px;
+  box-shadow: 0 0 80px rgba(200,169,106,.22), 0 24px 64px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.06);
+  max-width: 440px;
+  width: 90vw;
+  padding: 36px 32px;
+  text-align: center;
+  transform: scale(.88) translateY(12px);
+  transition: transform .45s cubic-bezier(.2,1.2,.4,1);
+  overflow: hidden;
+}
+.reveal-toast-overlay.visible .reveal-toast { transform: scale(1) translateY(0); }
+
+.reveal-toast::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  border: 1px solid rgba(200,169,106,.2);
+  pointer-events: none;
+}
+.reveal-toast::after {
+  content: '';
+  position: absolute;
+  top: -40%; left: 10%;
+  width: 80%; height: 60%;
+  background: radial-gradient(ellipse at center, rgba(200,169,106,.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.reveal-toast-icon { font-size: 40px; margin-bottom: 14px; line-height: 1; }
+.reveal-toast-eyebrow {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 10px;
+  color: #5a7a8a;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.reveal-toast-title {
+  font-family: var(--font-display, 'Cinzel Decorative', serif);
+  font-size: 18px;
+  color: #c8a96a;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+.reveal-toast-name {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 22px;
+  color: #e8c87a;
+  margin-bottom: 16px;
+  text-shadow: 0 0 18px rgba(200,169,106,.4);
+}
+.reveal-toast-desc {
+  font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
+  font-size: 13px;
+  color: #7a9ab0;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.reveal-toast-btn {
+  background: linear-gradient(135deg, rgba(200,169,106,.18), rgba(200,169,106,.1));
+  border: 1px solid rgba(200,169,106,.35);
+  border-radius: 8px;
+  color: #c8a96a;
+  cursor: pointer;
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 12px;
+  letter-spacing: .08em;
+  padding: 10px 24px;
+  transition: background .2s, border-color .2s, transform .1s;
+}
+.reveal-toast-btn:hover {
+  background: linear-gradient(135deg, rgba(200,169,106,.28), rgba(200,169,106,.18));
+  border-color: rgba(200,169,106,.6);
+  transform: translateY(-1px);
+}
+.reveal-toast-btn-secondary {
+  background: none;
+  border: none;
+  color: #4a6a7a;
+  cursor: pointer;
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 11px;
+  margin-left: 12px;
+  padding: 8px 12px;
+  transition: color .2s;
+}
+.reveal-toast-btn-secondary:hover { color: #8aabb0; }
+
+/* Secret-type toast variant */
+.reveal-toast.toast-secret::before { border-color: rgba(200,80,80,.25); }
+.reveal-toast.toast-secret::after { background: radial-gradient(ellipse at center, rgba(180,60,60,.07) 0%, transparent 70%); }
+.reveal-toast.toast-secret .reveal-toast-title { color: #e07070; }
+.reveal-toast.toast-secret .reveal-toast-name { color: #e08080; text-shadow: 0 0 18px rgba(200,80,80,.4); }
+.reveal-toast.toast-secret .reveal-toast-btn { border-color: rgba(200,80,80,.35); color: #e07070; background: rgba(200,80,80,.08); }
+.reveal-toast.toast-secret .reveal-toast-btn:hover { background: rgba(200,80,80,.15); border-color: rgba(200,80,80,.6); }
+
+/* Shimmer / particle effect for secret toast */
+@keyframes secretPulse {
+  0%, 100% { box-shadow: 0 0 80px rgba(200,80,80,.15), 0 24px 64px rgba(0,0,0,.9); }
+  50%        { box-shadow: 0 0 120px rgba(200,80,80,.3), 0 24px 64px rgba(0,0,0,.9); }
+}
+.reveal-toast.toast-secret { animation: secretPulse 2.5s ease-in-out infinite; }
+
 @media (max-width: 600px) {
   .pc-hero { grid-template-columns: 100px 1fr; gap: 16px; }
   .pc-portrait-img, .pc-portrait-placeholder { width: 90px; height: 112px; }

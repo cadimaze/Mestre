@@ -20,11 +20,17 @@ service cloud.firestore {
           request.auth.uid in resource.data.visibility.playerIds);
     }
 
-    // Perfis de usuário
+    // Perfis de usuário — todos autenticados podem ler (grupo fechado de confiança)
     match /users/{uid} {
-      allow read:   if isAuth() && (request.auth.uid == uid || isMaster());
+      allow read:   if isAuth();
       allow create: if isAuth() && request.auth.uid == uid;
       allow update: if isAuth() && request.auth.uid == uid;
+
+      // Notificações de revelação — mestre cria, jogador lê/atualiza as próprias
+      match /notifications/{notifId} {
+        allow read, update, delete: if isAuth() && request.auth.uid == uid;
+        allow create: if isAuth() && isMaster();
+      }
     }
 
     // Campanha e sub-coleções
