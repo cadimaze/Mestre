@@ -7,17 +7,14 @@ import { getFirestore, collection, doc, getDoc,
          getDocs, setDoc, addDoc, updateDoc,
          deleteDoc, onSnapshot, query, orderBy,
          serverTimestamp, writeBatch }            from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-import { getStorage, ref as storageRef,
-         uploadBytes, getDownloadURL }           from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
 import { FIREBASE_CONFIG, MASTER_EMAIL,
          CAMPAIGN_ID }                           from './firebase-config.js';
 import * as d3                                   from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
 // ── FIREBASE INIT ─────────────────────────────────────────────────────────────
-const fbApp   = initializeApp(FIREBASE_CONFIG);
-const auth    = getAuth(fbApp);
-const db      = getFirestore(fbApp);
-const storage = getStorage(fbApp);
+const fbApp = initializeApp(FIREBASE_CONFIG);
+const auth  = getAuth(fbApp);
+const db    = getFirestore(fbApp);
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 const STATE = {
@@ -1331,8 +1328,9 @@ function editTextarea(name, value = '', placeholder = '', rows = 3) {
 }
 
 function buildCharEditFields(c = {}) {
-  const imgPreview = (c.imageUrl || c.image)
-    ? `<img class="edit-img-preview" id="img-preview" src="${c.imageUrl || `assets/images/characters/${c.image}`}" alt="">`
+  const imgSrc = c.imageUrl || (c.image ? `assets/images/characters/${c.image}` : '');
+  const imgPreview = imgSrc
+    ? `<img class="edit-img-preview" id="img-preview" src="${imgSrc}" alt="">`
     : `<div class="edit-img-placeholder" id="img-preview">Sem imagem</div>`;
 
   return `
@@ -1352,13 +1350,12 @@ function buildCharEditFields(c = {}) {
 
     <div class="edit-form-section-title">Retrato</div>
     <div class="edit-field">
-      <label class="edit-label">Imagem do personagem</label>
+      <label class="edit-label">URL da imagem</label>
       <div class="edit-img-wrap">
         ${imgPreview}
         <div class="edit-img-controls">
-          <input class="edit-file-input" type="file" id="img-file" name="imageFile" accept="image/*">
-          <label class="edit-file-label" for="img-file">Escolher arquivo</label>
-          ${editField('Ou cole uma URL', editInput('imageUrl', c.imageUrl || '', 'https://...'))}
+          ${editField('Cole o link da imagem (Imgur, Discord, etc.)', editInput('imageUrl', c.imageUrl || '', 'https://i.imgur.com/...'))}
+          <div class="edit-img-hint">💡 Suba a imagem no <a href="https://imgur.com" target="_blank" style="color:#7abadc">Imgur</a> e cole o link direto aqui.</div>
         </div>
       </div>
     </div>
@@ -1459,18 +1456,18 @@ function attachEditFormEvents(id, type) {
   const form = document.getElementById('edit-form');
   if (!form) return;
 
-  // Image preview on file select
-  const fileInput = document.getElementById('img-file');
-  if (fileInput) {
-    fileInput.addEventListener('change', () => {
-      const file = fileInput.files[0];
-      if (!file) return;
+  // Live preview for image URL input
+  const imgUrlInput = form.querySelector('[name="imageUrl"]');
+  if (imgUrlInput) {
+    imgUrlInput.addEventListener('input', () => {
+      const url     = imgUrlInput.value.trim();
       const preview = document.getElementById('img-preview');
-      const reader  = new FileReader();
-      reader.onload = e => {
-        preview.outerHTML = `<img class="edit-img-preview" id="img-preview" src="${e.target.result}" alt="">`;
-      };
-      reader.readAsDataURL(file);
+      if (!preview) return;
+      if (url) {
+        preview.outerHTML = `<img class="edit-img-preview" id="img-preview" src="${url}" alt="" onerror="this.style.opacity='.3'">`;
+      } else {
+        preview.outerHTML = `<div class="edit-img-placeholder" id="img-preview">Sem imagem</div>`;
+      }
     });
   }
 
@@ -1507,19 +1504,8 @@ function attachEditFormEvents(id, type) {
     saveBtn.textContent = 'Salvando...';
 
     try {
-      const fd = new FormData(form);
+      const fd   = new FormData(form);
       const data = buildDataFromForm(fd, type);
-
-      // Image upload if file selected
-      const fileInput = document.getElementById('img-file');
-      if (fileInput?.files[0]) {
-        const file    = fileInput.files[0];
-        const itemId  = id || generateId(data.name || Date.now().toString());
-        const imgRef  = storageRef(storage, `characters/${itemId}/${file.name}`);
-        await uploadBytes(imgRef, file);
-        data.imageUrl = await getDownloadURL(imgRef);
-        data.image    = null;
-      }
 
       if (id) {
         await updateDoc(doc(db, 'campaigns', CAMPAIGN_ID, typeCollName(type), id), data);

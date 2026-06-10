@@ -161,21 +161,12 @@
   min-width: 140px;
 }
 
-.edit-file-input { display: none; }
-.edit-file-label {
-  display: inline-flex;
-  align-items: center;
-  background: rgba(90,138,176,.12);
-  border: 1px solid #2a3a4a;
-  border-radius: 6px;
-  color: #7abadc;
+.edit-img-hint {
   font-family: var(--font-body, 'Segoe UI', system-ui, sans-serif);
   font-size: 12px;
-  padding: 7px 12px;
-  cursor: pointer;
-  transition: background .2s;
+  color: #4a6a7a;
+  line-height: 1.5;
 }
-.edit-file-label:hover { background: rgba(90,138,176,.2); }
 
 /* Color picker */
 .edit-color-wrap {
