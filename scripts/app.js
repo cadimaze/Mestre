@@ -906,20 +906,22 @@ function buildCharModalContent(id) {
     (r.sourceId === id && r.sourceType === 'character') ||
     (r.targetId === id && r.targetType === 'character')
   ).filter(r => {
+    if (!STATE.isMaster && r.secret) return false;
     const otherId   = r.sourceId === id ? r.targetId   : r.sourceId;
     const otherType = r.sourceId === id ? r.targetType  : r.sourceType;
-    return getEntityName(otherId, otherType) !== otherId; // entity visible
+    return getEntityName(otherId, otherType) !== otherId;
   });
 
   const relItems = rels.map(r => {
-    const isSource  = r.sourceId === id;
-    const otherId   = isSource ? r.targetId   : r.sourceId;
-    const otherType = isSource ? r.targetType  : r.sourceType;
+    const isSource     = r.sourceId === id;
+    const otherId      = isSource ? r.targetId   : r.sourceId;
+    const otherType    = isSource ? r.targetType  : r.sourceType;
+    const displayLabel = isSource ? (r.label || '') : (r.labelTo || r.label || '');
     const color = relTypeColor(r.type);
     return `<div class="modal-relation-tag" data-modal-id="${otherId}" data-modal-type="${otherType}">
       <div class="rel-type-indicator" style="background:${color}"></div>
       <span class="rel-target-name">${getEntityName(otherId, otherType)}</span>
-      <span class="rel-label-text">${r.label}</span>
+      <span class="rel-label-text">${displayLabel}</span>
       ${r.secret && STATE.isMaster ? '<span title="Relação secreta" style="opacity:.6;">🔒</span>' : ''}
     </div>`;
   }).join('');
@@ -1052,14 +1054,15 @@ function buildFactionModalContent(id) {
     (r.targetId === id && r.targetType === 'faction')
   );
   const relItems = rels.map(r => {
-    const isSource  = r.sourceId === id;
-    const otherId   = isSource ? r.targetId   : r.sourceId;
-    const otherType = isSource ? r.targetType  : r.sourceType;
+    const isSource     = r.sourceId === id;
+    const otherId      = isSource ? r.targetId   : r.sourceId;
+    const otherType    = isSource ? r.targetType  : r.sourceType;
+    const displayLabel = isSource ? (r.label || '') : (r.labelTo || r.label || '');
     const color = relTypeColor(r.type);
     return `<div class="modal-relation-tag" data-modal-id="${otherId}" data-modal-type="${otherType}">
       <div class="rel-type-indicator" style="background:${color}"></div>
       <span class="rel-target-name">${getEntityName(otherId, otherType)}</span>
-      <span class="rel-label-text">${r.label}</span>
+      <span class="rel-label-text">${displayLabel}</span>
       ${r.secret && STATE.isMaster ? '<span title="Relação secreta" style="opacity:.6;">🔒</span>' : ''}
     </div>`;
   }).join('');
@@ -1723,44 +1726,86 @@ function attachEditFormEvents(id, type) {
   let relEdits = [];
   if (type === 'character' && id) {
     relEdits = STATE.data.relations
-      .filter(r => r.from === id || r.to === id)
+      .filter(r =>
+        (r.sourceId === id && r.sourceType === 'character') ||
+        (r.targetId === id && r.targetType === 'character')
+      )
       .map(r => ({ ...r, _delete: false, _isNew: false }));
 
     function renderRelRows() {
       const editor = document.getElementById('rel-editor');
       if (!editor) return;
-      editor.innerHTML = relEdits
-        .filter(r => !r._delete)
-        .map(r => {
-          const idx     = relEdits.indexOf(r);
-          const otherId = r.from === id ? r.to : r.from;
+      const visible = relEdits.filter(r => !r._delete);
+      if (!visible.length) { editor.innerHTML = ''; return; }
+      editor.innerHTML =
+        `<div class="rel-header">
+          <span>Personagem</span>
+          <span>Rótulo na minha ficha</span>
+          <span>Rótulo na ficha deles</span>
+          <span title="Visibilidade para jogadores">Vis.</span>
+          <span></span>
+        </div>` +
+        visible.map(r => {
+          const idx      = relEdits.indexOf(r);
+          const isSource = r.sourceId === id || r._isNew;
+          const otherId  = isSource ? r.targetId : r.sourceId;
+          const myLabel    = isSource ? (r.label   || '') : (r.labelTo || '');
+          const theirLabel = isSource ? (r.labelTo || '') : (r.label   || '');
+          const isSecret   = !!r.secret;
           return `<div class="rel-row">
             <select class="edit-select rel-target" data-idx="${idx}">
-              <option value="">— Selecionar personagem —</option>
+              <option value="">— Selecionar —</option>
               ${STATE.data.characters.filter(c => c.id !== id)
                 .map(c => `<option value="${c.id}" ${c.id === otherId ? 'selected' : ''}>${c.name}</option>`)
                 .join('')}
             </select>
-            <input class="edit-input rel-label" data-idx="${idx}" value="${escHtml(r.label || '')}" placeholder="Tipo de relação...">
-            <label class="rel-secret-label"><input type="checkbox" class="rel-secret" data-idx="${idx}" ${r.secret ? 'checked' : ''}> Segredo</label>
+            <input class="edit-input rel-label-mine"   data-idx="${idx}" value="${escHtml(myLabel)}"    placeholder="Ex: mãe de...">
+            <input class="edit-input rel-label-theirs" data-idx="${idx}" value="${escHtml(theirLabel)}" placeholder="Ex: filha de...">
+            <button type="button" class="rel-vis-toggle ${isSecret ? 'rel-vis-secret' : 'rel-vis-public'}"
+              data-idx="${idx}" title="${isSecret ? 'Secreto — só você vê (clique para tornar público)' : 'Visível para jogadores (clique para tornar secreto)'}">
+              ${isSecret ? '🔒' : '🌐'}
+            </button>
             <button type="button" class="rel-del-btn" data-idx="${idx}">✕</button>
           </div>`;
         }).join('');
 
+      editor.querySelectorAll('.rel-vis-toggle').forEach(btn =>
+        btn.addEventListener('click', () => {
+          const r = relEdits[+btn.dataset.idx];
+          r.secret = !r.secret;
+          renderRelRows();
+        }));
       editor.querySelectorAll('.rel-del-btn').forEach(btn =>
         btn.addEventListener('click', () => { relEdits[+btn.dataset.idx]._delete = true; renderRelRows(); }));
       editor.querySelectorAll('.rel-target').forEach(sel =>
-        sel.addEventListener('change', () => { relEdits[+sel.dataset.idx].to = sel.value; relEdits[+sel.dataset.idx].from = id; }));
-      editor.querySelectorAll('.rel-label').forEach(inp =>
-        inp.addEventListener('input', () => { relEdits[+inp.dataset.idx].label = inp.value; }));
-      editor.querySelectorAll('.rel-secret').forEach(chk =>
-        chk.addEventListener('change', () => { relEdits[+chk.dataset.idx].secret = chk.checked; }));
+        sel.addEventListener('change', () => {
+          const r = relEdits[+sel.dataset.idx];
+          r.targetId = sel.value; r.sourceId = id;
+          r.sourceType = 'character'; r.targetType = 'character';
+        }));
+      editor.querySelectorAll('.rel-label-mine').forEach(inp =>
+        inp.addEventListener('input', () => {
+          const r = relEdits[+inp.dataset.idx];
+          if (r.sourceId === id || r._isNew) r.label   = inp.value;
+          else                               r.labelTo = inp.value;
+        }));
+      editor.querySelectorAll('.rel-label-theirs').forEach(inp =>
+        inp.addEventListener('input', () => {
+          const r = relEdits[+inp.dataset.idx];
+          if (r.sourceId === id || r._isNew) r.labelTo = inp.value;
+          else                               r.label   = inp.value;
+        }));
     }
 
     renderRelRows();
 
     form.querySelector('.edit-add-rel-btn')?.addEventListener('click', () => {
-      relEdits.push({ _isNew: true, _delete: false, from: id, to: '', label: '', secret: false });
+      relEdits.push({
+        _isNew: true, _delete: false,
+        sourceId: id, sourceType: 'character',
+        targetId: '', targetType: 'character',
+        label: '', labelTo: '', secret: true,
+      });
       renderRelRows();
     });
   }
@@ -1810,12 +1855,23 @@ function attachEditFormEvents(id, type) {
             if (r._delete && !r._isNew && r.id) {
               relBatch.delete(doc(db, 'campaigns', CAMPAIGN_ID, 'relations', r.id));
               changed = true;
-            } else if (!r._delete && r._isNew && r.to) {
-              const ref = doc(collection(db, 'campaigns', CAMPAIGN_ID, 'relations'));
-              relBatch.set(ref, { from: id, to: r.to, label: r.label || '', secret: !!r.secret, visibility: defaultVis, secretsVisibility: defaultVis });
+            } else if (!r._delete && r._isNew && r.targetId) {
+              const ref    = doc(collection(db, 'campaigns', CAMPAIGN_ID, 'relations'));
+              const relVis = r.secret ? defaultVis : { mode: 'all', playerIds: [] };
+              relBatch.set(ref, {
+                sourceId: id, sourceType: 'character',
+                targetId: r.targetId, targetType: 'character',
+                label: r.label || '', labelTo: r.labelTo || '',
+                type: 'neutral', secret: !!r.secret,
+                visibility: relVis, secretsVisibility: defaultVis,
+              });
               changed = true;
             } else if (!r._delete && !r._isNew && r.id) {
-              relBatch.update(doc(db, 'campaigns', CAMPAIGN_ID, 'relations', r.id), { label: r.label || '', secret: !!r.secret });
+              const relVis = r.secret ? defaultVis : { mode: 'all', playerIds: [] };
+              relBatch.update(doc(db, 'campaigns', CAMPAIGN_ID, 'relations', r.id), {
+                label: r.label || '', labelTo: r.labelTo || '', secret: !!r.secret,
+                visibility: relVis,
+              });
               changed = true;
             }
           }
