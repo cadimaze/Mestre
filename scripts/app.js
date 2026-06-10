@@ -1137,6 +1137,43 @@ function setupSearch() {
 // ── GRAPH ─────────────────────────────────────────────────────────────────────
 let graphSimulation = null;
 
+const GRAPH_TYPE_LABEL = { character: 'Personagem', location: 'Local', event: 'Evento', faction: 'Facção' };
+const GRAPH_GLYPH      = { location: '🏝', event: '📜' };
+
+// Imagem do nó: retrato do personagem, ou imageUrl de qualquer entidade que tenha
+function nodeImgSrc(d) {
+  if (d.type === 'character') {
+    const c = getCharById(d.id);
+    return c ? charImgSrc(c) : null;
+  }
+  const item = getItemById(d.id, d.type);
+  return item?.imageUrl || null;
+}
+
+// Conteúdo do nó quando não há imagem: inicial (personagem), símbolo (facção) ou ícone
+function appendNodeGlyph(node, d, r) {
+  if (d.type === 'character') {
+    node.append('text').attr('class', 'node-initial')
+      .attr('text-anchor', 'middle').attr('dy', '.36em')
+      .attr('font-size', Math.round(r * 0.95))
+      .text((d.name || '?').charAt(0).toUpperCase());
+    return;
+  }
+  const glyph = d.type === 'faction'
+    ? (getFactionById(d.id)?.symbol || '⚑')
+    : (GRAPH_GLYPH[d.type] || '◆');
+  node.append('text').attr('class', 'node-glyph')
+    .attr('text-anchor', 'middle').attr('dy', '.36em')
+    .attr('font-size', Math.round(r * 1.05))
+    .text(glyph);
+}
+
+function graphTooltipSub(d) {
+  const item = getItemById(d.id, d.type);
+  if (!item) return '';
+  return { character: item.role, location: item.subtitle, event: item.period, faction: item.type }[d.type] || '';
+}
+
 function renderGraph() {
   const wrapper = document.getElementById('graph-wrapper');
   const svg     = document.getElementById('graph-svg');
@@ -1151,13 +1188,37 @@ function renderGraph() {
   ['normal','secret','romantic','political','family','historical'].forEach(type => {
     defs.append('marker')
       .attr('id', `arrow-${type}`).attr('viewBox', '0 -5 10 10')
-      .attr('refX', 18).attr('refY', 0).attr('markerWidth', 6).attr('markerHeight', 6)
-      .attr('orient', 'auto').append('path').attr('d', 'M0,-5L10,0L0,5').attr('fill', relTypeColor(type));
+      .attr('refX', 8).attr('refY', 0).attr('markerWidth', 7).attr('markerHeight', 7)
+      .attr('orient', 'auto').append('path').attr('d', 'M0,-5L10,0L0,5')
+      .attr('fill', relTypeColor(type)).attr('fill-opacity', 0.9);
   });
+
+  const shadow = defs.append('filter').attr('id', 'node-shadow')
+    .attr('x', '-60%').attr('y', '-60%').attr('width', '220%').attr('height', '220%');
+  shadow.append('feDropShadow')
+    .attr('dx', 0).attr('dy', 2).attr('stdDeviation', 3)
+    .attr('flood-color', '#000').attr('flood-opacity', 0.55);
 
   const g    = svgEl.append('g');
   const zoom = d3.zoom().scaleExtent([0.2, 4]).on('zoom', e => g.attr('transform', e.transform));
   svgEl.call(zoom);
+
+  // Controles de zoom (reatribuídos a cada render para usar o zoom atual)
+  const zoomInBtn    = document.getElementById('graph-zoom-in');
+  const zoomOutBtn   = document.getElementById('graph-zoom-out');
+  const zoomResetBtn = document.getElementById('graph-zoom-reset');
+  if (zoomInBtn)    zoomInBtn.onclick    = () => svgEl.transition().duration(250).call(zoom.scaleBy, 1.35);
+  if (zoomOutBtn)   zoomOutBtn.onclick   = () => svgEl.transition().duration(250).call(zoom.scaleBy, 1 / 1.35);
+  if (zoomResetBtn) zoomResetBtn.onclick = () => svgEl.transition().duration(400).call(zoom.transform, d3.zoomIdentity);
+
+  // Tooltip flutuante
+  let tip = wrapper.querySelector('.graph-tooltip');
+  if (!tip) {
+    tip = document.createElement('div');
+    tip.className = 'graph-tooltip';
+    wrapper.appendChild(tip);
+  }
+  tip.classList.remove('visible');
 
   const { character, location, event, faction } = STATE.graphFilters;
   const nodes   = [];
@@ -1175,26 +1236,27 @@ function renderGraph() {
 
   links.forEach(l => { if (nodeMap[l.source]) nodeMap[l.source].degree++; if (nodeMap[l.target]) nodeMap[l.target].degree++; });
 
-  const NODE_COLOR = { character: '#c8a96a', location: '#5a8ab0', event: '#7a9a6a', faction: '#9a5a5a' };
+  const NODE_COLOR = { character: '#cfac6e', location: '#5a8ab0', event: '#7a9a6a', faction: '#9a5a5a' };
   const getNodeColor = d => d.type === 'faction' ? (getFactionById(d.id)?.color || NODE_COLOR.faction) : (NODE_COLOR[d.type] || '#9a5a5a');
+  const radiusOf = d => Math.min(34, Math.max(17, 13 + d.degree * 2));
 
   graphSimulation = d3.forceSimulation(nodes)
-    .force('link', d3.forceLink(links).id(d => d.id).distance(110))
-    .force('charge', d3.forceManyBody().strength(-280))
+    .force('link', d3.forceLink(links).id(d => d.id).distance(130))
+    .force('charge', d3.forceManyBody().strength(-340))
     .force('center', d3.forceCenter(W / 2, H / 2))
-    .force('collision', d3.forceCollide().radius(30));
+    .force('collision', d3.forceCollide().radius(d => radiusOf(d) + 14));
 
   const linkG  = g.append('g').attr('class', 'links');
   const linkEl = linkG.selectAll('.graph-link').data(links).enter()
     .append('line').attr('class', 'graph-link')
     .attr('stroke', d => relTypeColor(d.type))
     .attr('stroke-dasharray', d => d.secret ? '5,4' : null)
-    .attr('stroke-opacity', 0.6)
+    .style('opacity', 0.55)
     .attr('marker-end', d => `url(#arrow-${d.type})`);
 
   const linkLabelEl = g.append('g').attr('class', 'link-labels').selectAll('.graph-link-label')
     .data(links).enter().append('text').attr('class', 'graph-link-label')
-    .attr('text-anchor', 'middle').attr('dy', -4)
+    .attr('text-anchor', 'middle').attr('dy', -5)
     .text(d => STATE.graphShowLabels ? d.label : '');
 
   const nodeG  = g.append('g').attr('class', 'nodes');
@@ -1206,16 +1268,59 @@ function renderGraph() {
       .on('end',   (e, d) => { if (!e.active) graphSimulation.alphaTarget(0); d.fx = null; d.fy = null; })
     );
 
-  nodeEl.append('circle')
-    .attr('r', d => Math.max(10, 8 + d.degree * 2.5))
-    .attr('fill', d => getNodeColor(d) + '33')
-    .attr('stroke', d => getNodeColor(d)).attr('stroke-width', 2);
+  // Halo externo suave na cor do tipo
+  nodeEl.append('circle').attr('class', 'node-halo')
+    .attr('r', d => radiusOf(d) + 7)
+    .attr('fill', d => getNodeColor(d))
+    .attr('opacity', 0.08);
 
-  nodeEl.append('text')
+  // Medalhão base com anel na cor do tipo/facção
+  nodeEl.append('circle').attr('class', 'node-base')
+    .attr('r', radiusOf)
+    .attr('fill', '#0a1d31')
+    .attr('stroke', d => getNodeColor(d))
+    .attr('stroke-width', 2)
+    .attr('filter', 'url(#node-shadow)');
+
+  // Conteúdo: retrato recortado em círculo, ou inicial/símbolo/ícone
+  nodeEl.each(function(d) {
+    const node = d3.select(this);
+    const r    = radiusOf(d);
+    const img  = nodeImgSrc(d);
+    if (img) {
+      const clipId = `node-clip-${d.id.replace(/[^a-zA-Z0-9_-]/g, '')}`;
+      defs.append('clipPath').attr('id', clipId)
+        .append('circle').attr('r', r - 1.5);
+      node.append('image')
+        .attr('href', img)
+        .attr('x', -(r - 1.5)).attr('y', -(r - 1.5))
+        .attr('width', (r - 1.5) * 2).attr('height', (r - 1.5) * 2)
+        .attr('preserveAspectRatio', 'xMidYMin slice')
+        .attr('clip-path', `url(#${clipId})`)
+        .on('error', function() { d3.select(this).remove(); appendNodeGlyph(node, d, r); });
+    } else {
+      appendNodeGlyph(node, d, r);
+    }
+  });
+
+  // Cadeado sobre nós com relações secretas (visível só na visão do mestre)
+  if (STATE.isMaster) {
+    const secretIds = new Set();
+    links.forEach(l => { if (l.secret) { secretIds.add(l.source.id || l.source); secretIds.add(l.target.id || l.target); } });
+    nodeEl.filter(d => secretIds.has(d.id))
+      .append('text').attr('class', 'node-secret-mark')
+      .attr('text-anchor', 'middle')
+      .attr('x', d => radiusOf(d) * 0.72)
+      .attr('y', d => -radiusOf(d) * 0.72)
+      .attr('font-size', 11)
+      .attr('opacity', 0.85)
+      .text('🔒');
+  }
+
+  nodeEl.append('text').attr('class', 'node-label')
     .attr('text-anchor', 'middle')
-    .attr('dy', d => Math.max(10, 8 + d.degree * 2.5) + 14)
-    .text(d => d.name.length > 14 ? d.name.substring(0, 13) + '…' : d.name)
-    .attr('fill', '#e8d4a0').attr('font-size', 10);
+    .attr('dy', d => radiusOf(d) + 16)
+    .text(d => d.name.length > 16 ? d.name.substring(0, 15) + '…' : d.name);
 
   nodeEl
     .on('mouseover', (e, d) => {
@@ -1226,18 +1331,54 @@ function renderGraph() {
         if (sid === d.id) connected.add(tid);
         if (tid === d.id) connected.add(sid);
       });
-      nodeEl.attr('opacity', n => connected.has(n.id) ? 1 : 0.15);
-      linkEl.attr('opacity', l => {
+      nodeEl.style('opacity', n => connected.has(n.id) ? 1 : 0.12);
+      linkEl.style('opacity', l => {
+        const sid = typeof l.source === 'object' ? l.source.id : l.source;
+        const tid = typeof l.target === 'object' ? l.target.id : l.target;
+        return (sid === d.id || tid === d.id) ? 0.95 : 0.04;
+      });
+      linkLabelEl.style('opacity', l => {
         const sid = typeof l.source === 'object' ? l.source.id : l.source;
         const tid = typeof l.target === 'object' ? l.target.id : l.target;
         return (sid === d.id || tid === d.id) ? 1 : 0.05;
       });
+
+      const sub = graphTooltipSub(d);
+      tip.innerHTML = `
+        <span class="tip-type" style="color:${getNodeColor(d)}">${GRAPH_TYPE_LABEL[d.type] || d.type}</span>
+        <div class="tip-name">${escHtml(d.name)}</div>
+        ${sub ? `<div class="tip-sub">${escHtml(sub)}</div>` : ''}
+        <div class="tip-deg">${d.degree} ${d.degree === 1 ? 'conexão' : 'conexões'} · clique para abrir</div>`;
+      tip.classList.add('visible');
     })
-    .on('mouseout', () => { nodeEl.attr('opacity', 1); linkEl.attr('opacity', 0.6); })
-    .on('click', (e, d) => { e.stopPropagation(); openModal(d.id, d.type); });
+    .on('mousemove', e => {
+      const [x, y] = d3.pointer(e, wrapper);
+      const flipX = x > wrapper.clientWidth - 260;
+      tip.style.left = flipX ? `${x - 252}px` : `${x + 18}px`;
+      tip.style.top  = `${Math.min(y + 14, wrapper.clientHeight - 110)}px`;
+    })
+    .on('mouseout', () => {
+      nodeEl.style('opacity', 1);
+      linkEl.style('opacity', 0.55);
+      linkLabelEl.style('opacity', 1);
+      tip.classList.remove('visible');
+    })
+    .on('click', (e, d) => { e.stopPropagation(); tip.classList.remove('visible'); openModal(d.id, d.type); });
 
   graphSimulation.on('tick', () => {
-    linkEl.attr('x1', d => d.source.x).attr('y1', d => d.source.y).attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+    // Apara as linhas na borda dos medalhões para a seta ficar visível
+    linkEl.each(function(d) {
+      const dx = d.target.x - d.source.x;
+      const dy = d.target.y - d.source.y;
+      const dist = Math.hypot(dx, dy) || 1;
+      const sr = radiusOf(d.source) + 3;
+      const tr = radiusOf(d.target) + 7;
+      d3.select(this)
+        .attr('x1', d.source.x + (dx / dist) * sr)
+        .attr('y1', d.source.y + (dy / dist) * sr)
+        .attr('x2', d.target.x - (dx / dist) * tr)
+        .attr('y2', d.target.y - (dy / dist) * tr);
+    });
     linkLabelEl.attr('x', d => (d.source.x + d.target.x) / 2).attr('y', d => (d.source.y + d.target.y) / 2);
     nodeEl.attr('transform', d => `translate(${d.x},${d.y})`);
   });
