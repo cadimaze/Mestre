@@ -1235,8 +1235,11 @@ async function seedCampaign() {
       createdAt: serverTimestamp(),
     });
 
-    const addItems = (coll, items) => items.forEach(item => {
-      batch.set(doc(db, 'campaigns', CAMPAIGN_ID, coll, item.id), {
+    const addItems = (coll, items) => items.forEach((item, idx) => {
+      const docRef = item.id
+        ? doc(db, 'campaigns', CAMPAIGN_ID, coll, item.id)
+        : doc(collection(db, 'campaigns', CAMPAIGN_ID, coll));
+      batch.set(docRef, {
         ...item,
         visibility:        { ...defaultVis },
         secretsVisibility: { ...defaultVis },
