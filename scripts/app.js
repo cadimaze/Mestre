@@ -493,7 +493,10 @@ function renderCharacters() {
 
   const grid = document.getElementById('characters-grid');
   if (!chars.length) {
-    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">⚓</div><p>Nenhum personagem encontrado.</p></div>`;
+    const msg = !STATE.isMaster && !STATE.data.characters.length
+      ? 'Você ainda não pode ver nada por aqui.'
+      : 'Nenhum personagem encontrado.';
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">⚓</div><p>${msg}</p></div>`;
     return;
   }
 
@@ -546,6 +549,11 @@ function buildCharacterFilters() {
 // ── LOCATIONS ─────────────────────────────────────────────────────────────────
 function renderLocations() {
   const grid = document.getElementById('locations-grid');
+  if (!STATE.data.locations.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🌊</div><p>${!STATE.isMaster ? 'Você ainda não pode ver nada por aqui.' : 'Nenhum local cadastrado.'}</p></div>`;
+    ensureAddBtn('tab-locais', 'location', 'Adicionar Local');
+    return;
+  }
   grid.innerHTML = STATE.data.locations.map(l => {
     const controller = getCharById(l.controlledBy);
     const controlText = controller
@@ -593,6 +601,11 @@ function renderLocations() {
 function renderEvents() {
   const sorted = [...STATE.data.events].sort((a, b) => (a.order || 0) - (b.order || 0));
   const timeline = document.getElementById('events-timeline');
+  if (!sorted.length) {
+    timeline.innerHTML = `<div class="empty-state"><div class="empty-icon">📜</div><p>${!STATE.isMaster ? 'Você ainda não pode ver nada por aqui.' : 'Nenhum evento cadastrado.'}</p></div>`;
+    ensureAddBtn('tab-eventos', 'event', 'Adicionar Evento');
+    return;
+  }
   timeline.innerHTML = sorted.map(e => `
     <div class="timeline-item">
       <div class="timeline-dot"></div>
@@ -616,6 +629,11 @@ function renderEvents() {
 // ── FACTIONS ──────────────────────────────────────────────────────────────────
 function renderFactions() {
   const grid = document.getElementById('factions-grid');
+  if (!STATE.data.factions.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">⚓</div><p>${!STATE.isMaster ? 'Você ainda não pode ver nada por aqui.' : 'Nenhuma facção cadastrada.'}</p></div>`;
+    ensureAddBtn('tab-faccoes', 'faction', 'Adicionar Facção');
+    return;
+  }
   grid.innerHTML = STATE.data.factions.map(f => {
     const memberTags = (f.members || []).map(mid => {
       const c = getCharById(mid);
@@ -691,66 +709,129 @@ async function renderMeuPersonagem() {
   const container = document.getElementById('meu-personagem-content');
   const pc = STATE.profile?.playerCharacter || {};
 
+  const portraitSrc = pc.imageUrl || null;
+  const portraitHtml = portraitSrc
+    ? `<img class="pc-portrait-img" id="pc-portrait-img" src="${portraitSrc}" alt="">`
+    : `<div class="pc-portrait-placeholder" id="pc-portrait-img">${(pc.name || '?').charAt(0)}</div>`;
+
   const allPlayersCharHtml = await buildAllPlayersCharHtml();
 
   container.innerHTML = `<div class="my-char-container">
     <div class="my-char-header">
       <div class="my-char-title">Meu Personagem</div>
-      <div class="my-char-subtitle">Preencha as informações do seu personagem — visível a todos os jogadores</div>
+      <div class="my-char-subtitle">Preencha sua ficha — outras informações ficam visíveis aos jogadores, exceto os seus segredos</div>
     </div>
 
     <form class="my-char-form" id="my-char-form">
-      <div class="my-char-row">
-        <div class="my-char-field">
-          <label>Nome do Personagem</label>
-          <input class="my-char-input" name="name" value="${escHtml(pc.name || '')}" placeholder="Nome do seu personagem">
+
+      <!-- HERO: portrait + basic info -->
+      <div class="pc-hero">
+        <div class="pc-portrait-wrap">
+          ${portraitHtml}
+          <input type="file" id="pc-img-file" accept="image/*" style="display:none">
+          <label class="pc-img-btn" for="pc-img-file">📷 Alterar foto</label>
+          <div class="pc-img-uploading" id="pc-img-uploading" style="display:none">Enviando...</div>
         </div>
-        <div class="my-char-field">
-          <label>Raça</label>
-          <input class="my-char-input" name="race" value="${escHtml(pc.race || '')}" placeholder="Ex: Humano, Elfo...">
+        <div class="pc-basic-fields">
+          <div class="my-char-field">
+            <label>Nome do Personagem</label>
+            <input class="my-char-input pc-name-input" name="name" value="${escHtml(pc.name || '')}" placeholder="Nome do seu personagem">
+          </div>
+          <div class="my-char-row">
+            <div class="my-char-field">
+              <label>Raça</label>
+              <input class="my-char-input" name="race" value="${escHtml(pc.race || '')}" placeholder="Ex: Humano, Elfo...">
+            </div>
+            <div class="my-char-field">
+              <label>Classe</label>
+              <input class="my-char-input" name="charClass" value="${escHtml(pc.charClass || '')}" placeholder="Ex: Guerreiro, Mago...">
+            </div>
+          </div>
+          <div class="my-char-field">
+            <label>Antecedente</label>
+            <input class="my-char-input" name="background" value="${escHtml(pc.background || '')}" placeholder="Ex: Soldado, Sábio...">
+          </div>
         </div>
       </div>
-      <div class="my-char-row">
-        <div class="my-char-field">
-          <label>Classe</label>
-          <input class="my-char-input" name="charClass" value="${escHtml(pc.charClass || '')}" placeholder="Ex: Guerreiro, Mago...">
-        </div>
-        <div class="my-char-field">
-          <label>Antecedente</label>
-          <input class="my-char-input" name="background" value="${escHtml(pc.background || '')}" placeholder="Ex: Soldado, Sábio...">
-        </div>
+
+      <!-- APARÊNCIA -->
+      <div class="pc-section">
+        <div class="pc-section-title">Aparência</div>
+        <textarea class="my-char-textarea" name="appearance" rows="3"
+          placeholder="Como seu personagem parece, o que as pessoas notam ao vê-lo pela primeira vez...">${escHtml(pc.appearance || '')}</textarea>
       </div>
-      <div class="my-char-field">
-        <label>Aparência</label>
-        <textarea class="my-char-textarea" name="appearance" placeholder="Como seu personagem parece...">${escHtml(pc.appearance || '')}</textarea>
+
+      <!-- PERSONALIDADE -->
+      <div class="pc-section">
+        <div class="pc-section-title">Personalidade &amp; Motivações</div>
+        <textarea class="my-char-textarea" name="personality" rows="4"
+          placeholder="O que seu personagem quer, teme, acredita, como age sob pressão...">${escHtml(pc.personality || '')}</textarea>
       </div>
-      <div class="my-char-field">
-        <label>Personalidade &amp; Motivações</label>
-        <textarea class="my-char-textarea" name="personality" placeholder="O que seu personagem quer, teme, acredita...">${escHtml(pc.personality || '')}</textarea>
+
+      <!-- HISTÓRIA -->
+      <div class="pc-section">
+        <div class="pc-section-title">História do Personagem</div>
+        <textarea class="my-char-textarea" name="history" rows="6"
+          placeholder="De onde veio, o que viveu, o que moldou quem ele é hoje...">${escHtml(pc.history || '')}</textarea>
       </div>
-      <div class="my-char-field">
-        <label>Notas pessoais (visíveis a todos)</label>
-        <textarea class="my-char-textarea" name="notes" placeholder="Anotações sobre sua jornada, segredos descobertos...">${escHtml(pc.notes || '')}</textarea>
-      </div>
-      <div style="display:flex;align-items:center;gap:16px;">
-        <button class="my-char-save-btn" type="submit">Salvar Ficha</button>
+
+      <!-- SAVE bar -->
+      <div class="pc-save-bar">
+        <button class="my-char-save-btn" type="submit" id="pc-save-btn">Salvar Ficha</button>
         <span class="my-char-saved-msg" id="my-char-saved-msg"></span>
       </div>
+
+      <!-- SEGREDOS — private section -->
+      <div class="pc-section pc-section-private">
+        <div class="pc-private-banner">🔒 Privado — só você vê este conteúdo</div>
+        <div class="pc-section-title">Segredos do Personagem</div>
+        <textarea class="my-char-textarea" name="secrets" rows="5"
+          placeholder="Segredos que seu personagem guarda, objetivos ocultos, memórias que esconde dos outros...">${escHtml(pc.secrets || '')}</textarea>
+      </div>
+
     </form>
 
     ${allPlayersCharHtml}
   </div>`;
 
+  // Image file upload (instant preview + Cloudinary)
+  let pendingImageUrl = pc.imageUrl || null;
+  document.getElementById('pc-img-file').addEventListener('change', async function () {
+    const file = this.files[0];
+    if (!file) return;
+    const uploading = document.getElementById('pc-img-uploading');
+    uploading.style.display = 'block';
+    try {
+      const url = await uploadToCloudinary(file);
+      pendingImageUrl = url;
+      const img = document.getElementById('pc-portrait-img');
+      img.outerHTML = `<img class="pc-portrait-img" id="pc-portrait-img" src="${url}" alt="">`;
+    } catch {
+      alert('Erro ao enviar imagem. Tente novamente.');
+    } finally {
+      uploading.style.display = 'none';
+    }
+  });
+
   document.getElementById('my-char-form').addEventListener('submit', async e => {
     e.preventDefault();
+    const btn = document.getElementById('pc-save-btn');
+    btn.disabled = true;
+    btn.textContent = 'Salvando...';
     const fd = new FormData(e.target);
     const charData = {};
-    fd.forEach((v, k) => { charData[k] = v; });
-    await updateDoc(doc(db, 'users', STATE.user.uid), { playerCharacter: charData });
-    STATE.profile.playerCharacter = charData;
-    const msg = document.getElementById('my-char-saved-msg');
-    msg.textContent = '✓ Ficha salva!';
-    setTimeout(() => { msg.textContent = ''; }, 3000);
+    fd.forEach((v, k) => { charData[k] = v.trim(); });
+    if (pendingImageUrl) charData.imageUrl = pendingImageUrl;
+    try {
+      await updateDoc(doc(db, 'users', STATE.user.uid), { playerCharacter: charData });
+      STATE.profile.playerCharacter = charData;
+      const msg = document.getElementById('my-char-saved-msg');
+      msg.textContent = '✓ Ficha salva!';
+      setTimeout(() => { msg.textContent = ''; }, 3000);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Salvar Ficha';
+    }
   });
 }
 
@@ -764,13 +845,18 @@ async function buildAllPlayersCharHtml() {
 
   const items = players.map(p => {
     const pc = p.playerCharacter;
+    const portrait = pc.imageUrl
+      ? `<img class="pcc-portrait" src="${escHtml(pc.imageUrl)}" alt="" onerror="this.outerHTML='<div class=pcc-portrait-ph>${escHtml((pc.name||'?').charAt(0))}</div>'">`
+      : `<div class="pcc-portrait-ph">${escHtml((pc.name || '?').charAt(0))}</div>`;
     return `<div class="player-char-card">
-      <div class="player-char-player">Jogador: ${escHtml(p.displayName)}</div>
-      <div class="player-char-name">${escHtml(pc.name)}</div>
-      <div class="player-char-details">
-        ${[pc.race, pc.charClass, pc.background].filter(Boolean).map(escHtml).join(' · ')}
-        ${pc.appearance ? `<br><em>${escHtml(pc.appearance)}</em>` : ''}
-        ${pc.notes ? `<br>${escHtml(pc.notes)}` : ''}
+      ${portrait}
+      <div class="pcc-body">
+        <div class="player-char-player">Jogador: ${escHtml(p.displayName)}</div>
+        <div class="player-char-name">${escHtml(pc.name)}</div>
+        <div class="player-char-details">
+          ${[pc.race, pc.charClass, pc.background].filter(Boolean).map(escHtml).join(' · ')}
+          ${pc.appearance ? `<div class="pcc-appearance">${escHtml(pc.appearance)}</div>` : ''}
+        </div>
       </div>
     </div>`;
   }).join('');
