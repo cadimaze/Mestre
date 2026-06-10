@@ -1,0 +1,38 @@
+[
+  {
+    "id": "grande-guerra",
+    "name": "A Grande Guerra",
+    "period": "Era Antiga — 40 a 80 anos antes da Maré Alta",
+    "order": 1,
+    "scale": "Mundial",
+    "location": null,
+    "description": "A Grande Guerra não começou como uma guerra entre povos — foi uma crise de origem sobrenatural que consumiu toda estrutura política e militar existente. Os maiores magistas elfos da era antiga descobriram, nas camadas mais profundas da realidade, a existência de O Peso. Acreditaram que poderiam invocá-lo, domesticá-lo, usá-lo como ferramenta para consolidar o domínio élfico definitivo.\n\nO que invocaram não obedeceu. Simplesmente começou a consumir.\n\nO que avançava não era um exército. Não tomava territórios nem exigia rendição. Regiões inteiras desapareciam dos mapas não porque fossem conquistadas, mas porque paravam de ser. A resposta das civilizações foi primeiro militar, depois diplomática, depois desesperada. Entre 60% e 80% da população mundial foi dizimada. Cidades inteiras pararam de existir.\n\nNos arquivos formais de Velmarch, seções sobre A Grande Guerra estão marcadas como 'classificação restrita'.",
+    "secrets": "SEGREDO DO MESTRE: Os elfos foram responsáveis pela invocação de O Peso numa tentativa de dominar o mundo. Isso é o que justificou — moralmente, para os povos sobreviventes — a Caça aos Elfos que se seguiu. A Grande Guerra não foi uma guerra entre povos. Foi a consequência de um experimento que deu errado de forma catastrófica.",
+    "characters": ["himmel-varek", "frieren-talion"],
+    "relatedEvents": ["abraco-aguas-eternas", "caca-elfos"]
+  },
+  {
+    "id": "abraco-aguas-eternas",
+    "name": "O Abraço das Águas Eternas",
+    "period": "A Maré Alta — O Marco Zero da História de Pelágos",
+    "order": 2,
+    "scale": "Mundial",
+    "location": "velmyr",
+    "description": "O evento que dividiu a história de Pelágos em antes e depois. Conhecido popularmente como A Maré Alta — o nome poético que Himmel escolheu foi gradualmente apagado pela oralidade até virar uma força da natureza sem autor, sem intenção, sem amor.\n\nHimmel realizou o ritual no pico mais alto do continente — hoje a ilha de Velmyr. Usou sua própria vida como catalisador. O sacrifício precisava ser voluntário e partir de alguém que amasse o mundo o suficiente para destruí-lo. As águas subiram em sete dias. Cidades inteiras afundaram. Civilizações viraram lendas. Pelágos nasceu dos fragmentos do que sobrou.",
+    "secrets": "SEGREDO DO MESTRE — O VERDADEIRO PERIGO: O tomo de Himmel descreve o selo, o sacrifício — e o que está lá embaixo. Se o nível do mar baixar, O Peso acorda. Os jogadores vão partir atrás de um segredo para derrubar um império. O que vão encontrar é uma escolha impossível: o império que eles odeiam existe porque alguém amou o mundo mais do que a própria vida — e derrubá-lo pode custar tudo.\n\nFrieren estava presente. Viu as águas subirem do pico mais alto de Reva, com Fern nos braços. Foi a única que tentou impedir Himmel — e a única que ele abraçou antes de começar.",
+    "characters": ["himmel-varek", "frieren-talion"],
+    "relatedEvents": ["grande-guerra", "caca-elfos"]
+  },
+  {
+    "id": "caca-elfos",
+    "name": "A Caça aos Elfos",
+    "period": "Pós-Maré Alta — imediata e contínua até o presente",
+    "order": 3,
+    "scale": "Regional",
+    "location": "reva",
+    "description": "Os elfos sobreviventes à Maré Alta foram caçados até quase o fim. Não por ordem de nenhum rei ou decreto formal — pelo ódio acumulado de povos que haviam perdido tudo por causa dos magistas elfos que invocaram O Peso. A caça durou gerações.\n\nHoje, elfos são raridade tão extrema que mercadores inescrupulosos pagam fortunas por eles — vendidos como troféus vivos a burgueses das ilhas próximas a Velmyr. A maioria das pessoas em Pelágos nunca viu um elfo. Muitas não acreditam que ainda existam.\n\nA Corrente proíbe oficialmente o tráfico élfico. Extraoficialmente, fecha os olhos quando o comprador é suficientemente rico.",
+    "secrets": "SEGREDO DO MESTRE: A família Talion é a maior concentração de elfos vivos em Pelágos — possivelmente a única colônia organizada. Se Velmarch descobrisse Reva, seria o fim dos Talion. A Caça aos Elfos não terminou — apenas ficou mais discreta.",
+    "characters": ["frieren-talion", "fern-talion"],
+    "relatedEvents": ["grande-guerra", "abraco-aguas-eternas"]
+  }
+]

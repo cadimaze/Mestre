@@ -1,0 +1,82 @@
+[
+  {
+    "id": "kaldera",
+    "name": "Kaldera",
+    "subtitle": "A Grande Capital",
+    "type": "Ilha urbana / Capital comercial",
+    "controlledBy": "tulo-bresh",
+    "faction": "velmarch",
+    "tone": "Porto caótico — barulhento, superlotado, vibrante e perigoso",
+    "description": "Kaldera é o coração pulsante de Pelágos. A maior ilha habitada do arquipélago é também a mais barulhenta, a mais superlotada e a mais perigosa para quem não sabe onde pisa. Seus portos nunca dormem. Seus mercados nunca fecham. Seus becos nunca ficam vazios.\n\nA cidade cresceu sem planejamento sobre si mesma: bairros empilhados sobre bairros, pontes improvisadas conectando telhados, canais que antes eram ruas e ruas que antes eram canais. O cheiro é de peixe, especiaria, fumaça e esgoto, dependendo de qual vento sopra.\n\nA bandeira de Velmarch está em todo lugar. Oficiais d'A Corrente patrulham os mercados com a expressão de quem cobra pedágio existencial. Kaldera é oficialmente a vitrine do Domínio. Na prática, é onde o Domínio mostra os dentes.",
+    "pointsOfInterest": [
+      "O Porto Principal — navios de guerra d'A Corrente ancorados permanentemente",
+      "Os Grandes Mercados — onde produtos de todo Pelágos circulam",
+      "O Palácio do Governador — separado do caos por muros altos, cheio dos excessos pessoais de Tulo Bresh",
+      "Os Bairros Baixos — onde os pobres de Kaldera vivem sob taxação abusiva",
+      "O Distrito das Trocas — onde mercadores de todas as ilhas negociam"
+    ],
+    "secrets": "SEGREDO DO MESTRE: Soren Mael aparece regularmente em Kaldera — é um dos portos onde costuma ancorar. Se os jogadores o encontrarem aqui, é o início de tudo.",
+    "characters": ["tulo-bresh", "soren-mael"],
+    "events": []
+  },
+  {
+    "id": "velmyr",
+    "name": "Velmyr",
+    "subtitle": "A Ilha do Trono",
+    "type": "Capital imperial",
+    "controlledBy": "aldric-xiv",
+    "faction": "velmarch",
+    "tone": "Imponente e solar — branca e dourada à distância, muros altos, canhões para o mar",
+    "description": "Do outro lado de Pelágos, onde o oceano fica mais fundo e o vento mais constante, ergue-se Velmyr. Branca e dourada à distância — uma ilha de pedra clara que reflete a luz do sol de um jeito que a torna visível no horizonte antes de qualquer outra. Bela, sim. Mas a beleza é funcional: os muros altos, as torres de vigia, os canhões voltados para o mar em todas as direções.\n\nNão há nada em Velmyr que não sirva a um propósito. Os jardins são simétricos e sem exuberância. As ruas são largas o suficiente para marchar tropas. Chegar a Velmyr sem convite é quase impossível — não recebe mercadores, peregrinos ou curiosos.",
+    "pointsOfInterest": [
+      "O Palácio Varek — ocupa o ponto mais alto da ilha, o mesmo pico onde Himmel realizou o ritual",
+      "A Câmara Selada — onde o tomo de Himmel é guardado; acesso conhecido por menos de cinco pessoas vivas",
+      "O Porto Militar — único porto da ilha, sem função comercial",
+      "Os Templos d'O Fundador — onde Himmel é venerado sem rosto e sem história pessoal",
+      "Os Jardins de Taliyah — único espaço da ilha onde algo cresce por vontade, não por função"
+    ],
+    "secrets": "SEGREDO DO MESTRE: O pico onde fica o Palácio Varek é o mesmo ponto onde Himmel realizou O Abraço das Águas Eternas. Sob o palácio, nas fundações mais antigas, existem inscrições que nenhum arquiteto moderno consegue datar — escritas por Himmel antes do ritual. Se os jogadores chegarem lá, essas inscrições são a confirmação final de tudo.\n\nA Câmara Selada contém o tomo completo de Himmel. O tomo descreve O Peso, o ritual, o sacrifício — e o aviso: se o nível do mar baixar, O Peso acorda.",
+    "characters": ["aldric-xiv", "taliyah-varek", "cade-varek"],
+    "events": ["grande-guerra", "abraco-aguas-eternas"]
+  },
+  {
+    "id": "marvosa",
+    "name": "Marvosa",
+    "subtitle": "A Ilha do Prazer",
+    "type": "Território livre / Capital do entretenimento",
+    "controlledBy": "gloria-vittar",
+    "faction": null,
+    "tone": "Carnavalesco — festa permanente, cores, barulho, excesso em tudo",
+    "description": "Marvosa é visível a quilômetros de distância — não pelo tamanho, mas pelo barulho e pelas cores. Bandeiras, lanternas e tecidos de todas as tonalidades enfeitam cada mastro, cada janela, cada beco. À noite, o reflexo das luzes sobre o mar faz Marvosa parecer uma estrela caída no oceano.\n\nNão há estação seca nem chuvosa em Marvosa. Há apenas a festa — permanente, ininterrupta. Mercadores chegam para negociar e ficam três dias a mais do que planejavam. Oficiais d'A Corrente chegam com ordens e saem sem memória do que vieram fazer.\n\nVelmarch tentou estabelecer presença em Marvosa duas vezes. As duas vezes, os oficiais enviados voltaram sem ter conseguido nada concreto. A terceira tentativa nunca aconteceu.",
+    "pointsOfInterest": [
+      "O Grande Cassino — onde Gloria Vittar tem seu camarim no andar mais alto",
+      "O Porto Aberto — único porto de Pelágos sem inspeção d'A Corrente",
+      "Os Bairros de Entretenimento — tavernas, cassinos, casas de espetáculo",
+      "A Ala de Gloria — onde as trabalhadoras da Senhorita Vittar vivem e operam",
+      "O Teatro das Tempestades — onde as melhores companhias de Pelágos se apresentam"
+    ],
+    "secrets": "SEGREDO DO MESTRE: A Ala de Gloria tem aposentos preparados para coleta de informações — paredes falsas, espelhos de observação, acústica manipulada. Cada quarto de hóspede importante foi preparado para que Gloria nunca perca uma palavra. Tulo Bresh frequenta Marvosa regularmente e seus segredos estão todos documentados.",
+    "characters": ["gloria-vittar", "tulo-bresh"],
+    "events": []
+  },
+  {
+    "id": "reva",
+    "name": "Reva",
+    "subtitle": "A Ilha dos Talion",
+    "type": "Ilha pequena / Colônia élfica secreta",
+    "controlledBy": "fern-talion",
+    "faction": "familia-talion",
+    "tone": "Tranquila, humilde, agrícola — uma ilha simples que ninguém tem razão para inspecionar",
+    "description": "Uma ilha pequena, tranquila, de gente simples que cultiva a terra e troca minérios por grãos com navios que passam sem nunca ancorar por muito tempo. Nenhum viajante fica. Nenhum oficial d'A Corrente tem razão para inspecionar. Reva não causa problemas.\n\nAparentemente, não há nada de especial em Reva. É exatamente o que parece ser — e isso é intencional. Planificado por Himmel há séculos, mantido por Fern com cuidado diário.",
+    "pointsOfInterest": [
+      "A Casa dos Talion — uma estrutura que parece crescer das árvores em vez de construída",
+      "As Minas de Minério — a principal atividade econômica da ilha, de qualidade surpreendente",
+      "A Casa no Fim da Praia — onde Frieren vive, jardim sem flores por ordem dela",
+      "O Bosque do Centro — onde, sob gerações de terra cultivada, pulsa o cristal de Himmel",
+      "A Costa de Ancoramento — onde navios param brevemente para negociar"
+    ],
+    "secrets": "SEGREDO DO MESTRE: No núcleo da ilha, enterrado sob gerações de terra cultivada, pulsa um cristal antigo instalado por Himmel Varek. Seu efeito é invisível e constante: qualquer elfo dentro do raio da ilha apresenta orelhas arredondadas, estatura comum, olhos sem brilho característico — humano em tudo que um olhar percebe.\n\nO cristal é a única razão pela qual os Talion existem. Se for destruído — por descuido, por magia, por interferência externa — todos os elfos de Reva revelarão sua verdadeira aparência simultaneamente. Com qualquer navio nas proximidades, seria uma sentença de morte para a família inteira.",
+    "characters": ["frieren-talion", "fern-talion"],
+    "events": ["caca-elfos"]
+  }
+]

@@ -1,0 +1,57 @@
+[
+  {
+    "id": "velmarch",
+    "name": "O Domínio de Velmarch",
+    "type": "Potência imperial",
+    "color": "#2a4a8a",
+    "symbol": "⚓",
+    "description": "O Domínio de Velmarch não se apresenta como um império conquistador — ele se apresenta como uma necessidade. Há séculos a maior potência de Pelágos expande sua influência de ilha em ilha, não pela força bruta, mas pela lógica implacável da ordem: rotas comerciais seguras, arbitragem de conflitos, erradicação da pirataria, moeda unificada. As ilhas não são invadidas — elas 'aderem'. Velmarch lembra de tudo que cada ilha deve, e cobra com juros.",
+    "secrets": "SEGREDO DO MESTRE: Velmarch foi fundada por Himmel Varek após a Maré Alta, originalmente como estrutura de organização dos sobreviventes. O Domínio que seus descendentes construíram sobre esse sacrifício é algo que Himmel nunca planejou. O poder acumulado ao longo de catorze gerações transformou uma organização de sobrevivência numa máquina imperial que o próprio fundador não reconheceria.",
+    "members": ["aldric-xiv", "taliyah-varek", "cade-varek", "tulo-bresh"],
+    "locations": ["velmyr", "kaldera"]
+  },
+  {
+    "id": "a-corrente",
+    "name": "A Corrente",
+    "type": "Marinha imperial de Velmarch",
+    "color": "#1a4a6a",
+    "symbol": "〰",
+    "description": "A marinha do Domínio de Velmarch é chamada de A Corrente — e como uma corrente, ela flui para todo lugar e é impossível de segurar. Seus navios patrulham todas as rotas principais de Pelágos. A Corrente não é apenas uma força militar — é a face visível de Velmarch no cotidiano das ilhas. São eles que cobram as taxas, que julgam os piratas, que escoltam os comboios de grãos. Uniforme: capas brancas com detalhes em dourado.",
+    "secrets": "SEGREDO DO MESTRE: A Corrente proíbe oficialmente o tráfico élfico. Extraoficialmente, fecha os olhos quando o comprador é suficientemente rico. A vigilância de atividades políticas nas ilhas é sistematizada e vai além do que qualquer decreto oficial admite.",
+    "members": ["aldric-xiv"],
+    "locations": ["kaldera", "velmyr"]
+  },
+  {
+    "id": "casa-varek",
+    "name": "Casa Varek",
+    "type": "Dinastia real fundadora",
+    "color": "#1a3a6a",
+    "symbol": "👑",
+    "description": "A Casa Varek não é o mesmo que o Domínio de Velmarch — é mais antiga, mais pessoal e mais mítica. É a linhagem que começa com Himmel Varek e chega a Aldric XIV. Cada geração carrega o nome como um peso e uma responsabilidade. A Casa Varek é a razão pela qual o Domínio existe, e é a razão pela qual o Domínio às vezes parece um peso em vez de um poder.",
+    "secrets": "SEGREDO DO MESTRE: A Câmara Selada no subsolo do Palácio de Velmyr contém o tomo que Himmel escreveu antes de realizar o ritual. O tomo descreve O Peso, o selo, o sacrifício — e o que está lá embaixo. Aldric XIV sabe que o tomo existe e que deve ser guardado. Não sabe o que está escrito nele. Nunca leu.",
+    "members": ["himmel-varek", "aldric-xiv", "taliyah-varek", "cade-varek"],
+    "locations": ["velmyr"]
+  },
+  {
+    "id": "familia-talion",
+    "name": "Família Talion",
+    "type": "Colônia élfica secreta",
+    "color": "#2a5a2a",
+    "symbol": "🌿",
+    "description": "Uma família de pescadores e agricultores simples numa ilha pequena e tranquila. Ninguém questiona sua existência — Reva não causa problemas, não tem valor estratégico, e seus habitantes raramente saem. A Família Talion existe há gerações, trocando minério por grãos com navios de passagem.",
+    "secrets": "SEGREDO DO MESTRE — CRÍTICO: A Família Talion é inteiramente composta por elfos. A maioria dos membros não sabe disso, pois nascem e vivem em Reva, onde um cristal instalado por Himmel Varek remove as aparências élficas de todos os presentes.\n\nQuem sai da ilha e se afasta da costa percebe que algo muda no próprio rosto — orelhas que se alongam, olhos que ganham brilho. Nenhum que percebeu entendeu o que era. Os que perceberam, voltaram correndo e nunca falaram.\n\nApenas Frieren e Fern sabem a verdade completa. O cristal é a única razão pela qual os Talion existem. Se for destruído, todos os elfos de Reva revelarão sua verdadeira aparência simultaneamente — uma sentença de morte se houver qualquer navio nas proximidades.",
+    "members": ["frieren-talion", "fern-talion"],
+    "locations": ["reva"]
+  },
+  {
+    "id": "o-peso",
+    "name": "O Peso",
+    "type": "Entidade primordial",
+    "color": "#4a1a4a",
+    "symbol": "◉",
+    "description": "Anterior aos deuses conhecidos de Pelágos. O Peso não tem forma, não tem vontade articulada e não tem nome próprio — o termo foi cunhado pelos pesquisadores que estudaram seus efeitos antes do sacrifício de Himmel. É uma presença, uma fome gravitacional que corrói a realidade ao redor quando desperta. Não pensa em termos humanos. Não tem malícia consciente. Tem apenas um impulso primitivo de liberdade.",
+    "secrets": "SEGREDO DO MESTRE — CENTRAL: Selado a quilômetros abaixo do oceano pela Maré Alta. A água que o sela não é água comum — é água consagrada pelo sacrifício voluntário de Himmel Varek. Se o nível do mar baixar significativamente, o selo enfraquece. Se o ritual for revertido, o selo quebra.\n\nO Peso encontrou em Soren Mael uma fresta — um humano que chegou perto demais do ponto de selagem. Não o possui. Vaza por ele. A compulsão que Soren sente de revelar certos segredos é O Peso tentando, sem consciência, criar as condições para sua libertação.\n\nO verdadeiro perigo da campanha: os jogadores vão partir atrás de um segredo para derrubar um império. O que vão encontrar é uma escolha impossível — o império que eles odeiam existe porque alguém amou o mundo mais do que a própria vida. Derrubá-lo pode custar tudo.",
+    "members": [],
+    "locations": []
+  }
+]

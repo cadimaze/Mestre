@@ -1,0 +1,302 @@
+[
+  {
+    "sourceId": "himmel-varek",
+    "sourceType": "character",
+    "targetId": "frieren-talion",
+    "targetType": "character",
+    "label": "amou",
+    "type": "romantic",
+    "secret": true,
+    "description": "Amor que Himmel escolheu proteger escondendo Frieren e sua filha do mundo que ele estava prestes a recriar. O único que ele nunca sacrificou."
+  },
+  {
+    "sourceId": "himmel-varek",
+    "sourceType": "character",
+    "targetId": "fern-talion",
+    "targetType": "character",
+    "label": "pai de",
+    "type": "family",
+    "secret": true,
+    "description": "Pai biológico de Fern Talion. Nunca a conheceu — ela nasceu após sua morte. Fern sabe quem foi o pai, Frieren lhe contou antes de começar a esquecer."
+  },
+  {
+    "sourceId": "himmel-varek",
+    "sourceType": "character",
+    "targetId": "aldric-xiv",
+    "targetType": "character",
+    "label": "ancestral de",
+    "type": "family",
+    "secret": false,
+    "description": "Himmel Varek é o fundador da linhagem que, catorze gerações depois, chegou a Aldric XIV."
+  },
+  {
+    "sourceId": "himmel-varek",
+    "sourceType": "character",
+    "targetId": "casa-varek",
+    "targetType": "faction",
+    "label": "fundou",
+    "type": "historical",
+    "secret": false,
+    "description": "Himmel Varek fundou a Casa Varek como estrutura de organização dos sobreviventes da Maré Alta."
+  },
+  {
+    "sourceId": "himmel-varek",
+    "sourceType": "character",
+    "targetId": "o-peso",
+    "targetType": "faction",
+    "label": "selou",
+    "type": "historical",
+    "secret": true,
+    "description": "Himmel sacrificou a própria vida para selar O Peso sob o oceano consagrado. O Abraço das Águas Eternas foi o nome que ele deu ao ritual — escolhido para Frieren."
+  },
+  {
+    "sourceId": "himmel-varek",
+    "sourceType": "character",
+    "targetId": "velmyr",
+    "targetType": "location",
+    "label": "realizou o ritual em",
+    "type": "historical",
+    "secret": true,
+    "description": "O pico mais alto do antigo continente — hoje a ilha de Velmyr — foi onde Himmel realizou O Abraço das Águas Eternas. O Palácio Varek foi construído sobre esse ponto."
+  },
+  {
+    "sourceId": "aldric-xiv",
+    "sourceType": "character",
+    "targetId": "taliyah-varek",
+    "targetType": "character",
+    "label": "casado com",
+    "type": "family",
+    "secret": false,
+    "description": "Aldric e Taliyah são casados há décadas. Ele se fechou numa distância emocional que ela nunca conseguiu atravessar completamente. Ela ainda o ama."
+  },
+  {
+    "sourceId": "aldric-xiv",
+    "sourceType": "character",
+    "targetId": "cade-varek",
+    "targetType": "character",
+    "label": "pai de",
+    "type": "family",
+    "secret": false,
+    "description": "Aldric XIV é o pai de Cade — mas nunca lhe deu a aprovação que o filho desesperadamente busca. Esse vazio é o motor da futura traição de Cade."
+  },
+  {
+    "sourceId": "aldric-xiv",
+    "sourceType": "character",
+    "targetId": "tulo-bresh",
+    "targetType": "character",
+    "label": "tolera a corrupção de",
+    "type": "political",
+    "secret": true,
+    "description": "Aldric sabe que Tulo é corrupto. Enquanto Kaldera funcionar e os impostos chegarem, isso é suficiente. Uma conveniência mútua que Aldric prefere não examinar de perto."
+  },
+  {
+    "sourceId": "aldric-xiv",
+    "sourceType": "character",
+    "targetId": "velmarch",
+    "targetType": "faction",
+    "label": "lidera",
+    "type": "political",
+    "secret": false,
+    "description": "Aldric XIV é o rei soberano do Domínio de Velmarch, décimo quarto da linhagem Varek."
+  },
+  {
+    "sourceId": "taliyah-varek",
+    "sourceType": "character",
+    "targetId": "cade-varek",
+    "targetType": "character",
+    "label": "mãe de",
+    "type": "family",
+    "secret": false,
+    "description": "Taliyah é a mãe de Cade — a única pessoa que o ama sem agenda. Sofre em silêncio ao ver o filho despertar para o jogo de poder."
+  },
+  {
+    "sourceId": "frieren-talion",
+    "sourceType": "character",
+    "targetId": "fern-talion",
+    "targetType": "character",
+    "label": "mãe de",
+    "type": "family",
+    "secret": false,
+    "description": "Frieren é a mãe de Fern. Lhe contou tudo sobre o pai, o cristal e o sacrifício quando Fern era jovem — antes de começar a esquecer."
+  },
+  {
+    "sourceId": "frieren-talion",
+    "sourceType": "character",
+    "targetId": "familia-talion",
+    "targetType": "faction",
+    "label": "fundou",
+    "type": "historical",
+    "secret": false,
+    "description": "Frieren fundou a Família Talion como abrigo para os elfos sobreviventes à Caça, usando o cristal que Himmel instalou em Reva."
+  },
+  {
+    "sourceId": "frieren-talion",
+    "sourceType": "character",
+    "targetId": "reva",
+    "targetType": "location",
+    "label": "vive em",
+    "type": "historical",
+    "secret": false,
+    "description": "Frieren vive em Reva desde o fim da Maré Alta. A casa no fim da praia é dela — sem flores no jardim."
+  },
+  {
+    "sourceId": "fern-talion",
+    "sourceType": "character",
+    "targetId": "reva",
+    "targetType": "location",
+    "label": "administra",
+    "type": "political",
+    "secret": false,
+    "description": "Fern administra silenciosamente a vida da ilha — acordos comerciais, trocas de minério, interações com navios. Garante que ninguém saia sem necessidade."
+  },
+  {
+    "sourceId": "soren-mael",
+    "sourceType": "character",
+    "targetId": "o-peso",
+    "targetType": "faction",
+    "label": "veículo involuntário de",
+    "type": "secret",
+    "secret": true,
+    "description": "Soren mergulhou perto demais do ponto de selagem em algum momento de sua vida. Sobreviveu, mas algo ficou. O Peso não o possui — vaza por ele. A compulsão que ele sente de revelar certos segredos é O Peso tentando criar as condições para sua própria libertação."
+  },
+  {
+    "sourceId": "tulo-bresh",
+    "sourceType": "character",
+    "targetId": "kaldera",
+    "targetType": "location",
+    "label": "governa",
+    "type": "political",
+    "secret": false,
+    "description": "Tulo Bresh governa Kaldera como governador indicado por Aldric XIV — com corrupção sistemática que o rei conhece e tolera."
+  },
+  {
+    "sourceId": "tulo-bresh",
+    "sourceType": "character",
+    "targetId": "gloria-vittar",
+    "targetType": "character",
+    "label": "frequenta sem saber o risco",
+    "type": "secret",
+    "secret": true,
+    "description": "Tulo frequenta Marvosa regularmente. Gloria tem documentado cada visita com riqueza de detalhes comprometedores. Ele não sabe que ela tem poder real sobre ele."
+  },
+  {
+    "sourceId": "gloria-vittar",
+    "sourceType": "character",
+    "targetId": "tulo-bresh",
+    "targetType": "character",
+    "label": "tem dossiê sobre",
+    "type": "secret",
+    "secret": true,
+    "description": "Gloria possui informações comprometedoras sobre Tulo Bresh que poderiam destruir sua posição em Velmarch. Uma alavanca que ainda não usou — mas guarda."
+  },
+  {
+    "sourceId": "gloria-vittar",
+    "sourceType": "character",
+    "targetId": "marvosa",
+    "targetType": "location",
+    "label": "controla",
+    "type": "political",
+    "secret": false,
+    "description": "Gloria é a senhora incontestável de Marvosa — sem título oficial, sem decreto. Simplesmente, em algum momento, ficou claro que Marvosa é o que Gloria quer que seja."
+  },
+  {
+    "sourceId": "velmarch",
+    "sourceType": "faction",
+    "targetId": "a-corrente",
+    "targetType": "faction",
+    "label": "controla",
+    "type": "political",
+    "secret": false,
+    "description": "A Corrente é a marinha imperial de Velmarch — seu braço armado em todo o arquipélago."
+  },
+  {
+    "sourceId": "velmarch",
+    "sourceType": "faction",
+    "targetId": "kaldera",
+    "targetType": "location",
+    "label": "controla",
+    "type": "political",
+    "secret": false,
+    "description": "O Domínio de Velmarch governa Kaldera através do Governador Tulo Bresh."
+  },
+  {
+    "sourceId": "velmarch",
+    "sourceType": "faction",
+    "targetId": "velmyr",
+    "targetType": "location",
+    "label": "sede em",
+    "type": "political",
+    "secret": false,
+    "description": "Velmyr é a capital e sede do poder do Domínio de Velmarch."
+  },
+  {
+    "sourceId": "a-corrente",
+    "sourceType": "faction",
+    "targetId": "kaldera",
+    "targetType": "location",
+    "label": "presença militar em",
+    "type": "political",
+    "secret": false,
+    "description": "Navios de guerra d'A Corrente estão ancorados permanentemente no Porto Principal de Kaldera."
+  },
+  {
+    "sourceId": "casa-varek",
+    "sourceType": "faction",
+    "targetId": "velmarch",
+    "targetType": "faction",
+    "label": "governa",
+    "type": "political",
+    "secret": false,
+    "description": "A Casa Varek fundou e governa o Domínio de Velmarch há catorze gerações."
+  },
+  {
+    "sourceId": "familia-talion",
+    "sourceType": "faction",
+    "targetId": "reva",
+    "targetType": "location",
+    "label": "habita",
+    "type": "historical",
+    "secret": false,
+    "description": "A Família Talion é a única habitante permanente de Reva — desde que Himmel instalou o cristal e escondeu Frieren ali."
+  },
+  {
+    "sourceId": "o-peso",
+    "sourceType": "faction",
+    "targetId": "soren-mael",
+    "targetType": "character",
+    "label": "vaza por",
+    "type": "secret",
+    "secret": true,
+    "description": "O Peso encontrou em Soren Mael uma fresta para o mundo. Não o possui — vaza por ele como água por uma rachadura, guiando-o sem que ele perceba."
+  },
+  {
+    "sourceId": "grande-guerra",
+    "sourceType": "event",
+    "targetId": "abraco-aguas-eternas",
+    "targetType": "event",
+    "label": "tornou necessário",
+    "type": "historical",
+    "secret": false,
+    "description": "A Grande Guerra e o avanço de O Peso tornaram o Abraço das Águas Eternas a única saída possível."
+  },
+  {
+    "sourceId": "abraco-aguas-eternas",
+    "sourceType": "event",
+    "targetId": "caca-elfos",
+    "targetType": "event",
+    "label": "precipitou",
+    "type": "historical",
+    "secret": false,
+    "description": "A Maré Alta deu aos povos sobreviventes um culpado para o ódio acumulado — os elfos que haviam invocado O Peso. A Caça começou imediatamente depois."
+  },
+  {
+    "sourceId": "grande-guerra",
+    "sourceType": "event",
+    "targetId": "o-peso",
+    "targetType": "faction",
+    "label": "provocado por invocação de",
+    "type": "secret",
+    "secret": true,
+    "description": "A Grande Guerra foi causada pelos magistas elfos ao invocarem O Peso numa tentativa de dominar o mundo definitivamente. O que invocaram não obedeceu."
+  }
+]

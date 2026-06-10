@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mares e Marés — Pélágos</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ── HEADER ── -->
+  <header class="site-header">
+    <div class="header-brand">
+      <h1>Mares e Marés</h1>
+      <span>Pélágos — O Continente dos Mil Mares</span>
+    </div>
+    <nav class="header-nav">
+      <button class="nav-btn active" data-tab="painel">Painel</button>
+      <button class="nav-btn" data-tab="personagens">Personagens</button>
+      <button class="nav-btn" data-tab="locais">Locais</button>
+      <button class="nav-btn" data-tab="eventos">Eventos</button>
+      <button class="nav-btn" data-tab="faccoes">Facções</button>
+      <button class="nav-btn" data-tab="relacoes">Relações</button>
+    </nav>
+    <div class="header-actions">
+      <button class="search-toggle" id="search-toggle" title="Busca global (Ctrl+K)">🔍</button>
+    </div>
+  </header>
+
+  <!-- ── GLOBAL SEARCH OVERLAY ── -->
+  <div class="global-search-overlay" id="global-search-overlay">
+    <div class="global-search-box">
+      <input class="global-search-input" id="global-search-input" type="text" placeholder="Buscar personagens, locais, eventos, facções...">
+      <div class="global-search-results" id="global-search-results"></div>
+    </div>
+  </div>
+
+  <!-- ── MAIN ── -->
+  <main class="main-content">
+
+    <!-- PAINEL -->
+    <section class="tab-panel active" id="tab-painel">
+      <div class="campaign-hero">
+        <h2>Mares e Marés</h2>
+        <p class="subtitle">Pélágos — O Continente dos Mil Mares</p>
+        <p class="tagline">"O mar não guarda segredos para sempre."</p>
+      </div>
+
+      <div class="summary-cards">
+        <div class="summary-card">
+          <div class="icon">⚔️</div>
+          <div class="count" id="count-chars">0</div>
+          <div class="label">Personagens</div>
+        </div>
+        <div class="summary-card">
+          <div class="icon">🤿</div>
+          <div class="count" id="count-locations">0</div>
+          <div class="label">Locais</div>
+        </div>
+        <div class="summary-card">
+          <div class="icon">🏛️</div>
+          <div class="count" id="count-events">0</div>
+          <div class="label">Eventos</div>
+        </div>
+        <div class="summary-card">
+          <div class="icon">⚓</div>
+          <div class="count" id="count-factions">0</div>
+          <div class="label">Facções</div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="dashboard-section">
+          <h3>Conexões Recentes</h3>
+          <div id="recent-relations"></div>
+        </div>
+        <div class="dashboard-section secrets-alert">
+          <h3>⚠ Segredos do Mestre</h3>
+          <div class="secrets-count" id="secrets-total">0</div>
+          <div style="font-size:13px;color:#e07070;margin-bottom:8px;">elementos com segredos cadastrados</div>
+          <div class="secrets-warning">Lembre-se: segredos visíveis apenas neste painel</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERSONAGENS -->
+    <section class="tab-panel" id="tab-personagens">
+      <div class="filters-bar">
+        <input class="filter-input" id="char-filter-name" type="text" placeholder="🔍 Buscar por nome...">
+        <select class="filter-select" id="char-filter-faction">
+          <option value="">Todas as facções</option>
+        </select>
+        <select class="filter-select" id="char-filter-status">
+          <option value="">Todos os status</option>
+          <option value="Vivo">Vivo</option>
+          <option value="Morto">Morto</option>
+          <option value="Desaparecido">Desaparecido</option>
+        </select>
+        <button class="filter-toggle" id="char-filter-secrets">🔒 Com segredos</button>
+      </div>
+      <div class="characters-grid" id="characters-grid"></div>
+    </section>
+
+    <!-- LOCAIS -->
+    <section class="tab-panel" id="tab-locais">
+      <div class="locations-grid" id="locations-grid"></div>
+    </section>
+
+    <!-- EVENTOS -->
+    <section class="tab-panel" id="tab-eventos">
+      <div class="timeline" id="events-timeline"></div>
+    </section>
+
+    <!-- FACÇÕES -->
+    <section class="tab-panel" id="tab-faccoes">
+      <div class="factions-grid" id="factions-grid"></div>
+    </section>
+
+    <!-- RELAÇÕES -->
+    <section class="tab-panel" id="tab-relacoes">
+      <div class="relations-container">
+        <div class="graph-controls">
+          <button class="graph-filter-btn filter-all active" data-filter="all">Todos</button>
+          <button class="graph-filter-btn filter-character active" data-filter="character">Personagens</button>
+          <button class="graph-filter-btn filter-location active" data-filter="location">Locais</button>
+          <button class="graph-filter-btn filter-event active" data-filter="event">Eventos</button>
+          <button class="graph-filter-btn filter-faction active" data-filter="faction">Facções</button>
+          <button class="graph-filter-btn active" id="graph-labels-toggle">Labels de arestas</button>
+        </div>
+        <div class="graph-wrapper" id="graph-wrapper">
+          <svg id="graph-svg"></svg>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ── MODAL ── -->
+<div class="modal-overlay" id="modal-overlay"></div>
+<aside class="modal-panel" id="modal-panel">
+  <div class="modal-header">
+    <button class="modal-back-btn" id="modal-back-btn" disabled title="Voltar">‹</button>
+    <div class="modal-breadcrumb" id="modal-breadcrumb"></div>
+    <button class="modal-close" id="modal-close" title="Fechar">✕</button>
+  </div>
+  <div class="modal-body" id="modal-body"></div>
+</aside>
+
+<!-- ── SECRETS FLOAT BTN ── -->
+<button class="secrets-float-btn active" id="secrets-float-btn">🔓 Segredos</button>
+
+<!-- ── D3.js CDN ── -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="scripts/app.js"></script>
+</body>
+</html>
