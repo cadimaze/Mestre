@@ -782,7 +782,13 @@ function renderPainel() {
     if (secretsEl) secretsEl.textContent = [...d.characters, ...d.locations, ...d.events, ...d.factions].filter(hasSecrets).length;
   }
 
+  // Conexões Recentes — exclusivo do Mestre; jogadores só veem relações
+  // liberadas na aba Relações
   const relList = document.getElementById('recent-relations');
+  if (!STATE.isMaster) {
+    if (relList) relList.innerHTML = '';
+    return;
+  }
   const recent = d.relations.slice(-5).reverse();
   relList.innerHTML = recent.map(r => {
     const sName = getEntityName(r.sourceId, r.sourceType);
