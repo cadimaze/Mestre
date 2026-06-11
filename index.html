@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="Mares e Marés — a lore viva de Pelágos, o Continente dos Mil Mares. Campanha de D&D de navegação e pirataria.">
   <meta name="theme-color" content="#04101d">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%93%3C/text%3E%3C/svg%3E">
@@ -70,7 +70,7 @@
       <button class="nav-btn" data-tab="locais">Locais</button>
       <button class="nav-btn" data-tab="eventos">Eventos</button>
       <button class="nav-btn" data-tab="faccoes">Facções</button>
-      <button class="nav-btn master-only" data-tab="relacoes">Relações</button>
+      <button class="nav-btn" data-tab="relacoes">Relações</button>
       <button class="nav-btn master-only" data-tab="jogadores">Jogadores</button>
       <button class="nav-btn player-only" data-tab="meu-personagem">Meu Personagem</button>
     </nav>
@@ -179,7 +179,9 @@
           <button class="graph-filter-btn filter-location active" data-filter="location">Locais</button>
           <button class="graph-filter-btn filter-event active" data-filter="event">Eventos</button>
           <button class="graph-filter-btn filter-faction active" data-filter="faction">Facções</button>
+          <button class="graph-filter-btn filter-player active" data-filter="player">Jogadores</button>
           <button class="graph-filter-btn active" id="graph-labels-toggle">Labels de arestas</button>
+          <button class="relation-add-btn" id="relation-add-btn">✚ Nova Relação</button>
         </div>
         <div class="graph-wrapper" id="graph-wrapper">
           <svg id="graph-svg"></svg>
@@ -194,6 +196,7 @@
             <div class="legend-item"><span class="legend-dot dot-location"></span> Local</div>
             <div class="legend-item"><span class="legend-dot dot-event"></span> Evento</div>
             <div class="legend-item"><span class="legend-dot dot-faction"></span> Facção</div>
+            <div class="legend-item"><span class="legend-dot dot-player"></span> Jogador</div>
             <div class="legend-item"><span class="legend-line"></span> Relação secreta</div>
           </div>
         </div>
@@ -225,6 +228,11 @@
   </div>
   <div class="modal-body" id="modal-body"></div>
 </aside>
+
+<!-- ── RELATION DIALOG (criar / ver / gerenciar relações) ── -->
+<div class="relation-dialog-overlay" id="relation-dialog-overlay">
+  <div class="relation-dialog" id="relation-dialog"></div>
+</div>
 
 <!-- ── SECRETS FLOAT BTN (master only) ── -->
 <button class="secrets-float-btn master-only active" id="secrets-float-btn">🔓 Segredos</button>

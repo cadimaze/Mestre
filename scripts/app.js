@@ -6,7 +6,7 @@ import { getAuth, signInWithEmailAndPassword,
 import { getFirestore, collection, doc, getDoc,
          getDocs, setDoc, addDoc, updateDoc,
          deleteDoc, onSnapshot, query, orderBy,
-         serverTimestamp, writeBatch }            from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+         where, serverTimestamp, writeBatch }     from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 import { FIREBASE_CONFIG, MASTER_EMAIL, CAMPAIGN_ID,
          CLOUDINARY_CLOUD_NAME,
          CLOUDINARY_UPLOAD_PRESET }             from './firebase-config.js';
@@ -29,7 +29,7 @@ const STATE = {
   activeTab:       'painel',
   secretsVisible:  localStorage.getItem('secretsVisible') !== 'false',
   modal:           { stack: [], current: null },
-  graphFilters:    { character: true, location: true, event: true, faction: true },
+  graphFilters:    { character: true, location: true, event: true, faction: true, player: true },
   graphShowLabels: true,
   charFilters:     { name: '', faction: '', status: '', secretsOnly: false },
 };
@@ -125,20 +125,50 @@ async function loadUserProfile(uid) {
 }
 
 async function loadAllPlayers() {
-  if (!STATE.isMaster) return;
-  const snap = await getDocs(collection(db, 'users'));
-  STATE.players = snap.docs.map(d => ({ uid: d.id, ...d.data() }));
+  try {
+    const snap = await getDocs(collection(db, 'users'));
+    STATE.players = snap.docs.map(d => ({ uid: d.id, ...d.data() }));
+  } catch (err) {
+    console.error('[players]', err);
+    STATE.players = [];
+  }
 }
 
 // ── FIRESTORE SUBSCRIPTIONS ──────────────────────────────────────────────────
 function subscribeToCollection(collName) {
   const ref = collection(db, 'campaigns', CAMPAIGN_ID, collName);
-  const unsub = onSnapshot(ref, snap => {
-    const items = snap.docs.map(d => ({ ...d.data(), id: d.id }));
-    STATE.data[collName] = STATE.isMaster ? items : items.filter(isItemVisible);
-    rerenderSection(collName);
-  }, err => console.error(`[${collName}]`, err));
-  STATE.unsubscribers.push(unsub);
+
+  if (STATE.isMaster) {
+    const unsub = onSnapshot(ref, snap => {
+      STATE.data[collName] = snap.docs.map(d => ({ ...d.data(), id: d.id }));
+      rerenderSection(collName);
+    }, err => console.error(`[${collName}]`, err));
+    STATE.unsubscribers.push(unsub);
+    return;
+  }
+
+  // Jogadores: as regras do Firestore só liberam documentos visíveis, então
+  // escutamos consultas que casam com as regras e mesclamos os resultados.
+  const queries = [
+    query(ref, where('visibility.mode', '==', 'all')),
+    query(ref, where('visibility.playerIds', 'array-contains', STATE.user.uid)),
+  ];
+  if (collName === 'relations') {
+    queries.push(query(ref, where('createdBy', '==', STATE.user.uid)));
+  }
+
+  const partials = queries.map(() => new Map());
+  queries.forEach((q, i) => {
+    const unsub = onSnapshot(q, snap => {
+      partials[i].clear();
+      snap.docs.forEach(d => partials[i].set(d.id, { ...d.data(), id: d.id }));
+      const merged = new Map();
+      partials.forEach(m => m.forEach((v, k) => merged.set(k, v)));
+      STATE.data[collName] = [...merged.values()];
+      rerenderSection(collName);
+    }, err => console.error(`[${collName}]`, err));
+    STATE.unsubscribers.push(unsub);
+  });
 }
 
 function subscribeToAnnotations() {
@@ -151,21 +181,13 @@ function subscribeToAnnotations() {
   STATE.unsubscribers.push(unsub);
 }
 
-function isItemVisible(item) {
-  const v = item.visibility;
-  if (!v) return false;
-  if (v.mode === 'all') return true;
-  if (v.mode === 'specific') return (v.playerIds || []).includes(STATE.user.uid);
-  return false;
-}
-
 function rerenderSection(collName) {
   switch (collName) {
     case 'characters': renderPainel(); renderCharacters(); break;
     case 'locations':  renderPainel(); renderLocations();  break;
     case 'events':     renderPainel(); renderEvents();     break;
     case 'factions':   renderPainel(); renderFactions(); buildCharacterFilters(); break;
-    case 'relations':  if (STATE.activeTab === 'relacoes') renderGraph(); break;
+    case 'relations':  renderPainel(); if (STATE.activeTab === 'relacoes') renderGraph(); break;
   }
 }
 
@@ -231,7 +253,9 @@ function attachVisibilityEvents() {
   async function save() {
     const activeBtn = sec.querySelector('.vis-btn.active');
     const mode = activeBtn ? activeBtn.dataset.mode : 'hidden';
-    const playerIds = mode !== 'all'
+    // playerIds só é mantido no modo 'specific' — nos demais a lista é limpa
+    // para que itens ocultos nunca casem com as consultas dos jogadores
+    const playerIds = mode === 'specific'
       ? [...sec.querySelectorAll('.player-vis-check:checked')].map(c => c.dataset.uid)
       : [];
     await updateVisibility(collName, itemId, mode, playerIds);
@@ -339,6 +363,9 @@ const getFactionById  = id => STATE.data.factions.find(f => f.id === id);
 const getCharById     = id => STATE.data.characters.find(c => c.id === id);
 const getLocationById = id => STATE.data.locations.find(l => l.id === id);
 const getEventById    = id => STATE.data.events.find(e => e.id === id);
+const getPlayerByUid  = uid => STATE.players.find(p => p.uid === uid);
+const playerCharName  = p => p?.playerCharacter?.name || p?.displayName || '—';
+const listPlayerChars = () => STATE.players.filter(p => p.role === 'player' && p.playerCharacter?.name);
 
 function factionColor(factionId) {
   const f = getFactionById(factionId);
@@ -464,6 +491,10 @@ function renderPainel() {
 }
 
 function getEntityName(id, type) {
+  if (type === 'player') {
+    const p = getPlayerByUid(id);
+    return p ? playerCharName(p) : id;
+  }
   const fn = { character: getCharById, location: getLocationById, event: getEventById, faction: getFactionById }[type];
   return fn?.(id)?.name || id;
 }
@@ -796,9 +827,10 @@ function openModal(id, type, pushToStack = true) {
   overlay.classList.add('open');
   panel.classList.add('open');
 
-  // Wire up edit button for master
+  // Wire up edit button for master (fichas de jogador são editadas pelo próprio jogador)
   const editBtn = document.getElementById('modal-edit-btn');
   if (editBtn) {
+    editBtn.style.visibility = type === 'player' ? 'hidden' : '';
     editBtn.innerHTML = '✏ Editar';
     editBtn.onclick = () => openEditMode(id, type);
   }
@@ -892,6 +924,7 @@ function buildModalContent(id, type) {
     location:  buildLocationModalContent,
     event:     buildEventModalContent,
     faction:   buildFactionModalContent,
+    player:    buildPlayerModalContent,
   })[type]?.(id) || '';
 }
 
@@ -1081,6 +1114,49 @@ function buildFactionModalContent(id) {
   `;
 }
 
+// ── MODAL: PLAYER ─────────────────────────────────────────────────────────────
+function buildPlayerModalContent(uid) {
+  const p = getPlayerByUid(uid);
+  if (!p) return '';
+  const pc   = p.playerCharacter || {};
+  const name = playerCharName(p);
+
+  const rels = STATE.data.relations.filter(r =>
+    (r.sourceId === uid && r.sourceType === 'player') ||
+    (r.targetId === uid && r.targetType === 'player')
+  );
+  const relItems = rels.map(r => {
+    const isSource  = r.sourceId === uid;
+    const otherId   = isSource ? r.targetId   : r.sourceId;
+    const otherType = isSource ? r.targetType : r.sourceType;
+    const color = relTypeColor(r.type);
+    return `<div class="modal-relation-tag" data-modal-id="${otherId}" data-modal-type="${otherType}">
+      <div class="rel-type-indicator" style="background:${color}"></div>
+      <span class="rel-target-name">${escHtml(getEntityName(otherId, otherType))}</span>
+      <span class="rel-label-text">${escHtml(r.label || '')}</span>
+      ${r.secret && STATE.isMaster ? '<span title="Relação secreta" style="opacity:.6;">🔒</span>' : ''}
+    </div>`;
+  }).join('');
+
+  const details = [pc.race, pc.charClass, pc.background].filter(Boolean).map(escHtml).join(' · ');
+
+  return `
+    <div class="modal-char-hero">
+      <div class="modal-char-avatar"><div class="modal-char-avatar-placeholder">${escHtml(name.charAt(0).toUpperCase())}</div></div>
+      <div class="modal-char-info">
+        <div class="modal-char-name">${escHtml(name)}</div>
+        <div class="modal-char-role">${details}</div>
+        <div class="badges"><span class="badge player-badge">⚔ Jogador: ${escHtml(p.displayName || '')}</span></div>
+      </div>
+    </div>
+    ${pc.appearance ? `<div class="modal-section"><div class="modal-section-title">Aparência</div><div class="modal-section-text">${escHtml(pc.appearance)}</div></div>` : ''}
+    ${pc.personality ? `<div class="modal-section"><div class="modal-section-title">Personalidade &amp; Motivações</div><div class="modal-section-text">${escHtml(pc.personality)}</div></div>` : ''}
+    ${pc.notes ? `<div class="modal-section"><div class="modal-section-title">Notas</div><div class="modal-section-text">${escHtml(pc.notes)}</div></div>` : ''}
+    ${relItems ? `<div class="modal-section"><div class="modal-section-title">Relações</div><div class="modal-relations-list">${relItems}</div></div>` : ''}
+    ${buildAnnotationsSection(uid, 'player')}
+  `;
+}
+
 // ── GLOBAL SEARCH ─────────────────────────────────────────────────────────────
 function buildSearchIndex() {
   const idx = [];
@@ -1137,7 +1213,7 @@ function setupSearch() {
 // ── GRAPH ─────────────────────────────────────────────────────────────────────
 let graphSimulation = null;
 
-const GRAPH_TYPE_LABEL = { character: 'Personagem', location: 'Local', event: 'Evento', faction: 'Facção' };
+const GRAPH_TYPE_LABEL = { character: 'Personagem', location: 'Local', event: 'Evento', faction: 'Facção', player: 'Jogador' };
 const GRAPH_GLYPH      = { location: '🏝', event: '📜' };
 
 // Imagem do nó: retrato do personagem, ou imageUrl de qualquer entidade que tenha
@@ -1146,16 +1222,18 @@ function nodeImgSrc(d) {
     const c = getCharById(d.id);
     return c ? charImgSrc(c) : null;
   }
+  if (d.type === 'player') return getPlayerByUid(d.id)?.playerCharacter?.imageUrl || null;
   const item = getItemById(d.id, d.type);
   return item?.imageUrl || null;
 }
 
-// Conteúdo do nó quando não há imagem: inicial (personagem), símbolo (facção) ou ícone
+// Conteúdo do nó quando não há imagem: inicial (personagem/jogador), símbolo (facção) ou ícone
 function appendNodeGlyph(node, d, r) {
-  if (d.type === 'character') {
+  if (d.type === 'character' || d.type === 'player') {
     node.append('text').attr('class', 'node-initial')
       .attr('text-anchor', 'middle').attr('dy', '.36em')
       .attr('font-size', Math.round(r * 0.95))
+      .attr('fill', d.type === 'player' ? 'rgba(106,198,198,.6)' : null)
       .text((d.name || '?').charAt(0).toUpperCase());
     return;
   }
@@ -1169,6 +1247,10 @@ function appendNodeGlyph(node, d, r) {
 }
 
 function graphTooltipSub(d) {
+  if (d.type === 'player') {
+    const pc = getPlayerByUid(d.id)?.playerCharacter || {};
+    return [pc.race, pc.charClass].filter(Boolean).join(' · ') || 'Personagem de jogador';
+  }
   const item = getItemById(d.id, d.type);
   if (!item) return '';
   return { character: item.role, location: item.subtitle, event: item.period, faction: item.type }[d.type] || '';
@@ -1220,7 +1302,7 @@ function renderGraph() {
   }
   tip.classList.remove('visible');
 
-  const { character, location, event, faction } = STATE.graphFilters;
+  const { character, location, event, faction, player } = STATE.graphFilters;
   const nodes   = [];
   const nodeMap = {};
   const addNode = (id, type, name) => { if (!nodeMap[id]) { nodeMap[id] = { id, type, name, degree: 0 }; nodes.push(nodeMap[id]); } };
@@ -1229,14 +1311,15 @@ function renderGraph() {
   if (location)  STATE.data.locations.forEach(l => addNode(l.id, 'location', l.name));
   if (event)     STATE.data.events.forEach(e => addNode(e.id, 'event', e.name));
   if (faction)   STATE.data.factions.forEach(f => addNode(f.id, 'faction', f.name));
+  if (player)    listPlayerChars().forEach(p => addNode(p.uid, 'player', playerCharName(p)));
 
   const links = STATE.data.relations
     .filter(r => nodeMap[r.sourceId] && nodeMap[r.targetId])
-    .map(r => ({ source: r.sourceId, target: r.targetId, label: r.label, type: r.type || 'historical', secret: r.secret || false }));
+    .map(r => ({ rel: r, source: r.sourceId, target: r.targetId, label: r.label, type: r.type || 'historical', secret: r.secret || false }));
 
   links.forEach(l => { if (nodeMap[l.source]) nodeMap[l.source].degree++; if (nodeMap[l.target]) nodeMap[l.target].degree++; });
 
-  const NODE_COLOR = { character: '#cfac6e', location: '#5a8ab0', event: '#7a9a6a', faction: '#9a5a5a' };
+  const NODE_COLOR = { character: '#cfac6e', location: '#5a8ab0', event: '#7a9a6a', faction: '#9a5a5a', player: '#4aa3a3' };
   const getNodeColor = d => d.type === 'faction' ? (getFactionById(d.id)?.color || NODE_COLOR.faction) : (NODE_COLOR[d.type] || '#9a5a5a');
   const radiusOf = d => Math.min(34, Math.max(17, 13 + d.degree * 2));
 
@@ -1253,6 +1336,13 @@ function renderGraph() {
     .attr('stroke-dasharray', d => d.secret ? '5,4' : null)
     .style('opacity', 0.55)
     .attr('marker-end', d => `url(#arrow-${d.type})`);
+
+  // Área de toque invisível sobre cada aresta — clique abre o painel da relação
+  const linkHitEl = linkG.selectAll('.graph-link-hit').data(links).enter()
+    .append('line').attr('class', 'graph-link-hit')
+    .attr('stroke', 'transparent').attr('stroke-width', 16)
+    .style('cursor', 'pointer')
+    .on('click', (e, d) => { e.stopPropagation(); openRelationDialog(d.rel); });
 
   const linkLabelEl = g.append('g').attr('class', 'link-labels').selectAll('.graph-link-label')
     .data(links).enter().append('text').attr('class', 'graph-link-label')
@@ -1379,6 +1469,9 @@ function renderGraph() {
         .attr('x2', d.target.x - (dx / dist) * tr)
         .attr('y2', d.target.y - (dy / dist) * tr);
     });
+    linkHitEl
+      .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+      .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
     linkLabelEl.attr('x', d => (d.source.x + d.target.x) / 2).attr('y', d => (d.source.y + d.target.y) / 2);
     nodeEl.attr('transform', d => `translate(${d.x},${d.y})`);
   });
@@ -1410,6 +1503,207 @@ function setupGraphControls() {
     labelsBtn.classList.toggle('active', STATE.graphShowLabels);
     renderGraph();
   });
+
+  const addRelBtn = document.getElementById('relation-add-btn');
+  if (addRelBtn) addRelBtn.onclick = () => openRelationDialog(null);
+}
+
+// ── RELATION DIALOG (criar / ver / gerenciar relações) ───────────────────────
+const REL_TYPE_OPTIONS = [
+  ['family',     'Família'],
+  ['romantic',   'Romântica'],
+  ['political',  'Política'],
+  ['historical', 'Histórica'],
+  ['secret',     'Secreta'],
+];
+
+function closeRelationDialog() {
+  document.getElementById('relation-dialog-overlay')?.classList.remove('open');
+}
+
+function entityOptionsHtml(selectedVal = '') {
+  const group = (label, items, type, nameFn) => {
+    const opts = items.map(it => {
+      const id  = type === 'player' ? it.uid : it.id;
+      const val = `${type}:${id}`;
+      return `<option value="${val}" ${val === selectedVal ? 'selected' : ''}>${escHtml(nameFn(it))}</option>`;
+    }).join('');
+    return opts ? `<optgroup label="${label}">${opts}</optgroup>` : '';
+  };
+  return group('Personagens', STATE.data.characters, 'character', c => c.name)
+       + group('Jogadores',   listPlayerChars(),     'player',    playerCharName)
+       + group('Locais',      STATE.data.locations,  'location',  l => l.name)
+       + group('Eventos',     STATE.data.events,     'event',     e => e.name)
+       + group('Facções',     STATE.data.factions,   'faction',   f => f.name);
+}
+
+function relVisibilityControlsHtml(rel) {
+  if (!STATE.isMaster) return '';
+  const mode   = rel?.visibility?.mode || 'hidden';
+  const isAll  = mode === 'all';
+  const isSpec = mode === 'specific';
+  const checks = STATE.players.filter(p => p.role === 'player').map(p => {
+    const checked = (rel?.visibility?.playerIds || []).includes(p.uid) ? 'checked' : '';
+    return `<label class="player-vis-label">
+      <input type="checkbox" class="rd-vis-check" data-uid="${p.uid}" ${checked}>
+      <span>${escHtml(p.displayName || '')}</span>
+    </label>`;
+  }).join('') || '<span class="rd-empty-note">Nenhum jogador registrado ainda.</span>';
+
+  return `<div class="rd-vis-section">
+    <label class="edit-label">Quais jogadores podem ver esta relação?</label>
+    <div class="vis-controls">
+      <button type="button" class="vis-btn vis-btn-all ${isAll ? 'active' : ''}" data-mode="all">🌐 Todos</button>
+      <button type="button" class="vis-btn ${isSpec ? 'active' : ''}" data-mode="specific">👁 Específicos</button>
+      <button type="button" class="vis-btn ${!isAll && !isSpec ? 'active' : ''}" data-mode="hidden">🔒 Oculta</button>
+    </div>
+    <div class="vis-players ${isSpec ? '' : 'vis-players-hidden'}" id="rd-vis-players">${checks}</div>
+  </div>`;
+}
+
+function openRelationDialog(rel = null) {
+  const overlay = document.getElementById('relation-dialog-overlay');
+  const box     = document.getElementById('relation-dialog');
+  if (!overlay || !box) return;
+
+  const isNew   = !rel;
+  const isOwner = !!rel && rel.createdBy === STATE.user?.uid;
+  const canEdit = STATE.isMaster || isNew || isOwner;
+  const me      = getPlayerByUid(STATE.user?.uid);
+  const myVal   = `player:${STATE.user?.uid}`;
+
+  // Jogador sem ficha preenchida não tem origem para criar laços
+  if (isNew && !STATE.isMaster && !me?.playerCharacter?.name) {
+    box.innerHTML = `
+      <div class="rd-header"><div class="rd-title">✚ Nova Relação</div>
+        <button class="rd-close" type="button">✕</button></div>
+      <p class="rd-note">Preencha o nome do seu personagem na aba <strong>Meu Personagem</strong> antes de criar laços de relação.</p>`;
+    overlay.classList.add('open');
+    box.querySelector('.rd-close').onclick = closeRelationDialog;
+    return;
+  }
+
+  const srcVal = rel ? `${rel.sourceType}:${rel.sourceId}` : (STATE.isMaster ? '' : myVal);
+  const tgtVal = rel ? `${rel.targetType}:${rel.targetId}` : '';
+  const typeOptions = REL_TYPE_OPTIONS
+    .filter(([v]) => STATE.isMaster || v !== 'secret')
+    .map(([v, l]) => `<option value="${v}" ${(rel?.type || 'historical') === v ? 'selected' : ''}>${l}</option>`).join('');
+
+  // Jogador criando: a origem é sempre o próprio personagem
+  const sourceField = (!STATE.isMaster && isNew)
+    ? `<div class="edit-field"><label class="edit-label">Origem</label>
+         <div class="rd-fixed-source">⚔ ${escHtml(playerCharName(me))} <span>(seu personagem)</span></div>
+         <input type="hidden" name="source" value="${myVal}"></div>`
+    : `<div class="edit-field"><label class="edit-label">Origem *</label>
+         <select class="edit-select" name="source" ${canEdit ? '' : 'disabled'}>
+           <option value="">— Selecione —</option>${entityOptionsHtml(srcVal)}
+         </select></div>`;
+
+  box.innerHTML = `
+    <div class="rd-header">
+      <div class="rd-title">${isNew ? '✚ Nova Relação' : '🔗 Relação'}</div>
+      <button class="rd-close" type="button">✕</button>
+    </div>
+    <form id="rd-form" class="rd-form">
+      <div class="rd-row">
+        ${sourceField}
+        <div class="edit-field"><label class="edit-label">Alvo *</label>
+          <select class="edit-select" name="target" ${canEdit ? '' : 'disabled'}>
+            <option value="">— Selecione —</option>${entityOptionsHtml(tgtVal)}
+          </select></div>
+      </div>
+      <div class="rd-row">
+        <div class="edit-field"><label class="edit-label">Rótulo *</label>
+          <input class="edit-input" name="label" value="${escHtml(rel?.label || '')}"
+            placeholder="Ex: amigo de, deve favores a..." ${canEdit ? '' : 'disabled'}></div>
+        <div class="edit-field"><label class="edit-label">Tipo</label>
+          <select class="edit-select" name="type" ${canEdit ? '' : 'disabled'}>${typeOptions}</select></div>
+      </div>
+      <div class="edit-field"><label class="edit-label">Descrição</label>
+        <textarea class="edit-textarea" name="description" rows="3"
+          placeholder="A história por trás deste laço..." ${canEdit ? '' : 'disabled'}>${escHtml(rel?.description || '')}</textarea></div>
+      ${STATE.isMaster ? `<label class="edit-checkbox-label rd-secret-check">
+        <input type="checkbox" name="secret" ${rel?.secret ? 'checked' : ''}> Relação secreta (linha tracejada, marcada com 🔒)
+      </label>` : ''}
+      ${relVisibilityControlsHtml(rel)}
+      <div class="rd-actions">
+        ${canEdit ? `<button type="submit" class="edit-save-btn">${isNew ? '✚ Criar Relação' : '✔ Salvar'}</button>` : ''}
+        <button type="button" class="edit-cancel-btn rd-cancel">Fechar</button>
+        ${!isNew && (STATE.isMaster || isOwner) ? '<button type="button" class="edit-delete-btn rd-delete">🗑 Excluir</button>' : ''}
+      </div>
+    </form>`;
+
+  overlay.classList.add('open');
+  box.querySelector('.rd-close').onclick  = closeRelationDialog;
+  box.querySelector('.rd-cancel').onclick = closeRelationDialog;
+
+  // Controles de visibilidade (mestre)
+  box.querySelectorAll('.rd-vis-section .vis-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      box.querySelectorAll('.rd-vis-section .vis-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('rd-vis-players')
+        ?.classList.toggle('vis-players-hidden', btn.dataset.mode !== 'specific');
+    });
+  });
+
+  const delBtn = box.querySelector('.rd-delete');
+  if (delBtn) delBtn.onclick = async () => {
+    if (!confirm('Excluir esta relação permanentemente?')) return;
+    await deleteDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'relations', rel.id));
+    closeRelationDialog();
+  };
+
+  document.getElementById('rd-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!canEdit) return;
+    const form   = e.target;
+    const fd     = new FormData(form);
+    const source = String(fd.get('source') || '').split(':');
+    const target = String(fd.get('target') || '').split(':');
+    const label  = String(fd.get('label') || '').trim();
+    if (source.length !== 2 || target.length !== 2 || !label) return;
+    if (fd.get('source') === fd.get('target')) { alert('Origem e alvo devem ser diferentes.'); return; }
+
+    const data = {
+      sourceType: source[0], sourceId: source[1],
+      targetType: target[0], targetId: target[1],
+      label,
+      type:        fd.get('type') || 'historical',
+      description: String(fd.get('description') || '').trim(),
+      secret:      STATE.isMaster ? fd.get('secret') === 'on' : (rel?.secret || false),
+    };
+
+    if (STATE.isMaster) {
+      const mode = box.querySelector('.rd-vis-section .vis-btn.active')?.dataset.mode || 'hidden';
+      data.visibility = {
+        mode,
+        playerIds: mode === 'specific'
+          ? [...box.querySelectorAll('.rd-vis-check:checked')].map(c => c.dataset.uid)
+          : [],
+      };
+    }
+
+    const saveBtn = form.querySelector('.edit-save-btn');
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Salvando...';
+
+    try {
+      if (isNew) {
+        data.createdBy = STATE.user.uid;
+        // Laços criados por jogadores nascem visíveis a todos; o mestre pode ocultar depois
+        if (!STATE.isMaster) data.visibility = { mode: 'all', playerIds: [] };
+        await addDoc(collection(db, 'campaigns', CAMPAIGN_ID, 'relations'), data);
+      } else {
+        await updateDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'relations', rel.id), data);
+      }
+      closeRelationDialog();
+    } catch (err) {
+      console.error('Relation save error:', err);
+      saveBtn.disabled = false;
+      saveBtn.textContent = '✘ Erro — tentar novamente';
+    }
+  });
 }
 
 // ── CLOUDINARY IMAGE UPLOAD ───────────────────────────────────────────────────
@@ -1428,7 +1722,7 @@ async function uploadToCloudinary(file) {
 // ── EDIT SYSTEM ───────────────────────────────────────────────────────────────
 
 function typeLabel(type) {
-  return { character: 'Personagem', location: 'Local', event: 'Evento', faction: 'Facção' }[type] || type;
+  return { character: 'Personagem', location: 'Local', event: 'Evento', faction: 'Facção', player: 'Jogador' }[type] || type;
 }
 
 function typeCollName(type) {
@@ -1436,7 +1730,7 @@ function typeCollName(type) {
 }
 
 function getItemById(id, type) {
-  return { character: getCharById, location: getLocationById, event: getEventById, faction: getFactionById }[type]?.(id);
+  return { character: getCharById, location: getLocationById, event: getEventById, faction: getFactionById, player: getPlayerByUid }[type]?.(id);
 }
 
 function generateId(name) {
@@ -1885,9 +2179,10 @@ async function onUserLoggedIn(user) {
   applyRoleUI();
   hideAuthOverlay();
 
+  await loadAllPlayers();
+
   // Check if campaign exists in Firestore
   if (STATE.isMaster) {
-    await loadAllPlayers();
     const exists = await (async () => {
       const snap = await getDoc(doc(db, 'campaigns', CAMPAIGN_ID));
       return snap.exists();
@@ -1933,6 +2228,10 @@ async function init() {
   document.getElementById('modal-overlay').addEventListener('click', closeModal);
   document.getElementById('modal-close').addEventListener('click', closeModal);
   document.getElementById('modal-back-btn').addEventListener('click', modalBack);
+
+  // Relation dialog: clique fora fecha
+  const rdOverlay = document.getElementById('relation-dialog-overlay');
+  if (rdOverlay) rdOverlay.addEventListener('click', e => { if (e.target === rdOverlay) closeRelationDialog(); });
 
   // Secrets toggle (master only)
   const secretsBtn = document.getElementById('secrets-float-btn');

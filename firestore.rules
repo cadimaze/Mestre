@@ -14,15 +14,18 @@ service cloud.firestore {
       return isAuth() && getUser().role == 'master';
     }
 
+    // Visível se liberado para todos ou se o uid está na lista de liberados.
+    // (playerIds só é preenchido quando o modo é 'specific' — o app limpa a
+    // lista nos outros modos, permitindo consultas compatíveis com as regras)
     function isVisible() {
       return resource.data.visibility.mode == 'all' ||
-        (resource.data.visibility.mode == 'specific' &&
-          request.auth.uid in resource.data.visibility.playerIds);
+        request.auth.uid in resource.data.visibility.playerIds;
     }
 
-    // Perfis de usuário
+    // Perfis de usuário — leitura liberada para autenticados
+    // (necessário para listar os personagens dos jogadores e laços entre eles)
     match /users/{uid} {
-      allow read:   if isAuth() && (request.auth.uid == uid || isMaster());
+      allow read:   if isAuth();
       allow create: if isAuth() && request.auth.uid == uid;
       allow update: if isAuth() && request.auth.uid == uid;
     }
@@ -47,9 +50,17 @@ service cloud.firestore {
         allow read, write: if isMaster();
         allow read: if isAuth() && isVisible();
       }
+
+      // Relações — jogadores criam laços próprios e gerenciam apenas os seus;
+      // o mestre controla a visibilidade de todas
       match /relations/{id} {
         allow read, write: if isMaster();
-        allow read: if isAuth() && isVisible();
+        allow read: if isAuth() &&
+          (isVisible() || resource.data.createdBy == request.auth.uid);
+        allow create: if isAuth() &&
+          request.resource.data.createdBy == request.auth.uid;
+        allow update, delete: if isAuth() &&
+          resource.data.createdBy == request.auth.uid;
       }
 
       // Anotações — todos autenticados podem ler e criar as próprias
