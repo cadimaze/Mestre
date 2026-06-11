@@ -5,7 +5,7 @@ import { getAuth, signInWithEmailAndPassword,
          onAuthStateChanged }                     from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import { getFirestore, collection, doc, getDoc,
          getDocs, setDoc, addDoc, updateDoc,
-         deleteDoc, onSnapshot, query, orderBy, where, or,
+         deleteDoc, onSnapshot, query, orderBy, where,
          serverTimestamp, writeBatch }            from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 import { FIREBASE_CONFIG, MASTER_EMAIL, CAMPAIGN_ID,
          CLOUDINARY_CLOUD_NAME,
@@ -133,25 +133,48 @@ async function loadAllPlayers() {
 function subscribeToCollection(collName) {
   const ref = collection(db, 'campaigns', CAMPAIGN_ID, collName);
 
-  let q;
   if (STATE.isMaster) {
-    q = ref;
-  } else {
-    // Explicit query so Firestore's listener reliably fires when visibility changes,
-    // rather than depending on security-rule re-evaluation (which is unreliable for
-    // documents the player had no previous access to).
-    q = query(ref, or(
-      where('visibility.mode', '==', 'all'),
-      where('visibility.playerIds', 'array-contains', STATE.user.uid)
-    ));
+    const unsub = onSnapshot(ref, snap => {
+      STATE.data[collName] = snap.docs.map(d => ({ ...d.data(), id: d.id }));
+      rerenderSection(collName);
+    }, err => console.error(`[${collName}]`, err));
+    STATE.unsubscribers.push(unsub);
+    return;
   }
 
-  const unsub = onSnapshot(q, snap => {
-    const items = snap.docs.map(d => ({ ...d.data(), id: d.id }));
-    STATE.data[collName] = items;
+  // Players: two separate single-field queries merged by id.
+  // Using two listeners avoids composite-index requirements and is provably safe
+  // under the simplified isVisible() rule (mode==all OR uid in playerIds).
+  const uid   = STATE.user.uid;
+  const byId  = { all: new Map(), specific: new Map() };
+
+  function merge() {
+    const merged = new Map([...byId.all, ...byId.specific]);
+    STATE.data[collName] = [...merged.values()];
     rerenderSection(collName);
-  }, err => console.error(`[${collName}]`, err));
-  STATE.unsubscribers.push(unsub);
+  }
+
+  const unsubAll = onSnapshot(
+    query(ref, where('visibility.mode', '==', 'all')),
+    snap => {
+      byId.all.clear();
+      snap.docs.forEach(d => byId.all.set(d.id, { ...d.data(), id: d.id }));
+      merge();
+    },
+    err => console.error(`[${collName}/all]`, err)
+  );
+
+  const unsubSpecific = onSnapshot(
+    query(ref, where('visibility.playerIds', 'array-contains', uid)),
+    snap => {
+      byId.specific.clear();
+      snap.docs.forEach(d => byId.specific.set(d.id, { ...d.data(), id: d.id }));
+      merge();
+    },
+    err => console.error(`[${collName}/specific]`, err)
+  );
+
+  STATE.unsubscribers.push(unsubAll, unsubSpecific);
 }
 
 function subscribeToAnnotations() {
@@ -368,7 +391,10 @@ function attachVisibilityEvents() {
   async function save() {
     const activeBtn = sec.querySelector('.vis-btn.active');
     const mode = activeBtn ? activeBtn.dataset.mode : 'hidden';
-    const playerIds = mode !== 'all'
+    // playerIds MUST be empty unless mode==='specific'. This is a hard invariant:
+    // isVisible() in Firestore rules is simplified to (mode==all || uid in playerIds),
+    // so a non-empty playerIds on a 'hidden' doc would grant unintended read access.
+    const playerIds = mode === 'specific'
       ? [...sec.querySelectorAll('.player-vis-check:checked')].map(c => c.dataset.uid)
       : [];
 

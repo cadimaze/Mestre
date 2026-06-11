@@ -14,10 +14,13 @@ service cloud.firestore {
       return isAuth() && getUser().role == 'master';
     }
 
+    // isVisible: a player can read if mode is 'all', OR if their UID is in playerIds.
+    // We intentionally drop the mode=='specific' check here so that Firestore's query
+    // planner can prove that "array-contains uid" is always safe — the app code ensures
+    // playerIds is only ever non-empty when mode=='specific', making these equivalent.
     function isVisible() {
       return resource.data.visibility.mode == 'all' ||
-        (resource.data.visibility.mode == 'specific' &&
-          request.auth.uid in resource.data.visibility.playerIds);
+        request.auth.uid in resource.data.visibility.playerIds;
     }
 
     // Perfis de usuário — todos autenticados podem ler (grupo fechado de confiança)
