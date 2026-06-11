@@ -1562,6 +1562,63 @@ body.is-master .vis-card-badge { display: block; }
 }
 .reveal-toast.toast-secret { animation: secretPulse 2.5s ease-in-out infinite; }
 
+/* ── Secret visibility controls inside character modal (master view) ─────────── */
+.sec-vis-wrap {
+  margin-top: 8px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(192,57,43,.1);
+}
+
+.sec-vis-label {
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 9px;
+  color: rgba(208,90,90,.5);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.sec-vis-btn-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.sec-vis-btn {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  color: #5a7a8a;
+  cursor: pointer;
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 10px;
+  letter-spacing: .03em;
+  padding: 4px 12px;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.sec-vis-btn:hover {
+  background: rgba(200,80,80,.08);
+  border-color: rgba(200,80,80,.2);
+  color: #c07070;
+}
+.sec-vis-btn.active {
+  background: rgba(200,80,80,.12);
+  border-color: rgba(200,80,80,.3);
+  color: #e07070;
+}
+
+.sec-vis-players {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 8px 10px;
+  background: rgba(0,0,0,.2);
+  border-radius: 5px;
+  border: 1px solid rgba(255,255,255,.05);
+  margin-top: 4px;
+}
+
 @media (max-width: 600px) {
   .pc-hero { grid-template-columns: 100px 1fr; gap: 16px; }
   .pc-portrait-img, .pc-portrait-placeholder { width: 90px; height: 112px; }

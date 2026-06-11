@@ -470,6 +470,69 @@ function buildAnnotationsSection(targetId, targetType) {
   </div>`;
 }
 
+function attachSecretVisEvents(charId) {
+  if (!STATE.isMaster) return;
+  const sec = document.getElementById('char-secrets-modal-section');
+  if (!sec) return;
+
+  async function saveSecretVis(secretId, mode, playerIds) {
+    const char = getCharById(charId);
+    if (!char) return;
+
+    const oldList    = Array.isArray(char.secretsList) ? char.secretsList
+                       : (char.secrets ? [{ id: '0', text: char.secrets, visibility: { mode: 'hidden', playerIds: [] } }] : []);
+    const oldSecret  = oldList.find(s => s.id === secretId);
+    const oldVis     = oldSecret?.visibility || { mode: 'hidden', playerIds: [] };
+
+    const newList = oldList.map(s =>
+      s.id === secretId ? { ...s, visibility: { mode, playerIds } } : s
+    );
+
+    await updateDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'characters', charId), { secretsList: newList });
+
+    // Notify newly-visible players
+    const allPlayerUids = STATE.players.filter(p => p.role === 'player').map(p => p.uid);
+    let newlyVisible = [];
+    if (mode === 'all' && oldVis.mode !== 'all') {
+      newlyVisible = allPlayerUids;
+    } else if (mode === 'specific') {
+      newlyVisible = playerIds.filter(uid => !(oldVis.playerIds || []).includes(uid));
+    }
+    if (newlyVisible.length) {
+      await sendRevealNotifications(newlyVisible, 'character', charId, char.name, 'secret');
+    }
+  }
+
+  sec.querySelectorAll('.sec-vis-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const secretId = btn.dataset.secretId;
+      const mode     = btn.dataset.mode;
+
+      // Update active state on buttons for this secret
+      sec.querySelectorAll(`.sec-vis-btn[data-secret-id="${secretId}"]`)
+         .forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+
+      // Show/hide player list
+      const playersDiv = document.getElementById(`svp-${secretId}`);
+      if (playersDiv) playersDiv.classList.toggle('pc-hidden', mode !== 'specific');
+
+      const playerIds = mode === 'specific'
+        ? [...sec.querySelectorAll(`.sec-player-check[data-secret-id="${secretId}"]:checked`)].map(c => c.dataset.uid)
+        : [];
+
+      await saveSecretVis(secretId, mode, playerIds);
+    });
+  });
+
+  sec.querySelectorAll('.sec-player-check').forEach(chk => {
+    chk.addEventListener('change', async () => {
+      const secretId  = chk.dataset.secretId;
+      const playerIds = [...sec.querySelectorAll(`.sec-player-check[data-secret-id="${secretId}"]:checked`)].map(c => c.dataset.uid);
+      await saveSecretVis(secretId, 'specific', playerIds);
+    });
+  });
+}
+
 function attachAnnotationEvents() {
   const btn = document.getElementById('annotation-submit');
   if (!btn) return;
@@ -531,26 +594,61 @@ function hasSecrets(item) {
 }
 
 function buildCharSecretsHtml(c) {
-  const uid = STATE.user?.uid;
+  const uid      = STATE.user?.uid;
   const isMaster = STATE.isMaster;
-  const list = Array.isArray(c.secretsList) ? c.secretsList : (c.secrets ? [{ id: '0', text: c.secrets, visibility: { mode: 'hidden', playerIds: [] } }] : []);
+  const list     = Array.isArray(c.secretsList)
+    ? c.secretsList
+    : (c.secrets ? [{ id: '0', text: c.secrets, visibility: { mode: 'hidden', playerIds: [] } }] : []);
   if (!list.length) return '';
 
   if (isMaster) {
+    const players = STATE.players.filter(p => p.role === 'player');
+
+    function secVisButtons(vis, secretId) {
+      const mode = vis?.mode || 'hidden';
+      return `<div class="sec-vis-btn-row" data-secret-id="${secretId}">
+        ${['hidden','specific','all'].map(m =>
+          `<button type="button" class="sec-vis-btn${mode===m?' active':''}" data-secret-id="${secretId}" data-mode="${m}">${
+            m==='hidden'?'🔒 Oculto':m==='specific'?'👁 Específicos':'🌐 Todos'
+          }</button>`
+        ).join('')}
+      </div>`;
+    }
+
+    function secPlayerChecks(vis, secretId) {
+      if (!players.length) return `<div class="pc-no-players" style="padding:8px 0;">Nenhum jogador cadastrado.</div>`;
+      const selectedIds = vis?.playerIds || [];
+      return `<div class="sec-vis-players${vis?.mode==='specific'?'':' pc-hidden'}" id="svp-${secretId}">
+        ${players.map(p =>
+          `<label class="pc-player-check-label">
+            <input type="checkbox" class="sec-player-check" data-secret-id="${secretId}" data-uid="${p.uid}"${selectedIds.includes(p.uid)?' checked':''}>
+            ${escHtml(p.displayName || p.email)}
+          </label>`
+        ).join('')}
+      </div>`;
+    }
+
     const items = list.map((s, i) => {
       const vis = s.visibility || { mode: 'hidden', playerIds: [] };
-      const visLabel = vis.mode === 'all' ? '🌐 Todos' : vis.mode === 'specific' ? `👁 Específicos (${(vis.playerIds||[]).length})` : '🔒 Oculto';
-      return `<div class="modal-char-secret-item">
+      return `<div class="modal-char-secret-item" data-secret-id="${s.id}">
         <div class="modal-char-secret-header">
           <span class="modal-char-secret-num">Segredo ${i+1}</span>
-          <span class="modal-char-secret-vis">${visLabel}</span>
         </div>
-        <div class="modal-section-text">${escHtml(s.text)}</div>
+        <div class="modal-section-text" style="margin-bottom:10px;">${escHtml(s.text)}</div>
+        <div class="sec-vis-wrap">
+          <div class="sec-vis-label">Visível para:</div>
+          ${secVisButtons(vis, s.id)}
+          ${secPlayerChecks(vis, s.id)}
+        </div>
       </div>`;
     }).join('');
-    return `<div class="modal-section secrets-section"><div class="modal-secrets">
-      <div class="modal-section-title">🔒 Segredos do Mestre</div>${items}
-    </div></div>`;
+
+    return `<div class="modal-section secrets-section" id="char-secrets-modal-section" data-char-id="${c.id}">
+      <div class="modal-secrets">
+        <div class="modal-section-title">🔒 Segredos do Mestre</div>
+        ${items}
+      </div>
+    </div>`;
   }
 
   // Player view — only show accessible secrets
@@ -1251,6 +1349,7 @@ function openModal(id, type, pushToStack = true) {
   attachModalEvents();
   attachVisibilityEvents();
   attachAnnotationEvents();
+  if (type === 'character') attachSecretVisEvents(id);
 }
 
 function closeModal() {
