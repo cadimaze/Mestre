@@ -14,20 +14,26 @@ service cloud.firestore {
       return isAuth() && getUser().role == 'master';
     }
 
-    // Visível se liberado para todos ou se o uid está na lista de liberados.
-    // (playerIds só é preenchido quando o modo é 'specific' — o app limpa a
-    // lista nos outros modos, permitindo consultas compatíveis com as regras)
+    // isVisible: a player can read if mode is 'all', OR if their UID is in playerIds.
+    // We intentionally drop the mode=='specific' check here so that Firestore's query
+    // planner can prove that "array-contains uid" is always safe — the app code ensures
+    // playerIds is only ever non-empty when mode=='specific', making these equivalent.
     function isVisible() {
       return resource.data.visibility.mode == 'all' ||
         request.auth.uid in resource.data.visibility.playerIds;
     }
 
-    // Perfis de usuário — leitura liberada para autenticados
-    // (necessário para listar os personagens dos jogadores e laços entre eles)
+    // Perfis de usuário — todos autenticados podem ler (grupo fechado de confiança)
     match /users/{uid} {
       allow read:   if isAuth();
       allow create: if isAuth() && request.auth.uid == uid;
       allow update: if isAuth() && request.auth.uid == uid;
+
+      // Notificações de revelação — mestre cria, jogador lê/atualiza as próprias
+      match /notifications/{notifId} {
+        allow read, update, delete: if isAuth() && request.auth.uid == uid;
+        allow create: if isAuth() && isMaster();
+      }
     }
 
     // Campanha e sub-coleções
@@ -50,9 +56,8 @@ service cloud.firestore {
         allow read, write: if isMaster();
         allow read: if isAuth() && isVisible();
       }
-
-      // Relações — jogadores criam laços próprios e gerenciam apenas os seus;
-      // o mestre controla a visibilidade de todas
+      // Relações — jogadores criam laços próprios (createdBy) e gerenciam
+      // apenas os seus; o mestre controla a visibilidade de todas
       match /relations/{id} {
         allow read, write: if isMaster();
         allow read: if isAuth() &&
