@@ -2683,8 +2683,14 @@ async function onUserLoggedIn(user) {
 
   const profile = await loadUserProfile(user.uid);
   if (!profile) {
-    // Profile doesn't exist yet — wait briefly for registration to complete
-    setTimeout(() => window.location.reload(), 500);
+    // No Firestore profile — user was deleted or registration never completed.
+    // Sign out to avoid an infinite reload loop, then show a clear error.
+    await signOut(auth);
+    const errEl = document.getElementById('login-error');
+    if (errEl) {
+      errEl.textContent = 'Conta não encontrada. Verifique com o mestre.';
+      errEl.style.display = 'block';
+    }
     return;
   }
 
