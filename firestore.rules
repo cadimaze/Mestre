@@ -27,7 +27,8 @@ service cloud.firestore {
     match /users/{uid} {
       allow read:   if isAuth();
       allow create: if isAuth() && request.auth.uid == uid;
-      allow update: if isAuth() && request.auth.uid == uid;
+      // O próprio usuário ou o mestre (edição de ficha de jogador)
+      allow update: if isAuth() && (request.auth.uid == uid || isMaster());
 
       // Notificações de revelação — mestre cria, jogador lê/atualiza as próprias
       match /notifications/{notifId} {

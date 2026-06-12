@@ -1583,6 +1583,31 @@ body::after {
   box-shadow: 0 0 8px currentColor;
 }
 
+.rel-vis-badge {
+  margin-left: auto;
+  font-size: 11px;
+  opacity: .7;
+  flex-shrink: 0;
+}
+
+.rel-manage-btn {
+  background: rgba(207,172,110,.08);
+  border: 1px solid rgba(207,172,110,.25);
+  border-radius: 7px;
+  color: var(--accent-gold);
+  width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all .15s;
+}
+.rel-manage-btn:hover {
+  background: rgba(207,172,110,.18);
+  border-color: var(--accent-gold);
+  transform: rotate(30deg);
+}
+
 .modal-link-list { display: flex; flex-direction: column; gap: 6px; }
 
 .modal-link-item {

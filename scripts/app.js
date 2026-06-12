@@ -1366,10 +1366,10 @@ function openModal(id, type, pushToStack = true) {
   overlay.classList.add('open');
   panel.classList.add('open');
 
-  // Wire up edit button for master (fichas de jogador são editadas pelo próprio jogador)
+  // Wire up edit button (ficha de jogador: só o mestre edita por aqui)
   const editBtn = document.getElementById('modal-edit-btn');
   if (editBtn) {
-    editBtn.style.visibility = type === 'player' ? 'hidden' : '';
+    editBtn.style.visibility = (type === 'player' && !STATE.isMaster) ? 'hidden' : '';
     editBtn.innerHTML = '✏ Editar';
     editBtn.onclick = () => openEditMode(id, type);
   }
@@ -1425,6 +1425,22 @@ function attachModalEvents() {
       e.stopPropagation();
       openModal(el.dataset.modalId, el.dataset.modalType);
     });
+  });
+
+  // Gerenciar relação direto da ficha (mestre)
+  document.getElementById('modal-body').querySelectorAll('.rel-manage-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const rel = STATE.data.relations.find(r => r.id === btn.dataset.relId);
+      if (rel) openRelationDialog(rel);
+    });
+  });
+
+  // Criar relação com origem pré-selecionada na ficha do jogador (mestre)
+  const addRelBtn = document.getElementById('player-add-rel-btn');
+  if (addRelBtn) addRelBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    openRelationDialog(null, `player:${addRelBtn.dataset.playerUid}`);
   });
 
   // Lightbox: click on character portrait to enlarge
@@ -1680,8 +1696,19 @@ function buildPlayerModalContent(uid) {
       <span class="rel-target-name">${escHtml(getEntityName(otherId, otherType))}</span>
       <span class="rel-label-text">${escHtml(relLabel)}</span>
       ${r.secret && STATE.isMaster ? '<span title="Relação secreta" style="opacity:.6;">🔒</span>' : ''}
+      ${STATE.isMaster ? `<span class="rel-vis-badge" title="Visibilidade para jogadores">${visBadgeEmoji(r)}</span>
+        <button class="rel-manage-btn" data-rel-id="${r.id}" title="Gerenciar esta relação">⚙</button>` : ''}
     </div>`;
   }).join('');
+
+  // O mestre sempre vê a seção de relações, com atalho para criar laços
+  // (inclusive ocultos do próprio jogador) a partir desta ficha
+  const relSection = (relItems || STATE.isMaster) ? `
+    <div class="modal-section"><div class="modal-section-title">Relações</div>
+      <div class="modal-relations-list">${relItems || ''}</div>
+      ${!relItems && STATE.isMaster ? '<div class="rd-empty-note" style="margin-bottom:10px;">Nenhuma relação ainda.</div>' : ''}
+      ${STATE.isMaster ? `<button class="add-new-btn" id="player-add-rel-btn" data-player-uid="${uid}" style="margin:10px 0 0;">✚ Nova relação deste personagem</button>` : ''}
+    </div>` : '';
 
   const details = [pc.race, pc.charClass, pc.background].filter(Boolean).map(escHtml).join(' · ');
 
@@ -1697,7 +1724,7 @@ function buildPlayerModalContent(uid) {
     ${pc.appearance ? `<div class="modal-section"><div class="modal-section-title">Aparência</div><div class="modal-section-text">${escHtml(pc.appearance)}</div></div>` : ''}
     ${pc.personality ? `<div class="modal-section"><div class="modal-section-title">Personalidade &amp; Motivações</div><div class="modal-section-text">${escHtml(pc.personality)}</div></div>` : ''}
     ${pc.notes ? `<div class="modal-section"><div class="modal-section-title">Notas</div><div class="modal-section-text">${escHtml(pc.notes)}</div></div>` : ''}
-    ${relItems ? `<div class="modal-section"><div class="modal-section-title">Relações</div><div class="modal-relations-list">${relItems}</div></div>` : ''}
+    ${relSection}
     ${buildAnnotationsSection(uid, 'player')}
   `;
 }
@@ -2107,7 +2134,7 @@ function relVisibilityControlsHtml(rel) {
   </div>`;
 }
 
-function openRelationDialog(rel = null) {
+function openRelationDialog(rel = null, presetSource = '') {
   const overlay = document.getElementById('relation-dialog-overlay');
   const box     = document.getElementById('relation-dialog');
   if (!overlay || !box) return;
@@ -2129,7 +2156,7 @@ function openRelationDialog(rel = null) {
     return;
   }
 
-  const srcVal = rel ? `${rel.sourceType}:${rel.sourceId}` : (STATE.isMaster ? '' : myVal);
+  const srcVal = rel ? `${rel.sourceType}:${rel.sourceId}` : (STATE.isMaster ? presetSource : myVal);
   const tgtVal = rel ? `${rel.targetType}:${rel.targetId}` : '';
   const typeOptions = REL_TYPE_OPTIONS
     .filter(([v]) => STATE.isMaster || v !== 'secret')
@@ -2198,11 +2225,20 @@ function openRelationDialog(rel = null) {
     });
   });
 
+  // Reabre o modal de entidade (se aberto) para refletir a mudança na ficha
+  function refreshOpenModal() {
+    const panelOpen = document.getElementById('modal-panel')?.classList.contains('open');
+    if (panelOpen && STATE.modal.current) {
+      openModal(STATE.modal.current.id, STATE.modal.current.type, false);
+    }
+  }
+
   const delBtn = box.querySelector('.rd-delete');
   if (delBtn) delBtn.onclick = async () => {
     if (!confirm('Excluir esta relação permanentemente?')) return;
     await deleteDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'relations', rel.id));
     closeRelationDialog();
+    refreshOpenModal();
   };
 
   document.getElementById('rd-form').addEventListener('submit', async e => {
@@ -2252,6 +2288,7 @@ function openRelationDialog(rel = null) {
         await updateDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'relations', rel.id), data);
       }
       closeRelationDialog();
+      refreshOpenModal();
     } catch (err) {
       console.error('Relation save error:', err);
       saveBtn.disabled = false;
@@ -2331,6 +2368,7 @@ function buildEditForm(id, type, item) {
     location:  buildLocationEditFields,
     event:     buildEventEditFields,
     faction:   buildFactionEditFields,
+    player:    buildPlayerEditFields,
   }[type]?.(item) || '';
 
   return `<div class="edit-form-container">
@@ -2339,7 +2377,7 @@ function buildEditForm(id, type, item) {
       <div class="edit-form-actions">
         <button type="submit" class="edit-save-btn">${isNew ? '✚ Criar' : '✔ Salvar Alterações'}</button>
         <button type="button" class="edit-cancel-btn">Cancelar</button>
-        ${!isNew ? `<button type="button" class="edit-delete-btn">🗑 Excluir ${typeLabel(type)}</button>` : ''}
+        ${!isNew && type !== 'player' ? `<button type="button" class="edit-delete-btn">🗑 Excluir ${typeLabel(type)}</button>` : ''}
       </div>
     </form>
   </div>`;
@@ -2520,6 +2558,25 @@ function buildFactionEditFields(f = {}) {
 
     <div class="edit-form-section-title">Segredos do Mestre</div>
     ${editField('Segredos (apenas você vê)', editTextarea('secrets', f.secrets, 'O que esta facção esconde...', 4))}
+  `;
+}
+
+function buildPlayerEditFields(p = {}) {
+  const pc = p.playerCharacter || {};
+  return `
+    <div class="edit-form-section-title">Ficha de ${escHtml(p.displayName || 'Jogador')}</div>
+    <div class="edit-row">
+      ${editField('Nome do Personagem *', editInput('pcName', pc.name, 'Nome do personagem'))}
+      ${editField('Raça', editInput('pcRace', pc.race, 'Ex: Humano, Elfo...'))}
+    </div>
+    <div class="edit-row">
+      ${editField('Classe', editInput('pcClass', pc.charClass, 'Ex: Guerreiro, Mago...'))}
+      ${editField('Antecedente', editInput('pcBackground', pc.background, 'Ex: Soldado, Sábio...'))}
+    </div>
+    ${editField('Aparência', editTextarea('pcAppearance', pc.appearance, 'Como o personagem parece...', 3))}
+    ${editField('Personalidade & Motivações', editTextarea('pcPersonality', pc.personality, 'O que o personagem quer, teme, acredita...', 3))}
+    ${editField('Notas (visíveis a todos)', editTextarea('pcNotes', pc.notes, 'Anotações públicas da jornada...', 3))}
+    <p class="rd-empty-note" style="margin-top:2px;">As alterações sobrescrevem a ficha que o jogador preencheu — ele continua podendo editá-la na aba Meu Personagem. Para laços ocultos do próprio jogador, use as relações da ficha com visibilidade 🔒 Oculta.</p>
   `;
 }
 
@@ -2756,6 +2813,35 @@ function attachEditFormEvents(id, type) {
     const saveBtn = form.querySelector('.edit-save-btn');
     saveBtn.disabled = true;
     saveBtn.textContent = 'Salvando...';
+
+    // Ficha de jogador: o mestre grava direto no perfil do usuário,
+    // preservando campos da ficha que não estão no formulário
+    if (type === 'player') {
+      try {
+        const fd = new FormData(form);
+        const get = k => String(fd.get(k) || '').trim();
+        const player = getPlayerByUid(id) || {};
+        const merged = {
+          ...(player.playerCharacter || {}),
+          name:        get('pcName'),
+          race:        get('pcRace'),
+          charClass:   get('pcClass'),
+          background:  get('pcBackground'),
+          appearance:  get('pcAppearance'),
+          personality: get('pcPersonality'),
+          notes:       get('pcNotes'),
+        };
+        await updateDoc(doc(db, 'users', id), { playerCharacter: merged });
+        if (player.uid) player.playerCharacter = merged;
+        if (STATE.activeTab === 'relacoes') renderGraph();
+        openModal(id, type, false);
+      } catch (err) {
+        console.error('Player sheet save error:', err);
+        saveBtn.disabled = false;
+        saveBtn.textContent = '✘ Erro — tentar novamente';
+      }
+      return;
+    }
 
     try {
       const fd   = new FormData(form);
