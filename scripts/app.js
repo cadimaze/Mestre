@@ -1436,11 +1436,12 @@ function attachModalEvents() {
     });
   });
 
-  // Criar relação com origem pré-selecionada na ficha do jogador (mestre)
-  const addRelBtn = document.getElementById('player-add-rel-btn');
-  if (addRelBtn) addRelBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    openRelationDialog(null, `player:${addRelBtn.dataset.playerUid}`);
+  // Criar relação com origem pré-selecionada na ficha aberta (mestre)
+  document.getElementById('modal-body').querySelectorAll('.modal-add-rel-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      openRelationDialog(null, btn.dataset.relSource);
+    });
   });
 
   // Lightbox: click on character portrait to enlarge
@@ -1484,34 +1485,48 @@ function buildModalContent(id, type) {
   })[type]?.(id) || '';
 }
 
-// ── MODAL: CHARACTER ──────────────────────────────────────────────────────────
-function buildCharModalContent(id) {
-  const c = getCharById(id);
-  if (!c) return '';
-
+// ── MODAL: seção de Relações compartilhada ────────────────────────────────────
+// Lista os laços de qualquer entidade; para o mestre inclui badge de
+// visibilidade, botão ⚙ de gerenciamento e atalho para criar novo laço
+function buildRelationsSectionFor(id, type) {
   const rels = STATE.data.relations.filter(r =>
-    (r.sourceId === id && r.sourceType === 'character') ||
-    (r.targetId === id && r.targetType === 'character')
+    (r.sourceId === id && r.sourceType === type) ||
+    (r.targetId === id && r.targetType === type)
   ).filter(r => {
     if (!STATE.isMaster && r.secret) return false;
     const otherId   = r.sourceId === id ? r.targetId   : r.sourceId;
-    const otherType = r.sourceId === id ? r.targetType  : r.sourceType;
-    return getEntityName(otherId, otherType) !== otherId;
+    const otherType = r.sourceId === id ? r.targetType : r.sourceType;
+    return getEntityName(otherId, otherType) !== otherId; // entidade visível
   });
 
   const relItems = rels.map(r => {
     const isSource     = r.sourceId === id;
     const otherId      = isSource ? r.targetId   : r.sourceId;
-    const otherType    = isSource ? r.targetType  : r.sourceType;
+    const otherType    = isSource ? r.targetType : r.sourceType;
     const displayLabel = isSource ? (r.label || '') : (r.labelTo || r.label || '');
     const color = relTypeColor(r.type);
     return `<div class="modal-relation-tag" data-modal-id="${otherId}" data-modal-type="${otherType}">
       <div class="rel-type-indicator" style="background:${color}"></div>
-      <span class="rel-target-name">${getEntityName(otherId, otherType)}</span>
-      <span class="rel-label-text">${displayLabel}</span>
+      <span class="rel-target-name">${escHtml(getEntityName(otherId, otherType))}</span>
+      <span class="rel-label-text">${escHtml(displayLabel)}</span>
       ${r.secret && STATE.isMaster ? '<span title="Relação secreta" style="opacity:.6;">🔒</span>' : ''}
+      ${STATE.isMaster ? `<span class="rel-vis-badge" title="Visibilidade para jogadores">${visBadgeEmoji(r)}</span>
+        <button class="rel-manage-btn" data-rel-id="${r.id}" title="Gerenciar esta relação">⚙</button>` : ''}
     </div>`;
   }).join('');
+
+  if (!relItems && !STATE.isMaster) return '';
+  return `<div class="modal-section"><div class="modal-section-title">Relações</div>
+    <div class="modal-relations-list">${relItems}</div>
+    ${!relItems && STATE.isMaster ? '<div class="rd-empty-note" style="margin-bottom:4px;">Nenhuma relação ainda.</div>' : ''}
+    ${STATE.isMaster ? `<button class="add-new-btn modal-add-rel-btn" data-rel-source="${type}:${id}" style="margin:10px 0 0;">✚ Nova relação</button>` : ''}
+  </div>`;
+}
+
+// ── MODAL: CHARACTER ──────────────────────────────────────────────────────────
+function buildCharModalContent(id) {
+  const c = getCharById(id);
+  if (!c) return '';
 
   const eventItems = (c.events || []).map(eid => {
     const ev = getEventById(eid);
@@ -1544,7 +1559,7 @@ function buildCharModalContent(id) {
     ${c.description ? `<div class="modal-section"><div class="modal-section-title">Descrição Pública</div><div class="modal-section-text">${c.description}</div></div>` : ''}
     ${c.personality ? `<div class="modal-section"><div class="modal-section-title">Personalidade</div><div class="modal-section-text">${c.personality}</div></div>` : ''}
     ${buildCharSecretsHtml(c)}
-    ${relItems ? `<div class="modal-section"><div class="modal-section-title">Relações</div><div class="modal-relations-list">${relItems}</div></div>` : ''}
+    ${buildRelationsSectionFor(id, 'character')}
     ${locItems ? `<div class="modal-section"><div class="modal-section-title">Locais Associados</div><div class="modal-link-list">${locItems}</div></div>` : ''}
     ${eventItems ? `<div class="modal-section"><div class="modal-section-title">Aparece nos Eventos</div><div class="modal-link-list">${eventItems}</div></div>` : ''}
     ${buildAnnotationsSection(id, 'character')}
@@ -1584,6 +1599,7 @@ function buildLocationModalContent(id) {
     ${l.description ? `<div class="modal-section"><div class="modal-section-title">Descrição</div><div class="modal-section-text">${l.description}</div></div>` : ''}
     ${poiHtml ? `<div class="modal-section"><div class="modal-section-title">Pontos de Interesse</div><ul class="poi-list">${poiHtml}</ul></div>` : ''}
     ${hasSecrets(l) ? `<div class="modal-section secrets-section"><div class="modal-secrets"><div class="modal-section-title">🔒 Segredos do Mestre</div><div class="modal-section-text">${l.secrets}</div></div></div>` : ''}
+    ${buildRelationsSectionFor(id, 'location')}
     ${charItems ? `<div class="modal-section"><div class="modal-section-title">Personagens Associados</div><div class="modal-link-list">${charItems}</div></div>` : ''}
     ${eventItems ? `<div class="modal-section"><div class="modal-section-title">Eventos que Ocorreram Aqui</div><div class="modal-link-list">${eventItems}</div></div>` : ''}
     ${buildAnnotationsSection(id, 'location')}
@@ -1636,24 +1652,6 @@ function buildFactionModalContent(id) {
     return l ? `<div class="modal-link-item" data-modal-id="${lid}" data-modal-type="location">${l.name}</div>` : '';
   }).join('');
 
-  const rels = STATE.data.relations.filter(r =>
-    (r.sourceId === id && r.sourceType === 'faction') ||
-    (r.targetId === id && r.targetType === 'faction')
-  );
-  const relItems = rels.map(r => {
-    const isSource     = r.sourceId === id;
-    const otherId      = isSource ? r.targetId   : r.sourceId;
-    const otherType    = isSource ? r.targetType  : r.sourceType;
-    const displayLabel = isSource ? (r.label || '') : (r.labelTo || r.label || '');
-    const color = relTypeColor(r.type);
-    return `<div class="modal-relation-tag" data-modal-id="${otherId}" data-modal-type="${otherType}">
-      <div class="rel-type-indicator" style="background:${color}"></div>
-      <span class="rel-target-name">${getEntityName(otherId, otherType)}</span>
-      <span class="rel-label-text">${displayLabel}</span>
-      ${r.secret && STATE.isMaster ? '<span title="Relação secreta" style="opacity:.6;">🔒</span>' : ''}
-    </div>`;
-  }).join('');
-
   return `
     ${buildVisibilitySection(f, 'factions')}
     <div class="modal-location-hero" style="border-left:3px solid ${f.color};">
@@ -1669,7 +1667,7 @@ function buildFactionModalContent(id) {
     ${hasSecrets(f) ? `<div class="modal-section secrets-section"><div class="modal-secrets"><div class="modal-section-title">🔒 Segredos do Mestre</div><div class="modal-section-text">${f.secrets}</div></div></div>` : ''}
     ${memberItems ? `<div class="modal-section"><div class="modal-section-title">Membros</div><div class="modal-link-list">${memberItems}</div></div>` : ''}
     ${locItems ? `<div class="modal-section"><div class="modal-section-title">Locais Controlados</div><div class="modal-link-list">${locItems}</div></div>` : ''}
-    ${relItems ? `<div class="modal-section"><div class="modal-section-title">Relações</div><div class="modal-relations-list">${relItems}</div></div>` : ''}
+    ${buildRelationsSectionFor(id, 'faction')}
     ${buildAnnotationsSection(id, 'faction')}
   `;
 }
@@ -1680,35 +1678,6 @@ function buildPlayerModalContent(uid) {
   if (!p) return '';
   const pc   = p.playerCharacter || {};
   const name = playerCharName(p);
-
-  const rels = STATE.data.relations.filter(r =>
-    (r.sourceId === uid && r.sourceType === 'player') ||
-    (r.targetId === uid && r.targetType === 'player')
-  );
-  const relItems = rels.map(r => {
-    const isSource  = r.sourceId === uid;
-    const otherId   = isSource ? r.targetId   : r.sourceId;
-    const otherType = isSource ? r.targetType : r.sourceType;
-    const relLabel  = isSource ? (r.label || '') : (r.labelTo || r.label || '');
-    const color = relTypeColor(r.type);
-    return `<div class="modal-relation-tag" data-modal-id="${otherId}" data-modal-type="${otherType}">
-      <div class="rel-type-indicator" style="background:${color}"></div>
-      <span class="rel-target-name">${escHtml(getEntityName(otherId, otherType))}</span>
-      <span class="rel-label-text">${escHtml(relLabel)}</span>
-      ${r.secret && STATE.isMaster ? '<span title="Relação secreta" style="opacity:.6;">🔒</span>' : ''}
-      ${STATE.isMaster ? `<span class="rel-vis-badge" title="Visibilidade para jogadores">${visBadgeEmoji(r)}</span>
-        <button class="rel-manage-btn" data-rel-id="${r.id}" title="Gerenciar esta relação">⚙</button>` : ''}
-    </div>`;
-  }).join('');
-
-  // O mestre sempre vê a seção de relações, com atalho para criar laços
-  // (inclusive ocultos do próprio jogador) a partir desta ficha
-  const relSection = (relItems || STATE.isMaster) ? `
-    <div class="modal-section"><div class="modal-section-title">Relações</div>
-      <div class="modal-relations-list">${relItems || ''}</div>
-      ${!relItems && STATE.isMaster ? '<div class="rd-empty-note" style="margin-bottom:10px;">Nenhuma relação ainda.</div>' : ''}
-      ${STATE.isMaster ? `<button class="add-new-btn" id="player-add-rel-btn" data-player-uid="${uid}" style="margin:10px 0 0;">✚ Nova relação deste personagem</button>` : ''}
-    </div>` : '';
 
   const details = [pc.race, pc.charClass, pc.background].filter(Boolean).map(escHtml).join(' · ');
 
@@ -1724,7 +1693,7 @@ function buildPlayerModalContent(uid) {
     ${pc.appearance ? `<div class="modal-section"><div class="modal-section-title">Aparência</div><div class="modal-section-text">${escHtml(pc.appearance)}</div></div>` : ''}
     ${pc.personality ? `<div class="modal-section"><div class="modal-section-title">Personalidade &amp; Motivações</div><div class="modal-section-text">${escHtml(pc.personality)}</div></div>` : ''}
     ${pc.notes ? `<div class="modal-section"><div class="modal-section-title">Notas</div><div class="modal-section-text">${escHtml(pc.notes)}</div></div>` : ''}
-    ${relSection}
+    ${buildRelationsSectionFor(uid, 'player')}
     ${buildAnnotationsSection(uid, 'player')}
   `;
 }
@@ -2639,28 +2608,34 @@ function attachEditFormEvents(id, type) {
       if (!visible.length) { editor.innerHTML = ''; return; }
       editor.innerHTML =
         `<div class="rel-header">
-          <span>Personagem</span>
+          <span>Personagem / Local</span>
           <span>Rótulo na minha ficha</span>
-          <span>Rótulo na ficha deles</span>
+          <span>Rótulo no outro lado</span>
           <span title="Visibilidade para jogadores">Vis.</span>
           <span></span>
         </div>` +
         visible.map(r => {
-          const idx      = relEdits.indexOf(r);
-          const isSource = r.sourceId === id || r._isNew;
-          const otherId  = isSource ? r.targetId : r.sourceId;
+          const idx       = relEdits.indexOf(r);
+          const isSource  = r.sourceId === id || r._isNew;
+          const otherId   = isSource ? r.targetId   : r.sourceId;
+          const otherType = isSource ? (r.targetType || 'character') : (r.sourceType || 'character');
           const myLabel    = isSource ? (r.label   || '') : (r.labelTo || '');
           const theirLabel = isSource ? (r.labelTo || '') : (r.label   || '');
           const isSecret   = !!r.secret;
+          const charOpts = STATE.data.characters.filter(c => c.id !== id)
+            .map(c => `<option value="character:${c.id}" ${otherType === 'character' && c.id === otherId ? 'selected' : ''}>${c.name}</option>`)
+            .join('');
+          const locOpts = STATE.data.locations
+            .map(l => `<option value="location:${l.id}" ${otherType === 'location' && l.id === otherId ? 'selected' : ''}>${l.name}</option>`)
+            .join('');
           return `<div class="rel-row">
             <select class="edit-select rel-target" data-idx="${idx}">
               <option value="">— Selecionar —</option>
-              ${STATE.data.characters.filter(c => c.id !== id)
-                .map(c => `<option value="${c.id}" ${c.id === otherId ? 'selected' : ''}>${c.name}</option>`)
-                .join('')}
+              <optgroup label="Personagens">${charOpts}</optgroup>
+              ${locOpts ? `<optgroup label="Locais">${locOpts}</optgroup>` : ''}
             </select>
-            <input class="edit-input rel-label-mine"   data-idx="${idx}" value="${escHtml(myLabel)}"    placeholder="Ex: mãe de...">
-            <input class="edit-input rel-label-theirs" data-idx="${idx}" value="${escHtml(theirLabel)}" placeholder="Ex: filha de...">
+            <input class="edit-input rel-label-mine"   data-idx="${idx}" value="${escHtml(myLabel)}"    placeholder="Ex: mãe de, nasceu em...">
+            <input class="edit-input rel-label-theirs" data-idx="${idx}" value="${escHtml(theirLabel)}" placeholder="Ex: filha de, berço de...">
             <button type="button" class="rel-vis-toggle ${isSecret ? 'rel-vis-secret' : 'rel-vis-public'}"
               data-idx="${idx}" title="${isSecret ? 'Secreto — só você vê (clique para tornar público)' : 'Visível para jogadores (clique para tornar secreto)'}">
               ${isSecret ? '🔒' : '🌐'}
@@ -2680,8 +2655,9 @@ function attachEditFormEvents(id, type) {
       editor.querySelectorAll('.rel-target').forEach(sel =>
         sel.addEventListener('change', () => {
           const r = relEdits[+sel.dataset.idx];
-          r.targetId = sel.value; r.sourceId = id;
-          r.sourceType = 'character'; r.targetType = 'character';
+          const [tType, tId] = sel.value ? sel.value.split(':') : ['character', ''];
+          r.targetId = tId; r.targetType = tType;
+          r.sourceId = id;  r.sourceType = 'character';
         }));
       editor.querySelectorAll('.rel-label-mine').forEach(inp =>
         inp.addEventListener('input', () => {
@@ -2898,18 +2874,21 @@ function attachEditFormEvents(id, type) {
               const relVis = r.secret ? defaultVis : { mode: 'all', playerIds: [] };
               relBatch.set(ref, {
                 sourceId: id, sourceType: 'character',
-                targetId: r.targetId, targetType: 'character',
+                targetId: r.targetId, targetType: r.targetType || 'character',
                 label: r.label || '', labelTo: r.labelTo || '',
                 type: 'neutral', secret: !!r.secret,
                 visibility: relVis, secretsVisibility: defaultVis,
               });
               changed = true;
             } else if (!r._delete && !r._isNew && r.id) {
-              const relVis = r.secret ? defaultVis : { mode: 'all', playerIds: [] };
-              relBatch.update(doc(db, 'campaigns', CAMPAIGN_ID, 'relations', r.id), {
-                label: r.label || '', labelTo: r.labelTo || '', secret: !!r.secret,
-                visibility: relVis,
-              });
+              // Só sobrescreve a visibilidade se o cadeado mudou — preserva
+              // o modo "Específicos" configurado no diálogo de relação
+              const orig = STATE.data.relations.find(x => x.id === r.id);
+              const upd  = { label: r.label || '', labelTo: r.labelTo || '', secret: !!r.secret };
+              if (!orig || !!orig.secret !== !!r.secret) {
+                upd.visibility = r.secret ? defaultVis : { mode: 'all', playerIds: [] };
+              }
+              relBatch.update(doc(db, 'campaigns', CAMPAIGN_ID, 'relations', r.id), upd);
               changed = true;
             }
           }
