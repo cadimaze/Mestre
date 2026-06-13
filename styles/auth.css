@@ -928,6 +928,25 @@ body.is-master .vis-card-badge { display: block; }
   font-size: 13px;
 }
 
+.jogador-edit-btn {
+  background: rgba(200,169,106,.1);
+  border: 1px solid rgba(200,169,106,.3);
+  border-radius: 7px;
+  color: #c8a96a;
+  font-family: var(--font-title, 'Cinzel', serif);
+  font-size: 11px;
+  letter-spacing: .5px;
+  padding: 6px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background .2s, border-color .2s;
+}
+.jogador-edit-btn:hover {
+  background: rgba(200,169,106,.22);
+  border-color: rgba(200,169,106,.6);
+}
+
 /* ══════════════════════════════════════════════════════════════════════
    MEU PERSONAGEM TAB (player only)
 ══════════════════════════════════════════════════════════════════════ */

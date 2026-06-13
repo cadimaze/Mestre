@@ -1031,23 +1031,37 @@ async function renderJogadores() {
   grid.innerHTML = players.map(p => {
     const pc = p.playerCharacter;
     const initial = (p.displayName || '?').charAt(0).toUpperCase();
-    return `<div class="jogador-card">
+    return `<div class="jogador-card" data-uid="${p.uid}" title="Abrir ficha">
       <div style="display:flex;align-items:center;gap:14px;">
         <div class="jogador-avatar">${initial}</div>
-        <div>
+        <div style="flex:1;min-width:0;">
           <div class="jogador-name">${escHtml(p.displayName || '—')}</div>
           <div class="jogador-email">${escHtml(p.email || '')}</div>
         </div>
+        <button class="jogador-edit-btn" data-uid="${p.uid}" title="Editar ficha deste jogador">✏ Editar ficha</button>
       </div>
       ${pc && pc.name
         ? `<div class="jogador-char-info">
             <div class="jogador-char-name">${escHtml(pc.name)}</div>
             <div>${[pc.race, pc.charClass, pc.background].filter(Boolean).map(escHtml).join(' · ')}</div>
            </div>`
-        : `<div class="jogador-char-info" style="color:#3a4a5a;font-style:italic;">Ficha ainda não preenchida.</div>`
+        : `<div class="jogador-char-info" style="color:#3a4a5a;font-style:italic;">Ficha ainda não preenchida — clique em Editar para preenchê-la pelo Mestre.</div>`
       }
     </div>`;
   }).join('');
+
+  // Card abre a ficha; botão abre direto em modo de edição
+  grid.querySelectorAll('.jogador-card').forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => openModal(card.dataset.uid, 'player'));
+  });
+  grid.querySelectorAll('.jogador-edit-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      openModal(btn.dataset.uid, 'player');
+      openEditMode(btn.dataset.uid, 'player');
+    });
+  });
 }
 
 // ── MEU PERSONAGEM TAB ────────────────────────────────────────────────────────
