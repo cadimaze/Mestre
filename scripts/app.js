@@ -611,6 +611,22 @@ function hasSecrets(item) {
   return !!(item.secrets && item.secrets.trim().length > 0);
 }
 
+// Generic secrets renderer for locations, events, factions (master-only, no per-player controls)
+function buildEntitySecretsHtml(entity) {
+  if (!STATE.isMaster || !hasSecrets(entity)) return '';
+  const list = Array.isArray(entity.secretsList) && entity.secretsList.length
+    ? entity.secretsList
+    : [{ id: '0', text: entity.secrets }];
+  const items = list.map((s, i) =>
+    `<div class="modal-char-secret-item" style="margin-bottom:12px;">
+      <div class="modal-char-secret-header"><span class="modal-char-secret-num">Camada ${i + 1}</span></div>
+      <div class="modal-section-text">${escHtml(s.text)}</div>
+    </div>`
+  ).join('');
+  return `<div class="modal-section secrets-section"><div class="modal-secrets">
+    <div class="modal-section-title">🔒 Segredos do Mestre</div>${items}</div></div>`;
+}
+
 function buildCharSecretsHtml(c) {
   const uid      = STATE.user?.uid;
   const isMaster = STATE.isMaster;
@@ -812,6 +828,84 @@ function getEntityName(id, type) {
   }
   const fn = { character: getCharById, location: getLocationById, event: getEventById, faction: getFactionById }[type];
   return fn?.(id)?.name || id;
+}
+
+// ── SYNC CAMPAIGN CONTENT ─────────────────────────────────────────────────────
+async function syncCampaignContent() {
+  const btn = document.getElementById('sync-campaign-btn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Sincronizando...'; }
+
+  try {
+    const [chars, locs, evts, facts] = await Promise.all([
+      fetch('data/characters.json').then(r => r.json()),
+      fetch('data/locations.json').then(r => r.json()),
+      fetch('data/events.json').then(r => r.json()),
+      fetch('data/factions.json').then(r => r.json()),
+    ]);
+
+    // Preserve existing secret visibility when syncing secretsList
+    function mergeSecretsList(newList, existing) {
+      if (!newList?.length) return newList || [];
+      const existingList = existing?.secretsList || [];
+      const visByID = Object.fromEntries(existingList.map(s => [s.id, s.visibility]));
+      return newList.map(s => ({ ...s, visibility: visByID[s.id] || s.visibility }));
+    }
+
+    const batch = writeBatch(db);
+    const base  = `campaigns/${CAMPAIGN_ID}`;
+
+    chars.forEach(c => {
+      const ref      = doc(db, base, 'characters', c.id);
+      const existing = STATE.data.characters.find(ch => ch.id === c.id);
+      const update   = {
+        name: c.name, role: c.role || '', status: c.status || '',
+        description: c.description || '', personality: c.personality || '',
+        secretsList: mergeSecretsList(c.secretsList, existing),
+      };
+      batch.set(ref, update, { merge: true });
+    });
+
+    locs.forEach(l => {
+      const ref      = doc(db, base, 'locations', l.id);
+      const existing = STATE.data.locations.find(x => x.id === l.id);
+      const update   = {
+        name: l.name, subtitle: l.subtitle || '', type: l.type || '',
+        description: l.description || '', tone: l.tone || '',
+        pointsOfInterest: l.pointsOfInterest || [], secrets: l.secrets || '',
+        secretsList: mergeSecretsList(l.secretsList, existing),
+      };
+      batch.set(ref, update, { merge: true });
+    });
+
+    evts.forEach(e => {
+      const ref      = doc(db, base, 'events', e.id);
+      const existing = STATE.data.events.find(x => x.id === e.id);
+      const update   = {
+        name: e.name, period: e.period || '', scale: e.scale || '',
+        description: e.description || '', secrets: e.secrets || '',
+        secretsList: mergeSecretsList(e.secretsList, existing),
+        relatedEvents: e.relatedEvents || [],
+      };
+      batch.set(ref, update, { merge: true });
+    });
+
+    facts.forEach(f => {
+      const ref    = doc(db, base, 'factions', f.id);
+      const update = {
+        name: f.name, type: f.type || '', color: f.color || '',
+        symbol: f.symbol || '', description: f.description || '',
+        secrets: f.secrets || '',
+      };
+      batch.set(ref, update, { merge: true });
+    });
+
+    await batch.commit();
+    if (btn) { btn.textContent = '✓ Sincronizado!'; setTimeout(() => { btn.textContent = '🔄 Sincronizar Dados'; btn.disabled = false; }, 3000); }
+  } catch (err) {
+    console.error('Sync error:', err);
+    alert('Erro ao sincronizar: ' + err.message);
+    if (btn) { btn.textContent = '🔄 Sincronizar Dados'; btn.disabled = false; }
+  }
 }
 
 // ── ADD NEW BUTTONS ───────────────────────────────────────────────────────────
@@ -1612,7 +1706,7 @@ function buildLocationModalContent(id) {
     </div>
     ${l.description ? `<div class="modal-section"><div class="modal-section-title">Descrição</div><div class="modal-section-text">${l.description}</div></div>` : ''}
     ${poiHtml ? `<div class="modal-section"><div class="modal-section-title">Pontos de Interesse</div><ul class="poi-list">${poiHtml}</ul></div>` : ''}
-    ${hasSecrets(l) ? `<div class="modal-section secrets-section"><div class="modal-secrets"><div class="modal-section-title">🔒 Segredos do Mestre</div><div class="modal-section-text">${l.secrets}</div></div></div>` : ''}
+    ${buildEntitySecretsHtml(l)}
     ${buildRelationsSectionFor(id, 'location')}
     ${charItems ? `<div class="modal-section"><div class="modal-section-title">Personagens Associados</div><div class="modal-link-list">${charItems}</div></div>` : ''}
     ${eventItems ? `<div class="modal-section"><div class="modal-section-title">Eventos que Ocorreram Aqui</div><div class="modal-link-list">${eventItems}</div></div>` : ''}
@@ -1643,7 +1737,7 @@ function buildEventModalContent(id) {
       <div style="margin-top:8px;">${scaleBadgeHtml(e.scale)}</div>
     </div>
     <div class="modal-section"><div class="modal-section-title">Descrição Completa</div><div class="modal-section-text">${e.description || ''}</div></div>
-    ${hasSecrets(e) ? `<div class="modal-section secrets-section"><div class="modal-secrets"><div class="modal-section-title">🔒 Segredos do Mestre</div><div class="modal-section-text">${e.secrets}</div></div></div>` : ''}
+    ${buildEntitySecretsHtml(e)}
     ${charItems ? `<div class="modal-section"><div class="modal-section-title">Personagens Presentes</div><div class="modal-link-list">${charItems}</div></div>` : ''}
     ${loc ? `<div class="modal-section"><div class="modal-section-title">Local do Evento</div><div class="modal-link-list"><div class="modal-link-item" data-modal-id="${loc.id}" data-modal-type="location">${loc.name}</div></div></div>` : ''}
     ${relEventItems ? `<div class="modal-section"><div class="modal-section-title">Eventos Relacionados</div><div class="modal-link-list">${relEventItems}</div></div>` : ''}
@@ -1678,7 +1772,7 @@ function buildFactionModalContent(id) {
       </div>
     </div>
     <div class="modal-section"><div class="modal-section-title">Descrição</div><div class="modal-section-text">${f.description || ''}</div></div>
-    ${hasSecrets(f) ? `<div class="modal-section secrets-section"><div class="modal-secrets"><div class="modal-section-title">🔒 Segredos do Mestre</div><div class="modal-section-text">${f.secrets}</div></div></div>` : ''}
+    ${buildEntitySecretsHtml(f)}
     ${memberItems ? `<div class="modal-section"><div class="modal-section-title">Membros</div><div class="modal-link-list">${memberItems}</div></div>` : ''}
     ${locItems ? `<div class="modal-section"><div class="modal-section-title">Locais Controlados</div><div class="modal-link-list">${locItems}</div></div>` : ''}
     ${buildRelationsSectionFor(id, 'faction')}
@@ -3133,6 +3227,10 @@ async function init() {
   // Relation dialog: clique fora fecha
   const rdOverlay = document.getElementById('relation-dialog-overlay');
   if (rdOverlay) rdOverlay.addEventListener('click', e => { if (e.target === rdOverlay) closeRelationDialog(); });
+
+  // Sync campaign data (master only)
+  const syncBtn = document.getElementById('sync-campaign-btn');
+  if (syncBtn) syncBtn.addEventListener('click', syncCampaignContent);
 
   // Secrets toggle (master only)
   const secretsBtn = document.getElementById('secrets-float-btn');

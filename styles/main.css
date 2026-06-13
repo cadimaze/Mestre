@@ -531,6 +531,23 @@ body::after {
   color: rgba(224,112,112,.6);
 }
 
+.sync-campaign-btn {
+  margin-top: 16px;
+  width: 100%;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, rgba(192,57,43,.18), rgba(207,172,110,.12));
+  border: 1px solid rgba(207,172,110,.35);
+  border-radius: 8px;
+  color: var(--accent-gold);
+  font-family: var(--font-title);
+  font-size: 13px;
+  letter-spacing: .5px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.sync-campaign-btn:hover { background: linear-gradient(135deg, rgba(192,57,43,.28), rgba(207,172,110,.20)); border-color: rgba(207,172,110,.6); }
+.sync-campaign-btn:disabled { opacity: .5; cursor: not-allowed; }
+
 /* ═══════════════════════════════════════════════════════════════════════════
    FILTERS
 ═══════════════════════════════════════════════════════════════════════════ */

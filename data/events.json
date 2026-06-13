@@ -6,7 +6,24 @@
     "order": 1,
     "scale": "Mundial",
     "location": null,
-    "description": "A Grande Guerra não começou como uma guerra entre povos — foi uma crise de origem sobrenatural que consumiu toda estrutura política e militar existente. Os maiores magistas elfos da era antiga descobriram, nas camadas mais profundas da realidade, a existência de O Peso. Acreditaram que poderiam invocá-lo, domesticá-lo, usá-lo como ferramenta para consolidar o domínio élfico definitivo.\n\nO que invocaram não obedeceu. Simplesmente começou a consumir.\n\nO que avançava não era um exército. Não tomava territórios nem exigia rendição. Regiões inteiras desapareciam dos mapas não porque fossem conquistadas, mas porque paravam de ser. A resposta das civilizações foi primeiro militar, depois diplomática, depois desesperada. Entre 60% e 80% da população mundial foi dizimada. Cidades inteiras pararam de existir.\n\nNos arquivos formais de Velmarch, seções sobre A Grande Guerra estão marcadas como 'classificação restrita'.",
+    "description": "A Grande Guerra não começou como uma guerra entre povos — foi uma crise de origem sobrenatural que consumiu toda estrutura política e militar existente. Os maiores magistas elfos da era antiga descobriram, nas camadas mais profundas da realidade, a existência de O Peso. Acreditaram que poderiam invocá-lo, domesticá-lo, usá-lo como ferramenta para consolidar o domínio élfico definitivo.\n\nO que invocaram não obedeceu. Simplesmente começou a consumir.\n\nO que avançava não era um exército. Não tomava territórios nem exigia rendição. Regiões inteiras desapareciam dos mapas não porque fossem conquistadas, mas porque paravam de ser. A resposta das civilizações foi primeiro militar, depois diplomática, depois desesperada. Entre 60% e 80% da população mundial foi dizimada. Cidades inteiras pararam de existir.\n\nEm Pelágos é chamada simplesmente de A Guerra ou A Grande Guerra. Não há nome oficial — e Pelágos, coletivamente, não parece querer um.",
+    "secretsList": [
+      {
+        "id": "guerra-s1",
+        "text": "Camada 1 — Os registros de Velmarch têm lacunas: Seções dos arquivos históricos de Velmarch sobre A Grande Guerra estão marcadas como 'classificação restrita'. Estudiosos que tentam acessá-las são redirecionados. Qualquer pesquisador que perceba o padrão entende que algo está sendo suprimido.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "guerra-s2",
+        "text": "Camada 2 — Os elfos foram os responsáveis: Registros não censurados em ilhas fora do controle de Velmarch documentam claramente que foram magistas elfos que invocaram O Peso numa tentativa de dominar o mundo definitivamente. Velmarch suprime essa informação — não por proteger os elfos, mas porque revelar a origem de O Peso seria revelar que O Peso ainda existe.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "guerra-s3",
+        "text": "Camada 3 — O Peso não foi destruído, foi selado: A Grande Guerra terminou não com a destruição de O Peso, mas com seu selamento sob o oceano. Isso significa que ainda está lá. Documentos sobre isso existem apenas no tomo de Himmel na Câmara Selada de Velmyr — e na memória de Frieren Talion.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
+    ],
     "secrets": "SEGREDO DO MESTRE: Os elfos foram responsáveis pela invocação de O Peso numa tentativa de dominar o mundo. Isso é o que justificou — moralmente, para os povos sobreviventes — a Caça aos Elfos que se seguiu. A Grande Guerra não foi uma guerra entre povos. Foi a consequência de um experimento que deu errado de forma catastrófica.",
     "characters": ["himmel-varek", "frieren-talion"],
     "relatedEvents": ["abraco-aguas-eternas", "caca-elfos"]
@@ -18,8 +35,25 @@
     "order": 2,
     "scale": "Mundial",
     "location": "velmyr",
-    "description": "O evento que dividiu a história de Pelágos em antes e depois. Conhecido popularmente como A Maré Alta — o nome poético que Himmel escolheu foi gradualmente apagado pela oralidade até virar uma força da natureza sem autor, sem intenção, sem amor.\n\nHimmel realizou o ritual no pico mais alto do continente — hoje a ilha de Velmyr. Usou sua própria vida como catalisador. O sacrifício precisava ser voluntário e partir de alguém que amasse o mundo o suficiente para destruí-lo. As águas subiram em sete dias. Cidades inteiras afundaram. Civilizações viraram lendas. Pelágos nasceu dos fragmentos do que sobrou.",
-    "secrets": "SEGREDO DO MESTRE — O VERDADEIRO PERIGO: O tomo de Himmel descreve o selo, o sacrifício — e o que está lá embaixo. Se o nível do mar baixar, O Peso acorda. Os jogadores vão partir atrás de um segredo para derrubar um império. O que vão encontrar é uma escolha impossível: o império que eles odeiam existe porque alguém amou o mundo mais do que a própria vida — e derrubá-lo pode custar tudo.\n\nFrieren estava presente. Viu as águas subirem do pico mais alto de Reva, com Fern nos braços. Foi a única que tentou impedir Himmel — e a única que ele abraçou antes de começar.",
+    "description": "O evento que dividiu a história de Pelágos em antes e depois. Conhecido popularmente como A Maré Alta — o nome poético que Himmel escolheu foi gradualmente apagado pela oralidade até virar uma força da natureza sem autor, sem intenção, sem amor.\n\nHimmel realizou o ritual no pico mais alto do continente — hoje a ilha de Velmyr. Usou sua própria vida como catalisador. O sacrifício precisava ser voluntário e partir de alguém que amasse o mundo o suficiente para destruí-lo. As águas subiram em sete dias. Cidades inteiras afundaram. Civilizações viraram lendas. Pelágos nasceu dos fragmentos do que sobrou.\n\nO nome original — O Abraço das Águas Eternas — foi gradualmente apagado: virou O Grande Abraço nos tomos acadêmicos, O Grande Alagamento na tradição oral, e finalmente A Maré Alta no uso popular. Sem autor, sem intenção, sem amor. Uma força da natureza com nome de previsão do tempo.",
+    "secretsList": [
+      {
+        "id": "abraco-s1",
+        "text": "Camada 1 — A Maré Alta teve uma data: Registros de diversas ilhas convergem numa data aproximada para A Maré Alta — sete dias de subida das águas. Esse nível de precisão sugere que houve testemunhas que sobreviveram e documentaram. Não foi um fenômeno instantâneo.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "abraco-s2",
+        "text": "Camada 2 — O nome original era diferente: Em registros muito antigos de ilhas não controladas por Velmarch, o evento é chamado de O Grande Abraço ou O Grande Alagamento — sugerindo que houve um nome ainda mais antigo, anterior a esses. O nome original aponta para um ato humano, não um fenômeno natural.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "abraco-s3",
+        "text": "Camada 3 — Foi um sacrifício voluntário: O nome original completo — O Abraço das Águas Eternas — e seu significado estão preservados apenas no tomo de Himmel em Velmyr, e na memória de Frieren Talion. Himmel escolheu esse nome para ela. Quando os jogadores descobrirem isso, a moral da campanha vira de cabeça para baixo. Frieren estava presente. Viu as águas subirem do pico mais alto de Reva, com Fern nos braços.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
+    ],
+    "secrets": "SEGREDO DO MESTRE — O VERDADEIRO PERIGO: O tomo de Himmel descreve o selo, o sacrifício — e o que está lá embaixo. Se o nível do mar baixar, O Peso acorda. Os jogadores vão partir atrás de um segredo para derrubar um império. O que vão encontrar é uma escolha impossível: o império que eles odeiam existe porque alguém amou o mundo mais do que a própria vida — e derrubá-lo pode custar tudo.\n\nFrieren estava presente. Viu as águas subirem do pico mais alto de Reva com Fern nos braços. Foi a única que tentou impedir Himmel — e a única que ele abraçou antes de começar.",
     "characters": ["himmel-varek", "frieren-talion"],
     "relatedEvents": ["grande-guerra", "caca-elfos"]
   },
@@ -31,6 +65,18 @@
     "scale": "Regional",
     "location": "reva",
     "description": "Os elfos sobreviventes à Maré Alta foram caçados até quase o fim. Não por ordem de nenhum rei ou decreto formal — pelo ódio acumulado de povos que haviam perdido tudo por causa dos magistas elfos que invocaram O Peso. A caça durou gerações.\n\nHoje, elfos são raridade tão extrema que mercadores inescrupulosos pagam fortunas por eles — vendidos como troféus vivos a burgueses das ilhas próximas a Velmyr. A maioria das pessoas em Pelágos nunca viu um elfo. Muitas não acreditam que ainda existam.\n\nA Corrente proíbe oficialmente o tráfico élfico. Extraoficialmente, fecha os olhos quando o comprador é suficientemente rico.",
+    "secretsList": [
+      {
+        "id": "caca-s1",
+        "text": "Camada 1 — O tráfico existe e é tolerado: A Corrente proíbe oficialmente o tráfico élfico. Qualquer investigação portuária séria revela que a proibição não é aplicada quando o comprador tem posição suficiente. O mercado existe, é discreto, e está próximo das esferas de poder de Velmarch.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "caca-s2",
+        "text": "Camada 2 — A família Talion é a maior colônia élfica viva: Se Velmarch descobrisse Reva, seria o fim dos Talion. A existência de uma colônia organizada e funcional seria considerada ameaça a ser eliminada, não uma anomalia a ser ignorada. A Caça aos Elfos não terminou — apenas ficou mais discreta.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
+    ],
     "secrets": "SEGREDO DO MESTRE: A família Talion é a maior concentração de elfos vivos em Pelágos — possivelmente a única colônia organizada. Se Velmarch descobrisse Reva, seria o fim dos Talion. A Caça aos Elfos não terminou — apenas ficou mais discreta.",
     "characters": ["frieren-talion", "fern-talion"],
     "relatedEvents": ["grande-guerra", "abraco-aguas-eternas"]

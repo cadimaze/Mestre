@@ -17,6 +17,23 @@
       "As Ruínas Submersas — fundações de cidades do mundo anterior visíveis em águas rasas",
       "O Povo das Torres — estruturas verticais encontradas no fundo oceânico a noroeste de Kaldera"
     ],
+    "secretsList": [
+      {
+        "id": "pelagos-s1",
+        "text": "Camada 1 — O mundo anterior existia: Sob as águas de Pelágos há fundações de pelo menos três grandes civilizações, identificáveis por estilo arquitetônico. Estudiosos que mergulham nas ruínas encontram cerâmicas com inscrições em línguas sem tradutor vivo e moedas de ligas que nenhum ferreiro moderno reproduz.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "pelagos-s2",
+        "text": "Camada 2 — Algo está sob o oceano: Personagens com sensibilidade arcana ou divina que se aproximam do centro geográfico de Pelágos podem sentir algo — uma pressão, uma presença, uma gravidade que não é física. Difícil de nomear, impossível de ignorar. É O Peso, selado a quilômetros de profundidade.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "pelagos-s3",
+        "text": "Camada 3 — O oceano é um cárcere: Toda a política, toda a história, toda a geografia de Pelágos existe por causa do selamento de O Peso. O oceano não é apenas água — é o cárcere de algo que não deveria existir. Se o nível do mar baixar significativamente, o selo enfraquece. Se o ritual for revertido, o selo quebra.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
+    ],
     "secrets": "SEGREDO DO MESTRE: Sob o oceano de Pelágos, selado a quilômetros de profundidade, está O Peso. Toda a política, toda a história, toda a geografia de Pelágos existe por causa desse selamento. O oceano não é apenas água — é o cárcere de algo que não deveria existir.",
     "characters": [],
     "events": ["grande-guerra", "abraco-aguas-eternas", "caca-elfos"]
@@ -36,6 +53,23 @@
       "O Palácio do Governador — separado do caos por muros altos, cheio dos excessos pessoais de Tulo Bresh",
       "Os Bairros Baixos — onde os pobres de Kaldera vivem sob taxação abusiva",
       "O Distrito das Trocas — onde mercadores de todas as ilhas negociam"
+    ],
+    "secretsList": [
+      {
+        "id": "kaldera-s1",
+        "text": "Camada 1 — As taxas reais de Kaldera: Os impostos cobrados em Kaldera excedem em muito os mandatos de Velmarch. Qualquer personagem que pergunte a mercadores ou verifique registros descobre a discrepância rapidamente. A diferença vai para os cofres pessoais de Tulo Bresh.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "kaldera-s2",
+        "text": "Camada 2 — O Palácio por dentro: Dentro do Palácio do Governador há alas inteiras que nenhum funcionário público acessa — apenas os convidados pessoais de Tulo. As prostitutas trazidas de Marvosa vivem permanentemente em ala própria. Gloria Vittar documenta cada visita.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "kaldera-s3",
+        "text": "Camada 3 — Soren aparece aqui: Soren Mael frequenta Kaldera regularmente — é um dos portos onde costuma ancorar. Se os jogadores o encontrarem aqui, é o início de tudo. Ele carrega O Peso sem saber e será o gatilho da campanha.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
     ],
     "secrets": "SEGREDO DO MESTRE: Soren Mael aparece regularmente em Kaldera — é um dos portos onde costuma ancorar. Se os jogadores o encontrarem aqui, é o início de tudo.",
     "characters": ["tulo-bresh", "soren-mael"],
@@ -57,6 +91,23 @@
       "Os Templos d'O Fundador — onde Himmel é venerado sem rosto e sem história pessoal",
       "Os Jardins de Taliyah — único espaço da ilha onde algo cresce por vontade, não por função"
     ],
+    "secretsList": [
+      {
+        "id": "velmyr-s1",
+        "text": "Camada 1 — A Câmara Selada existe: Membros da Casa Varek e poucos conselheiros sabem que existe uma câmara de acesso extremamente restrito no palácio. O que está lá dentro, ninguém dos que têm acesso sabe completamente.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "velmyr-s2",
+        "text": "Camada 2 — O pico tem história: O ponto mais alto de Velmyr — onde fica o Palácio — é o mesmo ponto onde Himmel realizou O Abraço das Águas Eternas. Nas fundações mais antigas do palácio existem inscrições que nenhum arquiteto moderno consegue datar.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "velmyr-s3",
+        "text": "Camada 3 — As inscrições de Himmel: As inscrições nas fundações antigas foram escritas por Himmel antes do ritual. Se os jogadores chegarem lá, são a confirmação final de tudo — a prova irrefutável do sacrifício, do Peso, e da escolha impossível que fundou Pelágos. A Câmara Selada contém o tomo completo: descreve O Peso, o ritual, o sacrifício — e o aviso: se o nível do mar baixar, O Peso acorda.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
+    ],
     "secrets": "SEGREDO DO MESTRE: O pico onde fica o Palácio Varek é o mesmo ponto onde Himmel realizou O Abraço das Águas Eternas. Sob o palácio, nas fundações mais antigas, existem inscrições que nenhum arquiteto moderno consegue datar — escritas por Himmel antes do ritual. Se os jogadores chegarem lá, essas inscrições são a confirmação final de tudo.\n\nA Câmara Selada contém o tomo completo de Himmel. O tomo descreve O Peso, o ritual, o sacrifício — e o aviso: se o nível do mar baixar, O Peso acorda.",
     "characters": ["aldric-xiv", "taliyah-varek", "cade-varek"],
     "events": ["grande-guerra", "abraco-aguas-eternas"]
@@ -77,6 +128,23 @@
       "A Ala de Gloria — onde as trabalhadoras da Senhorita Vittar vivem e operam",
       "O Teatro das Tempestades — onde as melhores companhias de Pelágos se apresentam"
     ],
+    "secretsList": [
+      {
+        "id": "marvosa-s1",
+        "text": "Camada 1 — Ninguém consegue tomar Marvosa: Velmarch tentou duas vezes estabelecer presença. Ambas falharam de forma inexplicável — oficiais voltaram sem ter conseguido nada concreto. Isso é conhecido por qualquer capitão ou diplomata experiente, mas ninguém sabe o motivo real.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "marvosa-s2",
+        "text": "Camada 2 — A rede de inteligência: Cada casa de entretenimento de Gloria é também um posto de coleta de informações. A Ala de Gloria tem aposentos com paredes falsas, espelhos de observação e acústica manipulada. Qualquer segredo dito em Marvosa tem chances consideráveis de chegar aos ouvidos da Senhorita Vittar.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "marvosa-s3",
+        "text": "Camada 3 — O dossiê de Tulo: Tulo Bresh frequenta Marvosa regularmente e seus segredos estão todos documentados por Gloria. Ela possui informação suficiente para destruir sua carreira e possivelmente sua liberdade — e Tulo não sabe que está sendo monitorado.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
+    ],
     "secrets": "SEGREDO DO MESTRE: A Ala de Gloria tem aposentos preparados para coleta de informações — paredes falsas, espelhos de observação, acústica manipulada. Cada quarto de hóspede importante foi preparado para que Gloria nunca perca uma palavra. Tulo Bresh frequenta Marvosa regularmente e seus segredos estão todos documentados.",
     "characters": ["gloria-vittar", "tulo-bresh"],
     "events": []
@@ -96,6 +164,23 @@
       "A Casa no Fim da Praia — onde Frieren vive, jardim sem flores por ordem dela",
       "O Bosque do Centro — onde, sob gerações de terra cultivada, pulsa o cristal de Himmel",
       "A Costa de Ancoramento — onde navios param brevemente para negociar"
+    ],
+    "secretsList": [
+      {
+        "id": "reva-s1",
+        "text": "Camada 1 — Reva é estranhamente isolada: Para uma ilha com minérios de qualidade, Reva tem pouquíssimo tráfego. Ninguém da família sai para comercializar pessoalmente. Os contratos são sempre feitos à distância. Uma investigação de padrões comerciais revela o isolamento sistemático.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "reva-s2",
+        "text": "Camada 2 — Os habitantes são elfos: Quem sair de Reva e se afastar da costa suficientemente vai notar mudanças físicas no próprio reflexo — orelhas que se alongam, olhos que ganham brilho. Investigação arcana da ilha revela o cristal no núcleo — e o que ele faz. A família Talion inteira é élfica.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "reva-s3",
+        "text": "Camada 3 — O cristal é de Himmel: A magia do cristal é anterior a qualquer escola arcana conhecida em Pelágos. Sua assinatura é a mesma que permeia as inscrições nas fundações de Velmyr. Himmel instalou ambos. Se o cristal for destruído, todos os elfos de Reva revelarão sua verdadeira aparência simultaneamente — sentença de morte se houver qualquer navio nas proximidades.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
     ],
     "secrets": "SEGREDO DO MESTRE: No núcleo da ilha, enterrado sob gerações de terra cultivada, pulsa um cristal antigo instalado por Himmel Varek. Seu efeito é invisível e constante: qualquer elfo dentro do raio da ilha apresenta orelhas arredondadas, estatura comum, olhos sem brilho característico — humano em tudo que um olhar percebe.\n\nO cristal é a única razão pela qual os Talion existem. Se for destruído — por descuido, por magia, por interferência externa — todos os elfos de Reva revelarão sua verdadeira aparência simultaneamente. Com qualquer navio nas proximidades, seria uma sentença de morte para a família inteira.",
     "characters": ["frieren-talion", "fern-talion"],
