@@ -548,6 +548,58 @@ function attachSecretVisEvents(charId) {
   });
 }
 
+function attachPlayerSecretVisEvents(playerUid) {
+  if (!STATE.isMaster) return;
+  const sec = document.getElementById('char-secrets-modal-section');
+  if (!sec) return;
+
+  async function saveSecretVis(secretId, mode, playerIds) {
+    const player = getPlayerByUid(playerUid);
+    if (!player) return;
+    const pc      = player.playerCharacter || {};
+    const oldList = Array.isArray(pc.secretsList) ? pc.secretsList : [];
+    const oldVis  = oldList.find(s => s.id === secretId)?.visibility || { mode: 'hidden', playerIds: [] };
+    const newList = oldList.map(s => s.id === secretId ? { ...s, visibility: { mode, playerIds } } : s);
+
+    await updateDoc(doc(db, 'users', playerUid), { 'playerCharacter.secretsList': newList });
+
+    const allPlayerUids = STATE.players.filter(p => p.role === 'player').map(p => p.uid);
+    let newlyVisible = [];
+    if (mode === 'all' && oldVis.mode !== 'all') {
+      newlyVisible = allPlayerUids;
+    } else if (mode === 'specific') {
+      newlyVisible = playerIds.filter(uid => !(oldVis.playerIds || []).includes(uid));
+    }
+    if (newlyVisible.length) {
+      const charName = playerCharName(player);
+      await sendRevealNotifications(newlyVisible, 'player', playerUid, charName, 'secret');
+    }
+  }
+
+  sec.querySelectorAll('.sec-vis-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const secretId = btn.dataset.secretId;
+      const mode     = btn.dataset.mode;
+      sec.querySelectorAll(`.sec-vis-btn[data-secret-id="${secretId}"]`)
+         .forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+      const playersDiv = document.getElementById(`svp-${secretId}`);
+      if (playersDiv) playersDiv.classList.toggle('pc-hidden', mode !== 'specific');
+      const playerIds = mode === 'specific'
+        ? [...sec.querySelectorAll(`.sec-player-check[data-secret-id="${secretId}"]:checked`)].map(c => c.dataset.uid)
+        : [];
+      await saveSecretVis(secretId, mode, playerIds);
+    });
+  });
+
+  sec.querySelectorAll('.sec-player-check').forEach(chk => {
+    chk.addEventListener('change', async () => {
+      const secretId  = chk.dataset.secretId;
+      const playerIds = [...sec.querySelectorAll(`.sec-player-check[data-secret-id="${secretId}"]:checked`)].map(c => c.dataset.uid);
+      await saveSecretVis(secretId, 'specific', playerIds);
+    });
+  });
+}
+
 function attachAnnotationEvents() {
   const btn = document.getElementById('annotation-submit');
   if (!btn) return;
@@ -1191,7 +1243,7 @@ function renderMeuPersonagem() {
   }
 
   const portraitHtml = pendingImageUrl
-    ? `<img class="pc-portrait-img" id="pc-portrait-img" src="${pendingImageUrl}" alt="">`
+    ? `<img class="pc-portrait-img pc-portrait-zoomable" id="pc-portrait-img" src="${pendingImageUrl}" alt="" title="Clique para ampliar">`
     : `<div class="pc-portrait-placeholder" id="pc-portrait-img">${(pc.name||'?').charAt(0)}</div>`;
 
   // ── Render shell ─────────────────────────────────────────────────────────
@@ -1360,6 +1412,15 @@ function renderMeuPersonagem() {
     wirePlayerChecks(document.getElementById('pc-secrets-list'));
   });
 
+  // ── Portrait lightbox ─────────────────────────────────────────────────────
+  function wirePortraitLightbox() {
+    const img = document.getElementById('pc-portrait-img');
+    if (img && img.tagName === 'IMG') {
+      img.addEventListener('click', () => openLightbox(img.src));
+    }
+  }
+  wirePortraitLightbox();
+
   // ── Image upload ──────────────────────────────────────────────────────────
   document.getElementById('pc-img-file').addEventListener('change', async function() {
     const file = this.files[0];
@@ -1370,7 +1431,8 @@ function renderMeuPersonagem() {
       const url = await uploadToCloudinary(file);
       pendingImageUrl = url;
       document.getElementById('pc-portrait-img').outerHTML =
-        `<img class="pc-portrait-img" id="pc-portrait-img" src="${url}" alt="">`;
+        `<img class="pc-portrait-img pc-portrait-zoomable" id="pc-portrait-img" src="${url}" alt="" title="Clique para ampliar">`;
+      wirePortraitLightbox();
     } catch { alert('Erro ao enviar imagem. Tente novamente.'); }
     finally { up.style.display = 'none'; }
   });
@@ -1396,7 +1458,12 @@ function renderMeuPersonagem() {
   // ── Load other players (async, non-blocking) ──────────────────────────────
   buildAllPlayersCharHtml().then(html => {
     const el = document.getElementById('other-players-chars');
-    if (el) el.innerHTML = html;
+    if (el) {
+      el.innerHTML = html;
+      el.querySelectorAll('.pcc-portrait').forEach(img => {
+        img.addEventListener('click', () => openLightbox(img.src));
+      });
+    }
   }).catch(() => {});
 }
 
@@ -1420,7 +1487,7 @@ async function buildAllPlayersCharHtml() {
   const items = visible.map(p => {
     const pc = p.playerCharacter;
     const portrait = pc.imageUrl
-      ? `<img class="pcc-portrait" src="${escHtml(pc.imageUrl)}" alt="" onerror="this.style.display='none'">`
+      ? `<img class="pcc-portrait pcc-portrait-zoomable" src="${escHtml(pc.imageUrl)}" alt="" title="Clique para ampliar" onerror="this.style.display='none'">`
       : `<div class="pcc-portrait-ph">${escHtml((pc.name||'?').charAt(0))}</div>`;
 
     // Visible secrets
@@ -1487,6 +1554,7 @@ function openModal(id, type, pushToStack = true) {
   attachVisibilityEvents();
   attachAnnotationEvents();
   if (type === 'character') attachSecretVisEvents(id);
+  if (type === 'player')    attachPlayerSecretVisEvents(id);
 }
 
 function closeModal() {
@@ -1789,9 +1857,16 @@ function buildPlayerModalContent(uid) {
 
   const details = [pc.race, pc.charClass, pc.background].filter(Boolean).map(escHtml).join(' · ');
 
+  const avatarHtml = pc.imageUrl
+    ? `<div class="modal-char-avatar modal-char-avatar-clickable" title="Clique para ampliar">
+         <img src="${escHtml(pc.imageUrl)}" alt="${escHtml(name)}" data-lightbox="${escHtml(pc.imageUrl)}"
+           onerror="this.parentElement.innerHTML='<div class=\\'modal-char-avatar-placeholder\\'>${escHtml(name.charAt(0).toUpperCase())}</div>'">
+       </div>`
+    : `<div class="modal-char-avatar"><div class="modal-char-avatar-placeholder">${escHtml(name.charAt(0).toUpperCase())}</div></div>`;
+
   return `
     <div class="modal-char-hero">
-      <div class="modal-char-avatar"><div class="modal-char-avatar-placeholder">${escHtml(name.charAt(0).toUpperCase())}</div></div>
+      ${avatarHtml}
       <div class="modal-char-info">
         <div class="modal-char-name">${escHtml(name)}</div>
         <div class="modal-char-role">${details}</div>
@@ -1800,7 +1875,9 @@ function buildPlayerModalContent(uid) {
     </div>
     ${pc.appearance ? `<div class="modal-section"><div class="modal-section-title">Aparência</div><div class="modal-section-text">${escHtml(pc.appearance)}</div></div>` : ''}
     ${pc.personality ? `<div class="modal-section"><div class="modal-section-title">Personalidade &amp; Motivações</div><div class="modal-section-text">${escHtml(pc.personality)}</div></div>` : ''}
+    ${pc.history ? `<div class="modal-section"><div class="modal-section-title">História</div><div class="modal-section-text">${escHtml(pc.history)}</div></div>` : ''}
     ${pc.notes ? `<div class="modal-section"><div class="modal-section-title">Notas</div><div class="modal-section-text">${escHtml(pc.notes)}</div></div>` : ''}
+    ${buildCharSecretsHtml({ ...pc, id: uid })}
     ${buildRelationsSectionFor(uid, 'player')}
     ${buildAnnotationsSection(uid, 'player')}
   `;
@@ -2639,8 +2716,35 @@ function buildFactionEditFields(f = {}) {
 }
 
 function buildPlayerEditFields(p = {}) {
-  const pc = p.playerCharacter || {};
+  const pc     = p.playerCharacter || {};
+  const imgSrc = pc.imageUrl || '';
+  const imgPreview = imgSrc
+    ? `<img class="edit-img-preview" id="img-preview" src="${imgSrc}" alt="">`
+    : `<div class="edit-img-placeholder" id="img-preview">Sem imagem</div>`;
+
+  const sheetVis = pc.sheetVisibility || { mode: 'all', playerIds: [] };
+  const allPlayers = STATE.players.filter(pp => pp.role === 'player' && pp.uid !== p.uid);
+
+  function visBtn(mode, label) {
+    return `<button type="button" class="pc-vis-btn pev-vis-btn${sheetVis.mode === mode ? ' active' : ''}" data-mode="${mode}">${label}</button>`;
+  }
+  const playerChecks = allPlayers.map(pp =>
+    `<label class="pc-player-check-label">
+      <input type="checkbox" class="pev-player-check" data-uid="${pp.uid}" ${(sheetVis.playerIds||[]).includes(pp.uid) ? 'checked' : ''}>
+      ${escHtml(pp.displayName || pp.email)}
+    </label>`
+  ).join('') || '<span class="pc-no-players">Nenhum outro jogador ainda.</span>';
+
   return `
+    <div class="edit-form-section-title">Foto do Personagem</div>
+    <div class="edit-img-wrap">
+      ${imgPreview}
+      <div class="edit-img-actions">
+        <label class="edit-img-upload-btn">📷 Enviar foto<input type="file" id="img-file" accept="image/*" style="display:none"></label>
+        <div class="edit-img-uploading" id="edit-img-uploading" style="display:none;font-size:12px;color:var(--text-muted);">Enviando...</div>
+      </div>
+    </div>
+
     <div class="edit-form-section-title">Ficha de ${escHtml(p.displayName || 'Jogador')}</div>
     <div class="edit-row">
       ${editField('Nome do Personagem *', editInput('pcName', pc.name, 'Nome do personagem'))}
@@ -2652,8 +2756,20 @@ function buildPlayerEditFields(p = {}) {
     </div>
     ${editField('Aparência', editTextarea('pcAppearance', pc.appearance, 'Como o personagem parece...', 3))}
     ${editField('Personalidade & Motivações', editTextarea('pcPersonality', pc.personality, 'O que o personagem quer, teme, acredita...', 3))}
+    ${editField('História do Personagem', editTextarea('pcHistory', pc.history, 'De onde veio, o que viveu, o que o moldou...', 4))}
     ${editField('Notas (visíveis a todos)', editTextarea('pcNotes', pc.notes, 'Anotações públicas da jornada...', 3))}
-    <p class="rd-empty-note" style="margin-top:2px;">As alterações sobrescrevem a ficha que o jogador preencheu — ele continua podendo editá-la na aba Meu Personagem. Para laços ocultos do próprio jogador, use as relações da ficha com visibilidade 🔒 Oculta.</p>
+
+    <div class="edit-form-section-title">Visibilidade da Ficha</div>
+    <div class="pc-vis-row" id="pev-sheet-vis-btns">
+      ${visBtn('hidden','🔒 Só o jogador')}${visBtn('specific','👁 Específicos')}${visBtn('all','🌐 Todos')}
+    </div>
+    <div class="pc-vis-players-wrap${sheetVis.mode === 'specific' ? '' : ' pc-hidden'}" id="pev-sheet-vis-players">
+      ${playerChecks}
+    </div>
+
+    <div class="edit-form-section-title">Segredos do Mestre</div>
+    <div id="char-secrets-editor"></div>
+    <button type="button" class="edit-add-secret-btn">+ Adicionar Segredo</button>
   `;
 }
 
@@ -2794,10 +2910,35 @@ function attachEditFormEvents(id, type) {
     });
   }
 
+  // ── Player edit: sheet visibility wiring ──────────────────────────────────
+  if (type === 'player') {
+    const player = getPlayerByUid(id) || {};
+    const pc     = player.playerCharacter || {};
+    let   pevSheetVis = { ...(pc.sheetVisibility || { mode: 'all', playerIds: [] }), playerIds: [...(pc.sheetVisibility?.playerIds || [])] };
+
+    document.getElementById('pev-sheet-vis-btns')?.querySelectorAll('.pev-vis-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mode = btn.dataset.mode;
+        pevSheetVis.mode = mode;
+        document.getElementById('pev-sheet-vis-btns').querySelectorAll('.pev-vis-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+        document.getElementById('pev-sheet-vis-players').classList.toggle('pc-hidden', mode !== 'specific');
+      });
+    });
+    document.getElementById('pev-sheet-vis-players')?.querySelectorAll('.pev-player-check').forEach(chk => {
+      chk.addEventListener('change', () => {
+        const uid = chk.dataset.uid;
+        if (chk.checked) { if (!pevSheetVis.playerIds.includes(uid)) pevSheetVis.playerIds.push(uid); }
+        else { const i = pevSheetVis.playerIds.indexOf(uid); if (i !== -1) pevSheetVis.playerIds.splice(i, 1); }
+      });
+    });
+    // Expose to save path via closure on the form element
+    form._pevSheetVis = pevSheetVis;
+  }
+
   // ── Character secrets editor (master-controlled) ───────────────────────────
   let charSecretsList = [];
-  if (type === 'character') {
-    const existingChar = getCharById(id);
+  if (type === 'character' || type === 'player') {
+    const existingChar = type === 'character' ? getCharById(id) : (getPlayerByUid(id)?.playerCharacter || null);
     charSecretsList = Array.isArray(existingChar?.secretsList)
       ? existingChar.secretsList.map(s => ({
           ...s,
@@ -2898,23 +3039,31 @@ function attachEditFormEvents(id, type) {
     saveBtn.disabled = true;
     saveBtn.textContent = 'Salvando...';
 
-    // Ficha de jogador: o mestre grava direto no perfil do usuário,
-    // preservando campos da ficha que não estão no formulário
+    // Ficha de jogador: o mestre grava direto no perfil do usuário
     if (type === 'player') {
       try {
-        const fd = new FormData(form);
+        const fd  = new FormData(form);
         const get = k => String(fd.get(k) || '').trim();
         const player = getPlayerByUid(id) || {};
         const merged = {
           ...(player.playerCharacter || {}),
-          name:        get('pcName'),
-          race:        get('pcRace'),
-          charClass:   get('pcClass'),
-          background:  get('pcBackground'),
-          appearance:  get('pcAppearance'),
-          personality: get('pcPersonality'),
-          notes:       get('pcNotes'),
+          name:           get('pcName'),
+          race:           get('pcRace'),
+          charClass:      get('pcClass'),
+          background:     get('pcBackground'),
+          appearance:     get('pcAppearance'),
+          personality:    get('pcPersonality'),
+          history:        get('pcHistory'),
+          notes:          get('pcNotes'),
+          secretsList:    charSecretsList,
+          sheetVisibility: form._pevSheetVis || (player.playerCharacter?.sheetVisibility || { mode: 'all', playerIds: [] }),
         };
+        // Image upload
+        const fileInput = document.getElementById('img-file');
+        if (fileInput?.files[0]) {
+          saveBtn.textContent = 'Enviando imagem...';
+          merged.imageUrl = await uploadToCloudinary(fileInput.files[0]);
+        }
         await updateDoc(doc(db, 'users', id), { playerCharacter: merged });
         if (player.uid) player.playerCharacter = merged;
         if (STATE.activeTab === 'relacoes') renderGraph();
@@ -2934,7 +3083,7 @@ function attachEditFormEvents(id, type) {
       // Inject secrets list (character only — managed outside FormData)
       if (type === 'character') data.secretsList = charSecretsList;
 
-      // Upload de arquivo para Cloudinary (personagens)
+      // Upload de arquivo para Cloudinary (personagens e locais)
       const fileInput = document.getElementById('img-file');
       if ((type === 'character' || type === 'location') && fileInput?.files[0]) {
         saveBtn.textContent = 'Enviando imagem...';

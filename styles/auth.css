@@ -1047,6 +1047,8 @@ body.is-master .vis-card-badge { display: block; }
   border: 2px solid #2a3a4a;
   display: block;
 }
+.pc-portrait-zoomable { cursor: zoom-in; transition: border-color .2s; }
+.pc-portrait-zoomable:hover { border-color: var(--accent-gold, #cfac6e); }
 
 .pc-portrait-placeholder {
   width: 120px;
@@ -1199,6 +1201,8 @@ body.is-master .vis-card-badge { display: block; }
   object-fit: cover;
   flex-shrink: 0;
 }
+.pcc-portrait-zoomable { cursor: zoom-in; transition: opacity .15s; }
+.pcc-portrait-zoomable:hover { opacity: .85; }
 
 .pcc-portrait-ph {
   width: 72px;
