@@ -388,5 +388,75 @@
     "type": "secret",
     "secret": true,
     "description": "O Peso está selado a quilômetros abaixo do oceano de Pelágos. O arquipélago inteiro existe por causa desse selamento."
+  },
+  {
+    "sourceId": "aldric-xiv",
+    "sourceType": "character",
+    "targetId": "gangplank",
+    "targetType": "character",
+    "label": "contratou secretamente",
+    "type": "secret",
+    "secret": true,
+    "description": "Aldric contratou Gangplank para executar serviços que A Corrente não pode fazer publicamente — eliminações, bloqueios, proteções discretas. A relação é conhecida por menos de cinco pessoas. Aldric tem tanto medo de Gangplank quanto qualquer outra pessoa — simplesmente foi o primeiro a chegar com dinheiro suficiente."
+  },
+  {
+    "sourceId": "gangplank",
+    "sourceType": "character",
+    "targetId": "aldric-xiv",
+    "targetType": "character",
+    "label": "empregador secreto",
+    "type": "secret",
+    "secret": true,
+    "description": "Gangplank trabalha para Aldric XIV por baixo dos panos e por bom e velho dinheiro. A relação é estritamente financeira — sem lealdade, sem ideologia. Se Aldric tentar usar Gangplank como ferramenta descartável, vai descobrir que ferramentas não ficam paradas quando decidem cortar a mão que as segura."
+  },
+  {
+    "sourceId": "gangplank",
+    "sourceType": "character",
+    "targetId": "a-corrente",
+    "targetType": "faction",
+    "label": "trégua informal com",
+    "type": "secret",
+    "secret": true,
+    "description": "A Corrente recebeu ordem de não engajar o Dead Pool sem autorização direta de Velmyr — resultado de três tentativas fracassadas de interceptação. Não é uma trégua formal, mas é uma realidade que ambos os lados reconhecem."
+  },
+  {
+    "sourceId": "gangplank",
+    "sourceType": "character",
+    "targetId": "gloria-vittar",
+    "targetType": "character",
+    "label": "respeito mútuo e cauteloso",
+    "type": "political",
+    "secret": true,
+    "description": "Os dois sabem demais sobre os outros para serem inimigos confortáveis. Gloria conhece movimentos da Maré Negra. Gangplank sabe que Marvosa é território que não vale a pena tocar. Um equilíbrio baseado em reconhecimento mútuo de poder."
+  },
+  {
+    "sourceId": "gloria-vittar",
+    "sourceType": "character",
+    "targetId": "gangplank",
+    "targetType": "character",
+    "label": "respeito mútuo e cauteloso",
+    "type": "political",
+    "secret": true,
+    "description": "Gloria e Gangplank compartilham o tipo de respeito que cresce quando dois poderes independentes percebem que o outro é real. Nenhum dos dois quer testar onde os limites estão de fato."
+  },
+  {
+    "sourceId": "gangplank",
+    "sourceType": "character",
+    "targetId": "mare-negra",
+    "targetType": "faction",
+    "label": "lidera",
+    "type": "political",
+    "secret": false,
+    "description": "Gangplank comanda A Maré Negra — a frota pirata mais temida de Pelágos. Cada capitão é leal a ele com o tipo de lealdade que também é medo."
+  },
+  {
+    "sourceId": "mare-negra",
+    "sourceType": "faction",
+    "targetId": "a-corrente",
+    "targetType": "faction",
+    "label": "trégua informal com",
+    "type": "secret",
+    "secret": true,
+    "description": "A Corrente recebeu ordem de não engajar o Dead Pool sem autorização de Velmyr. A Maré Negra e A Corrente coexistem nos mares de Pelágos com uma não-agressão tácita que nenhum dos lados admite publicamente."
   }
 ]

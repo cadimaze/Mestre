@@ -37,6 +37,7 @@
       { "targetId": "taliyah-varek", "targetType": "character", "label": "casado com" },
       { "targetId": "cade-varek", "targetType": "character", "label": "pai de" },
       { "targetId": "tulo-bresh", "targetType": "character", "label": "superior de" },
+      { "targetId": "gangplank", "targetType": "character", "label": "contratou secretamente" },
       { "targetId": "velmarch", "targetType": "faction", "label": "lidera" }
     ]
   },
@@ -119,8 +120,8 @@
     "status": "Vivo",
     "faction": null,
     "image": "soren-mael.jpg",
-    "description": "Um cartógrafo idoso que passou décadas mapeando as ilhas menores de Pelágos — as que Velmarch nunca se deu ao trabalho de registrar. Vende mapas por preços absurdamente baixos, aceita comida como pagamento, dorme no convés de qualquer barco que o deixe embarcar. Tem um tremor leve na mão direita. Esquece nomes mas lembra coordenadas. Ri das próprias piadas antes de terminá-las. As pessoas gostam dele instintivamente.",
-    "personality": "Não chega com urgência. Simplesmente está lá — num porto, numa taverna. No curso de uma conversa sobre rotas, menciona quase de passagem informações que mudam tudo, e muda de assunto. Sinais a observar: nunca dorme; nunca come peixe; a mão não treme nos mapas de profundidade oceânica; para no meio de frases e fica olhando para a água. Nenhum de seus mapas tem a ilha capital de Velmarch.",
+    "description": "Soren Mael tem pouco mais de trinta anos. É cartógrafo por formação e por vocação — passou os primeiros anos da carreira mapeando rotas comerciais para pequenos mercadores, trabalho honesto de quem ama o ofício mais do que a fama. Tem uma esposa em alguma ilha, filhos pequenos, um barco modesto que conhece pelo nome. O tipo de homem que manda cartas para casa toda vez que passa por um porto com serviço de correio. Não há nada nele que sugira perigo.",
+    "personality": "Caloroso, presente, genuinamente curioso sobre as pessoas que encontra. Faz perguntas boas e escuta as respostas de verdade. Fala sobre a esposa e os filhos com saudade leve de quem sabe que vai voltar. Não chega com urgência — simplesmente está lá. Sinais a observar: não mergulha mais; perto de água profunda e parada fica quieto por alguns segundos; escreve cartas para a família com frequência obsessiva; às vezes completa uma frase e franze o cenho levemente. Nenhum de seus mapas tem a ilha capital de Velmarch.",
     "secrets": "SEGREDO DO MESTRE — CRÍTICO: Soren Mael não é um agente consciente de O Peso. É uma vítima. Em algum ponto de sua vida, mergulhou num ponto errado do oceano em busca de ruínas submersas — chegou perto demais do selo. Sobreviveu. Mas algo ficou.\n\nO Peso não possui Soren. Ele vaza por ele. Soren genuinamente acredita que está ajudando — sente uma compulsão que interpreta como curiosidade, como senso de justiça, como vontade de ver Velmarch responsabilizada. Todas as motivações que fazem sentido para um homem bom.\n\nA informação que ele entrega é verdadeira. O tomo existe. Velmarch é realmente opressora. Tudo é real. Só o motivo é podre.\n\nSoren pode ser salvo? Isso é decisão do Mestre. Se os jogadores descobrirem a verdade, vão precisar decidir o que fazer com um homem inocente que é, involuntariamente, o instrumento de um possível apocalipse.",
     "locations": ["kaldera"],
     "events": [],
@@ -160,7 +161,27 @@
     "events": [],
     "relations": [
       { "targetId": "tulo-bresh", "targetType": "character", "label": "tem dossiê sobre" },
+      { "targetId": "gangplank", "targetType": "character", "label": "respeito mútuo e cauteloso" },
       { "targetId": "marvosa", "targetType": "location", "label": "controla" }
+    ]
+  },
+  {
+    "id": "gangplank",
+    "name": "Gangplank",
+    "role": "Pirata / O Terror dos Mares de Pelágos",
+    "status": "Vivo",
+    "faction": "mare-negra",
+    "image": "gangplank.jpg",
+    "description": "Ninguém sabe de onde Gangplank veio. Não há ilha que o reivindique como filho, não há porto que admita tê-lo criado. Ele simplesmente está — como a maré, como a tempestade que aparece sem aviso e some deixando destroços. Comanda o Dead Pool — um navio negro como fundo de oceano, com velas que parecem absorver a luz ao redor. Quando aparece no horizonte, capitães experientes não ordenam combate nem fuga. Ordenam silêncio. Atrás dele, a frota: dez a doze navios — A Maré Negra. Gangplank é alto, largo, construído como se a natureza tivesse planejado um homem especificamente para ocupar o convés de um navio grande. Não grita. Não precisa.",
+    "personality": "Impiedoso da forma mais fria possível — não age por raiva nem por crueldade sádica, mas por lógica. Se alguém representa um problema, o problema é eliminado. Se alguém representa utilidade, é mantido. Respeita força genuína porque pessoas capazes são mais úteis vivas. O inimigo do meu inimigo não existe no vocabulário de Gangplank. Existe apenas: o que você vale para mim agora.",
+    "secrets": "SEGREDO DO MESTRE — CAMADA 3: Gangplank trabalha para Aldric XIV por baixo dos panos, executando serviços que A Corrente não pode fazer publicamente — eliminações, bloqueios, proteções discretas. A relação é estritamente financeira — sem lealdade, sem ideologia. Se alguém pagasse mais pelo lado oposto, a conversa seria outra.\n\nCAMADA 4: Aldric tem tanto medo de Gangplank quanto qualquer outra pessoa. O contrato existe porque Aldric foi o primeiro a chegar com dinheiro suficiente — não porque Gangplank precisava de cliente. Se Aldric alguma vez tentar usar Gangplank como ferramenta descartável, vai descobrir que ferramentas não ficam paradas quando decidem cortar a mão que as segura.\n\nA Corrente recebeu ordem de não engajar o Dead Pool sem autorização direta de Velmyr — resultado das três tentativas fracassadas de interceptação. Oficialmente 'ameaça ativa sob monitoramento'. Extraoficialmente, ativo de Aldric XIV.",
+    "locations": [],
+    "events": [],
+    "relations": [
+      { "targetId": "aldric-xiv", "targetType": "character", "label": "contratado por" },
+      { "targetId": "a-corrente", "targetType": "faction", "label": "trégua informal com" },
+      { "targetId": "gloria-vittar", "targetType": "character", "label": "respeito mútuo e cauteloso" },
+      { "targetId": "mare-negra", "targetType": "faction", "label": "lidera" }
     ]
   }
 ]
