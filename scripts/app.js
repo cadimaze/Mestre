@@ -2700,7 +2700,8 @@ function buildLocationEditFields(l = {}) {
     ${editField('Pontos de Interesse (um por linha)', editTextarea('pointsOfInterest', poi, 'Ex: O Porto Principal — navios de guerra...', 4))}
 
     <div class="edit-form-section-title">Segredos do Mestre</div>
-    ${editField('Segredos (apenas você vê)', editTextarea('secrets', l.secrets, 'Informações ocultas sobre este local...', 4))}
+    <div id="char-secrets-editor"></div>
+    <button type="button" class="edit-add-secret-btn">+ Adicionar Segredo</button>
   `;
 }
 
@@ -2720,7 +2721,8 @@ function buildEventEditFields(e = {}) {
     ${editField('Descrição Completa', editTextarea('description', e.description, 'O que aconteceu neste evento...', 5))}
 
     <div class="edit-form-section-title">Segredos do Mestre</div>
-    ${editField('Segredos (apenas você vê)', editTextarea('secrets', e.secrets, 'A verdade por trás do evento...', 4))}
+    <div id="char-secrets-editor"></div>
+    <button type="button" class="edit-add-secret-btn">+ Adicionar Segredo</button>
   `;
 }
 
@@ -2752,7 +2754,8 @@ function buildFactionEditFields(f = {}) {
     </div>
 
     <div class="edit-form-section-title">Segredos do Mestre</div>
-    ${editField('Segredos (apenas você vê)', editTextarea('secrets', f.secrets, 'O que esta facção esconde...', 4))}
+    <div id="char-secrets-editor"></div>
+    <button type="button" class="edit-add-secret-btn">+ Adicionar Segredo</button>
   `;
 }
 
@@ -2976,10 +2979,18 @@ function attachEditFormEvents(id, type) {
     form._pevSheetVis = pevSheetVis;
   }
 
-  // ── Character secrets editor (master-controlled) ───────────────────────────
+  // ── Character / entity secrets editor (master-controlled) ─────────────────
+  const SECRETS_EDITOR_TYPES = ['character', 'player', 'location', 'event', 'faction'];
   let charSecretsList = [];
-  if (type === 'character' || type === 'player') {
-    const existingChar = type === 'character' ? getCharById(id) : (getPlayerByUid(id)?.playerCharacter || null);
+  if (SECRETS_EDITOR_TYPES.includes(type)) {
+    const getExisting = {
+      character: () => getCharById(id),
+      player:    () => getPlayerByUid(id)?.playerCharacter || null,
+      location:  () => getLocationById(id),
+      event:     () => getEventById(id),
+      faction:   () => getFactionById(id),
+    };
+    const existingChar = getExisting[type]?.() || null;
     charSecretsList = Array.isArray(existingChar?.secretsList)
       ? existingChar.secretsList.map(s => ({
           ...s,
@@ -3121,8 +3132,8 @@ function attachEditFormEvents(id, type) {
       const fd   = new FormData(form);
       const data = buildDataFromForm(fd, type);
 
-      // Inject secrets list (character only — managed outside FormData)
-      if (type === 'character') data.secretsList = charSecretsList;
+      // Inject secrets list — managed outside FormData for all entity types
+      if (SECRETS_EDITOR_TYPES.includes(type) && type !== 'player') data.secretsList = charSecretsList;
 
       // Upload de arquivo para Cloudinary (personagens e locais)
       const fileInput = document.getElementById('img-file');
@@ -3133,14 +3144,16 @@ function attachEditFormEvents(id, type) {
 
       if (id) {
         // Snapshot old secretsList before updating (for notification diff)
-        const oldChar = type === 'character' ? getCharById(id) : null;
-        const oldSecretsList = oldChar?.secretsList || [];
+        const getOldEntity = { character: getCharById, location: getLocationById, event: getEventById, faction: getFactionById };
+        const oldEntity = getOldEntity[type]?.(id) || null;
+        const oldSecretsList = oldEntity?.secretsList || [];
 
         await updateDoc(doc(db, 'campaigns', CAMPAIGN_ID, typeCollName(type), id), data);
 
         // Send secret reveal notifications for newly-visible secrets
-        if (type === 'character' && charSecretsList.length) {
-          const charName = data.name || oldChar?.name || '';
+        const secretNotifTypes = ['character', 'location', 'event', 'faction'];
+        if (secretNotifTypes.includes(type) && charSecretsList.length) {
+          const entityName = data.name || oldEntity?.name || '';
           const allPlayerUids = STATE.players.filter(p => p.role === 'player').map(p => p.uid);
           for (const newSec of charSecretsList) {
             const oldSec = oldSecretsList.find(s => s.id === newSec.id);
@@ -3153,7 +3166,7 @@ function attachEditFormEvents(id, type) {
               newlyVisible = (newVis.playerIds || []).filter(uid => !(oldVis.playerIds || []).includes(uid));
             }
             if (newlyVisible.length) {
-              await sendRevealNotifications(newlyVisible, 'character', id, charName, 'secret');
+              await sendRevealNotifications(newlyVisible, type, id, entityName, 'secret');
             }
           }
         }
@@ -3244,7 +3257,7 @@ function buildDataFromForm(fd, type) {
     data.featured         = fd.get('featured') === 'on';
     data.description      = get('description').trim();
     data.pointsOfInterest = get('pointsOfInterest').split('\n').map(l => l.trim()).filter(Boolean);
-    data.secrets          = get('secrets').trim();
+    // secretsList is injected from attachEditFormEvents
     const locUrlVal = get('imageUrl').trim();
     if (locUrlVal) data.imageUrl = locUrlVal;
   }
@@ -3255,7 +3268,7 @@ function buildDataFromForm(fd, type) {
     data.scale       = get('scale');
     data.order       = parseInt(get('order')) || 0;
     data.description = get('description').trim();
-    data.secrets     = get('secrets').trim();
+    // secretsList is injected from attachEditFormEvents
   }
 
   if (type === 'faction') {
@@ -3264,7 +3277,7 @@ function buildDataFromForm(fd, type) {
     data.symbol      = get('symbol').trim() || '◆';
     data.color       = get('color').trim() || '#5a8ab0';
     data.description = get('description').trim();
-    data.secrets     = get('secrets').trim();
+    // secretsList is injected from attachEditFormEvents
     data.members     = fd.getAll('members');
   }
 
