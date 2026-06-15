@@ -703,6 +703,43 @@ A magia do cristal é anterior a qualquer escola arcana conhecida em Pelágos. S
 
 -----
 
+### 4.5 O ANCORADOURO DE LATÃO — A Forja Acorrentada
+
+**Tipo:** Ilha industrial / Colônia metalúrgica
+**Controle:** Domínio de Velmarch — operação direta d'A Corrente
+**Tom:** Enxofre e metal quente — uma ilha que cheirava a invenção e agora cheira a obrigação
+
+#### Descrição
+
+O Ancoradouro de Latão é uma ilha pequena e densa, encravada num ponto de rotas comerciais que ninguém considerava estratégico até A Corrente perceber o que ela produzia. Suas colinas são atravessadas por chaminés que soltam fumaça amarelada, seus becos são tão estreitos que duas pessoas mal se cruzam, e seu porto tem um brilho metálico na água que vem de décadas de limalha e resíduos de fundição despejados no mar.
+
+Foi durante séculos uma república de artesãos — sem rei, sem governador, sem hierarquia que não fosse o talento. Gnomos, principalmente, mas também humanos e halflings que vieram atrás do trabalho bom e ficaram atrás da filosofia: aqui, quem inventa manda. As oficinas eram abertas, as fórmulas eram compartilhadas e as brigas mais ferozes eram sobre calibragem de engrenagens e proporções de pólvora.
+
+Quando A Corrente chegou, não chegou como invasora. Chegou com papéis, com argumentos de "proteção de rota" e com navios que eram grandes demais para ignorar. A "adesão" ao Domínio levou três semanas. O confisco das oficinas levou três dias.
+
+Hoje, o Ancoradouro de Latão produz munição, peças de artilharia e componentes navais dentro das cotas estabelecidas por Velmarch. Os artesãos trabalham — mas agora para um cliente que não negocia preço e não aceita recusa. As crianças que antes aprendiam a calibrar pelo prazer de calibrar agora aprendem para não ficar devendo cota.
+
+#### Pontos de Interesse
+
+- **A Grande Forja** — a fundição central da ilha; antes o coração pulsante da comunidade, agora operada por supervisores d'A Corrente com cotas diárias afixadas na entrada
+- **O Porto Militar do Latão** — onde navios cinzentos de Velmarch ancoram regularmente para carregar o que foi produzido e deixar as ordens do próximo mês
+- **Os Becos dos Inventores** — rede labiríntica de vielas onde as antigas oficinas particulares ainda existem, espremidas entre armazéns de Velmarch; de noite ainda se ouve o tilintar discreto de quem não parou de inventar
+- **O Arquivo Confiscado** — edifício administrado por A Corrente que abriga todos os projetos, fórmulas e protótipos catalogados durante a "absorção"; os artesãos chamam de A Morgue
+- **A Estátua do Fundador Sem Nome** — no centro da praça principal, uma estátua de latão de um gnomo de chapéu largo que ninguém mais lembra quem é; Velmarch tentou removê-la duas vezes e ambas as vezes algo deu errado
+
+#### Segredos
+
+**🔒 Camada 1** — *As cotas não cobrem tudo*
+A produção oficial registrada nos relatórios de Velmarch não bate com a quantidade de matéria-prima consumida. A diferença é pequena — pequena o suficiente para parecer erro de medição. Não é. Alguma coisa está sendo fabricada fora dos registros.
+
+**🔒 Camada 2** — *O Arquivo Confiscado tem um inventário incompleto*
+Quando A Corrente catalogou as invenções da ilha, um conjunto de fórmulas não foi encontrado — especificamente, as pesquisas mais avançadas sobre química de pólvora de uma família de gnomos. Os supervisores registraram "material destruído antes da adesão". Não foi destruído. Foi escondido, ou levado, ou ambos. Velmarch ainda procura, discretamente.
+
+**🔒 Camada 3** — *A Estátua sabe quem é*
+A estátua do fundador sem nome é de um gnomo real — o avô do personagem que fugiu da ilha. Seu chapéu largo é um detalhe específico demais para ser coincidência. Alguém a construiu depois da "absorção", à noite, sem que A Corrente percebesse a tempo de impedir. Os mais velhos da ilha sabem de quem é a estátua. Não dizem.
+
+-----
+
 ## 5. EVENTOS HISTÓRICOS
 
 ### 5.1 A GRANDE GUERRA

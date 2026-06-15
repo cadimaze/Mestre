@@ -185,5 +185,42 @@
     "secrets": "SEGREDO DO MESTRE: No núcleo da ilha, enterrado sob gerações de terra cultivada, pulsa um cristal antigo instalado por Himmel Varek. Seu efeito é invisível e constante: qualquer elfo dentro do raio da ilha apresenta orelhas arredondadas, estatura comum, olhos sem brilho característico — humano em tudo que um olhar percebe.\n\nO cristal é a única razão pela qual os Talion existem. Se for destruído — por descuido, por magia, por interferência externa — todos os elfos de Reva revelarão sua verdadeira aparência simultaneamente. Com qualquer navio nas proximidades, seria uma sentença de morte para a família inteira.",
     "characters": ["frieren-talion", "fern-talion"],
     "events": ["caca-elfos"]
+  },
+  {
+    "id": "ancoradouro-de-latao",
+    "name": "O Ancoradouro de Latão",
+    "subtitle": "A Forja Acorrentada",
+    "type": "Ilha industrial / Colônia metalúrgica",
+    "controlledBy": null,
+    "faction": "velmarch",
+    "tone": "Enxofre e metal quente — uma ilha que cheirava a invenção e agora cheira a obrigação",
+    "description": "O Ancoradouro de Latão é uma ilha pequena e densa, encravada num ponto de rotas comerciais que ninguém considerava estratégico até A Corrente perceber o que ela produzia. Suas colinas são atravessadas por chaminés que soltam fumaça amarelada, seus becos são tão estreitos que duas pessoas mal se cruzam, e seu porto tem um brilho metálico na água que vem de décadas de limalha e resíduos de fundição despejados no mar.\n\nFoi durante séculos uma república de artesãos — sem rei, sem governador, sem hierarquia que não fosse o talento. Gnomos, principalmente, mas também humanos e halflings que vieram atrás do trabalho bom e ficaram atrás da filosofia: aqui, quem inventa manda. As oficinas eram abertas, as fórmulas eram compartilhadas e as brigas mais ferozes eram sobre calibragem de engrenagens e proporções de pólvora.\n\nQuando A Corrente chegou, não chegou como invasora. Chegou com papéis, com argumentos de 'proteção de rota' e com navios que eram grandes demais para ignorar. A 'adesão' ao Domínio levou três semanas. O confisco das oficinas levou três dias.\n\nHoje, o Ancoradouro de Latão produz munição, peças de artilharia e componentes navais dentro das cotas estabelecidas por Velmarch. Os artesãos trabalham — mas agora para um cliente que não negocia preço e não aceita recusa.",
+    "pointsOfInterest": [
+      "A Grande Forja — a fundição central da ilha; antes o coração pulsante da comunidade, agora operada por supervisores d'A Corrente com cotas diárias afixadas na entrada",
+      "O Porto Militar do Latão — onde navios cinzentos de Velmarch ancoram regularmente para carregar o que foi produzido e deixar as ordens do próximo mês",
+      "Os Becos dos Inventores — rede labiríntica de vielas onde as antigas oficinas particulares ainda existem, espremidas entre armazéns de Velmarch; de noite ainda se ouve o tilintar discreto de quem não parou de inventar",
+      "O Arquivo Confiscado — edifício administrado por A Corrente que abriga todos os projetos, fórmulas e protótipos catalogados durante a 'absorção'; os artesãos chamam de A Morgue",
+      "A Estátua do Fundador Sem Nome — no centro da praça principal, uma estátua de latão de um gnomo de chapéu largo que ninguém mais lembra quem é; Velmarch tentou removê-la duas vezes e ambas as vezes algo deu errado"
+    ],
+    "secretsList": [
+      {
+        "id": "latao-s1",
+        "text": "Camada 1 — As cotas não cobrem tudo: A produção oficial registrada nos relatórios de Velmarch não bate com a quantidade de matéria-prima consumida. A diferença é pequena — pequena o suficiente para parecer erro de medição. Não é. Alguma coisa está sendo fabricada fora dos registros.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "latao-s2",
+        "text": "Camada 2 — O Arquivo Confiscado tem um inventário incompleto: Quando A Corrente catalogou as invenções da ilha, um conjunto de fórmulas não foi encontrado — especificamente, as pesquisas mais avançadas sobre química de pólvora de uma família de gnomos. Os supervisores registraram 'material destruído antes da adesão'. Não foi destruído. Foi escondido, ou levado, ou ambos. Velmarch ainda procura, discretamente.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "latao-s3",
+        "text": "Camada 3 — A Estátua sabe quem é: A estátua do fundador sem nome é de um gnomo real — o avô do personagem que fugiu da ilha. Seu chapéu largo é um detalhe específico demais para ser coincidência. Alguém a construiu depois da 'absorção', à noite, sem que A Corrente percebesse a tempo de impedir. Os mais velhos da ilha sabem de quem é a estátua. Não dizem.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
+    ],
+    "secrets": "SEGREDO DO MESTRE: Velmarch confiscou as oficinas mas não encontrou as fórmulas mais avançadas de pólvora da família do personagem gnomo. O material foi levado ou escondido antes da absorção — e Velmarch ainda procura. A estátua na praça principal é do avô do personagem, construída clandestinamente pelos artesãos após a ocupação.",
+    "characters": [],
+    "events": []
   }
 ]
