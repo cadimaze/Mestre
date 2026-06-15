@@ -247,7 +247,7 @@
       },
       {
         "id": "aethon-s2",
-        "text": "Camada 2 — Liris foi levada: Depois que Cid fugiu, A Corrente registrou o incidente como 'recrutamento malsucedido' e adicionou uma nota: a mãe do fugitivo, Liris Maré, foi 'voluntariamente realocada' para oficinas de Kaldera, onde suas habilidades como tecedora de velas poderiam ser 'mais bem aproveitadas'. A realocação aconteceu dois meses depois da fuga de Cid. Ela está em Kaldera, costurando velas de Velmarch. Thorne não tentou ir atrás. Ou não pôde.",
+        "text": "Camada 2 — Liris foi levada: Depois que Cid fugiu, A Corrente registrou o incidente como 'recrutamento malsucedido' e adicionou uma nota: a mãe do fugitivo, Liris Maré, foi 'voluntariamente realocada' para as oficinas do Ancoradouro de Latão, onde suas habilidades como tecedora de velas poderiam ser 'mais bem aproveitadas' na produção de velas militares. A realocação aconteceu dois meses depois da fuga de Cid. Ela está no Ancoradouro de Latão, costurando velas de Velmarch. Thorne não tentou ir atrás. Ou não pôde.",
         "visibility": { "mode": "hidden", "playerIds": [] }
       },
       {
@@ -256,7 +256,7 @@
         "visibility": { "mode": "hidden", "playerIds": [] }
       }
     ],
-    "secrets": "SEGREDO DO MESTRE: Thorne Maré ainda vive em Aethon construindo barcos para A Corrente. Liris foi realocada forçosamente para Kaldera após a fuga de Cid e costura velas militares de Velmarch. O registro de Cid como desertor de recrutamento obrigatório ainda consta nos arquivos portuários do Domínio — qualquer oficial atento pode localizá-lo.",
+    "secrets": "SEGREDO DO MESTRE: Thorne Maré ainda vive em Aethon construindo barcos para A Corrente. Liris foi realocada forçosamente para o Ancoradouro de Latão após a fuga de Cid e costura velas militares de Velmarch. O registro de Cid como desertor de recrutamento obrigatório ainda consta nos arquivos portuários do Domínio — qualquer oficial atento pode localizá-lo.",
     "characters": [],
     "events": []
   }
