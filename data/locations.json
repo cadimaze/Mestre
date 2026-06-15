@@ -222,5 +222,42 @@
     "secrets": "SEGREDO DO MESTRE: Velmarch confiscou as oficinas mas não encontrou as fórmulas mais avançadas de pólvora da família do personagem gnomo. O material foi levado ou escondido antes da absorção — e Velmarch ainda procura. A estátua na praça principal é do avô do personagem, construída clandestinamente pelos artesãos após a ocupação.",
     "characters": [],
     "events": []
+  },
+  {
+    "id": "aethon",
+    "name": "Aethon",
+    "subtitle": "A Ilha das Velas",
+    "type": "Ilha pequena / Comunidade naval e de construção de embarcações",
+    "controlledBy": null,
+    "faction": "velmarch",
+    "tone": "Madeira de lei e vento salgado — uma ilha que ainda cheira a verniz e mar, e aprendeu a obedecer sem dizer que obedece",
+    "description": "Aethon é uma ilha montanhosa de tamanho modesto, encravada entre rotas costeiras que os grandes navios de guerra d'A Corrente não precisam usar — e por isso, por séculos, foi esquecida. O que não precisam não significa que não querem: quando Velmarch percebeu o que saía das oficinas de Aethon, os navios de 'recrutamento' apareceram no porto com a mesma suavidade inevitável com que a maré entra.\n\nA ilha é conhecida em sete ilhas ao redor por uma coisa: seus barcos não afundam. Não no sentido de que são difíceis de afundar — no sentido de que parecem querer flutuar. As embarcações de Aethon respondem ao toque como animais treinados, absorvem tempestades que destroçariam casco de outro estaleiro e resistem ao sal com uma obstinação que alguns marinheiros juram ser magia. Não é. É gerações de conhecimento acumulado, passado em silêncio entre pais e filhos, entre mestres e aprendizes, entre os dedos e a madeira.\n\nHoje, os estaleiros de Aethon ainda produzem as melhores embarcações do arquipélago — agora principalmente para A Corrente, em cotas que ninguém negociou e ninguém pode recusar.",
+    "pointsOfInterest": [
+      "Os Estaleiros da Costa Norte — onde as embarcações são construídas; cheiro permanente de serragem úmida e betume; supervisores d'A Corrente aparecem uma vez por mês para contar o que foi produzido",
+      "A Oficina de Thorne — menor do que já foi, agora funcionando num canto dos estaleiros maiores; Thorne Maré ainda trabalha, ainda é o melhor, ainda não fala mais do que o necessário",
+      "O Porto de Aethon — porto pequeno, limpo, funcional; os barcos que saem daqui são bonitos mesmo quando carregam canhões",
+      "A Casa dos Maré — construção de madeira escura no alto da colina; Liris não está mais lá, mas os padrões de suas velas ainda decoram janelas de outras casas da ilha",
+      "O Mirante — ponto mais alto da ilha, onde os aprendizes de navegação aprendem a reconhecer as formações de rocha que marcam a entrada do porto"
+    ],
+    "secretsList": [
+      {
+        "id": "aethon-s1",
+        "text": "Camada 1 — Thorne Maré ainda vive e trabalha em Aethon: Cid foi embora. O pai ficou. Thorne continua sendo o melhor carpinteiro naval da ilha — A Corrente sabe disso e nunca o tirou de lá. Qualquer viajante que pergunte pelos estaleiros de Aethon vai ouvir o nome Thorne. Ele não fala sobre Cid. Não porque tenha esquecido — porque não quer que a pergunta seja feita.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "aethon-s2",
+        "text": "Camada 2 — Liris foi levada: Depois que Cid fugiu, A Corrente registrou o incidente como 'recrutamento malsucedido' e adicionou uma nota: a mãe do fugitivo, Liris Maré, foi 'voluntariamente realocada' para oficinas de Kaldera, onde suas habilidades como tecedora de velas poderiam ser 'mais bem aproveitadas'. A realocação aconteceu dois meses depois da fuga de Cid. Ela está em Kaldera, costurando velas de Velmarch. Thorne não tentou ir atrás. Ou não pôde.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "aethon-s3",
+        "text": "Camada 3 — O registro de Cid ainda está ativo: O nome 'Cid Maré, navegador de Aethon' consta nos registros portuários do Domínio como 'desertado de recrutamento obrigatório'. A recompensa era pequena — suficiente para que um informante ficasse atento, não para que alguém fosse atrás. Mas os registros de A Corrente não somem por esquecimento. Qualquer oficial que conecte 'Cid' a 'Aethon' pode verificar nos arquivos e confirmar em horas.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
+    ],
+    "secrets": "SEGREDO DO MESTRE: Thorne Maré ainda vive em Aethon construindo barcos para A Corrente. Liris foi realocada forçosamente para Kaldera após a fuga de Cid e costura velas militares de Velmarch. O registro de Cid como desertor de recrutamento obrigatório ainda consta nos arquivos portuários do Domínio — qualquer oficial atento pode localizá-lo.",
+    "characters": [],
+    "events": []
   }
 ]

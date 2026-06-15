@@ -740,6 +740,43 @@ A estátua do fundador sem nome é de um gnomo real — o avô do personagem que
 
 -----
 
+### 4.6 AETHON — A Ilha das Velas
+
+**Tipo:** Ilha pequena / Comunidade naval e de construção de embarcações
+**Controle:** Domínio de Velmarch — presença administrativa leve mas crescente
+**Tom:** Madeira de lei e vento salgado — uma ilha que ainda cheira a verniz e mar, e aprendeu a obedecer sem dizer que obedece
+
+#### Descrição
+
+Aethon é uma ilha montanhosa de tamanho modesto, encravada entre rotas costeiras que os grandes navios de guerra d'A Corrente não precisam usar — e por isso, por séculos, foi esquecida. O que não precisam não significa que não querem: quando Velmarch percebeu o que saía das oficinas de Aethon, os navios de "recrutamento" apareceram no porto com a mesma suavidade inevitável com que a maré entra.
+
+A ilha é conhecida em sete ilhas ao redor por uma coisa: seus barcos não afundam. Não no sentido de que são difíceis de afundar — no sentido de que parecem *querer* flutuar. As embarcações de Aethon respondem ao toque como animais treinados, absorvem tempestades que destroçariam casco de outro estaleiro e resistem ao sal com uma obstinação que alguns marinheiros juram ser magia. Não é. É gerações de conhecimento acumulado, passado em silêncio entre pais e filhos, entre mestres e aprendizes, entre os dedos e a madeira.
+
+A *Brisa Vermilha* — o barco que Cid Maré roubou ao fugir — foi construída nessa ilha. O casco era de seu pai. A vela vermelha com padrão bordado era de sua mãe. Oito anos de consertos a tornaram outra coisa; a alma, não.
+
+Hoje, os estaleiros de Aethon ainda produzem as melhores embarcações do arquipélago — agora principalmente para A Corrente, em cotas que ninguém negociou e ninguém pode recusar. Os carpinteiros trabalham. As velas são costuradas. Os barcos saem pelo porto carregando a bandeira de Velmarch. E ninguém comenta sobre o rapaz que sumiu num deles há oito anos.
+
+#### Pontos de Interesse
+
+- **Os Estaleiros da Costa Norte** — onde as embarcações são construídas; cheiro permanente de serragem úmida e betume; supervisores d'A Corrente aparecem uma vez por mês para contar o que foi produzido
+- **A Oficina de Thorne** — menor do que já foi, agora funcionando num canto dos estaleiros maiores; Thorne ainda trabalha, ainda é o melhor, ainda não fala mais do que o necessário
+- **O Porto de Aethon** — porto pequeno, limpo, funcional; os barcos que saem daqui são bonitos mesmo quando carregam canhões
+- **A Casa dos Maré** — construção de madeira escura no alto da colina; Liris não está mais lá, mas os padrões de suas velas ainda decoram janelas de outras casas da ilha
+- **O Mirante** — ponto mais alto da ilha, onde os aprendizes de navegação aprendem a reconhecer as formações de rocha que marcam a entrada do porto; Cid as memorizou antes de saber ler mapas
+
+#### Segredos
+
+**🔒 Camada 1** — *Thorne Maré ainda vive e trabalha em Aethon*
+Cid foi embora. O pai ficou. Thorne Maré continua sendo o melhor carpinteiro naval da ilha — e A Corrente sabe disso, então nunca o tirou de lá. Qualquer viajante que pergunte pelos estaleiros de Aethon vai ouvir o nome Thorne. Qualquer capitão que queira uma embarcação de verdade vai tentar chegar a ele. Ele não fala sobre Cid. Não porque tenha esquecido — porque não quer que a pergunta seja feita.
+
+**🔒 Camada 2** — *Liris foi levada*
+Depois que Cid fugiu, A Corrente registrou o incidente como "recrutamento malsucedido" e adicionou uma nota: a mãe do fugitivo, Liris Maré, foi "voluntariamente realocada" para oficinas de Kaldera, onde suas habilidades como tecedora de velas poderiam ser "mais bem aproveitadas". A realocação aconteceu dois meses depois da fuga de Cid. Ela está em Kaldera, costurando velas de Velmarch. Thorne não tentou ir atrás. Ou não pôde.
+
+**🔒 Camada 3** — *O registro de Cid ainda está ativo*
+O nome "Cid Maré, navegador de Aethon" consta nos registros portuários do Domínio como "desertado de recrutamento obrigatório". A recompensa era pequena — moedas suficientes para que um informante ocasional ficasse atento, não suficientes para que alguém fosse atrás. Pequena o suficiente para ser esquecida. Mas os registros de A Corrente não somem por esquecimento. O nome ainda está lá. Qualquer oficial que conecte "Cid" a "Aethon" pode verificar nos arquivos e confirmar em horas.
+
+-----
+
 ## 5. EVENTOS HISTÓRICOS
 
 ### 5.1 A GRANDE GUERRA

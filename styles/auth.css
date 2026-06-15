@@ -1116,6 +1116,16 @@ body.is-master .vis-card-badge { display: block; }
   text-transform: uppercase;
 }
 
+.pc-field-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.pc-field-header .pc-section-title { margin-bottom: 0; }
+.pc-field-vis-row { display: flex; gap: 4px; flex-shrink: 0; }
+.pc-field-vis-row .pc-vis-btn { padding: 3px 9px; font-size: 11px; }
+
 /* Private / secrets section */
 .pc-section-private {
   background: rgba(10,20,30,.4);
@@ -1405,6 +1415,13 @@ body.is-master .vis-card-badge { display: block; }
   padding: 4px 0;
   font-style: italic;
 }
+.pcc-secret-link {
+  cursor: pointer;
+  transition: color .15s;
+  border-radius: 4px;
+  padding: 4px 6px;
+}
+.pcc-secret-link:hover { color: #c8a96a; background: rgba(200,169,106,.08); }
 
 /* ── Character secrets in edit form ─────────────────────────────────────────── */
 .char-secret-item {

@@ -279,12 +279,12 @@ function showRevealToast(notif) {
         <div class="reveal-toast-name">${escHtml(notif.entityName)}</div>
         <div class="reveal-toast-desc">${
           isSecret
-            ? 'O mestre revelou um segredo exclusivo para você. Esta informação é confidencial.'
+            ? `O mestre revelou um segredo sobre <strong>${escHtml(notif.entityName)}</strong>. Clique para ver a ficha completa.`
             : `O mestre liberou o acesso a informações sobre ${escHtml(notif.entityName)}. Explore ${entityLabel} agora.`
         }</div>
         <div>
-          ${!isSecret ? `<button class="reveal-toast-btn" id="rt-view">Ver agora</button>` : ''}
-          <button class="${isSecret?'reveal-toast-btn':'reveal-toast-btn-secondary'}" id="rt-close">${isSecret?'Entendido':'Fechar'}</button>
+          <button class="reveal-toast-btn" id="rt-view">${isSecret ? 'Ver ficha' : 'Ver agora'}</button>
+          <button class="reveal-toast-btn-secondary" id="rt-close">Fechar</button>
         </div>
       </div>`;
 
@@ -1220,6 +1220,14 @@ function renderMeuPersonagem() {
   // Mutable state — saved together on form submit
   let sheetVis   = pc.sheetVisibility ? { ...pc.sheetVisibility, playerIds: [...(pc.sheetVisibility.playerIds || [])] }
                                        : { mode: 'all', playerIds: [] };
+
+  const FIELD_VIS_KEYS = ['appearance', 'personality', 'history'];
+  let fieldVis = {};
+  FIELD_VIS_KEYS.forEach(k => {
+    const saved = pc.fieldVisibility?.[k];
+    fieldVis[k] = saved ? { ...saved, playerIds: [...(saved.playerIds || [])] } : { mode: 'all', playerIds: [] };
+  });
+
   let secretsList = Array.isArray(pc.secretsList)
     ? pc.secretsList.map(s => ({ ...s, visibility: { ...s.visibility, playerIds: [...(s.visibility?.playerIds || [])] } }))
     : (pc.secrets ? [{ id: '1', text: pc.secrets, visibility: { mode: 'hidden', playerIds: [] } }] : []);
@@ -1281,19 +1289,37 @@ function renderMeuPersonagem() {
       </div>
 
       <div class="pc-section">
-        <div class="pc-section-title">Aparência</div>
+        <div class="pc-field-header">
+          <div class="pc-section-title">Aparência</div>
+          <div class="pc-vis-row pc-field-vis-row" id="field-vis-btns-appearance">${visButtons(fieldVis.appearance.mode,'appearance')}</div>
+        </div>
+        <div class="pc-vis-players-wrap${fieldVis.appearance.mode==='specific'?'':' pc-hidden'}" id="field-vis-players-appearance">
+          ${playerChecks(fieldVis.appearance.playerIds,'appearance')}
+        </div>
         <textarea class="my-char-textarea" name="appearance" rows="3"
           placeholder="Como seu personagem parece, o que as pessoas notam ao vê-lo...">${escHtml(pc.appearance||'')}</textarea>
       </div>
 
       <div class="pc-section">
-        <div class="pc-section-title">Personalidade &amp; Motivações</div>
+        <div class="pc-field-header">
+          <div class="pc-section-title">Personalidade &amp; Motivações</div>
+          <div class="pc-vis-row pc-field-vis-row" id="field-vis-btns-personality">${visButtons(fieldVis.personality.mode,'personality')}</div>
+        </div>
+        <div class="pc-vis-players-wrap${fieldVis.personality.mode==='specific'?'':' pc-hidden'}" id="field-vis-players-personality">
+          ${playerChecks(fieldVis.personality.playerIds,'personality')}
+        </div>
         <textarea class="my-char-textarea" name="personality" rows="4"
           placeholder="O que quer, teme, acredita, como age sob pressão...">${escHtml(pc.personality||'')}</textarea>
       </div>
 
       <div class="pc-section">
-        <div class="pc-section-title">História do Personagem</div>
+        <div class="pc-field-header">
+          <div class="pc-section-title">História do Personagem</div>
+          <div class="pc-vis-row pc-field-vis-row" id="field-vis-btns-history">${visButtons(fieldVis.history.mode,'history')}</div>
+        </div>
+        <div class="pc-vis-players-wrap${fieldVis.history.mode==='specific'?'':' pc-hidden'}" id="field-vis-players-history">
+          ${playerChecks(fieldVis.history.playerIds,'history')}
+        </div>
         <textarea class="my-char-textarea" name="history" rows="6"
           placeholder="De onde veio, o que viveu, o que o moldou...">${escHtml(pc.history||'')}</textarea>
       </div>
@@ -1372,6 +1398,9 @@ function renderMeuPersonagem() {
         if (prefix === 'sheet') {
           sheetVis.mode = mode;
           document.getElementById('sheet-vis-players').classList.toggle('pc-hidden', mode !== 'specific');
+        } else if (FIELD_VIS_KEYS.includes(prefix)) {
+          fieldVis[prefix].mode = mode;
+          document.getElementById(`field-vis-players-${prefix}`).classList.toggle('pc-hidden', mode !== 'specific');
         } else if (prefix.startsWith('secret-')) {
           const idx = +prefix.split('-')[1];
           secretsList[idx].visibility.mode = mode;
@@ -1389,6 +1418,8 @@ function renderMeuPersonagem() {
         let arr;
         if (name === 'sheet') {
           arr = sheetVis.playerIds;
+        } else if (FIELD_VIS_KEYS.includes(name)) {
+          arr = fieldVis[name].playerIds;
         } else if (name.startsWith('secret-')) {
           const idx = +name.split('-')[1];
           arr = secretsList[idx].visibility.playerIds;
@@ -1443,7 +1474,7 @@ function renderMeuPersonagem() {
     const btn = document.getElementById('pc-save-btn');
     btn.disabled = true; btn.textContent = 'Salvando...';
     const fd = new FormData(e.target);
-    const charData = { sheetVisibility: sheetVis, secretsList };
+    const charData = { sheetVisibility: sheetVis, fieldVisibility: fieldVis, secretsList };
     fd.forEach((v, k) => { charData[k] = v.trim(); });
     if (pendingImageUrl) charData.imageUrl = pendingImageUrl;
     try {
@@ -1463,8 +1494,18 @@ function renderMeuPersonagem() {
       el.querySelectorAll('.pcc-portrait').forEach(img => {
         img.addEventListener('click', () => openLightbox(img.src));
       });
+      el.querySelectorAll('.pcc-secret-link').forEach(div => {
+        div.addEventListener('click', () => openModal(div.dataset.playerUid, 'player'));
+      });
     }
   }).catch(() => {});
+}
+
+function isFieldVisible(pc, field, viewerUid) {
+  const fv = pc.fieldVisibility?.[field];
+  if (!fv || fv.mode === 'all') return true;
+  if (fv.mode === 'specific') return (fv.playerIds || []).includes(viewerUid);
+  return false;
 }
 
 async function buildAllPlayersCharHtml() {
@@ -1500,7 +1541,7 @@ async function buildAllPlayersCharHtml() {
     const secretsHtml = sharedSecrets.length
       ? `<div class="pcc-secrets-block">
           <div class="pcc-secrets-label">Segredos compartilhados</div>
-          ${sharedSecrets.map(s => `<div class="pcc-secret-item">🔒 ${escHtml(s.text)}</div>`).join('')}
+          ${sharedSecrets.map(s => `<div class="pcc-secret-item pcc-secret-link" data-player-uid="${p.uid}" title="Clique para abrir a ficha">🔒 ${escHtml(s.text)}</div>`).join('')}
          </div>`
       : '';
 
@@ -1511,7 +1552,7 @@ async function buildAllPlayersCharHtml() {
         <div class="player-char-name">${escHtml(pc.name)}</div>
         <div class="player-char-details">
           ${[pc.race, pc.charClass, pc.background].filter(Boolean).map(escHtml).join(' · ')}
-          ${pc.appearance ? `<div class="pcc-appearance">${escHtml(pc.appearance)}</div>` : ''}
+          ${pc.appearance && isFieldVisible(pc, 'appearance', myUid) ? `<div class="pcc-appearance">${escHtml(pc.appearance)}</div>` : ''}
         </div>
         ${secretsHtml}
       </div>
@@ -1873,9 +1914,9 @@ function buildPlayerModalContent(uid) {
         <div class="badges"><span class="badge player-badge">⚔ Jogador: ${escHtml(p.displayName || '')}</span></div>
       </div>
     </div>
-    ${pc.appearance ? `<div class="modal-section"><div class="modal-section-title">Aparência</div><div class="modal-section-text">${escHtml(pc.appearance)}</div></div>` : ''}
-    ${pc.personality ? `<div class="modal-section"><div class="modal-section-title">Personalidade &amp; Motivações</div><div class="modal-section-text">${escHtml(pc.personality)}</div></div>` : ''}
-    ${pc.history ? `<div class="modal-section"><div class="modal-section-title">História</div><div class="modal-section-text">${escHtml(pc.history)}</div></div>` : ''}
+    ${pc.appearance && (STATE.isMaster || isFieldVisible(pc, 'appearance', STATE.user.uid)) ? `<div class="modal-section"><div class="modal-section-title">Aparência</div><div class="modal-section-text">${escHtml(pc.appearance)}</div></div>` : ''}
+    ${pc.personality && (STATE.isMaster || isFieldVisible(pc, 'personality', STATE.user.uid)) ? `<div class="modal-section"><div class="modal-section-title">Personalidade &amp; Motivações</div><div class="modal-section-text">${escHtml(pc.personality)}</div></div>` : ''}
+    ${pc.history && (STATE.isMaster || isFieldVisible(pc, 'history', STATE.user.uid)) ? `<div class="modal-section"><div class="modal-section-title">História</div><div class="modal-section-text">${escHtml(pc.history)}</div></div>` : ''}
     ${pc.notes ? `<div class="modal-section"><div class="modal-section-title">Notas</div><div class="modal-section-text">${escHtml(pc.notes)}</div></div>` : ''}
     ${buildCharSecretsHtml({ ...pc, id: uid })}
     ${buildRelationsSectionFor(uid, 'player')}
