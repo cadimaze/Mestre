@@ -460,6 +460,16 @@
     "description": "A Corrente recebeu ordem de não engajar o Dead Pool sem autorização de Velmyr. A Maré Negra e A Corrente coexistem nos mares de Pelágos com uma não-agressão tácita que nenhum dos lados admite publicamente."
   },
   {
+    "sourceId": "vaelindra-cass",
+    "sourceType": "character",
+    "targetId": "ondra",
+    "targetType": "location",
+    "label": "lidera comunidade élfica em",
+    "type": "secret",
+    "secret": true,
+    "description": "Galadriel Cass vive em Ondra há séculos, disfarçada como a 'Anciã das Ordens' da comunidade religiosa local. Lidera vinte e três elfos sobreviventes da Caça que vivem nas seções internas do Templo das Marés, encapuzados como 'penitentes em retiro'. É a pessoa viva com o conhecimento histórico mais completo sobre a Grande Guerra, o Thurvael e Selavin Doss."
+  },
+  {
     "sourceId": "aelindra",
     "sourceType": "character",
     "targetId": "himmel-varek",

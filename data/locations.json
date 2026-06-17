@@ -293,27 +293,43 @@
   {
     "id": "ondra",
     "name": "Ondra",
-    "subtitle": "A Ilha das Antigas Ordens",
-    "type": "Ilha religiosa / Centro espiritual",
+    "subtitle": "A Cidade Que Se Esqueceu de Si Mesma",
+    "type": "Ilha religiosa / Refúgio élfico secreto",
     "faction": null,
-    "tone": "Reverente e fechada — uma ilha que respira história mas desconfia de estranhos",
-    "description": "Ondra é uma ilha de ordem e memória. Antes da Maré Alta era conhecida como centro espiritual de várias tradições religiosas — depois da inundação tornou-se ainda mais importante, pois parte de seus arquivos e templos sobreviveu nas partes altas da ilha.\n\nVários mosteiros e ordens religiosas mantêm sedes em Ondra. A relação com o Domínio de Velmarch é cordial mas distante — Ondra paga tributos e aceita a presença discreta d'A Corrente, mas mantém autonomia religiosa que Velmarch prefere não desafiar.\n\nEntre os documentos preservados em Ondra há fragmentos que mencionam 'o abraço eterno que selou o que não podia ser destruído' — uma frase que os estudiosos locais atribuem a metáfora religiosa sobre a Maré Alta, sem entender que é descrição literal.",
+    "tone": "Reverente e fechada — uma ilha que respira história e desconfia de estranhos. Quem chega sem recomendação encontra hospitalidade educada e portas que não abrem.",
+    "description": "Ondra é uma ilha de pedra escura e névoa permanente. Não tem os portos movimentados de Kaldera nem a grandiosidade militar de Velmyr — tem templos, arquivos e silêncio. As ordens religiosas que a habitam há séculos cultivam uma forma de devoção discreta que Velmarch nunca soube muito bem como classificar nem tributar. Tentou uma vez. Os navios que enviou voltaram com oficiais febris que não conseguiam explicar por que tinham virado e ido embora.\n\nA comunidade religiosa vive em torno do Templo das Marés, uma estrutura de pedra negra construída com blocos recuperados do fundo do oceano. Os monges que mantêm o templo são conhecidos por sua longevidade incomum e sua recusa em aceitar aprendizes que não passem por um período de avaliação que pode durar meses.\n\nO que os visitantes ocasionais não percebem: a ilha tem mais habitantes do que os que aparecem no porto. Nos corredores mais internos do templo e nas Celas dos Penitentes vivem vinte e três elfos — o que restou do grupo de Galadriel Cass após décadas de perseguição. Eles aparecem ao público apenas encapuzados como 'penitentes em retiro espiritual prolongado' e, em troca da proteção das ordens, contribuíram com séculos de conhecimento histórico para os Arquivos. Os textos que os monges leem como poesia espiritual são memória élfica literal.",
     "pointsOfInterest": [
-      "O Templo das Marés — o maior templo da ilha, construído com pedras do mundo anterior recuperadas do fundo",
-      "Os Arquivos de Ondra — biblioteca religiosa com documentos pré-Maré Alta em condições razoáveis",
-      "O Porto das Bênçãos — único porto da ilha, onde navios recebem bênçãos rituais antes de partir",
-      "As Celas dos Penitentes — estruturas medievas usadas por religiosos em retiro prolongado"
+      "O Templo das Marés — estrutura de pedra negra pré-diluviana; o interior vai mais fundo do que sugere o exterior; as seções mais profundas não são abertas a visitantes",
+      "Os Arquivos de Ondra — biblioteca religiosa com textos que os monges interpretam como poesia espiritual e que são relatos literais de sobreviventes élficos em linguagem oblíqua",
+      "O Porto das Bênçãos — único porto da ilha; visitantes são recebidos aqui e raramente convidados a ir mais longe",
+      "As Celas dos Penitentes — estruturas de pedra no anel interno do templo; os 'penitentes' que as habitam há décadas nunca saem sem capuz",
+      "O Jardim da Maré — espaço entre as celas e o templo, aberto ao céu; único lugar onde os elfos aparecem sem capuz, ao amanhecer, quando não há visitantes no porto"
     ],
     "secretsList": [
       {
         "id": "ondra-s1",
-        "text": "Camada 1 — Os Arquivos de Ondra têm documentos sobre a Maré Alta: Entre os fragmentos preservados há referências ao 'abraço eterno' e a um 'selamento' — linguagem que as ordens religiosas locais interpretam como metáfora espiritual, sem saber que é descrição literal do ritual de Himmel.",
+        "text": "Camada 1 — A comunidade de Ondra é mais fechada do que admite: Há setores da ilha que simplesmente não são mostrados. 'As seções internas são para retiro espiritual' é a resposta padrão. Quem perguntar mais de uma vez vai notar que a resposta não muda, nem o tom.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "ondra-s2",
+        "text": "Camada 2 — Os penitentes de Ondra nunca encerram o retiro: Em ordens religiosas, penitentes em retiro eventualmente saem. Em Ondra, nenhum 'penitente em retiro prolongado' jamais foi embora. Alguns estão lá há décadas. A quantidade é sempre a mesma — nunca mais, nunca menos.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "ondra-s3",
+        "text": "Camada 3 — Ondra abriga sobreviventes élficos sob o comando de Galadriel Cass: Vinte e três elfos vivem nas seções internas do templo. A 'Anciã das Ordens' é Galadriel Cass — sobrevivente da Grande Guerra, da Maré Alta e da Caça. Ela sabe sobre o Thurvael, sobre Selavin Doss e sobre o que acontecerá se o selo quebrar. Teme que alguém com as melhores intenções do mundo vá quebrá-lo.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "ondra-s4",
+        "text": "Camada 4 — Os Arquivos de Ondra foram escritos pelos elfos: Os textos históricos que os monges leem como poesia espiritual são relatos literais de sobreviventes élficos em linguagem deliberadamente oblíqua. 'A escuridão que os elfos abriram nas profundezas' é o Thurvael. 'O abraço eterno que selou o que não podia ser destruído' é o sacrifício de Himmel. 'Aquele que ficou quando todos foram' é Selavin Doss. Com contexto suficiente, os jogadores conseguem ler esses textos de uma forma que os monges nunca conseguiram.",
         "visibility": { "mode": "hidden", "playerIds": [] }
       }
     ],
-    "secrets": "SEGREDO DO MESTRE: Os Arquivos de Ondra contêm pistas sobre o ritual de Himmel que os monges não compreendem. Um pesquisador com contexto suficiente poderia conectar os pontos.",
-    "characters": [],
-    "events": []
+    "secrets": "SEGREDO DO MESTRE: Ondra é o principal refúgio dos elfos sobreviventes da Caça. Galadriel Cass vive lá há séculos como 'Anciã das Ordens'. Os Arquivos de Ondra foram escritos pelos próprios elfos em linguagem codificada — textos que parecem poesia espiritual mas são memória literal da Grande Guerra e do selamento do Thurvael. Com contexto suficiente, os jogadores conseguem ler o que os monges nunca leram.",
+    "characters": ["vaelindra-cass"],
+    "events": ["grande-guerra", "caca-elfos"]
   },
   {
     "id": "kesvar",
