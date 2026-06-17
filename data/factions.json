@@ -53,5 +53,16 @@
     "secrets": "SEGREDO DO MESTRE: A Maré Negra executa serviços secretos para Aldric XIV mediante pagamento. A relação é estritamente contratual — sem lealdade, sem ideologia. Se alguém pagasse mais pelo lado oposto, a conversa seria outra.\n\nQualquer capitão ou cartógrafo que analise os padrões da Maré Negra percebe que há lógica territorial clara. Gangplank não está saqueando. Está administrando.\n\nA Corrente tentou interceptar o Dead Pool em pelo menos três ocasiões. Em duas, os navios voltaram com baixas pesadas. Na terceira, não voltaram.",
     "members": ["gangplank"],
     "locations": []
+  },
+  {
+    "id": "corte-cortesas",
+    "name": "A Corte das Cortesãs",
+    "type": "Rede de inteligência / Assassinas de aluguel",
+    "color": "#5a1a3a",
+    "symbol": "🌹",
+    "description": "A Corte das Cortesãs não existe oficialmente. Não tem sede, não tem estandarte, não tem nome gravado em nenhum documento. O que existe é Gloria Vittar — e a rede de mulheres que ela treinou, posicionou e mantém espalhadas pelos principais portos de Pelágos. Cada uma delas ocupa um papel legítimo: cortesãs, acompanhantes, dançarinas, enfermeiras, criadas em casas ricas. Cada uma delas envia informação a Marvosa. E quando necessário, cada uma delas age. A morte de Tulo Bresh em Kaldera é o trabalho da Corte — não ordenada por Gloria, mas executada por iniciativa de campo. O que acontece quando uma das suas age sem ordem é o único tipo de problema que Gloria Vittar não consegue resolver com elegância.",
+    "secrets": "SEGREDO DO MESTRE — A Corte opera com três funções distintas: inteligência (coleta de informação de todos os portos de Pelágos), pressão política (chantagear figuras influentes com o que as cortesãs documentaram) e eliminação (quando o alvo não pode ser controlado nem comprado). Gloria Vittar não ordena mortes por capricho — cada eliminação é calculada. A cortesã que matou Tulo Bresh em Kaldera o fez por iniciativa própria ao ouvir sobre o artefato, o que colocou Gloria numa posição incômoda: a acusação contra os jogadores foi a forma de transformar um erro num ativo.\n\nA Corte tem informantes em Kaldera, Aethon, Marvosa e — de forma mais esparsa — em Velmyr. A única ilha onde Gloria não tem presença segura é Reva. Ela tentou. As tentativas não voltaram.",
+    "members": ["gloria-vittar"],
+    "locations": ["marvosa"]
   }
 ]
