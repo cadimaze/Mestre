@@ -1231,10 +1231,17 @@ function renderRoteiro() {
   if (!el || el.dataset.rendered) return;
   el.dataset.rendered = '1';
 
+  const cadeBox = `
+    <div class="roteiro-recorrente">
+      <div class="roteiro-recorrente-titulo">⚓ Personagem Recorrente — Cade Varek</div>
+      <p>Cade aparece pela primeira vez em Kaldera e reaparece ao longo de toda a campanha, sempre ajudando os jogadores contra Velmarch. Ele genuinamente desaprovava Tulo Bresh — e aprecia quando alguém faz o que ele não tem coragem de fazer.</p>
+      <div class="roteiro-nota">📌 O mestre sabe: a ajuda de Cade é real, mas calculada. Ele reporta ao pai (indiretamente) o que os jogadores fazem. A traição, quando vier, não será maldade — será desespero de aprovação. Por enquanto, ele é o aliado improvável demais para ser verdade. Aparições sugeridas: Kaldera → portos de passagem → Marvosa → Kesvar/Ondra → Velmyr (onde facilita o acesso ao palácio, antecedendo a traição).</div>
+    </div>`;
+
   const arcos = [
     {
       id: 'arco1', num: '1', titulo: 'Kaldera: O Início', ilha: 'Kaldera',
-      objetivo: 'Apresentação dos personagens, formação do grupo, fuga e gancho central da campanha.',
+      objetivo: 'Apresentação dos personagens, formação do grupo, fuga, gancho central — e primeira aparição de Cade Varek.',
       cenas: [
         {
           titulo: 'A Cela',
@@ -1255,9 +1262,9 @@ function renderRoteiro() {
           texto: 'Combate com armas improvisadas. O escritório de Tulo tem: garrafas de bebida cara, estatuetas pesadas, candelabros de ferro, mobília pesada. O orc é grande e forte mas lento — exige criatividade, não força bruta. Durante o combate, a cortesã se retira discretamente. Não há motivo aparente para notar isso no calor da luta.'
         },
         {
-          titulo: 'A Fuga',
-          texto: 'Quando o combate termina, Tulo é encontrado morto — envenenado. A cortesã sumiu. A Corrente fecha o porto. Os jogadores são os suspeitos óbvios. Fuga por Kaldera: becos, mercado, porto. O barco de Cid está no cais — ele conhece cada canto. Bjorn pode estar esperando, ou ser encontrado nos cais. Escapam sob perseguição da Corrente.',
-          nota: 'A cortesã foi a Marvosa. Não foi enviada para matar Tulo — foi uma decisão de campo baseada no que ouviu sobre o artefato. Gloria ficará irritada. E usará isso como ferramenta contra os jogadores.'
+          titulo: 'A Fuga — e Cade Varek',
+          texto: 'Tulo é encontrado morto — envenenado. A Corrente fecha o porto. Fuga por Kaldera: becos, mercado, porto. E então: um oficial de Velmarch com um brasão diferente da Corrente baixa a espada num beco. "Não me interessa prendê-los. Tulo Bresh era uma vergonha pública e um problema privado. Existe uma saída pelo cais norte que a Corrente não está cobrindo." Não dá nome. Some.',
+          nota: 'Essa é a primeira aparição de Cade Varek. Os jogadores não sabem quem ele é imediatamente — o brasão da Casa Varek é reconhecível para quem sabe o que procurar. A identidade pode ser revelada de imediato ou descoberta mais tarde. A cortesã foi a Marvosa — Gloria ficará irritada e usará isso como ferramenta.'
         }
       ],
       documentos: [
@@ -1272,108 +1279,154 @@ function renderRoteiro() {
       cenas: [
         {
           titulo: 'A Conversa no Barco',
-          texto: 'Soren revela mais: o artefato é um tomo, guardado na Câmara Selada do palácio de Velmyr. Referências antigas o descrevem como "o registro que não pode ser lido por mãos que não merecem". A Casa Varek guarda esse segredo há gerações — sem saber por quê.',
-          nota: 'A rota que Soren sugere leva, eventualmente, a Velmyr — passando por pontos específicos que ele justifica como "melhores rotas". Cada sugestão é tecnicamente válida. Cada uma foi calculada.'
+          texto: 'Soren revela mais: o artefato é um tomo, guardado na Câmara Selada do palácio de Velmyr. Referências antigas o descrevem como "o registro que não pode ser lido por mãos que não merecem". A Casa Varek guarda esse segredo há gerações.',
+          nota: 'A rota que Soren sugere leva, eventualmente, a Velmyr — por pontos que ele justifica como "melhores rotas". Cada sugestão é tecnicamente válida. Cada uma foi calculada por Selavin Doss.'
         },
         {
           titulo: 'A Primeira Decisão',
-          texto: 'Os jogadores escolhem para onde vão. Ganchos: Aethon ("há ferreiros que fazem instrumentos náuticos — poderia atualizar meus mapas"), Kesvar ("há um arquivo lá — se os documentos sobre o tomo existem fora de Velmyr, é em Kesvar"), Marvosa (surgirá quando descobrirem que estão sendo culpados pela morte de Tulo).'
+          texto: 'Ganchos: Aethon (equipamento, história de Cid), Kesvar ("se os documentos existem fora de Velmyr, é lá — e há algo guardado lá que ninguém consegue chegar"), Mosteiro ("há registros antigos, mas algo impede quem tenta chegar"), Ondra (rumores de uma anciã que sabe coisas que não cabem numa vida só), Marvosa (quando descobrirem que estão sendo culpados pela morte de Tulo).'
         }
       ],
       documentos: []
     },
     {
-      id: 'arco3', num: '3', titulo: 'Ilhas Livres: Aethon e Kesvar', ilha: 'Aethon / Kesvar',
-      objetivo: 'Recursos e informação. Primeiras revelações históricas sobre a Grande Guerra e o nome Himmel Varek.',
+      id: 'arco3a', num: '3A', titulo: 'Aethon: O Ancoradouro de Latão', ilha: 'Aethon',
+      objetivo: 'Recursos, história de Cid, backstory de jogadores. Ilha independente — os jogadores respiram.',
       cenas: [
         {
-          titulo: 'Aethon — O Ancoradouro de Latão',
-          texto: 'Ilha metalúrgica e independente de Velmarch. Ferreiros, mercadores de metal, estaleiros. Rumores: a história dos fugitivos de Kaldera já circula nos portos. Bom lugar para reparação do barco, equipamento melhor. Possível NPC relevante para a história pessoal de algum jogador.'
+          titulo: 'O Que Encontram',
+          texto: 'Ilha metalúrgica independente de Velmarch. Ferreiros, mercadores de metal, estaleiros. Reparação do barco, equipamento melhor. Rumores sobre os fugitivos de Kaldera já circulam nos portos. Possível NPC relevante para a história pessoal de algum jogador.',
+          nota: 'Se Cid é jogador: Aethon é a ilha natal. O pai Thorne ainda trabalha nos estaleiros. A mãe Liris foi "realocada" para o Ancoradouro de Latão depois que Cid fugiu — Thorne não tentou ir atrás, ou não pôde.'
+        }
+      ],
+      documentos: []
+    },
+    {
+      id: 'arco3b', num: '3B', titulo: 'Kesvar: A Grande Biblioteca', ilha: 'Kesvar',
+      objetivo: 'A maior biblioteca acessível fora de Velmyr — e Vaelkor, o dragão ancião que guarda as câmaras profundas.',
+      cenas: [
+        {
+          titulo: 'Kesvar e seus Arquivos',
+          texto: 'Um arquivista lembra de Maren Krill — pesquisadora que veio décadas atrás buscando "os magistas da língua alta". Fragmentos sobre a Grande Guerra sem nomear Selavin, mas descrevendo "os que convocaram o que não devia ser convocado". O nome Himmel Varek aparece: "sacerdote-rei de uma ilha pequena que encontrou um método". As seções superiores do arquivo são acessíveis. As câmaras profundas, não.'
         },
         {
-          titulo: 'Kesvar — A Ilha dos Arquivos',
-          texto: 'Melhor arquivo histórico acessível fora de Velmyr. Um arquivista lembra de Maren Krill — pesquisadora que veio décadas atrás buscando "os magistas da língua alta". Documentos fragmentados sobre a Grande Guerra sem nomear Selavin, mas descrevendo "os que convocaram o que não devia ser convocado". O nome Himmel Varek aparece pela primeira vez: "sacerdote-rei de uma ilha pequena que encontrou um método".'
+          titulo: 'Vaelkor',
+          texto: 'Um dragão ancião que estava na ilha antes da inundação — e ficou. Os estudiosos de Kesvar aprenderam, gerações atrás, que certas seções simplesmente não são visitadas. Vaelkor não é inerentemente hostil — é territorial, velho e aborrecido com humanos que fazem perguntas cujas respostas estão nos livros ao redor. Pode ser enfrentado em combate, negociado, ou impressionado. Um personagem que demonstre conhecimento genuíno do que procura tem mais chance do que alguém com uma espada.',
+          nota: 'As câmaras mais profundas guardam um item — a ser definido quando os itens forem criados. Por enquanto: o mestre sabe que está lá, Vaelkor sabe o que é, e os jogadores precisam chegar até lá.'
         }
       ],
       documentos: [
-        { nome: 'Investigações sobre a Guerra Antiga (Vol. II — Maren Krill)', como: 'Arquivo de Kesvar (primário) ou comerciante de relíquias em Aethon' },
-        { nome: 'Uma Investigação Histórica (Vol. II — Telvis Oran)', como: 'Arquivo de Kesvar — um dos únicos registros formais sobre a Caça aos Elfos' },
-        { nome: 'Canção da Maré Alta (Vol. I)', como: 'Se não encontrada antes: qualquer taverna portuária' }
+        { nome: 'Investigações sobre a Guerra Antiga (Vol. II — Maren Krill)', como: 'Seção superior do arquivo — acessível sem Vaelkor' },
+        { nome: 'Uma Investigação Histórica (Vol. II — Telvis Oran)', como: 'Seção superior — um dos únicos registros formais sobre a Caça aos Elfos' },
+        { nome: 'Fragmentos sobre Himmel Varek', como: 'Seção intermediária — requer acesso negociado ou disfarce' }
       ]
     },
     {
-      id: 'arco4', num: '4', titulo: 'Marvosa: A Corte das Sombras', ilha: 'Marvosa',
-      objetivo: 'Confronto político com Gloria Vittar. Revelação parcial da Corte das Cortesãs. Proposta que define a segunda metade da campanha.',
+      id: 'arco3c', num: '3C', titulo: 'Mosteiro da Costa Afogada', ilha: 'Mosteiro da Costa Afogada',
+      objetivo: 'Informação, XP e item poderoso. Os monges estão isolados por uma besta que açola as águas da ilha.',
+      cenas: [
+        {
+          titulo: 'A Besta do Fundo',
+          texto: 'Há meses uma criatura das profundezas circula a ilha — os monges chamam de A Besta do Fundo. Monges não conseguem sair, barcos de suprimento não conseguem chegar. A comunidade está isolada e com provisões acabando. A criatura foi perturbada por algo nas profundezas — possivelmente o que Selavin está movimentando através de Soren.',
+          nota: 'Não é um monstro inteligente. É uma força natural descontrolada, corrompida pela proximidade com o ponto de selamento do Thurvael. O combate deve ser épico e aquático — no porto, nas pedras, talvez parcialmente submerso.'
+        },
+        {
+          titulo: 'A Recompensa dos Monges',
+          texto: 'Os monges ficam em dívida. Oferecem: acesso ao Scriptorium da Costa (documentos sobre o Abraço nunca distribuídos), acesso ao Arquivo Submerso (câmaras inferiores que os próprios monges nunca abriram), e um item guardado na Torre do Silêncio — a ser definido quando os itens forem criados. Também podem revelar o que Frei Assolvan descobriu antes de morrer.'
+        }
+      ],
+      documentos: [
+        { nome: 'Especulações de um Monge Costeiro (Vol. II — Frei Assolvan)', como: 'Scriptorium da Costa — cópia guardada aqui além da de Gloria Vittar' }
+      ]
+    },
+    {
+      id: 'arco4', num: '4', titulo: 'Ondra: A Anciã', ilha: 'Ondra',
+      objetivo: 'Galadriel Cass. A memória élfica mais completa que ainda existe numa mente viva.',
       cenas: [
         {
           titulo: 'Como Chegam',
-          texto: 'Os jogadores descobrem que estão sendo culpados pela morte de Tulo Bresh — e que a acusação vem de Marvosa. Chegam para limpar o nome, negociar ou seguindo pista sobre o artefato.'
+          texto: 'Rumores de uma "anciã das ordens" que "sabe coisas que não cabem numa pessoa de uma vida só". Ou pistas dos documentos históricos apontando para textos em Ondra que sabem demais. A ilha recebe os jogadores com hospitalidade educada e portas fechadas — mais fundo, só com convite ou determinação.'
         },
+        {
+          titulo: 'Galadriel Cass',
+          texto: 'Para chegar à Anciã, os jogadores precisam ganhar a confiança dos monges — ou descobrir por conta própria o que se esconde nas Celas dos Penitentes. Quando encontrarem Galadriel: ela tem mais de seiscentos anos e parece ter oitenta. Conhecia Selavin Doss. Tentou pessoalmente dissuadi-lo. Falhou. Sobreviveu à guerra, à Maré Alta, à Caça. Passou séculos em Ondra esperando uma conversa que achava que nunca aconteceria.',
+          nota: 'O que Galadriel revela depende do que os jogadores já sabem. Com o Lamento de Galadriel Cass, a conversa começa de um lugar diferente. Com a Memória dos Derradeiros Dias, ela fica em silêncio por um momento antes de falar. Em qualquer caso, ela revela: Selavin não morreu no selamento. E o que isso significa.'
+        },
+        {
+          titulo: 'O Pedido de Galadriel',
+          texto: '"Se chegarem ao fim e tiverem uma escolha, lembrem-se de que há uma terceira opção. Não sei qual é. Mas sei que existe — porque Himmel sempre deixava uma saída para quem soubesse procurar."'
+        }
+      ],
+      documentos: [
+        { nome: 'Lamento de Galadriel Cass (Vol. III)', como: 'Galadriel tem o original — e pode entregá-lo como prova de confiança ou como despedida' }
+      ]
+    },
+    {
+      id: 'arco5', num: '5', titulo: 'Marvosa: A Corte das Sombras', ilha: 'Marvosa',
+      objetivo: 'Confronto político com Gloria Vittar. Proposta que define a segunda metade da campanha.',
+      cenas: [
         {
           titulo: 'Gloria Vittar',
-          texto: 'Os recebe. Surpreendentemente, não os prende. "Vocês não mataram Tulo Bresh. Eu sei disso. A questão é que a Corrente não sabe — e o que a Corrente acredita depende do que eu disser." Gloria quer o tomo de Velmyr por razões políticas — algo no tomo pode desestabilizar o fundamento do Domínio. A proposta: "Trabalhem para mim. Contrabandeiem o tomo. Em troca, vos livro da acusação." Os jogadores podem aceitar, recusar ou negociar. Gloria é paciente.',
-          nota: 'A Corte das Cortesãs: mencionada mas não completamente revelada. Gloria não havia ordenado a morte de Tulo — foi decisão de campo. Ela está irritada com isso mas não vai admitir. O que ficará claro: há uma rede de informantes espalhada pelos portos de Pelágos.'
+          texto: 'Os recebe. Não os prende. "Vocês não mataram Tulo Bresh. A questão é que a Corrente não sabe — e o que a Corrente acredita depende do que eu disser." A proposta: trabalhem para mim, contrabandeiem o tomo de Velmyr, em troca vos livro da acusação. Os jogadores podem aceitar, recusar ou negociar. Gloria é paciente.',
+          nota: 'Se Cade Varek aparecer aqui numa visita de "negócios", ele avisa os jogadores discretamente: Gloria sabe mais do que diz sobre o artefato. E o que ela quer com ele não é o que ela está dizendo que quer.'
         }
       ],
       documentos: [
-        { nome: 'Especulações de um Monge Costeiro (Vol. II — Frei Assolvan)', como: 'Coleção particular de Gloria Vittar — dado como boa fé ou como pagamento' }
+        { nome: 'Especulações de um Monge Costeiro (Vol. II — Frei Assolvan)', como: 'Coleção de Gloria — dado como boa fé (se não obtido no Mosteiro)' },
+        { nome: 'Lamento de Galadriel Cass (Vol. III)', como: 'Gloria tem uma cópia — não sabe o que é, só que é raro' }
       ]
     },
     {
-      id: 'arco5', num: '5', titulo: 'Reva: A Memória do Mundo', ilha: 'Reva',
-      objetivo: 'A revelação mais profunda da campanha. Frieren sabe o que ninguém mais sabe. Fern guarda o que Frieren não consegue mais guardar sozinha.',
+      id: 'arco6', num: '6', titulo: 'Reva: A Memória do Mundo', ilha: 'Reva',
+      objetivo: 'Frieren sabe o que ninguém mais sabe. Fern guarda o que Frieren não consegue mais guardar sozinha.',
       cenas: [
         {
-          titulo: 'Como Chegam',
-          texto: 'Soren tem mapas que mencionam Reva como ponto de rota. Ou os jogadores seguem pistas dos documentos sobre sobreviventes da Caça. Ou Fern aparece como compradora de suprimentos em algum porto anterior. Reva parece uma ilha pequena e simples. A família Talion parece uma família de curandeiros isolados.'
-        },
-        {
           titulo: 'Frieren e Fern',
-          texto: 'Fern é a administradora prática, cordial, eficiente. Frieren é uma velha quase senil que às vezes diz coisas que não fazem sentido de uma maneira que faz sentido demais. Conquistando a confiança de Fern (gradualmente): (1) ela revela que são elfos; (2) que Frieren estava presente no Abraço das Águas Eternas; (3) Frieren, em momento lúcido: "Himmel sacrificou tudo. O que está selado tem nome. Não digam o nome perto da água."',
-          nota: 'O momento lúcido de Frieren pode ser provocado por: um documento histórico lido em voz alta na sua presença; alguém mencionar o nome "Himmel Varek"; presença de sensibilidade arcana próxima ao tomo de Himmel.'
+          texto: 'Fern é a administradora prática. Frieren é uma velha quase senil que diz coisas que fazem sentido demais. Conquistando a confiança de Fern: (1) ela revela que são elfos; (2) que Frieren estava no Abraço das Águas Eternas; (3) Frieren, em momento lúcido: "Himmel sacrificou tudo. O que está selado tem nome. Não digam o nome perto da água."',
+          nota: 'Se os jogadores já passaram por Ondra e Galadriel, este momento de Frieren adquire outra dimensão — eles sabem o nome que não deve ser dito. Frieren pode sentir isso e reagir de forma diferente.'
         }
       ],
       documentos: [
         { nome: 'Palavras de Frieren (Vol. III — Frieren Talion)', como: 'Carta entre os pertences de Frieren; dado por Fern como sinal de confiança' },
-        { nome: 'Memória dos Derradeiros Dias (Vol. III — Aelindra)', como: 'Frieren guardou uma cópia que Aelindra lhe entregou durante o selamento' },
-        { nome: 'Lamento de Galadriel Cass (Vol. III)', como: 'Aqui ou obtido no Arco 4' }
+        { nome: 'Memória dos Derradeiros Dias (Vol. III — Aelindra)', como: 'Frieren guardou uma cópia que Aelindra lhe entregou no selamento' }
       ]
     },
     {
-      id: 'arco6', num: '6', titulo: 'A Revelação de Soren', ilha: 'Qualquer lugar',
-      objetivo: 'Os sinais acumulados ao longo da campanha tornam-se impossíveis de ignorar. Soren é uma vítima — e uma ferramenta.',
+      id: 'arco7', num: '7', titulo: 'A Revelação de Soren', ilha: 'Qualquer lugar',
+      objetivo: 'Os sinais acumulados tornam-se impossíveis de ignorar. Soren é uma vítima — e uma ferramenta.',
       cenas: [
         {
           titulo: 'Os Sinais Acumulam',
-          texto: 'As rotas de Soren têm uma direção consistente: sempre em direção ao centro geográfico do oceano de Pelágos. Seus mapas de profundidade oceânica têm marcações precisíssimas exatamente na área do selamento descrita no Tomo de Himmel. Em algum momento, ele "sabe" algo que não poderia saber — e quando questionado, franze o cenho e não consegue explicar.'
+          texto: 'As rotas de Soren têm uma direção consistente: sempre em direção ao centro de Pelágos. Seus mapas de profundidade têm marcações precisíssimas exatamente onde o Tomo descreve o selamento. Em algum momento, ele "sabe" algo que não poderia saber.'
         },
         {
           titulo: 'O Confronto',
-          texto: 'Se os jogadores confrontam Soren: ele genuinamente não sabe. Acredita em tudo que diz. Quando pressionado, fica perturbado — há algo, mas não consegue nomear. Se investigam magicamente: um fio de influência que vai muito fundo. Não é possessão — é infiltração. Como água por uma rachadura.',
-          nota: 'Soren não é o inimigo. É uma vítima que também é uma ferramenta. O que o usa tem nome: Selavin Doss — o magista que se fundiu com o Thurvael no instante do selamento e usa essa fresta para conduzir os jogadores até o tomo.'
+          texto: 'Se os jogadores confrontam Soren: ele genuinamente não sabe. Quando pressionado, fica perturbado. Se investigam magicamente: um fio de influência que vai muito fundo. Não é possessão — é infiltração.',
+          nota: 'Soren não é o inimigo. O que o usa tem nome: Selavin Doss.'
         }
       ],
       documentos: []
     },
     {
-      id: 'arco7', num: '7', titulo: 'Velmyr: O Coração do Império', ilha: 'Velmyr',
-      objetivo: 'A verdade completa. O Tomo de Himmel Varek. A preparação para a escolha final.',
+      id: 'arco8', num: '8', titulo: 'Velmyr: O Coração do Império', ilha: 'Velmyr',
+      objetivo: 'A verdade completa. O Tomo de Himmel Varek. Cade Varek os leva para dentro do palácio.',
       cenas: [
         {
-          titulo: 'Entrando em Velmyr',
-          texto: 'Os jogadores chegam com documentos suficientes para entender o que está em jogo. A cidade é grande, policiada, e os nomes deles provavelmente ainda circulam em mandados. Abordagens possíveis: com apoio de Gloria Vittar; com disfarce ou documentação falsa; pela rede de Gangplank; com apoio improvável de alguém dentro da Casa Varek.'
+          titulo: 'Cade Varek — O Risco Real',
+          texto: 'Cade aparece e faz algo que nunca fez antes: coloca os jogadores dentro do palácio. Dá-lhes acesso. Arrisca-se de verdade — ou parece que sim.',
+          nota: 'Esta é a cena que antecede a possível traição (Camada 3 de Cade). O mestre decide quando e se ativa. A traição não é obrigatória — é uma opção narrativa de alta tensão para o clímax. Se ativada: Cade os entrega à Corrente no pior momento possível, não por maldade, mas por desespero de aprovação de Aldric. E vai se odiar imediatamente depois.'
         },
         {
           titulo: 'Aldric XIV',
-          texto: 'Não é o vilão que imaginavam. É um homem que administra um poder que não entende. Sabe que o tomo existe e que deve ser guardado. Nunca leu. Cada rei da linhagem Varek, ao assumir, recebe a mesma instrução: "Guarde o tomo. Não o abra. Não pergunte o que há dentro." Pode ser obstáculo, aliado relutante ou irrelevante — depende de como os jogadores chegam.'
+          texto: 'Não é o vilão que imaginavam. Administra um poder que não entende. Sabe que o tomo existe. Nunca leu. Cada rei da linhagem recebe a mesma instrução: "Guarde. Não abra. Não pergunte."'
         },
         {
           titulo: 'A Câmara Selada',
-          texto: 'Nas fundações do palácio. As inscrições de Himmel nas paredes são a confirmação final — escritas por ele antes do ritual. O tomo está aqui.'
+          texto: 'Nas fundações do palácio. As inscrições de Himmel nas paredes são a confirmação final. O tomo está aqui.'
         }
       ],
       documentos: [
-        { nome: 'Tomo de Himmel Varek (Lendário)', como: 'Câmara Selada nas fundações do Palácio de Velmyr — a verdade completa sobre o Thurvael, o selamento e o aviso' }
+        { nome: 'Tomo de Himmel Varek (Lendário)', como: 'Câmara Selada nas fundações do Palácio — a verdade completa' }
       ]
     },
     {
@@ -1382,20 +1435,20 @@ function renderRoteiro() {
       cenas: [
         {
           titulo: 'Depois de Ler o Tomo',
-          texto: 'Os jogadores sabem: a Maré Alta foi intencional — Himmel afogou o mundo para selar o Thurvael. O oceano de Pelágos inteiro é um cárcere. O que está selado tem o rosto de Selavin Doss — não uma força amorfa, mas um homem com séculos de planejamento e o poder integral de uma entidade primordial. E Soren foi o instrumento que os trouxe até aqui sem saber.'
+          texto: 'Os jogadores sabem tudo: a Maré Alta foi intencional, o oceano é um cárcere, Selavin Doss está vivo dentro do selo, Soren foi o instrumento que os trouxe até aqui sem saber.'
         },
         {
           titulo: 'Quebrar o Selo',
-          texto: 'Selavin Doss emerge. Vai tentar convencer os jogadores de que foi vítima — os elfos foram perseguidos, Himmel destruiu o mundo deles para salvar um mundo que os exterminou. Ele não está completamente errado. Mas tem o poder do Thurvael e passou séculos planejando.'
+          texto: 'Selavin Doss emerge. Vai tentar convencer os jogadores de que foi vítima. Não está completamente errado. Mas tem o poder do Thurvael e séculos de planejamento.'
         },
         {
           titulo: 'Manter o Selo',
           texto: 'Velmarch continua. O oceano permanece como cárcere. Os elfos continuam sendo perseguidos. O erro de Selavin permanece enterrado com ele.'
         },
         {
-          titulo: 'Uma Terceira Opção',
-          texto: 'A existência de uma terceira saída depende das escolhas ao longo da campanha — dos aliados construídos, dos documentos encontrados, do que Frieren revelou em Reva, de se encontraram Galadriel Cass, de como trataram Soren.',
-          nota: 'Planejar a terceira opção junto com o que os jogadores construíram. Ela não existe de forma fixa — emerge das escolhas deles.'
+          titulo: 'A Terceira Opção',
+          texto: 'Existe — se os jogadores encontraram Galadriel em Ondra, ouviram Frieren em Reva, e compreenderam o que Himmel deixou nas inscrições de Velmyr. "Sempre deixava uma saída para quem soubesse procurar."',
+          nota: 'A terceira opção emerge das escolhas dos jogadores. Ela não existe de forma fixa — o mestre constrói junto com o que foi acumulado.'
         }
       ],
       documentos: []
@@ -1410,14 +1463,14 @@ function renderRoteiro() {
         <tbody>
           <tr><td>A Guerra que Partiu o Mundo</td><td>I</td><td>Arco 1 — Kaldera</td></tr>
           <tr><td>Registros do Purgo</td><td>I</td><td>Arco 1 — Kaldera</td></tr>
-          <tr><td>Canção da Maré Alta</td><td>I</td><td>Arco 1 / 2 / 3</td></tr>
-          <tr><td>Investigações sobre a Guerra Antiga</td><td>II</td><td>Arco 3 — Kesvar / Aethon</td></tr>
-          <tr><td>Uma Investigação Histórica</td><td>II</td><td>Arco 3 — Kesvar</td></tr>
-          <tr><td>Especulações de um Monge Costeiro</td><td>II</td><td>Arco 4 — Marvosa</td></tr>
-          <tr><td>Memória dos Derradeiros Dias</td><td>III</td><td>Arco 5 — Reva</td></tr>
-          <tr><td>Palavras de Frieren</td><td>III</td><td>Arco 5 — Reva</td></tr>
-          <tr><td>Lamento de Galadriel Cass</td><td>III</td><td>Arco 4 ou 5</td></tr>
-          <tr><td>Tomo de Himmel Varek</td><td>Lendário</td><td>Arco 7 — Velmyr</td></tr>
+          <tr><td>Canção da Maré Alta</td><td>I</td><td>Arco 1 / 2 / 3A</td></tr>
+          <tr><td>Investigações sobre a Guerra Antiga (Maren Krill)</td><td>II</td><td>Arco 3B — Kesvar</td></tr>
+          <tr><td>Uma Investigação Histórica (Telvis Oran)</td><td>II</td><td>Arco 3B — Kesvar</td></tr>
+          <tr><td>Especulações de um Monge Costeiro (Frei Assolvan)</td><td>II</td><td>Arco 3C — Mosteiro / Arco 5 — Marvosa</td></tr>
+          <tr><td>Lamento de Galadriel Cass</td><td>III</td><td>Arco 4 — Ondra / Arco 5 — Marvosa</td></tr>
+          <tr><td>Memória dos Derradeiros Dias (Aelindra)</td><td>III</td><td>Arco 6 — Reva</td></tr>
+          <tr><td>Palavras de Frieren</td><td>III</td><td>Arco 6 — Reva</td></tr>
+          <tr><td>Tomo de Himmel Varek</td><td>Lendário</td><td>Arco 8 — Velmyr</td></tr>
         </tbody>
       </table>
     </div>`;
@@ -1428,6 +1481,8 @@ function renderRoteiro() {
         <div class="roteiro-title">Roteiro — Mares e Marés</div>
         <div class="roteiro-subtitle">Documento exclusivo do Mestre · Esboço linear da campanha</div>
       </div>
+
+      ${cadeBox}
 
       <div class="roteiro-arcos">
         ${arcos.map(a => `
