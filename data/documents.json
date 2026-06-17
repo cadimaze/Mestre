@@ -22,6 +22,115 @@
         "visibility": { "mode": "hidden", "playerIds": [] }
       }
     ],
+    "contentVisibility": { "mode": "hidden", "playerIds": [] },
+    "visibility": { "mode": "hidden", "playerIds": [] }
+  },
+  {
+    "id": "guerra-vol-1",
+    "name": "A Grande Guerra — Vol. I: A Guerra que Partiu o Mundo",
+    "docType": "pergaminho",
+    "period": "Pós-Maré Alta, geração dos sobreviventes",
+    "author": "Desconhecido (tradição oral compilada)",
+    "description": "Crônica popular recolhida de ilha em ilha, transmitida por gerações de navegadores. Conta a Grande Guerra com as poucas palavras que sobreviveram ao mar — sem nomes, sem causas, apenas a memória de que havia guerra antes de haver água.",
+    "content": "O que os velhos contam, de ilha em ilha, é que havia guerra antes de haver água.\n\nNão uma guerra de corsários ou de tributos mal cobrados — essas são as guerras que conhecemos. Era uma guerra de impérios, de reis com nomes que o mar já engoliu, de exércitos que marchavam por continentes que não existem mais.\n\nDizem que o céu ficou vermelho por quarenta dias. Que o cheiro de fumaça chegava antes dos navios. Que cidades inteiras desapareciam em uma noite — não pela chama, mas por algo que não tinha nome nos idiomas de então.\n\nDurou décadas. Talvez gerações.\n\nE então, quando os homens já não conseguiam mais imaginar o que seria o fim, as águas vieram. De onde, ninguém sabe ao certo. Por quê, tampouco. Mas quando o mar parou de subir, o mundo era outro. E a guerra havia terminado.\n\nNão porque alguém venceu. Mas porque não havia mais o suficiente para continuar.",
+    "secretsList": [],
+    "contentVisibility": { "mode": "hidden", "playerIds": [] },
+    "visibility": { "mode": "hidden", "playerIds": [] }
+  },
+  {
+    "id": "guerra-vol-2",
+    "name": "A Grande Guerra — Vol. II: Investigações sobre a Guerra Antiga",
+    "docType": "pergaminho",
+    "period": "~50 anos após a Maré Alta",
+    "author": "Maren Oss, estudioso errante",
+    "description": "Fragmento acadêmico de um estudioso que passou anos reunindo testemunhos e arquivos da inundação. Não chega a conclusões definitivas, mas insinua com força o envolvimento élfico e algo invocado que mudou a natureza da guerra.",
+    "content": "Após anos compilando testemunhos e fragmentos de arquivos que a inundação não destruiu completamente, chego a algumas conclusões preliminares — e a muitas mais perguntas.\n\nA Grande Guerra não foi, como nos ensinaram, uma disputa territorial entre os impérios do continente antigo. Os registros não coincidem com essa narrativa. O que os registros sugerem — e sublinho que são sugestões, não certezas — é que algo foi invocado.\n\nOs povos de orelhas longas estavam no centro disso. Isso aparece em demasiados arquivos independentes para ser descartado como preconceito. Um fragmento de Kesvar menciona \"os magistas da língua alta que chamaram o que não devia ser chamado.\" Um registro de Ondra fala de \"a escuridão que os elfos abriram nas profundezas.\"\n\nO que foi invocado, não sei dizer. Nenhum arquivo descreve com clareza. As palavras que encontro são metáforas: \"a fome antiga,\" \"o peso do abismo,\" \"aquilo que consome.\" Poética de sobreviventes tentando descrever algo para o qual não tinham vocabulário.\n\nO que posso afirmar é que a guerra mudou quando isso aconteceu. Deixou de ser uma guerra entre homens e se tornou outra coisa. Os exércitos ainda lutavam, mas lutavam como quem luta contra uma maré — sabendo que talvez não houvesse vitória possível.\n\nAguardo encontrar mais registros. Temo que não existam.\n\n— Maren Oss, estudioso errante, redigido em Kaldera",
+    "secretsList": [],
+    "contentVisibility": { "mode": "hidden", "playerIds": [] },
+    "visibility": { "mode": "hidden", "playerIds": [] }
+  },
+  {
+    "id": "guerra-vol-3",
+    "name": "A Grande Guerra — Vol. III: Memória dos Derradeiros Dias",
+    "docType": "tomo",
+    "period": "Durante a Grande Guerra",
+    "author": "Aelindra, Sacerdotisa da Última Chama",
+    "description": "Tomo escrito por uma sacerdotisa élfica que viveu a Grande Guerra. Revela a verdade completa: os magistas elfos invocaram a Fome deliberadamente, acreditando que podiam controlá-la. Quando Himmel surgiu com um método de selamento, Aelindra estava presente.",
+    "content": "Escrevo isto para que alguém saiba. Não para que sirvam de consolo — não há consolo aqui. Mas para que, se alguém encontrar estas páginas num tempo que não é o meu, compreenda o que aconteceu. Não a versão que será contada. O que de fato aconteceu.\n\nOs magistas eram da minha gente. Elfos. Os maiores que havíamos produzido em dez gerações. Passaram décadas nas camadas mais profundas da realidade — o que chamamos de o substrato, o que os humanos chamam de o abismo. Encontraram algo lá.\n\nChamavam-no de a Fome. Depois passaram a não chamá-lo de nada, porque mesmo a referência indireta parecia nutri-lo.\n\nAcreditaram que podiam invocá-lo e domá-lo. Que seria a vantagem definitiva — uma força primordial sob o controle dos elfos garantiria a supremacia para sempre. Não consultaram os anciãos. Não consultaram os sacerdotes. Realizaram o ritual em segredo, numa ilha que não existe mais, em um dia que nenhum calendário marca.\n\nA Fome não obedeceu. Simplesmente começou a consumir.\n\nO que veio depois chamamos de Grande Guerra, mas esse nome é impreciso. Não foi uma guerra. Foi um recuo. Todos recuando, sempre, diante de algo que não entendia negociação nem rendição. Os exércitos dos impérios tentaram. As ordens mágicas tentaram. Os deuses — os que ainda respondiam — tentaram.\n\nNada foi suficiente.\n\nEu era sacerdotisa da Última Chama quando Himmel veio nos consultar. Um sacerdote-rei de uma ilha pequena, sem exército, sem fortuna. Trouxe consigo páginas de um tomo que havia encontrado — um deus morto havia deixado suas anotações, e Himmel as havia lido. Havia um método.\n\nO preço que ele descreveu fez minha superiora chorar. Ela que não chorava desde a Guerra dos Cinquenta Anos.\n\nNão pude impedi-lo. Ninguém pôde.\n\n— Aelindra, Sacerdotisa da Última Chama, ano não registrado",
+    "secretsList": [],
+    "contentVisibility": { "mode": "hidden", "playerIds": [] },
+    "visibility": { "mode": "hidden", "playerIds": [] }
+  },
+  {
+    "id": "abraco-vol-1",
+    "name": "O Abraço das Águas Eternas — Vol. I: Canção da Maré Alta",
+    "docType": "carta",
+    "period": "Pós-Maré Alta, tradição oral",
+    "author": "Anônimo (verso popular)",
+    "description": "Poema de tradição oral cantado por pescadores e navegantes de Pelágos. Não nomeia ninguém, não explica nada — apenas registra que alguém pagou um preço pelas águas que subiram e que todos navegam sobre o que esse alguém fez.",
+    "content": "Antes havia terra onde há mar.\nAntes havia montanha onde há fundo.\nAntes havia um mundo que não sabia o que carregava.\n\nDizem que um homem parou na beira do que ainda era beira\ne disse palavras que o mar reconheceu.\nDizem que o mar respondeu subindo.\nDizem que o homem ficou onde estava.\n\nNão sabemos o nome do homem.\nOs que sabiam não contaram.\nOs que contaram não eram confiáveis.\n\nMas toda criança de Pelágos aprende cedo que as águas vieram por uma razão.\nE que alguém pagou por essa razão um preço que não tem nome em nenhuma língua viva.\n\nNavegamos sobre o que ele fez.\nPescamos sobre o que ele fez.\nVivemos sobre o que ele fez.\n\nTalvez fosse justo lembrar.",
+    "secretsList": [],
+    "contentVisibility": { "mode": "hidden", "playerIds": [] },
+    "visibility": { "mode": "hidden", "playerIds": [] }
+  },
+  {
+    "id": "abraco-vol-2",
+    "name": "O Abraço das Águas Eternas — Vol. II: Especulações de um Monge Costeiro",
+    "docType": "pergaminho",
+    "period": "~30 anos após a Maré Alta",
+    "author": "Frei Assolvan, Mosteiro da Costa Afogada",
+    "description": "Notas de pesquisa de um monge que investigou a origem da Maré Alta. Conclui que a inundação não foi natural e que houve um ritual de sacrifício que selou algo — mas não sabe o quê. Termina com um aviso explícito: não recomenda divulgar.",
+    "content": "Há três anos percorro os arquivos dos mosteiros costeiros em busca de registros sobre a Maré Alta. O que encontrei perturba o sono mais do que eu esperava de um erudito de minha idade.\n\nA Maré Alta não foi natural. Isso, com o respeito às doutrinas oficiais do Domínio, parece claro demais para ser ignorado. As marés não sobem assim. As correntes não mudam assim. E, sobretudo, as águas não param de subir num determinado ponto e ficam — permanentemente — como se alguém as tivesse colocado ali.\n\nEncontrei referências, em três arquivos distintos, a algo chamado \"o rito do abraço.\" Um monge de Ondra menciona \"aquele que abraçou as águas e por elas foi abraçado de volta, para sempre.\" Um poema fragmentado fala de \"o abraço eterno que selou o que não podia ser destruído.\"\n\nUm sacerdote anônimo, em notas que parecem posteriores à inundação em décadas, escreve apenas: \"ele sabia o que fazia. Que os deuses o recebam — se é que os deuses ainda existem para recebê-lo.\"\n\nMinha hipótese: alguém realizou um ritual. Um sacrifício de si mesmo. As águas subiram como resultado — ou como parte — desse ritual. O que o ritual selava, ou prendia, ou encerrava, não consigo determinar. Mas estava lá. E aparentemente ainda está.\n\nNão recomendo divulgar estas notas.\n\n— Frei Assolvan, Mosteiro da Costa Afogada",
+    "secretsList": [],
+    "contentVisibility": { "mode": "hidden", "playerIds": [] },
+    "visibility": { "mode": "hidden", "playerIds": [] }
+  },
+  {
+    "id": "abraco-vol-3",
+    "name": "O Abraço das Águas Eternas — Vol. III: Palavras de Frieren",
+    "docType": "carta",
+    "period": "Anos após a Maré Alta",
+    "author": "Frieren Talion (preservado por Fern Talion)",
+    "description": "Testemunho escrito por Frieren Talion a pedido de sua filha Fern, enquanto ainda conseguia lembrar. Revela o nome completo do ritual, o preço real pago por Himmel, e o que permanece selado sob o oceano. O documento mais devastador da série.",
+    "content": "Minha filha me pede que escreva. Diz que estou esquecendo — e ela não está errada. Escrevo então, enquanto ainda consigo.\n\nEle me encontrou numa tarde de verão, numa ilha pequena que o Domínio chama de Reva. Eu tinha vivido o suficiente para saber quando um homem carregava algo que não conseguia segurar sozinho. Himmel carregava o mundo.\n\nMostrou-me o tomo. As páginas do deus morto — não direi o nome, porque ele me pediu que não dissesse. Disse que nomear criava frestas. Aprendi tarde demais que ele tinha razão sobre muitas coisas.\n\nO ritual se chamava O Abraço das Águas Eternas. Ele escolheu o nome. Para mim, disse.\n\nDepois que eu entendi o que o nome significava — que a âncora não partiria, que ficaria lá, que toda energia de seu ser seria usada para sempre para criar e manter o que ia baixo — tentei argumentar durante três noites. Ele ouvia. Concordava com tudo. E não mudava nada.\n\nNa manhã do quarto dia, disse: \"Não há outro método. Não há outro tempo. E não há outra pessoa que faça isso voluntariamente — e ele precisa ser voluntário, senão não funciona.\"\n\nSubi ao pico mais alto de Reva com Fern nos braços. Ela tinha dois anos. Não entendia o que via. Eu entendia demais.\n\nAs águas subiram devagar no início. Depois não tão devagar.\n\nQuando pararam, o mundo era Pelágos. E Himmel não estava mais nele — não da forma que os vivos entendem estar.\n\nÀs vezes, em noites sem vento, quando o mar está muito quieto, imagino que consigo sentir o peso de algo lá embaixo. Muito abaixo. Seguro.\n\nNão sei se é ele. Prefiro acreditar que sim.\n\n— Frieren Talion\n(preservado e copiado por Fern Talion, para que não se perca)",
+    "secretsList": [],
+    "contentVisibility": { "mode": "hidden", "playerIds": [] },
+    "visibility": { "mode": "hidden", "playerIds": [] }
+  },
+  {
+    "id": "caca-vol-1",
+    "name": "A Caça aos Elfos — Vol. I: Registros do Purgo",
+    "docType": "anotação",
+    "period": "Pós-Maré Alta, anos iniciais da perseguição",
+    "author": "Desconhecido, cronista dos primeiros anos",
+    "description": "Breve registro das perseguições que se seguiram à Maré Alta. Sem explicações, sem julgamentos — apenas o fato cru de que os sobreviventes da Grande Guerra encontraram um alvo para o ódio e o exerceram sem decreto, sem tribunal.",
+    "content": "Após as águas, vieram os homens.\n\nOs registros chamam de diferentes formas: o Purgo, a Caça, a Limpeza. Em Velmarch dizem \"os Anos da Purificação,\" mas esse nome é propaganda de quem venceu.\n\nO que aconteceu foi simples: os povos que sobreviveram à Grande Guerra e à inundação precisavam de alguém a quem culpar. Encontraram.\n\nOs elfos — os poucos que restavam após décadas de guerra — foram caçados por toda extensão do que hoje é Pelágos. Não houve decreto. Não houve tribunal. Houve apenas o ódio de pessoas que haviam perdido tudo buscando um rosto onde colocar a dor.\n\nA maioria não sobreviveu.\n\nOs que sobreviveram não contam onde estão.",
+    "secretsList": [],
+    "contentVisibility": { "mode": "hidden", "playerIds": [] },
+    "visibility": { "mode": "hidden", "playerIds": [] }
+  },
+  {
+    "id": "caca-vol-2",
+    "name": "A Caça aos Elfos — Vol. II: Uma Investigação Histórica",
+    "docType": "pergaminho",
+    "period": "~40 anos após a Maré Alta",
+    "author": "Telvis Oran, Arquivista de Kaldera",
+    "description": "Investigação histórica de um arquivista que tentou documentar as perseguições com distância moral. Distingue magistas de elfos comuns e encontra uma nota anônima de um sobrevivente élfico que muda tudo: eles também não sabiam.",
+    "content": "Quarenta e três anos após as últimas perseguições documentadas, permito-me agora reunir o que os arquivos de Kaldera preservaram sobre o período que chamamos, eufemisticamente, de A Caça.\n\nOs fatos que posso estabelecer com razoável certeza:\n\nPrimeiro: a perseguição começou sem coordenação. Não foi ordenada por nenhum rei ou conselho. Surgiu espontaneamente em múltiplas ilhas, quase simultaneamente, nos anos imediatamente posteriores à Maré Alta.\n\nSegundo: a justificativa popular era que os elfos haviam \"chamado a destruição.\" Há algum fundamento para isso — os registros que sobreviveram sugerem que magistas élficos estiveram envolvidos em algo que desencadeou a Grande Guerra. O que os registros não confirmam é que os elfos comuns — agricultores, pescadores, artesãos, crianças — tivessem qualquer conhecimento ou participação nessa decisão.\n\nTerceiro: encontrei, nos arquivos, uma nota de um sobrevivente élfico — sem nome, sem data — que diz apenas: \"Nós também não sabíamos. Fomos os últimos a saber. E os primeiros a pagar.\"\n\nA questão moral que não consigo resolver: se os magistas tomaram uma decisão que destruiu o mundo, e os demais elfos não sabiam e não consentiram, o que justificava a caça?\n\nNão encontrei resposta nos arquivos. Suspeito que ninguém a tenha.\n\n— Telvis Oran, Arquivista de Kaldera",
+    "secretsList": [],
+    "contentVisibility": { "mode": "hidden", "playerIds": [] },
+    "visibility": { "mode": "hidden", "playerIds": [] }
+  },
+  {
+    "id": "caca-vol-3",
+    "name": "A Caça aos Elfos — Vol. III: Lamento de Vaelindra Cass",
+    "docType": "carta",
+    "period": "Durante a Caça aos Elfos",
+    "author": "Vaelindra Cass, Última Anciã de Elarindë",
+    "description": "Carta escrita por uma anciã élfica de trezentos anos que viveu a Grande Guerra, a invocação da Fome pelos magistas de sua geração, a Maré Alta e a Caça. Nomeia Selavin Doss como o magista responsável. Confirma que os elfos comuns não sabiam de nada. Um dos documentos mais devastadores da campanha.",
+    "content": "Eu tinha trezentos anos quando as águas subiram. Tinha visto guerras. Tinha enterrado amigos que os humanos teriam chamado de anciãos. Pensava que havia visto o suficiente para entender qualquer coisa que o mundo me enviasse.\n\nNão havia.\n\nOs magistas eram da minha geração. Conheci Selavin Doss antes de ele se tornar o que se tornou — era curioso, era brilhante, era o tipo de élfico que faz os humanos acreditarem que nossa raça é sábia. Não era sábio. Era genial, que é uma coisa muito diferente e muito mais perigosa.\n\nQuando soube do que haviam invocado, fui encontrá-lo. A conversa foi curta. Ele acreditava que podia controlá-la — a Fome, a coisa que os humanos depois chamariam de outros nomes. \"Não é um ser,\" ele disse. \"É uma força. As forças podem ser dirigidas.\" Tentei dizer que forças antigas não seguem a lógica de forças novas. Ele me pediu que saísse.\n\nA Fome não foi dirigida. Consumiu.\n\nQuando as águas subiram — quando o que o sacerdote-rei humano fez funcionou — eu estava escondida numa caverna no pico de uma ilha cujo nome não darei. Com mim estavam quarenta e dois élficos. Adultos, crianças, velhos. Nenhum deles era magista. Nenhum deles sabia o que Selavin havia feito.\n\nOs humanos não fizeram essa distinção.\n\nNos anos seguintes, vi minha gente ser caçada como animais por pessoas que também haviam perdido tudo e precisavam de um lugar para colocar a dor. Entendo essa necessidade. Entender não significa aceitar.\n\nDos quarenta e dois que estavam comigo, doze sobreviveram à Caça. Seis ainda vivem, que eu saiba. Estamos espalhados, escondidos, usando artifícios — cristais, feitiços, nomes falsos — para parecer o que não somos.\n\nOs magistas erraram. Erraram de uma forma que não tem nome. Mas os magistas morreram na guerra que criaram. Quem sobreviveu para ser caçado eram os que tinham tanto a perder quanto qualquer humano — e que ninguém pensou em perguntar.\n\nEscrevo isto em couro que não apodrecerá, com tinta que não desbotará, e escondo onde imagino que um dia alguém curioso o suficiente vai encontrar.\n\nPara que saibam: existimos. Existimos ainda. E não fomos nós.\n\n— Vaelindra Cass, Última Anciã de Elarindë",
+    "secretsList": [],
+    "contentVisibility": { "mode": "hidden", "playerIds": [] },
     "visibility": { "mode": "hidden", "playerIds": [] }
   }
 ]
