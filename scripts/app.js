@@ -934,11 +934,12 @@ async function syncCampaignContent() {
   if (btn) { btn.disabled = true; btn.textContent = 'Sincronizando...'; }
 
   try {
-    const [chars, locs, evts, facts] = await Promise.all([
+    const [chars, locs, evts, facts, docs] = await Promise.all([
       fetch('data/characters.json').then(r => r.json()),
       fetch('data/locations.json').then(r => r.json()),
       fetch('data/events.json').then(r => r.json()),
       fetch('data/factions.json').then(r => r.json()),
+      fetch('data/documents.json').then(r => r.json()),
     ]);
 
     // Preserve existing secret visibility when syncing secretsList
@@ -994,6 +995,19 @@ async function syncCampaignContent() {
         symbol: f.symbol || '', description: f.description || '',
         secrets: f.secrets || '',
       };
+      batch.set(ref, update, { merge: true });
+    });
+
+    docs.forEach(d => {
+      const ref      = doc(db, base, 'documents', d.id);
+      const existing = STATE.data.documents.find(x => x.id === d.id);
+      const update   = {
+        name: d.name, docType: d.docType || '', period: d.period || '',
+        author: d.author || '', description: d.description || '',
+        content: d.content || '', rarity: d.rarity || '',
+        secretsList: mergeSecretsList(d.secretsList, existing),
+      };
+      if (d.imageUrl) update.imageUrl = d.imageUrl;
       batch.set(ref, update, { merge: true });
     });
 
@@ -1612,7 +1626,7 @@ async function buildAllPlayersCharHtml() {
 }
 
 // ── ACERVO ────────────────────────────────────────────────────────────────────
-const DOC_TYPE_ICON  = { carta: '✉', diário: '📖', pergaminho: '📜', mapa: '🗺', proclamação: '📣', decreto: '⚖', inscrição: '🔏', anotação: '📝' };
+const DOC_TYPE_ICON  = { tomo: '📕', carta: '✉', diário: '📖', pergaminho: '📜', mapa: '🗺', proclamação: '📣', decreto: '⚖', inscrição: '🔏', anotação: '📝' };
 const ITEM_TYPE_ICON = { chave: '🗝', joia: '💎', artefato: '✨', amuleto: '🔮', relíquia: '⚜', moeda: '🪙', símbolo: '🔱', fragmento: '🪨' };
 const ITEM_RARITY_COLOR = { comum: '#7a9aaa', incomum: '#5a9a60', raro: '#4a70c0', 'muito raro': '#9a50c0', lendário: '#c0882a' };
 
@@ -2796,7 +2810,7 @@ function buildDocumentEditFields(d = {}) {
   const imgPreview = imgSrc
     ? `<img class="edit-img-preview" id="img-preview" src="${imgSrc}" alt="">`
     : `<div class="edit-img-placeholder" id="img-preview">Sem imagem</div>`;
-  const docTypes = ['carta','diário','pergaminho','mapa','proclamação','decreto','inscrição','anotação','outro'];
+  const docTypes = ['tomo','carta','diário','pergaminho','mapa','proclamação','decreto','inscrição','anotação','outro'];
   return `
     <div class="edit-form-section-title">Dados Básicos</div>
     ${editField('Nome *', editInput('name', d.name, 'Título do documento'))}

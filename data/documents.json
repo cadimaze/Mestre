@@ -1,1 +1,27 @@
-[]
+[
+  {
+    "id": "tomo-himmel-varek",
+    "name": "Tomo de Himmel Varek",
+    "docType": "tomo",
+    "period": "Véspera da Maré Alta",
+    "author": "Himmel Varek",
+    "description": "Relíquia lendária encadernada em couro marinho escurecido, sem título na capa — apenas o símbolo de um círculo com uma âncora invertida gravado a fogo. As páginas são de um material que não é papel nem pergaminho, escritas em tinta que parece mudar de cor à luz de vela. O único registro do método de selamento de O Peso. Nenhum Varek vivo leu seu conteúdo completo em gerações.",
+    "content": "Destas palavras — ao que as encontrar\n\nNão sei se este tomo chegará a mãos que possam compreendê-lo. Não sei se haverá mãos, quando o que planejo for feito. Escrevo ainda assim, pois há coisas que devem ser ditas ao menos uma vez, mesmo que nenhum ouvido as receba.\n\n— Do que está sob as águas —\n\nEncontrei-o inscrito nas páginas de um deus que já não existe — um nome que não repetirei, pois repeti-lo cria frestas. Chamavam-no de O Peso. Não porque pesasse — mas porque o mundo inteiro pesava menos que o dano que faria se acordasse.\n\nOs magistas antigos pensaram que podiam contê-lo com correntes de vontade. Com palavras de poder. Com sua soberba. Aprendi com os ossos deles.\n\n— Do ritual e do preço —\n\nHá um método. Encontrei-o na parte mais funda do tomo do deus morto, onde as páginas pareciam escritas com algo mais escuro que tinta. Funciona. Testei fragmentos. Sei que funciona.\n\nO método exige âncora. Uma âncora viva. Uma âncora que permaneça.\n\nCompreendi o que isso significa quando o último fragmento se encaixou. A âncora não pode ser removida sem que o selo se abra. A âncora não pode morrer sem que o selo se abra. A âncora deve ser voluntária — O Peso reconhece coerção e a devora.\n\nSerei a âncora. Não há outro. Não há tempo.\n\nToda energia que existe em mim — a que respira, a que lembra, a que ainda ama — será usada para criar e sustentar o que vai baixo. Não partirei. Não exatamente. Ficarei lá, onde nenhum olho chegará, segurando aquilo que não pode ser segurado de outra forma.\n\n— Do que não deve ser feito —\n\nSe alguém lê estas palavras — se este tomo sobreviveu, se o mundo sobreviveu — é porque deu certo.\n\nNão desfaçam o que fiz.\n\nNão pelo que me custou. Não pela memória de ninguém. Mas porque O Peso ainda está lá. Selado, mas não destruído. Faminto, mas sem boca. Ainda existe, à espera de uma fresta.\n\nSe o selo for quebrado — por curiosidade, por poder, por alguma filosofia que pareça muito razoável na hora — O Peso acordará. Não há segunda tentativa. Não haverá sacerdote-rei disponível. Não haverá tomo de um deus morto esperando numa prateleira.\n\nO que restou da terra será consumido. Devagar, ao princípio. Depois de uma vez só.\n\nNão quebrem o selo.\n\n— Himmel Varek\nEscrito na véspera do Abraço das Águas Eternas\nQue quem lê entenda. Que quem entende não esqueça.",
+    "rarity": "lendário",
+    "secretsList": [
+      {
+        "id": "tomo-s1",
+        "title": "O tomo documenta o Selo do Peso",
+        "content": "O tomo é o único registro vivo do método de selamento de O Peso. Contém a descoberta de Himmel, a natureza de O Peso, e as instruções do ritual. Quem o lê compreende que a Maré Alta foi intencional — e que o sacrifício de Himmel continua ativo, pois toda a energia de seu ser foi usada para criar e sustentar o Selo.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "tomo-s2",
+        "title": "O tomo também documenta como desfazer o ritual",
+        "content": "Himmel registrou o método inverso não como instrução, mas como aviso. A descrição de como quebrar o Selo está no tomo — detalhada o suficiente para que alguém determinado o use. Não há como reescrever o tomo sem desfazer o encantamento que o preserva. Esta é a decisão moral central da campanha.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
+    ],
+    "visibility": { "mode": "hidden", "playerIds": [] }
+  }
+]
