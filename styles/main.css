@@ -1738,6 +1738,169 @@ body::after {
   to   { transform: none; opacity: 1; }
 }
 
+/* ── ACERVO ─────────────────────────────────────────────────────────────────── */
+.acervo-section {
+  margin-bottom: 40px;
+}
+.acervo-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.acervo-section-title {
+  font-family: var(--font-title);
+  font-size: 18px;
+  color: var(--accent-gold);
+  letter-spacing: 1.2px;
+  text-shadow: 0 0 18px rgba(207,172,110,.18);
+}
+.acervo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+}
+.acervo-card {
+  background: linear-gradient(155deg, var(--bg-card) 0%, rgba(7,19,34,.96) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform .25s var(--ease-out), border-color .25s, box-shadow .25s;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.acervo-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+.doc-card { border-top: 2px solid rgba(207,172,110,.25); }
+.doc-card:hover { border-color: rgba(207,172,110,.45); }
+.item-card { border-top: 2px solid rgba(90,138,176,.22); }
+.item-card:hover { border-color: rgba(90,138,176,.5); }
+
+.acervo-card-img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  flex-shrink: 0;
+}
+.acervo-card-body {
+  padding: 14px 16px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.acervo-card-icon {
+  font-size: 28px;
+  line-height: 1;
+  margin-bottom: 8px;
+  display: block;
+}
+.acervo-card-name {
+  font-family: var(--font-title);
+  font-size: 14px;
+  color: var(--accent-gold-light);
+  letter-spacing: .4px;
+  line-height: 1.3;
+}
+.acervo-card-type {
+  font-family: var(--font-title);
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  margin-top: 1px;
+}
+.acervo-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 8px;
+  flex-wrap: wrap;
+}
+.acervo-card-rarity {
+  font-size: 10px;
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.vis-card-badge {
+  font-size: 12px;
+  opacity: .7;
+  cursor: default;
+}
+.secrets-card-badge {
+  font-size: 10px;
+  background: rgba(192,100,62,.18);
+  color: #e08070;
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-family: var(--font-title);
+  letter-spacing: .5px;
+  cursor: default;
+}
+
+/* Modal — documento */
+.modal-doc-header {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 24px 24px 22px;
+  background:
+    radial-gradient(ellipse 90% 100% at 0% 0%, rgba(207,172,110,.06), transparent 60%),
+    linear-gradient(to bottom, rgba(207,172,110,.03), transparent);
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.modal-doc-icon {
+  font-size: 40px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 4px;
+  filter: drop-shadow(0 0 10px rgba(207,172,110,.2));
+}
+.modal-doc-content {
+  font-family: var(--font-flavor);
+  font-style: italic;
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  background: rgba(0,0,0,.25);
+  border: 1px solid rgba(207,172,110,.12);
+  border-radius: 6px;
+  padding: 16px 20px;
+  white-space: pre-wrap;
+}
+
+/* Modal — item */
+.modal-item-img-wrap {
+  padding: 20px 24px 0;
+  text-align: center;
+}
+.modal-item-img {
+  max-height: 240px;
+  max-width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(90,138,176,.2);
+  box-shadow: 0 8px 28px rgba(0,0,0,.5);
+  object-fit: contain;
+}
+.modal-item-icon-large {
+  font-size: 64px;
+  text-align: center;
+  padding: 24px 24px 0;
+  line-height: 1;
+  filter: drop-shadow(0 0 18px rgba(90,138,176,.3));
+}
+
 /* ── Celulares ── */
 @media (max-width: 768px) {
   body { -webkit-tap-highlight-color: transparent; }
@@ -1839,4 +2002,9 @@ body::after {
     right: 14px;
     padding: 10px 16px;
   }
+
+  .acervo-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .acervo-card-body { padding: 11px 13px 14px; }
+  .modal-doc-header { padding: 18px 16px 16px; gap: 14px; }
+  .modal-doc-icon { font-size: 32px; }
 }

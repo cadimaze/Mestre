@@ -24,7 +24,7 @@ const STATE = {
   isMaster:       false,
   players:        [],
   unsubscribers:  [],
-  data: { characters: [], locations: [], events: [], factions: [], relations: [], annotations: [] },
+  data: { characters: [], locations: [], events: [], factions: [], relations: [], annotations: [], documents: [], items: [] },
 
   activeTab:       'painel',
   secretsVisible:  localStorage.getItem('secretsVisible') !== 'false',
@@ -217,6 +217,8 @@ function rerenderSection(collName) {
     case 'events':     renderPainel(); renderEvents();     break;
     case 'factions':   renderPainel(); renderFactions(); buildCharacterFilters(); break;
     case 'relations':  renderPainel(); if (STATE.activeTab === 'relacoes') renderGraph(); break;
+    case 'documents':  renderAcervo(); break;
+    case 'items':      renderAcervo(); break;
   }
 }
 
@@ -226,6 +228,8 @@ async function setupFirestoreListeners() {
   subscribeToCollection('events');
   subscribeToCollection('factions');
   subscribeToCollection('relations');
+  subscribeToCollection('documents');
+  subscribeToCollection('items');
   subscribeToAnnotations();
 }
 
@@ -238,7 +242,7 @@ async function updateVisibility(collName, itemId, mode, playerIds = []) {
 }
 
 // ── NOTIFICATIONS ─────────────────────────────────────────────────────────────
-const collNameToEntityType = { characters: 'character', locations: 'location', events: 'event', factions: 'faction' };
+const collNameToEntityType = { characters: 'character', locations: 'location', events: 'event', factions: 'faction', documents: 'document', items: 'item' };
 
 async function sendRevealNotifications(targetUids, entityType, entityId, entityName, type = 'reveal') {
   if (!targetUids.length) return;
@@ -398,7 +402,7 @@ function attachVisibilityEvents() {
   function getOldVis() {
     const typeKey  = collNameToEntityType[collName] || collName;
     const collKey  = collName;
-    const dataMap  = { characters: STATE.data.characters, locations: STATE.data.locations, events: STATE.data.events, factions: STATE.data.factions };
+    const dataMap  = { characters: STATE.data.characters, locations: STATE.data.locations, events: STATE.data.events, factions: STATE.data.factions, documents: STATE.data.documents, items: STATE.data.items };
     const item     = (dataMap[collKey] || []).find(e => e.id === itemId);
     return { mode: item?.visibility?.mode || 'hidden', playerIds: item?.visibility?.playerIds || [], name: item?.name || '' };
   }
@@ -591,6 +595,48 @@ function attachPlayerSecretVisEvents(playerUid) {
     });
   });
 
+  sec.querySelectorAll('.sec-player-check').forEach(chk => {
+    chk.addEventListener('change', async () => {
+      const secretId  = chk.dataset.secretId;
+      const playerIds = [...sec.querySelectorAll(`.sec-player-check[data-secret-id="${secretId}"]:checked`)].map(c => c.dataset.uid);
+      await saveSecretVis(secretId, 'specific', playerIds);
+    });
+  });
+}
+
+function attachEntitySecretVisEvents(entityId, collName, entityType, getEntityFn) {
+  if (!STATE.isMaster) return;
+  const sec = document.getElementById('char-secrets-modal-section');
+  if (!sec) return;
+
+  async function saveSecretVis(secretId, mode, playerIds) {
+    const entity = getEntityFn(entityId);
+    if (!entity) return;
+    const oldList = Array.isArray(entity.secretsList) ? entity.secretsList
+                    : (entity.secrets ? [{ id: '0', text: entity.secrets, visibility: { mode: 'hidden', playerIds: [] } }] : []);
+    const oldVis  = oldList.find(s => s.id === secretId)?.visibility || { mode: 'hidden', playerIds: [] };
+    const newList = oldList.map(s => s.id === secretId ? { ...s, visibility: { mode, playerIds } } : s);
+    await updateDoc(doc(db, 'campaigns', CAMPAIGN_ID, collName, entityId), { secretsList: newList });
+    const allPlayerUids = STATE.players.filter(p => p.role === 'player').map(p => p.uid);
+    let newlyVisible = [];
+    if (mode === 'all' && oldVis.mode !== 'all') { newlyVisible = allPlayerUids; }
+    else if (mode === 'specific') { newlyVisible = playerIds.filter(uid => !(oldVis.playerIds || []).includes(uid)); }
+    if (newlyVisible.length) await sendRevealNotifications(newlyVisible, entityType, entityId, entity.name, 'secret');
+  }
+
+  sec.querySelectorAll('.sec-vis-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const secretId = btn.dataset.secretId;
+      const mode     = btn.dataset.mode;
+      sec.querySelectorAll(`.sec-vis-btn[data-secret-id="${secretId}"]`).forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+      const playersDiv = document.getElementById(`svp-${secretId}`);
+      if (playersDiv) playersDiv.classList.toggle('pc-hidden', mode !== 'specific');
+      const playerIds = mode === 'specific'
+        ? [...sec.querySelectorAll(`.sec-player-check[data-secret-id="${secretId}"]:checked`)].map(c => c.dataset.uid)
+        : [];
+      await saveSecretVis(secretId, mode, playerIds);
+    });
+  });
   sec.querySelectorAll('.sec-player-check').forEach(chk => {
     chk.addEventListener('change', async () => {
       const secretId  = chk.dataset.secretId;
@@ -878,7 +924,7 @@ function getEntityName(id, type) {
     const p = getPlayerByUid(id);
     return p ? playerCharName(p) : id;
   }
-  const fn = { character: getCharById, location: getLocationById, event: getEventById, faction: getFactionById }[type];
+  const fn = { character: getCharById, location: getLocationById, event: getEventById, faction: getFactionById, document: getDocumentById, item: getItemByIdFn }[type];
   return fn?.(id)?.name || id;
 }
 
@@ -1565,6 +1611,135 @@ async function buildAllPlayersCharHtml() {
   </div>`;
 }
 
+// ── ACERVO ────────────────────────────────────────────────────────────────────
+const DOC_TYPE_ICON  = { carta: '✉', diário: '📖', pergaminho: '📜', mapa: '🗺', proclamação: '📣', decreto: '⚖', inscrição: '🔏', anotação: '📝' };
+const ITEM_TYPE_ICON = { chave: '🗝', joia: '💎', artefato: '✨', amuleto: '🔮', relíquia: '⚜', moeda: '🪙', símbolo: '🔱', fragmento: '🪨' };
+const ITEM_RARITY_COLOR = { comum: '#7a9aaa', incomum: '#5a9a60', raro: '#4a70c0', 'muito raro': '#9a50c0', lendário: '#c0882a' };
+
+function renderAcervo() {
+  const docs  = STATE.data.documents || [];
+  const items = STATE.data.items || [];
+  const myUid = STATE.user?.uid;
+
+  function docVisible(d) {
+    if (STATE.isMaster) return true;
+    const v = d.visibility;
+    if (!v || v.mode === 'all') return true;
+    if (v.mode === 'specific') return (v.playerIds || []).includes(myUid);
+    return false;
+  }
+
+  const visibleDocs  = docs.filter(docVisible);
+  const visibleItems = items.filter(docVisible);
+
+  const docsGrid = document.getElementById('docs-grid');
+  const itemsGrid = document.getElementById('items-grid');
+  if (!docsGrid || !itemsGrid) return;
+
+  docsGrid.innerHTML = visibleDocs.length
+    ? visibleDocs.map(d => {
+        const icon = DOC_TYPE_ICON[d.docType] || '📄';
+        const secretBadge = STATE.isMaster && hasSecrets(d) ? `<span class="secret-icon" title="Tem segredos">🔒</span>` : '';
+        const visBadge = STATE.isMaster ? `<span class="vis-card-badge" title="Visibilidade">${visBadgeEmoji(d)}</span>` : '';
+        return `<div class="acervo-card doc-card" data-id="${d.id}" data-type="document">
+          <div class="acervo-card-body">
+            <span class="acervo-card-icon">${icon}</span>
+            <div class="acervo-card-name">${escHtml(d.name)}${secretBadge}</div>
+            ${d.docType ? `<div class="acervo-card-type">${escHtml(d.docType)}</div>` : ''}
+            <div class="acervo-card-meta">
+              ${d.author ? `<span>por ${escHtml(d.author)}</span>` : ''}
+              ${d.period ? `<span>${escHtml(d.period)}</span>` : ''}
+              ${visBadge}
+            </div>
+          </div>
+        </div>`;
+      }).join('')
+    : `<div class="empty-state"><div class="empty-icon">📜</div><p>${STATE.isMaster ? 'Nenhum documento cadastrado.' : 'Nenhum documento disponível ainda.'}</p></div>`;
+
+  itemsGrid.innerHTML = visibleItems.length
+    ? visibleItems.map(i => {
+        const icon = ITEM_TYPE_ICON[i.itemType] || '🗡';
+        const rarityColor = ITEM_RARITY_COLOR[i.rarity] || '#7a9aaa';
+        const secretBadge = STATE.isMaster && hasSecrets(i) ? `<span class="secret-icon" title="Tem segredos">🔒</span>` : '';
+        const visBadge = STATE.isMaster ? `<span class="vis-card-badge" title="Visibilidade">${visBadgeEmoji(i)}</span>` : '';
+        const imgHtml = i.imageUrl
+          ? `<img class="acervo-card-img" src="${escHtml(i.imageUrl)}" alt="" onerror="this.style.display='none'">`
+          : '';
+        return `<div class="acervo-card item-card" data-id="${i.id}" data-type="item">
+          ${imgHtml}
+          <div class="acervo-card-body">
+            ${!i.imageUrl ? `<span class="acervo-card-icon">${icon}</span>` : ''}
+            <div class="acervo-card-name">${escHtml(i.name)}${secretBadge}</div>
+            <div class="acervo-card-meta">
+              ${i.rarity ? `<span class="acervo-card-rarity" style="color:${rarityColor}">${escHtml(i.rarity)}</span>` : ''}
+              ${i.itemType ? `<span class="acervo-card-type">${escHtml(i.itemType)}</span>` : ''}
+              ${visBadge}
+            </div>
+          </div>
+        </div>`;
+      }).join('')
+    : `<div class="empty-state"><div class="empty-icon">🗝</div><p>${STATE.isMaster ? 'Nenhum item cadastrado.' : 'Nenhum item disponível ainda.'}</p></div>`;
+
+  docsGrid.querySelectorAll('.acervo-card').forEach(card => {
+    card.addEventListener('click', () => openModal(card.dataset.id, card.dataset.type));
+  });
+  itemsGrid.querySelectorAll('.acervo-card').forEach(card => {
+    card.addEventListener('click', () => openModal(card.dataset.id, card.dataset.type));
+  });
+
+  ensureAddBtn('docs-section',  'document', 'Novo Documento');
+  ensureAddBtn('items-section', 'item',     'Novo Item');
+}
+
+function buildDocumentModalContent(id) {
+  const d = getDocumentById(id);
+  if (!d) return '';
+  const icon = DOC_TYPE_ICON[d.docType] || '📄';
+  const visSec = STATE.isMaster ? buildVisibilitySection(d, 'documents') : '';
+  return `
+    <div class="modal-doc-header">
+      <span class="modal-doc-icon">${icon}</span>
+      <div>
+        <div class="modal-char-name">${escHtml(d.name)}</div>
+        <div class="modal-char-role">${[d.docType, d.period].filter(Boolean).map(escHtml).join(' · ')}</div>
+        ${d.author ? `<div class="modal-char-role" style="margin-top:2px;">por ${escHtml(d.author)}</div>` : ''}
+      </div>
+    </div>
+    ${d.description ? `<div class="modal-section"><div class="modal-section-title">Descrição</div><div class="modal-section-text">${escHtml(d.description)}</div></div>` : ''}
+    ${d.content ? `<div class="modal-section"><div class="modal-section-title">Conteúdo</div><div class="modal-doc-content">${escHtml(d.content)}</div></div>` : ''}
+    ${buildRelationsSectionFor(id, 'document')}
+    ${visSec}
+    ${buildCharSecretsHtml({ ...d, id })}
+    ${buildAnnotationsSection(id, 'document')}
+  `;
+}
+
+function buildItemModalContent(id) {
+  const item = getItemByIdFn(id);
+  if (!item) return '';
+  const icon = ITEM_TYPE_ICON[item.itemType] || '🗡';
+  const rarityColor = ITEM_RARITY_COLOR[item.rarity] || '#7a9aaa';
+  const imgHtml = item.imageUrl
+    ? `<div class="modal-item-img-wrap"><img src="${escHtml(item.imageUrl)}" alt="${escHtml(item.name)}" class="modal-item-img" data-lightbox="${escHtml(item.imageUrl)}" style="cursor:zoom-in;"></div>`
+    : `<div class="modal-item-icon-large">${icon}</div>`;
+  const visSec = STATE.isMaster ? buildVisibilitySection(item, 'items') : '';
+  return `
+    <div class="modal-char-hero">
+      ${imgHtml}
+      <div class="modal-char-info">
+        <div class="modal-char-name">${escHtml(item.name)}</div>
+        ${item.rarity ? `<div class="modal-char-role" style="color:${rarityColor}">${escHtml(item.rarity)}</div>` : ''}
+        ${item.itemType ? `<div class="modal-char-role">${escHtml(item.itemType)}</div>` : ''}
+      </div>
+    </div>
+    ${item.description ? `<div class="modal-section"><div class="modal-section-title">Descrição</div><div class="modal-section-text">${escHtml(item.description)}</div></div>` : ''}
+    ${buildRelationsSectionFor(id, 'item')}
+    ${visSec}
+    ${buildCharSecretsHtml({ ...item, id })}
+    ${buildAnnotationsSection(id, 'item')}
+  `;
+}
+
 // ── MODAL ─────────────────────────────────────────────────────────────────────
 function openModal(id, type, pushToStack = true) {
   const overlay = document.getElementById('modal-overlay');
@@ -1596,6 +1771,8 @@ function openModal(id, type, pushToStack = true) {
   attachAnnotationEvents();
   if (type === 'character') attachSecretVisEvents(id);
   if (type === 'player')    attachPlayerSecretVisEvents(id);
+  if (type === 'document')  attachEntitySecretVisEvents(id, 'documents', 'document', getDocumentById);
+  if (type === 'item')      attachEntitySecretVisEvents(id, 'items',     'item',     getItemByIdFn);
 }
 
 function closeModal() {
@@ -1699,6 +1876,8 @@ function buildModalContent(id, type) {
     event:     buildEventModalContent,
     faction:   buildFactionModalContent,
     player:    buildPlayerModalContent,
+    document:  buildDocumentModalContent,
+    item:      buildItemModalContent,
   })[type]?.(id) || '';
 }
 
@@ -1931,6 +2110,8 @@ function buildSearchIndex() {
   STATE.data.locations.forEach(l => idx.push({ id: l.id, type: 'location', name: l.name, sub: l.subtitle }));
   STATE.data.events.forEach(e => idx.push({ id: e.id, type: 'event', name: e.name, sub: e.period }));
   STATE.data.factions.forEach(f => idx.push({ id: f.id, type: 'faction', name: f.name, sub: f.type }));
+  STATE.data.documents.forEach(d => idx.push({ id: d.id, type: 'document', name: d.name, sub: d.docType }));
+  STATE.data.items.forEach(i => idx.push({ id: i.id, type: 'item', name: i.name, sub: i.itemType }));
   return idx;
 }
 
@@ -1960,7 +2141,7 @@ function setupSearch() {
     if (!hits.length) { results.innerHTML = '<div class="search-no-results">Nenhum resultado.</div>'; return; }
     results.innerHTML = hits.map(h => `
       <div class="search-result-item" data-id="${h.id}" data-type="${h.type}">
-        <span class="search-result-type type-${h.type}">${{character:'Personagem',location:'Local',event:'Evento',faction:'Facção'}[h.type]}</span>
+        <span class="search-result-type type-${h.type}">${{character:'Personagem',location:'Local',event:'Evento',faction:'Facção',document:'Documento',item:'Item'}[h.type]}</span>
         <span class="search-result-name">${h.name}</span>
         <span class="search-result-sub">${h.sub || ''}</span>
       </div>`).join('');
@@ -1969,7 +2150,7 @@ function setupSearch() {
         overlay.classList.remove('open');
         input.value = '';
         results.innerHTML = '';
-        const tabMap = { character: 'personagens', location: 'locais', event: 'eventos', faction: 'faccoes' };
+        const tabMap = { character: 'personagens', location: 'locais', event: 'eventos', faction: 'faccoes', document: 'acervo', item: 'acervo' };
         switchTab(tabMap[el.dataset.type]);
         setTimeout(() => openModal(el.dataset.id, el.dataset.type), 100);
       });
@@ -2302,7 +2483,9 @@ function entityOptionsHtml(selectedVal = '') {
        + group('Jogadores',   listPlayerChars(),     'player',    playerCharName)
        + group('Locais',      STATE.data.locations,  'location',  l => l.name)
        + group('Eventos',     STATE.data.events,     'event',     e => e.name)
-       + group('Facções',     STATE.data.factions,   'faction',   f => f.name);
+       + group('Facções',     STATE.data.factions,   'faction',   f => f.name)
+       + group('Documentos',  STATE.data.documents,  'document',  d => d.name)
+       + group('Itens',       STATE.data.items,      'item',      i => i.name);
 }
 
 function relVisibilityControlsHtml(rel) {
@@ -2508,15 +2691,18 @@ async function uploadToCloudinary(file) {
 // ── EDIT SYSTEM ───────────────────────────────────────────────────────────────
 
 function typeLabel(type) {
-  return { character: 'Personagem', location: 'Local', event: 'Evento', faction: 'Facção', player: 'Jogador' }[type] || type;
+  return { character: 'Personagem', location: 'Local', event: 'Evento', faction: 'Facção', player: 'Jogador', document: 'Documento', item: 'Item' }[type] || type;
 }
 
 function typeCollName(type) {
-  return { character: 'characters', location: 'locations', event: 'events', faction: 'factions' }[type];
+  return { character: 'characters', location: 'locations', event: 'events', faction: 'factions', document: 'documents', item: 'items' }[type];
 }
 
+const getDocumentById = id => STATE.data.documents.find(d => d.id === id);
+const getItemByIdFn   = id => STATE.data.items.find(i => i.id === id);
+
 function getItemById(id, type) {
-  return { character: getCharById, location: getLocationById, event: getEventById, faction: getFactionById, player: getPlayerByUid }[type]?.(id);
+  return { character: getCharById, location: getLocationById, event: getEventById, faction: getFactionById, player: getPlayerByUid, document: getDocumentById, item: getItemByIdFn }[type]?.(id);
 }
 
 function generateId(name) {
@@ -2564,6 +2750,8 @@ function buildEditForm(id, type, item) {
     event:     buildEventEditFields,
     faction:   buildFactionEditFields,
     player:    buildPlayerEditFields,
+    document:  buildDocumentEditFields,
+    item:      buildItemEditFields,
   }[type]?.(item) || '';
 
   return `<div class="edit-form-container">
@@ -2601,6 +2789,87 @@ function editInput(name, value = '', placeholder = '') {
 
 function editTextarea(name, value = '', placeholder = '', rows = 3) {
   return `<textarea class="edit-textarea" name="${name}" placeholder="${placeholder}" rows="${rows}">${escHtml(value)}</textarea>`;
+}
+
+function buildDocumentEditFields(d = {}) {
+  const imgSrc = d.imageUrl || '';
+  const imgPreview = imgSrc
+    ? `<img class="edit-img-preview" id="img-preview" src="${imgSrc}" alt="">`
+    : `<div class="edit-img-placeholder" id="img-preview">Sem imagem</div>`;
+  const docTypes = ['carta','diário','pergaminho','mapa','proclamação','decreto','inscrição','anotação','outro'];
+  return `
+    <div class="edit-form-section-title">Dados Básicos</div>
+    ${editField('Nome *', editInput('name', d.name, 'Título do documento'))}
+    <div class="edit-row">
+      ${editField('Tipo', `<select class="edit-select" name="docType">
+        ${docTypes.map(t => `<option ${d.docType===t?'selected':''}>${t}</option>`).join('')}
+      </select>`)}
+      ${editField('Período / Data', editInput('period', d.period, 'Ex: Pré-Maré Alta, Século III...'))}
+    </div>
+    ${editField('Autor', editInput('author', d.author, 'Quem escreveu este documento'))}
+    ${editField('Descrição breve', editTextarea('description', d.description, 'Resumo público do documento...', 2))}
+
+    <div class="edit-form-section-title">Conteúdo</div>
+    ${editField('Texto do Documento', editTextarea('content', d.content, 'O texto que os jogadores leem ao encontrar este documento...', 8))}
+
+    <div class="edit-form-section-title">Imagem (opcional)</div>
+    <div class="edit-field">
+      <label class="edit-label">Imagem / digitalização</label>
+      <div class="edit-img-wrap">
+        ${imgPreview}
+        <div class="edit-img-controls">
+          <input class="edit-file-input" type="file" id="img-file" accept="image/*">
+          <label class="edit-file-label" for="img-file">📁 Escolher do PC</label>
+          <div class="edit-img-separator">ou</div>
+          ${editField('Cole uma URL de imagem', editInput('imageUrl', d.imageUrl || '', 'https://i.imgur.com/...'))}
+        </div>
+      </div>
+    </div>
+
+    <div class="edit-form-section-title">Segredos do Mestre</div>
+    <div id="char-secrets-editor"></div>
+    <button type="button" class="edit-add-secret-btn">+ Adicionar Segredo</button>
+  `;
+}
+
+function buildItemEditFields(item = {}) {
+  const imgSrc = item.imageUrl || '';
+  const imgPreview = imgSrc
+    ? `<img class="edit-img-preview" id="img-preview" src="${imgSrc}" alt="">`
+    : `<div class="edit-img-placeholder" id="img-preview">Sem imagem</div>`;
+  const itemTypes = ['chave','joia','artefato','amuleto','relíquia','moeda','símbolo','fragmento','outro'];
+  const rarities  = ['comum','incomum','raro','muito raro','lendário'];
+  return `
+    <div class="edit-form-section-title">Dados Básicos</div>
+    ${editField('Nome *', editInput('name', item.name, 'Nome do item'))}
+    <div class="edit-row">
+      ${editField('Tipo', `<select class="edit-select" name="itemType">
+        ${itemTypes.map(t => `<option ${item.itemType===t?'selected':''}>${t}</option>`).join('')}
+      </select>`)}
+      ${editField('Raridade', `<select class="edit-select" name="rarity">
+        ${rarities.map(r => `<option ${item.rarity===r?'selected':''}>${r}</option>`).join('')}
+      </select>`)}
+    </div>
+    ${editField('Descrição', editTextarea('description', item.description, 'O que os jogadores sabem sobre este item...', 4))}
+
+    <div class="edit-form-section-title">Imagem</div>
+    <div class="edit-field">
+      <label class="edit-label">Ilustração do item</label>
+      <div class="edit-img-wrap">
+        ${imgPreview}
+        <div class="edit-img-controls">
+          <input class="edit-file-input" type="file" id="img-file" accept="image/*">
+          <label class="edit-file-label" for="img-file">📁 Escolher do PC</label>
+          <div class="edit-img-separator">ou</div>
+          ${editField('Cole uma URL de imagem', editInput('imageUrl', item.imageUrl || '', 'https://i.imgur.com/...'))}
+        </div>
+      </div>
+    </div>
+
+    <div class="edit-form-section-title">Segredos do Mestre</div>
+    <div id="char-secrets-editor"></div>
+    <button type="button" class="edit-add-secret-btn">+ Adicionar Segredo</button>
+  `;
 }
 
 function buildCharEditFields(c = {}) {
@@ -2980,7 +3249,7 @@ function attachEditFormEvents(id, type) {
   }
 
   // ── Character / entity secrets editor (master-controlled) ─────────────────
-  const SECRETS_EDITOR_TYPES = ['character', 'player', 'location', 'event', 'faction'];
+  const SECRETS_EDITOR_TYPES = ['character', 'player', 'location', 'event', 'faction', 'document', 'item'];
   let charSecretsList = [];
   if (SECRETS_EDITOR_TYPES.includes(type)) {
     const getExisting = {
@@ -2989,6 +3258,8 @@ function attachEditFormEvents(id, type) {
       location:  () => getLocationById(id),
       event:     () => getEventById(id),
       faction:   () => getFactionById(id),
+      document:  () => getDocumentById(id),
+      item:      () => getItemByIdFn(id),
     };
     const existingChar = getExisting[type]?.() || null;
     charSecretsList = Array.isArray(existingChar?.secretsList)
@@ -3135,9 +3406,9 @@ function attachEditFormEvents(id, type) {
       // Inject secrets list — managed outside FormData for all entity types
       if (SECRETS_EDITOR_TYPES.includes(type) && type !== 'player') data.secretsList = charSecretsList;
 
-      // Upload de arquivo para Cloudinary (personagens e locais)
+      // Upload de arquivo para Cloudinary (personagens, locais, documentos e itens)
       const fileInput = document.getElementById('img-file');
-      if ((type === 'character' || type === 'location') && fileInput?.files[0]) {
+      if ((type === 'character' || type === 'location' || type === 'document' || type === 'item') && fileInput?.files[0]) {
         saveBtn.textContent = 'Enviando imagem...';
         data.imageUrl = await uploadToCloudinary(fileInput.files[0]);
       }
@@ -3281,6 +3552,28 @@ function buildDataFromForm(fd, type) {
     data.members     = fd.getAll('members');
   }
 
+  if (type === 'document') {
+    data.name        = get('name').trim();
+    data.docType     = get('docType');
+    data.period      = get('period').trim();
+    data.author      = get('author').trim();
+    data.description = get('description').trim();
+    data.content     = get('content').trim();
+    // secretsList is injected from attachEditFormEvents
+    const urlVal = get('imageUrl').trim();
+    if (urlVal) data.imageUrl = urlVal;
+  }
+
+  if (type === 'item') {
+    data.name        = get('name').trim();
+    data.itemType    = get('itemType');
+    data.rarity      = get('rarity');
+    data.description = get('description').trim();
+    // secretsList is injected from attachEditFormEvents
+    const urlVal = get('imageUrl').trim();
+    if (urlVal) data.imageUrl = urlVal;
+  }
+
   return data;
 }
 
@@ -3394,6 +3687,7 @@ async function onUserLoggedIn(user) {
   renderLocations();
   renderEvents();
   renderFactions();
+  renderAcervo();
   buildCharacterFilters();
   setupGraphControls();
 
