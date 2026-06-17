@@ -27,7 +27,7 @@
   },
   {
     "id": "guerra-vol-1",
-    "name": "A Grande Guerra — Vol. I: A Guerra que Partiu o Mundo",
+    "name": "A Guerra que Partiu o Mundo",
     "docType": "pergaminho",
     "period": "Pós-Maré Alta, geração dos sobreviventes",
     "author": "Desconhecido (tradição oral compilada)",
@@ -39,7 +39,7 @@
   },
   {
     "id": "guerra-vol-2",
-    "name": "A Grande Guerra — Vol. II: Investigações sobre a Guerra Antiga",
+    "name": "Investigações sobre a Guerra Antiga",
     "docType": "pergaminho",
     "period": "~50 anos após a Maré Alta",
     "author": "Maren Oss, estudioso errante",
@@ -51,7 +51,7 @@
   },
   {
     "id": "guerra-vol-3",
-    "name": "A Grande Guerra — Vol. III: Memória dos Derradeiros Dias",
+    "name": "Memória dos Derradeiros Dias",
     "docType": "tomo",
     "period": "Durante a Grande Guerra",
     "author": "Aelindra, Sacerdotisa da Última Chama",
@@ -63,7 +63,7 @@
   },
   {
     "id": "abraco-vol-1",
-    "name": "O Abraço das Águas Eternas — Vol. I: Canção da Maré Alta",
+    "name": "Canção da Maré Alta",
     "docType": "carta",
     "period": "Pós-Maré Alta, tradição oral",
     "author": "Anônimo (verso popular)",
@@ -75,7 +75,7 @@
   },
   {
     "id": "abraco-vol-2",
-    "name": "O Abraço das Águas Eternas — Vol. II: Especulações de um Monge Costeiro",
+    "name": "Especulações de um Monge Costeiro",
     "docType": "pergaminho",
     "period": "~30 anos após a Maré Alta",
     "author": "Frei Assolvan, Mosteiro da Costa Afogada",
@@ -87,7 +87,7 @@
   },
   {
     "id": "abraco-vol-3",
-    "name": "O Abraço das Águas Eternas — Vol. III: Palavras de Frieren",
+    "name": "Palavras de Frieren",
     "docType": "carta",
     "period": "Anos após a Maré Alta",
     "author": "Frieren Talion (preservado por Fern Talion)",
@@ -99,7 +99,7 @@
   },
   {
     "id": "caca-vol-1",
-    "name": "A Caça aos Elfos — Vol. I: Registros do Purgo",
+    "name": "Registros do Purgo",
     "docType": "anotação",
     "period": "Pós-Maré Alta, anos iniciais da perseguição",
     "author": "Desconhecido, cronista dos primeiros anos",
@@ -111,7 +111,7 @@
   },
   {
     "id": "caca-vol-2",
-    "name": "A Caça aos Elfos — Vol. II: Uma Investigação Histórica",
+    "name": "Uma Investigação Histórica",
     "docType": "pergaminho",
     "period": "~40 anos após a Maré Alta",
     "author": "Telvis Oran, Arquivista de Kaldera",
@@ -123,7 +123,7 @@
   },
   {
     "id": "caca-vol-3",
-    "name": "A Caça aos Elfos — Vol. III: Lamento de Vaelindra Cass",
+    "name": "Lamento de Vaelindra Cass",
     "docType": "carta",
     "period": "Durante a Caça aos Elfos",
     "author": "Vaelindra Cass, Última Anciã de Elarindë",
