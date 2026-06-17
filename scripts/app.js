@@ -1655,9 +1655,13 @@ function renderAcervo() {
         const icon = DOC_TYPE_ICON[d.docType] || '📄';
         const secretBadge = STATE.isMaster && hasSecrets(d) ? `<span class="secret-icon" title="Tem segredos">🔒</span>` : '';
         const visBadge = STATE.isMaster ? `<span class="vis-card-badge" title="Visibilidade">${visBadgeEmoji(d)}</span>` : '';
+        const docImgHtml = d.imageUrl
+          ? `<img class="acervo-card-img" src="${escHtml(d.imageUrl)}" alt="" onerror="this.style.display='none'">`
+          : '';
         return `<div class="acervo-card doc-card" data-id="${d.id}" data-type="document">
+          ${docImgHtml}
           <div class="acervo-card-body">
-            <span class="acervo-card-icon">${icon}</span>
+            ${!d.imageUrl ? `<span class="acervo-card-icon">${icon}</span>` : ''}
             <div class="acervo-card-name">${escHtml(d.name)}${secretBadge}</div>
             ${d.docType ? `<div class="acervo-card-type">${escHtml(d.docType)}</div>` : ''}
             <div class="acervo-card-meta">
@@ -1710,6 +1714,22 @@ function buildDocumentModalContent(id) {
   if (!d) return '';
   const icon = DOC_TYPE_ICON[d.docType] || '📄';
   const visSec = STATE.isMaster ? buildVisibilitySection(d, 'documents') : '';
+
+  const imgHtml = d.imageUrl
+    ? `<div class="modal-doc-img-wrap">
+         <img src="${escHtml(d.imageUrl)}" alt="${escHtml(d.name)}" class="modal-doc-img"
+              data-lightbox="${escHtml(d.imageUrl)}" style="cursor:zoom-in;"
+              onerror="this.parentElement.style.display='none'">
+       </div>`
+    : '';
+
+  const cv = d.contentVisibility || { mode: 'hidden', playerIds: [] };
+  const myUid = STATE.user?.uid;
+  const playerCanSeeContent = cv.mode === 'all' || (cv.mode === 'specific' && (cv.playerIds || []).includes(myUid));
+  const showContent = STATE.isMaster || playerCanSeeContent;
+
+  const contentVisSection = STATE.isMaster ? buildDocContentVisSection(d) : '';
+
   return `
     <div class="modal-doc-header">
       <span class="modal-doc-icon">${icon}</span>
@@ -1719,13 +1739,79 @@ function buildDocumentModalContent(id) {
         ${d.author ? `<div class="modal-char-role" style="margin-top:2px;">por ${escHtml(d.author)}</div>` : ''}
       </div>
     </div>
+    ${imgHtml}
     ${d.description ? `<div class="modal-section"><div class="modal-section-title">Descrição</div><div class="modal-section-text">${escHtml(d.description)}</div></div>` : ''}
-    ${d.content ? `<div class="modal-section"><div class="modal-section-title">Conteúdo</div><div class="modal-doc-content">${escHtml(d.content)}</div></div>` : ''}
+    ${showContent && d.content ? `<div class="modal-section"><div class="modal-section-title">Conteúdo</div><div class="modal-doc-content">${escHtml(d.content)}</div></div>` : ''}
+    ${contentVisSection}
     ${buildRelationsSectionFor(id, 'document')}
     ${visSec}
     ${buildCharSecretsHtml({ ...d, id })}
     ${buildAnnotationsSection(id, 'document')}
   `;
+}
+
+function buildDocContentVisSection(d) {
+  const cv = d.contentVisibility || { mode: 'hidden', playerIds: [] };
+  const isAll  = cv.mode === 'all';
+  const isSpec = cv.mode === 'specific';
+  const checks = STATE.players.filter(p => p.role === 'player').map(p => {
+    const checked = (cv.playerIds || []).includes(p.uid) ? 'checked' : '';
+    return `<label class="player-vis-label">
+      <input type="checkbox" class="cv-player-check" data-uid="${p.uid}" ${checked}>
+      <span>${escHtml(p.displayName || '')}</span>
+    </label>`;
+  }).join('') || '<span style="font-size:12px;color:var(--text-muted)">Nenhum jogador registrado.</span>';
+
+  return `<div class="modal-section" id="doc-content-vis-section">
+    <div class="modal-section-title">Visibilidade do Conteúdo</div>
+    <div class="vis-row" id="doc-cv-btns" style="display:flex;gap:6px;margin-bottom:8px;">
+      <button class="vis-btn ${!isAll && !isSpec ? 'active' : ''}" data-cv-mode="hidden">🔒 Oculto</button>
+      <button class="vis-btn ${isAll ? 'active' : ''}" data-cv-mode="all">🌐 Todos</button>
+      <button class="vis-btn ${isSpec ? 'active' : ''}" data-cv-mode="specific">👁 Específicos</button>
+    </div>
+    <div class="vis-players ${isSpec ? '' : 'vis-players-hidden'}" id="doc-cv-players">${checks}</div>
+  </div>`;
+}
+
+function attachDocContentVisEvents(id) {
+  if (!STATE.isMaster) return;
+  const sec = document.getElementById('doc-content-vis-section');
+  if (!sec) return;
+
+  const d = getDocumentById(id);
+  let currentMode     = (d?.contentVisibility?.mode)      || 'hidden';
+  let currentPlayers  = [...(d?.contentVisibility?.playerIds || [])];
+
+  async function save() {
+    const oldCv  = d?.contentVisibility || { mode: 'hidden', playerIds: [] };
+    const newVis = { mode: currentMode, playerIds: currentPlayers };
+    await updateDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'documents', id), { contentVisibility: newVis });
+    const newlyVisible = STATE.players.filter(p => p.role === 'player').map(p => p.uid).filter(uid => {
+      const was = oldCv.mode === 'all' || (oldCv.mode === 'specific' && (oldCv.playerIds || []).includes(uid));
+      const now = currentMode === 'all' || (currentMode === 'specific' && currentPlayers.includes(uid));
+      return !was && now;
+    });
+    if (newlyVisible.length) {
+      const fresh = getDocumentById(id);
+      await sendRevealNotifications(newlyVisible, 'document', id, fresh?.name || d?.name || '', 'content');
+    }
+  }
+
+  sec.querySelectorAll('[data-cv-mode]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      currentMode = btn.dataset.cvMode;
+      sec.querySelectorAll('[data-cv-mode]').forEach(b => b.classList.toggle('active', b === btn));
+      document.getElementById('doc-cv-players').classList.toggle('vis-players-hidden', currentMode !== 'specific');
+      await save();
+    });
+  });
+
+  sec.querySelectorAll('.cv-player-check').forEach(chk => {
+    chk.addEventListener('change', async () => {
+      currentPlayers = [...sec.querySelectorAll('.cv-player-check:checked')].map(c => c.dataset.uid);
+      await save();
+    });
+  });
 }
 
 function buildItemModalContent(id) {
@@ -1785,7 +1871,7 @@ function openModal(id, type, pushToStack = true) {
   attachAnnotationEvents();
   if (type === 'character') attachSecretVisEvents(id);
   if (type === 'player')    attachPlayerSecretVisEvents(id);
-  if (type === 'document')  attachEntitySecretVisEvents(id, 'documents', 'document', getDocumentById);
+  if (type === 'document')  { attachEntitySecretVisEvents(id, 'documents', 'document', getDocumentById); attachDocContentVisEvents(id); }
   if (type === 'item')      attachEntitySecretVisEvents(id, 'items',     'item',     getItemByIdFn);
 }
 

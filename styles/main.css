@@ -1880,6 +1880,27 @@ body::after {
   white-space: pre-wrap;
 }
 
+/* Modal — documento com imagem */
+.modal-doc-img-wrap {
+  width: 100%;
+  max-height: 320px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  background: #060f1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-doc-img {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: opacity .2s;
+}
+.modal-doc-img:hover { opacity: .9; }
+
 /* Modal — item */
 .modal-item-img-wrap {
   padding: 20px 24px 0;

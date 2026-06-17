@@ -69,6 +69,15 @@ service cloud.firestore {
           resource.data.createdBy == request.auth.uid;
       }
 
+      match /documents/{id} {
+        allow read, write: if isMaster();
+        allow read: if isAuth() && isVisible();
+      }
+      match /items/{id} {
+        allow read, write: if isMaster();
+        allow read: if isAuth() && isVisible();
+      }
+
       // Anotações — todos autenticados podem ler e criar as próprias
       match /annotations/{id} {
         allow read:   if isAuth();
