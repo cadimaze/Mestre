@@ -527,7 +527,7 @@
     "label": "foi confrontado por antes da invocação",
     "type": "historical",
     "secret": true,
-    "description": "Vaelindra Cass conhecia Selavin e tentou pessoalmente dissuadi-lo da invocação do Thurvael. Ele ouviu. Não mudou de ideia. É a última conversa que ela descreve no Lamento de Vaelindra Cass."
+    "description": "Galadriel Cass conhecia Selavin e tentou pessoalmente dissuadi-lo da invocação do Thurvael. Ele ouviu. Não mudou de ideia. É a última conversa que ela descreve no Lamento de Galadriel Cass."
   },
   {
     "sourceId": "selavin-doss",
@@ -577,7 +577,7 @@
     "label": "sobreviveu à",
     "type": "historical",
     "secret": false,
-    "description": "Vaelindra Cass sobreviveu à Grande Guerra — uma das poucas elfas a fazê-lo. Sua sobrevivência foi suficientemente bem escondida para também sobreviver ao início da Caça aos Elfos."
+    "description": "Galadriel Cass sobreviveu à Grande Guerra — uma das poucas elfas a fazê-lo. Sua sobrevivência foi suficientemente bem escondida para também sobreviver ao início da Caça aos Elfos."
   },
   {
     "sourceId": "vaelindra-cass",
@@ -587,7 +587,7 @@
     "label": "sobreviveu à / destino desconhecido",
     "type": "secret",
     "secret": true,
-    "description": "Vaelindra Cass sobreviveu ao início da Caça — mas seu paradeiro após as perseguições é desconhecido. Status: Desaparecido, não Morto. Pode ainda estar viva em algum lugar de Pelágos."
+    "description": "Galadriel Cass sobreviveu ao início da Caça — mas seu paradeiro após as perseguições é desconhecido. Status: Desaparecido, não Morto. Pode ainda estar viva em algum lugar de Pelágos."
   },
   {
     "sourceId": "vaelindra-cass",
@@ -597,7 +597,7 @@
     "label": "autora de",
     "type": "personal",
     "secret": false,
-    "description": "Vaelindra Cass escreveu o Lamento de Vaelindra Cass como testemunho das perseguições e confissão da conversa com Selavin que nunca conseguiu esquecer."
+    "description": "Galadriel Cass escreveu o Lamento de Galadriel Cass como testemunho das perseguições e confissão da conversa com Selavin que nunca conseguiu esquecer."
   },
   {
     "sourceId": "maren-oss",
@@ -607,7 +607,7 @@
     "label": "pesquisou historicamente",
     "type": "historical",
     "secret": false,
-    "description": "Maren Oss foi um estudioso errante que pesquisou a Grande Guerra décadas após os eventos, compilando registros sobreviventes e tentando reconstruir o que aconteceu com rigor histórico."
+    "description": "Maren Krill foi um estudioso errante que pesquisou a Grande Guerra décadas após os eventos, compilando registros sobreviventes e tentando reconstruir o que aconteceu com rigor histórico."
   },
   {
     "sourceId": "maren-oss",
@@ -617,7 +617,7 @@
     "label": "autora de",
     "type": "personal",
     "secret": false,
-    "description": "Maren Oss escreveu as Investigações sobre a Guerra Antiga — o registro mais completo disponível para quem não tem acesso aos documentos secretos dos sacerdotes."
+    "description": "Maren Krill escreveu as Investigações sobre a Guerra Antiga — o registro mais completo disponível para quem não tem acesso aos documentos secretos dos sacerdotes."
   },
   {
     "sourceId": "frei-assolvan",

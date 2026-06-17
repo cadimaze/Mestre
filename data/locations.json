@@ -322,7 +322,7 @@
     "type": "Ilha / Ruína habitada",
     "faction": null,
     "tone": "Decadente e estudiosa — uma ilha que sobreviveu à inundação mais pela teimosia de seus habitantes do que pela sorte",
-    "description": "Kesvar é uma ilha pequena com uma história de resistência silenciosa. Antes da Maré Alta era um centro de conhecimento secular — não religioso, não militar, apenas acadêmico. Cartógrafos, filósofos, arquivistas. Quando as águas subiram, os habitantes de Kesvar subiram junto — literalmente, construindo estruturas mais altas sobre as que a inundação cobria.\n\nO resultado é uma ilha que parece construída em camadas: os fundamentos antigos do mundo pré-dilúvio emergem do mar em pedaços, e sobre eles novas construções cresceram ao longo de séculos. Os moradores chamam isso de 'a cidade de dois mundos'.\n\nKesvar mantém um fragmento do arquivo acadêmico original — muito do qual foi perdido, mas o suficiente para que estudiosos em busca de história antiga ainda façam a viagem. Foi de um arquivo em Kesvar que Maren Oss obteve um dos fragmentos que mencionava 'os magistas da língua alta que chamaram o que não devia ser chamado.'",
+    "description": "Kesvar é uma ilha pequena com uma história de resistência silenciosa. Antes da Maré Alta era um centro de conhecimento secular — não religioso, não militar, apenas acadêmico. Cartógrafos, filósofos, arquivistas. Quando as águas subiram, os habitantes de Kesvar subiram junto — literalmente, construindo estruturas mais altas sobre as que a inundação cobria.\n\nO resultado é uma ilha que parece construída em camadas: os fundamentos antigos do mundo pré-dilúvio emergem do mar em pedaços, e sobre eles novas construções cresceram ao longo de séculos. Os moradores chamam isso de 'a cidade de dois mundos'.\n\nKesvar mantém um fragmento do arquivo acadêmico original — muito do qual foi perdido, mas o suficiente para que estudiosos em busca de história antiga ainda façam a viagem. Foi de um arquivo em Kesvar que Maren Krill obteve um dos fragmentos que mencionava 'os magistas da língua alta que chamaram o que não devia ser chamado.'",
     "pointsOfInterest": [
       "As Fundações Emersas — seções do mundo pré-Maré Alta visíveis e transitáveis na parte baixa da ilha",
       "O Arquivo Duplo — biblioteca construída sobre ruínas de outra biblioteca, com documentos de duas eras",
@@ -332,7 +332,7 @@
     "secretsList": [
       {
         "id": "kesvar-s1",
-        "text": "Camada 1 — O Arquivo de Kesvar tem fragmentos sobre a Grande Guerra: Entre os documentos sobreviventes há referências aos magistas élficos e à invocação — material que Maren Oss encontrou e usou em sua investigação. Há mais fragmentos não catalogados.",
+        "text": "Camada 1 — O Arquivo de Kesvar tem fragmentos sobre a Grande Guerra: Entre os documentos sobreviventes há referências aos magistas élficos e à invocação — material que Maren Krill encontrou e usou em sua investigação. Há mais fragmentos não catalogados.",
         "visibility": { "mode": "hidden", "playerIds": [] }
       },
       {

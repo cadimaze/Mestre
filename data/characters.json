@@ -316,7 +316,7 @@
     "secretsList": [
       {
         "id": "selavin-s1",
-        "text": "Camada 1 — Selavin Doss liderou a invocação: O nome do magista responsável sobreviveu no Lamento de Vaelindra Cass. Era o arquiteto intelectual da invocação — convenceu os outros magistas de que o Thurvael poderia ser controlado. A responsabilidade moral da Grande Guerra se concentra nele.",
+        "text": "Camada 1 — Selavin Doss liderou a invocação: O nome do magista responsável sobreviveu no Lamento de Galadriel Cass. Era o arquiteto intelectual da invocação — convenceu os outros magistas de que o Thurvael poderia ser controlado. A responsabilidade moral da Grande Guerra se concentra nele.",
         "visibility": { "mode": "hidden", "playerIds": [] }
       },
       {
@@ -338,11 +338,11 @@
   },
   {
     "id": "vaelindra-cass",
-    "name": "Vaelindra Cass",
+    "name": "Galadriel Cass",
     "role": "Última Anciã de Elarindë",
     "status": "Desaparecido",
     "faction": null,
-    "description": "Élfica de trezentos anos na época da Maré Alta. Conhecia Selavin Doss antes de ele realizar a invocação e tentou avisá-lo. Sobreviveu à Grande Guerra e à Caça aos Elfos escondida em uma caverna com quarenta e dois outros élficos — dos quais apenas doze sobreviveram à perseguição. Escreveu o Lamento de Vaelindra Cass em couro que não apodrece, com tinta que não desbota, para que a verdade não se perdesse. Sua localização atual é desconhecida.",
+    "description": "Élfica de trezentos anos na época da Maré Alta. Conhecia Selavin Doss antes de ele realizar a invocação e tentou avisá-lo. Sobreviveu à Grande Guerra e à Caça aos Elfos escondida em uma caverna com quarenta e dois outros élficos — dos quais apenas doze sobreviveram à perseguição. Escreveu o Lamento de Galadriel Cass em couro que não apodrece, com tinta que não desbota, para que a verdade não se perdesse. Sua localização atual é desconhecida.",
     "personality": "Carrega trezentos anos de história com uma serenidade que não é paz — é o peso de quem já viu demais para se surpreender. Entende o ódio dos humanos. Entender não significa aceitar.",
     "secretsList": [
       {
@@ -359,7 +359,7 @@
   },
   {
     "id": "maren-oss",
-    "name": "Maren Oss",
+    "name": "Maren Krill",
     "role": "Estudioso errante",
     "status": "Morto",
     "faction": null,
