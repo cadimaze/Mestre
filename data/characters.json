@@ -277,7 +277,7 @@
   {
     "id": "aelindra",
     "name": "Aelindra",
-    "role": "Sacerdotisa do Selamento / Traidora Involuntária",
+    "role": "Sacerdotisa do Selamento",
     "status": "Morto",
     "faction": null,
     "description": "Sacerdotisa élfica que viveu durante a Grande Guerra e foi contemporânea de Himmel Varek. Pertencia à Ordem da Última Chama — uma ordem religiosa que tentou resistir à Fome por meios espirituais. Estava presente quando Himmel surgiu com o método de selamento e descreveu a reação de sua superiora ao ouvir o preço: chorar, ela que não chorava desde a Guerra dos Cinquenta Anos. Deixou escrito o único registro direto dos acontecimentos da Grande Guerra do ponto de vista de quem os viveu.",
@@ -386,5 +386,31 @@
     "description": "Arquivista de Kaldera que, quarenta e três anos após as perseguições, tentou documentar a Caça aos Elfos com distância histórica e moral. Foi o primeiro a registrar formalmente a distinção entre magistas e elfos comuns, e o primeiro a encontrar e preservar a nota anônima de um sobrevivente élfico: 'Nós também não sabíamos. Fomos os últimos a saber. E os primeiros a pagar.' Seu pergaminho foi arquivado e praticamente esquecido.",
     "personality": "Honesto ao ponto do desconforto. Fazia perguntas morais que os arquivos não respondiam e registrava isso sem pudor. Em Kaldera, sob controle de Velmarch, esse tipo de honestidade era mais seguro em forma de pergaminho do que em forma de conversa.",
     "secretsList": []
+  },
+  {
+    "id": "o-peso",
+    "name": "O Peso",
+    "role": "Thurvael / Entidade Primordial / O Selado",
+    "status": "Selado",
+    "faction": null,
+    "description": "Anterior aos deuses conhecidos de Pelágos. O Peso é o nome dado pelos sobreviventes da Grande Guerra — seu nome verdadeiro é Thurvael, palavra da língua do Substrato, anterior a todos os idiomas élficos e humanos, que significa aproximadamente 'aquilo que devora o que existe'. Foi invocado pelos magistas elfos nas camadas mais profundas da realidade e recusou qualquer forma de controle. Não pensa em termos humanos. Não tem malícia consciente. Tem apenas um impulso primitivo de liberdade. Está selado a quilômetros de profundidade sob o oceano de Pelágos — e não está sozinho: Selavin Doss, o magista que o invocou, fundiu sua consciência ao Thurvael no instante do selamento. O que emerge se o selo quebrar não é a entidade amorfa, mas Selavin Doss com o poder integral do Thurvael dentro de si.",
+    "personality": "Não possui personalidade própria articulada — é uma presença, uma fome gravitacional. Mas através de Selavin Doss, adquiriu voz, intelecto e paciência. Após séculos de simbiose, os dois já não são completamente separáveis: o Peso fornece poder e permanência; Selavin fornece forma e vontade.",
+    "secretsList": [
+      {
+        "id": "opeso-s1",
+        "text": "Camada 1 — O nome verdadeiro é Thurvael: O Peso é apenas o nome popular. O nome verdadeiro — Thurvael — existe apenas em registros élficos antigos e nas anotações do Tomo de Himmel Varek. Quem conhece o nome verdadeiro tem acesso a informações que os registros comuns não contêm.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "opeso-s2",
+        "text": "Camada 2 — O Peso não está sozinho no selo: Selavin Doss fundiu sua consciência ao Thurvael no instante do selamento. Os dois existem em simbiose há séculos: o Peso fornece poder e permanência; Selavin fornece forma, vontade e intelecto. Ninguém sabe disso — nem Himmel sabia.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "opeso-s3",
+        "text": "Camada 3 — O oceano inteiro é o cárcere: A água de Pelágos não é água comum. É consagrada pelo sacrifício voluntário de Himmel Varek. Se o nível do mar baixar significativamente, o selo enfraquece. Se o ritual for revertido, o selo quebra — e o que emerge é Selavin Doss com o poder integral do Thurvael.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
+    ]
   }
 ]

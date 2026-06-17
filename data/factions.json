@@ -44,17 +44,6 @@
     "locations": ["reva"]
   },
   {
-    "id": "o-peso",
-    "name": "O Peso",
-    "type": "Entidade primordial",
-    "color": "#4a1a4a",
-    "symbol": "◉",
-    "description": "Anterior aos deuses conhecidos de Pelágos. O Peso não tem forma, não tem vontade articulada e não tem nome próprio — o termo foi cunhado pelos pesquisadores que estudaram seus efeitos antes do sacrifício de Himmel. É uma presença, uma fome gravitacional que corrói a realidade ao redor quando desperta. Não pensa em termos humanos. Não tem malícia consciente. Tem apenas um impulso primitivo de liberdade.",
-    "secrets": "SEGREDO DO MESTRE — CENTRAL: Selado a quilômetros abaixo do oceano pela Maré Alta. A água que o sela não é água comum — é água consagrada pelo sacrifício voluntário de Himmel Varek. Se o nível do mar baixar significativamente, o selo enfraquece. Se o ritual for revertido, o selo quebra.\n\nO Peso encontrou em Soren Mael uma fresta — um humano que chegou perto demais do ponto de selagem. Não o possui. Vaza por ele. A compulsão que Soren sente de revelar certos segredos é O Peso tentando, sem consciência, criar as condições para sua libertação.\n\nO verdadeiro perigo da campanha: os jogadores vão partir atrás de um segredo para derrubar um império. O que vão encontrar é uma escolha impossível — o império que eles odeiam existe porque alguém amou o mundo mais do que a própria vida. Derrubá-lo pode custar tudo.",
-    "members": [],
-    "locations": []
-  },
-  {
     "id": "mare-negra",
     "name": "A Maré Negra",
     "type": "Frota pirata",
