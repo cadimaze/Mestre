@@ -259,5 +259,90 @@
     "secrets": "SEGREDO DO MESTRE: Thorne Maré ainda vive em Aethon construindo barcos para A Corrente. Liris foi realocada forçosamente para o Ancoradouro de Latão após a fuga de Cid e costura velas militares de Velmarch. O registro de Cid como desertor de recrutamento obrigatório ainda consta nos arquivos portuários do Domínio — qualquer oficial atento pode localizá-lo.",
     "characters": [],
     "events": []
+  },
+  {
+    "id": "mosteiro-costa-afogada",
+    "name": "Mosteiro da Costa Afogada",
+    "subtitle": "Ordem dos Monges da Maré",
+    "type": "Ilha monástica / Arquivo histórico",
+    "faction": null,
+    "tone": "Silencioso e melancólico — uma ilha que lembra o que o mundo perdeu",
+    "description": "Um mosteiro antigo construído no alto de uma ilha costeira que sobreviveu à Maré Alta — mas apenas a parte superior. As fundações e os claustros inferiores foram engolidos pela inundação, e as paredes que emergem do oceano carregam a linha d'água marcada nas pedras como uma cicatriz. Os monges que habitam o que sobrou chamam isso de 'a memória visível do preço.'\n\nO mosteiro mantém um dos arquivos mais antigos de Pelágos — fragmentos de documentos que sobreviveram à inundação em cofres de pedra vedada. A maioria está danificada. Alguns são ilegíveis. Os que sobreviveram inteiros são tratados como relíquias.\n\nA Ordem não tem nome oficial — os monges simplesmente chamam uns aos outros de irmãos. Não pregam, não aceitam convertidos formalmente. Apenas guardam. E às vezes, quando alguém parece digno, deixam ler.",
+    "pointsOfInterest": [
+      "A Linha da Maré — marca permanente nas paredes externas que indica o nível exato que as águas atingiram",
+      "O Arquivo Submerso — câmaras inferiores parcialmente inundadas onde ainda existem documentos em cofres vedados nunca abertos",
+      "A Torre do Silêncio — estrutura mais alta do mosteiro, usada para meditação e, segundo rumores, para observar algo no oceano que os monges não descrevem",
+      "O Scriptorium da Costa — sala onde os monges copiam e preservam os fragmentos recuperados"
+    ],
+    "secretsList": [
+      {
+        "id": "mosteiro-s1",
+        "text": "Camada 1 — O Arquivo Submerso ainda contém documentos intocados: As câmaras inferiores inundadas têm cofres que nunca foram abertos. Os monges sabem que estão lá. Não têm como chegar — ou escolheram não chegar.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "mosteiro-s2",
+        "text": "Camada 2 — Os monges guardam mais do que admitem: Frei Assolvan era deste mosteiro. Suas notas sobre a Maré Alta e o 'rito do abraço' foram escritas aqui — e a recomendação de não divulgar foi seguida por gerações. Não é a única pesquisa arquivada que nunca foi compartilhada.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
+    ],
+    "secrets": "SEGREDO DO MESTRE: O Mosteiro guarda pesquisas sobre a Maré Alta que contradizem a narrativa oficial de Velmarch. Frei Assolvan foi apenas o mais recente em uma longa linha de monges que perceberam que a inundação não foi natural — e escolheram guardar em vez de falar.",
+    "characters": [],
+    "events": []
+  },
+  {
+    "id": "ondra",
+    "name": "Ondra",
+    "subtitle": "A Ilha das Antigas Ordens",
+    "type": "Ilha religiosa / Centro espiritual",
+    "faction": null,
+    "tone": "Reverente e fechada — uma ilha que respira história mas desconfia de estranhos",
+    "description": "Ondra é uma ilha de ordem e memória. Antes da Maré Alta era conhecida como centro espiritual de várias tradições religiosas — depois da inundação tornou-se ainda mais importante, pois parte de seus arquivos e templos sobreviveu nas partes altas da ilha.\n\nVários mosteiros e ordens religiosas mantêm sedes em Ondra. A relação com o Domínio de Velmarch é cordial mas distante — Ondra paga tributos e aceita a presença discreta d'A Corrente, mas mantém autonomia religiosa que Velmarch prefere não desafiar.\n\nEntre os documentos preservados em Ondra há fragmentos que mencionam 'o abraço eterno que selou o que não podia ser destruído' — uma frase que os estudiosos locais atribuem a metáfora religiosa sobre a Maré Alta, sem entender que é descrição literal.",
+    "pointsOfInterest": [
+      "O Templo das Marés — o maior templo da ilha, construído com pedras do mundo anterior recuperadas do fundo",
+      "Os Arquivos de Ondra — biblioteca religiosa com documentos pré-Maré Alta em condições razoáveis",
+      "O Porto das Bênçãos — único porto da ilha, onde navios recebem bênçãos rituais antes de partir",
+      "As Celas dos Penitentes — estruturas medievas usadas por religiosos em retiro prolongado"
+    ],
+    "secretsList": [
+      {
+        "id": "ondra-s1",
+        "text": "Camada 1 — Os Arquivos de Ondra têm documentos sobre a Maré Alta: Entre os fragmentos preservados há referências ao 'abraço eterno' e a um 'selamento' — linguagem que as ordens religiosas locais interpretam como metáfora espiritual, sem saber que é descrição literal do ritual de Himmel.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
+    ],
+    "secrets": "SEGREDO DO MESTRE: Os Arquivos de Ondra contêm pistas sobre o ritual de Himmel que os monges não compreendem. Um pesquisador com contexto suficiente poderia conectar os pontos.",
+    "characters": [],
+    "events": []
+  },
+  {
+    "id": "kesvar",
+    "name": "Kesvar",
+    "subtitle": "A Ilha dos Arquivos Perdidos",
+    "type": "Ilha / Ruína habitada",
+    "faction": null,
+    "tone": "Decadente e estudiosa — uma ilha que sobreviveu à inundação mais pela teimosia de seus habitantes do que pela sorte",
+    "description": "Kesvar é uma ilha pequena com uma história de resistência silenciosa. Antes da Maré Alta era um centro de conhecimento secular — não religioso, não militar, apenas acadêmico. Cartógrafos, filósofos, arquivistas. Quando as águas subiram, os habitantes de Kesvar subiram junto — literalmente, construindo estruturas mais altas sobre as que a inundação cobria.\n\nO resultado é uma ilha que parece construída em camadas: os fundamentos antigos do mundo pré-dilúvio emergem do mar em pedaços, e sobre eles novas construções cresceram ao longo de séculos. Os moradores chamam isso de 'a cidade de dois mundos'.\n\nKesvar mantém um fragmento do arquivo acadêmico original — muito do qual foi perdido, mas o suficiente para que estudiosos em busca de história antiga ainda façam a viagem. Foi de um arquivo em Kesvar que Maren Oss obteve um dos fragmentos que mencionava 'os magistas da língua alta que chamaram o que não devia ser chamado.'",
+    "pointsOfInterest": [
+      "As Fundações Emersas — seções do mundo pré-Maré Alta visíveis e transitáveis na parte baixa da ilha",
+      "O Arquivo Duplo — biblioteca construída sobre ruínas de outra biblioteca, com documentos de duas eras",
+      "O Mercado das Memórias — onde colecionadores e estudiosos trocam e vendem fragmentos antigos",
+      "A Torre dos Cartógrafos — estrutura alta que ainda mantém mapas do mundo anterior, ilegíveis por falta de referências"
+    ],
+    "secretsList": [
+      {
+        "id": "kesvar-s1",
+        "text": "Camada 1 — O Arquivo de Kesvar tem fragmentos sobre a Grande Guerra: Entre os documentos sobreviventes há referências aos magistas élficos e à invocação — material que Maren Oss encontrou e usou em sua investigação. Há mais fragmentos não catalogados.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "kesvar-s2",
+        "text": "Camada 2 — Nas Fundações Emersas há inscrições do mundo anterior: Parte das fundações emergidas do pré-dilúvio tem inscrições em língua arcaica. Ninguém em Kesvar as lê. Alguém com conhecimento das línguas antigas — ou acesso ao tomo certo — poderia.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
+    ],
+    "secrets": "SEGREDO DO MESTRE: Kesvar é um ponto de partida para investigação histórica. Um grupo determinado conseguiria em Kesvar fragmentos suficientes para começar a montar o quadro real da Grande Guerra — sem que ninguém na ilha soubesse a importância do que estava guardando.",
+    "characters": [],
+    "events": []
   }
 ]

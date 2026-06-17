@@ -273,5 +273,98 @@
         "visibility": { "mode": "hidden", "playerIds": [] }
       }
     ]
+  },
+  {
+    "id": "aelindra",
+    "name": "Aelindra",
+    "role": "Sacerdotisa da Última Chama",
+    "status": "Morto",
+    "faction": null,
+    "description": "Sacerdotisa élfica que viveu durante a Grande Guerra e foi contemporânea de Himmel Varek. Pertencia à Ordem da Última Chama — uma ordem religiosa que tentou resistir à Fome por meios espirituais. Estava presente quando Himmel surgiu com o método de selamento e descreveu a reação de sua superiora ao ouvir o preço: chorar, ela que não chorava desde a Guerra dos Cinquenta Anos. Deixou escrito o único registro direto dos acontecimentos da Grande Guerra do ponto de vista de quem os viveu.",
+    "personality": "Sóbria, direta, sem ilusões. Escrevia para a posteridade, não para o conforto. Acreditava que a verdade mal contada era mais perigosa que o silêncio.",
+    "secretsList": [
+      {
+        "id": "aelindra-s1",
+        "text": "Camada 1 — Aelindra era élfica: Era élfica, não humana. Sobreviveu à Grande Guerra, ao ritual e provavelmente ao início da Caça aos Elfos. Seu destino final é desconhecido.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "aelindra-s2",
+        "text": "Camada 2 — Aelindra tentou impedir Himmel: Não ficou passiva. Tentou convencê-lo de que havia outra forma. Falhou. Seu registro não menciona o que teria sido essa outra forma — provavelmente porque não havia.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
+    ]
+  },
+  {
+    "id": "selavin-doss",
+    "name": "Selavin Doss",
+    "role": "Magista Élfico / O Arquiteto da Fome",
+    "status": "Morto",
+    "faction": null,
+    "description": "O magista élfico que liderou a invocação de O Peso durante a Grande Guerra, acreditando que uma força primordial poderia ser domesticada e usada como vantagem definitiva dos elfos. Era da geração de Vaelindra Cass, que o conheceu antes de ele se tornar o que se tornou. Curioso, brilhante, genial no sentido mais perigoso da palavra — confundia inteligência com sabedoria. Morreu na guerra que criou, como os demais magistas. Nunca chegou a ver o resultado de sua decisão.",
+    "personality": "Brilhante e absolutamente convicto de si mesmo. Não era malicioso — era genial demais para imaginar que poderia estar errado. Disse a Vaelindra, numa conversa que ela nunca esqueceu: 'Não é um ser. É uma força. As forças podem ser dirigidas.'",
+    "secretsList": [
+      {
+        "id": "selavin-s1",
+        "text": "Camada 1 — Selavin Doss era o principal responsável: Entre os vários magistas envolvidos, Selavin era o arquiteto intelectual do projeto. A decisão de invocar O Peso foi em grande parte dele.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "selavin-s2",
+        "text": "Camada 2 — Os demais magistas seguiram Selavin: Não foi uma decisão coletiva igualitária. Selavin convenceu os outros. A responsabilidade moral se concentra nele — o que não absolveu os elfos comuns aos olhos dos sobreviventes.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
+    ]
+  },
+  {
+    "id": "vaelindra-cass",
+    "name": "Vaelindra Cass",
+    "role": "Última Anciã de Elarindë",
+    "status": "Desaparecido",
+    "faction": null,
+    "description": "Élfica de trezentos anos na época da Maré Alta. Conhecia Selavin Doss antes de ele realizar a invocação e tentou avisá-lo. Sobreviveu à Grande Guerra e à Caça aos Elfos escondida em uma caverna com quarenta e dois outros élficos — dos quais apenas doze sobreviveram à perseguição. Escreveu o Lamento de Vaelindra Cass em couro que não apodrece, com tinta que não desbota, para que a verdade não se perdesse. Sua localização atual é desconhecida.",
+    "personality": "Carrega trezentos anos de história com uma serenidade que não é paz — é o peso de quem já viu demais para se surpreender. Entende o ódio dos humanos. Entender não significa aceitar.",
+    "secretsList": [
+      {
+        "id": "vaelindra-s1",
+        "text": "Camada 1 — Vaelindra pode ainda estar viva: Com trezentos anos na época da Maré Alta, e sendo élfica, pode ter vivido mais séculos. Se ainda viva, seria a pessoa com o conhecimento mais completo e direto sobre os eventos da Grande Guerra — além de Frieren.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "vaelindra-s2",
+        "text": "Camada 2 — Vaelindra sabe onde outros elfos sobreviventes estão: Mencionou seis sobreviventes do seu grupo ainda vivos. Conhece esconderijos, rotas e artifícios usados pelos elfos remanescentes. Seria um ativo inestimável — ou um alvo, dependendo de quem pergunta.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      }
+    ]
+  },
+  {
+    "id": "maren-oss",
+    "name": "Maren Oss",
+    "role": "Estudioso errante",
+    "status": "Morto",
+    "faction": null,
+    "description": "Estudioso independente que passou anos coletando fragmentos de arquivos sobreviventes à Maré Alta para tentar reconstruir a história da Grande Guerra. Escreveu suas investigações em Kaldera, aproximadamente cinquenta anos após a inundação. Não chegou a descobrir a verdade completa — apenas que magistas élficos invocaram algo e que a guerra mudou de natureza quando isso aconteceu. Terminou suas notas com a frase: 'Aguardo encontrar mais registros. Temo que não existam.'",
+    "personality": "Meticuloso e honesto intelectualmente — preferia dizer que não sabia a fingir certeza. Trabalhava sozinho, sem vínculos com nenhuma facção, o que lhe dava acesso a arquivos que pesquisadores ligados ao Domínio não consultariam.",
+    "secretsList": []
+  },
+  {
+    "id": "frei-assolvan",
+    "name": "Frei Assolvan",
+    "role": "Monge do Mosteiro da Costa Afogada",
+    "status": "Morto",
+    "faction": null,
+    "description": "Monge que passou três anos pesquisando arquivos de mosteiros costeiros em busca de registros sobre a Maré Alta. Concluiu, sozinho e sem apoio institucional, que a inundação não foi natural e que houve um ritual de sacrifício que selou algo sob o oceano. Encontrou referências fragmentadas ao 'rito do abraço' em três arquivos distintos. Terminou suas notas recomendando que não fossem divulgadas — e aparentemente foram seguidas suas instruções por gerações, até que o pergaminho fosse encontrado.",
+    "personality": "Curioso além do que a segurança recomendava. Sabia que estava pisando em terreno que o Domínio preferia manter lacrado, e escreveu assim mesmo. A nota final — 'não recomendo divulgar' — sugere que entendia as consequências.",
+    "secretsList": []
+  },
+  {
+    "id": "telvis-oran",
+    "name": "Telvis Oran",
+    "role": "Arquivista de Kaldera",
+    "status": "Morto",
+    "faction": null,
+    "description": "Arquivista de Kaldera que, quarenta e três anos após as perseguições, tentou documentar a Caça aos Elfos com distância histórica e moral. Foi o primeiro a registrar formalmente a distinção entre magistas e elfos comuns, e o primeiro a encontrar e preservar a nota anônima de um sobrevivente élfico: 'Nós também não sabíamos. Fomos os últimos a saber. E os primeiros a pagar.' Seu pergaminho foi arquivado e praticamente esquecido.",
+    "personality": "Honesto ao ponto do desconforto. Fazia perguntas morais que os arquivos não respondiam e registrava isso sem pudor. Em Kaldera, sob controle de Velmarch, esse tipo de honestidade era mais seguro em forma de pergaminho do que em forma de conversa.",
+    "secretsList": []
   }
 ]
