@@ -458,5 +458,245 @@
     "type": "secret",
     "secret": true,
     "description": "A Corrente recebeu ordem de não engajar o Dead Pool sem autorização de Velmyr. A Maré Negra e A Corrente coexistem nos mares de Pelágos com uma não-agressão tácita que nenhum dos lados admite publicamente."
+  },
+  {
+    "sourceId": "aelindra",
+    "sourceType": "character",
+    "targetId": "himmel-varek",
+    "targetType": "character",
+    "label": "integrava círculo de selamento com",
+    "type": "historical",
+    "secret": false,
+    "description": "Aelindra fazia parte do círculo de sacerdotes que buscava selar O Peso — o mesmo esforço liderado por Himmel Varek. Conhecia o plano por dentro, incluindo o preço que ele estava disposto a pagar."
+  },
+  {
+    "sourceId": "aelindra",
+    "sourceType": "character",
+    "targetId": "selavin-doss",
+    "targetType": "character",
+    "label": "avisou inadvertidamente",
+    "type": "secret",
+    "secret": true,
+    "description": "Por medo do plano de Himmel, Aelindra foi a Selavin antes do ritual final acreditando que ele poderia encontrar uma alternativa. Em vez disso, ele usou o tempo que ela lhe deu para preparar a fusão com o Thurvael. O aviso de Aelindra é a razão pela qual Selavin sobreviveu ao selamento."
+  },
+  {
+    "sourceId": "aelindra",
+    "sourceType": "character",
+    "targetId": "grande-guerra",
+    "targetType": "event",
+    "label": "sobreviveu à / documentou",
+    "type": "historical",
+    "secret": false,
+    "description": "Aelindra sobreviveu à Grande Guerra como sacerdotisa do círculo de selamento. Seu tomo é o registro mais preciso e completo dos eventos — escrito por quem estava lá e carregava culpa demais para omitir."
+  },
+  {
+    "sourceId": "aelindra",
+    "sourceType": "character",
+    "targetId": "guerra-vol-3",
+    "targetType": "document",
+    "label": "autora de",
+    "type": "personal",
+    "secret": false,
+    "description": "Aelindra escreveu a Memória dos Derradeiros Dias como ato de testemunho e penitência silenciosa."
+  },
+  {
+    "sourceId": "selavin-doss",
+    "sourceType": "character",
+    "targetId": "o-peso",
+    "targetType": "character",
+    "label": "fundiu-se com / hospedeiro de",
+    "type": "secret",
+    "secret": true,
+    "description": "No instante do selamento, Selavin cedeu voluntariamente seu corpo e consciência ao Thurvael. Os dois existem em simbiose há séculos — o Peso fornece poder e permanência; Selavin fornece forma, vontade e intelecto."
+  },
+  {
+    "sourceId": "selavin-doss",
+    "sourceType": "character",
+    "targetId": "himmel-varek",
+    "targetType": "character",
+    "label": "selado por",
+    "type": "historical",
+    "secret": true,
+    "description": "Himmel Varek realizou o ritual que selou o Thurvael — e, sem saber, selou Selavin Doss junto. Os dois estão presos no mesmo selamento há séculos."
+  },
+  {
+    "sourceId": "selavin-doss",
+    "sourceType": "character",
+    "targetId": "vaelindra-cass",
+    "targetType": "character",
+    "label": "foi confrontado por antes da invocação",
+    "type": "historical",
+    "secret": true,
+    "description": "Vaelindra Cass conhecia Selavin e tentou pessoalmente dissuadi-lo da invocação do Thurvael. Ele ouviu. Não mudou de ideia. É a última conversa que ela descreve no Lamento de Vaelindra Cass."
+  },
+  {
+    "sourceId": "selavin-doss",
+    "sourceType": "character",
+    "targetId": "grande-guerra",
+    "targetType": "event",
+    "label": "arquiteto intelectual da invocação que causou",
+    "type": "secret",
+    "secret": true,
+    "description": "Selavin Doss foi o principal responsável intelectual pela decisão de invocar o Thurvael. Convenceu os demais magistas de que uma força primordial poderia ser domesticada. A Grande Guerra é a consequência direta dessa decisão."
+  },
+  {
+    "sourceId": "selavin-doss",
+    "sourceType": "character",
+    "targetId": "soren-mael",
+    "targetType": "character",
+    "label": "manipula como instrumento",
+    "type": "secret",
+    "secret": true,
+    "description": "Selavin Doss usa a fresta aberta em Soren Mael pelo mergulho perto do ponto de selagem para orquestrar o caminho dos jogadores. Cada informação que Soren compartilha foi escolhida. Cada rota que sugere foi calculada. Soren não sabe disso."
+  },
+  {
+    "sourceId": "selavin-doss",
+    "sourceType": "character",
+    "targetId": "aelindra",
+    "targetType": "character",
+    "label": "recebeu aviso de / deve sua sobrevivência a",
+    "type": "secret",
+    "secret": true,
+    "description": "O aviso inadvertido de Aelindra deu a Selavin o tempo necessário para preparar a fusão com o Thurvael. Sem ela, teria sido destruído ou selado como força amorfa. Ela é, involuntariamente, a razão pela qual o maior perigo de Pelágos ainda existe."
+  },
+  {
+    "sourceId": "vaelindra-cass",
+    "sourceType": "character",
+    "targetId": "selavin-doss",
+    "targetType": "character",
+    "label": "tentou dissuadir da invocação",
+    "type": "historical",
+    "secret": true,
+    "description": "Vaelindra conhecia Selavin antes da guerra. Tentou pessoalmente convencê-lo a abandonar o projeto de invocar o Thurvael. Ele disse: 'Não é um ser. É uma força. As forças podem ser dirigidas.' Ela nunca esqueceu essas palavras."
+  },
+  {
+    "sourceId": "vaelindra-cass",
+    "sourceType": "character",
+    "targetId": "grande-guerra",
+    "targetType": "event",
+    "label": "sobreviveu à",
+    "type": "historical",
+    "secret": false,
+    "description": "Vaelindra Cass sobreviveu à Grande Guerra — uma das poucas elfas a fazê-lo. Sua sobrevivência foi suficientemente bem escondida para também sobreviver ao início da Caça aos Elfos."
+  },
+  {
+    "sourceId": "vaelindra-cass",
+    "sourceType": "character",
+    "targetId": "caca-elfos",
+    "targetType": "event",
+    "label": "sobreviveu à / destino desconhecido",
+    "type": "secret",
+    "secret": true,
+    "description": "Vaelindra Cass sobreviveu ao início da Caça — mas seu paradeiro após as perseguições é desconhecido. Status: Desaparecido, não Morto. Pode ainda estar viva em algum lugar de Pelágos."
+  },
+  {
+    "sourceId": "vaelindra-cass",
+    "sourceType": "character",
+    "targetId": "caca-vol-3",
+    "targetType": "document",
+    "label": "autora de",
+    "type": "personal",
+    "secret": false,
+    "description": "Vaelindra Cass escreveu o Lamento de Vaelindra Cass como testemunho das perseguições e confissão da conversa com Selavin que nunca conseguiu esquecer."
+  },
+  {
+    "sourceId": "maren-oss",
+    "sourceType": "character",
+    "targetId": "grande-guerra",
+    "targetType": "event",
+    "label": "pesquisou historicamente",
+    "type": "historical",
+    "secret": false,
+    "description": "Maren Oss foi um estudioso errante que pesquisou a Grande Guerra décadas após os eventos, compilando registros sobreviventes e tentando reconstruir o que aconteceu com rigor histórico."
+  },
+  {
+    "sourceId": "maren-oss",
+    "sourceType": "character",
+    "targetId": "guerra-vol-2",
+    "targetType": "document",
+    "label": "autora de",
+    "type": "personal",
+    "secret": false,
+    "description": "Maren Oss escreveu as Investigações sobre a Guerra Antiga — o registro mais completo disponível para quem não tem acesso aos documentos secretos dos sacerdotes."
+  },
+  {
+    "sourceId": "frei-assolvan",
+    "sourceType": "character",
+    "targetId": "mosteiro-costa-afogada",
+    "targetType": "location",
+    "label": "pertencia ao",
+    "type": "personal",
+    "secret": false,
+    "description": "Frei Assolvan era monge do Mosteiro da Costa Afogada — comunidade religiosa na costa de Pelágos que cultivava memória oral das antigas marés e do evento que as criou."
+  },
+  {
+    "sourceId": "frei-assolvan",
+    "sourceType": "character",
+    "targetId": "abraco-aguas-eternas",
+    "targetType": "event",
+    "label": "pesquisou e especulou sobre",
+    "type": "historical",
+    "secret": false,
+    "description": "Frei Assolvan passou anos pesquisando o Abraço das Águas Eternas a partir de tradições orais e registros costeiros. Suas conclusões eram especulativas mas mais corretas do que a maioria das versões disponíveis."
+  },
+  {
+    "sourceId": "frei-assolvan",
+    "sourceType": "character",
+    "targetId": "abraco-vol-2",
+    "targetType": "document",
+    "label": "autor de",
+    "type": "personal",
+    "secret": false,
+    "description": "Frei Assolvan escreveu as Especulações de um Monge Costeiro como registro das suas pesquisas sobre a Maré Alta — o trabalho de décadas de um homem que acreditava que a verdade importava mesmo que ninguém fosse ouvir."
+  },
+  {
+    "sourceId": "telvis-oran",
+    "sourceType": "character",
+    "targetId": "caca-elfos",
+    "targetType": "event",
+    "label": "documentou historicamente",
+    "type": "historical",
+    "secret": false,
+    "description": "Telvis Oran foi o primeiro arquivista a tentar documentar a Caça aos Elfos com distância histórica e julgamento moral explícito — quarenta e três anos depois dos eventos, sob controle de Velmarch."
+  },
+  {
+    "sourceId": "telvis-oran",
+    "sourceType": "character",
+    "targetId": "caca-vol-2",
+    "targetType": "document",
+    "label": "autor de",
+    "type": "personal",
+    "secret": false,
+    "description": "Telvis Oran escreveu Uma Investigação Histórica — o único registro formal que distingue entre magistas (responsáveis) e elfos comuns (vítimas). Arquivado e praticamente esquecido."
+  },
+  {
+    "sourceId": "telvis-oran",
+    "sourceType": "character",
+    "targetId": "kaldera",
+    "targetType": "location",
+    "label": "viveu e trabalhou em",
+    "type": "personal",
+    "secret": false,
+    "description": "Telvis Oran era arquivista de Kaldera — cidade sob controle de Velmarch onde seu trabalho estava mais seguro em forma de pergaminho do que em forma de conversa."
+  },
+  {
+    "sourceId": "o-peso",
+    "sourceType": "character",
+    "targetId": "selavin-doss",
+    "targetType": "character",
+    "label": "fundido com / simbiose com",
+    "type": "secret",
+    "secret": true,
+    "description": "O Thurvael e Selavin Doss existem em simbiose há séculos dentro do selo. O Peso fornece poder e permanência; Selavin fornece forma, vontade e intelecto. Os dois deixaram de ser completamente separáveis."
+  },
+  {
+    "sourceId": "frieren-talion",
+    "sourceType": "character",
+    "targetId": "abraco-vol-3",
+    "targetType": "document",
+    "label": "autora de",
+    "type": "personal",
+    "secret": true,
+    "description": "Frieren Talion escreveu as Palavras de Frieren — carta jamais enviada, encontrada entre seus pertences em Reva. Revela que ela estava presente no Abraço das Águas Eternas e sobreviveu com o preço de carregar esse segredo."
   }
 ]
