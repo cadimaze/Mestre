@@ -168,11 +168,11 @@
   {
     "id": "soren-mael",
     "name": "Soren Mael",
-    "role": "Cartógrafo Errante / Veículo Inconsciente de O Peso",
+    "role": "Cartógrafo Errante / Instrumento Inconsciente de Selavin Doss",
     "status": "Vivo",
     "faction": null,
-    "description": "Soren Mael tem pouco mais de trinta anos. É cartógrafo por formação e por vocação — passou os primeiros anos da carreira mapeando rotas comerciais para pequenos mercadores, trabalho honesto de quem ama o ofício mais do que a fama. Tem uma esposa em alguma ilha, filhos pequenos, um barco modesto que conhece pelo nome. O tipo de homem que manda cartas para casa toda vez que passa por um porto com serviço de correio. Não há nada nele que sugira perigo.",
-    "personality": "Caloroso, presente, genuinamente curioso sobre as pessoas que encontra. Faz perguntas boas e escuta as respostas de verdade. Fala sobre a esposa e os filhos com saudade leve de quem sabe que vai voltar. Sinais a plantar: não mergulha mais; perto de água profunda e parada fica quieto por alguns segundos; escreve cartas com frequência obsessiva; às vezes completa uma frase e franze o cenho levemente.",
+    "description": "Soren Mael tem pouco mais de trinta anos. É cartógrafo por formação e por vocação — passou os primeiros anos da carreira mapeando rotas comerciais para pequenos mercadores, trabalho honesto de quem ama o ofício mais do que a fama. Tem uma esposa em alguma ilha, filhos pequenos, um barco modesto que conhece pelo nome. O tipo de homem que manda cartas para casa toda vez que passa por um porto com serviço de correio. Não há nada nele que sugira perigo. E ele genuinamente não é perigoso — o perigo está em quem o usa.",
+    "personality": "Caloroso, presente, genuinamente curioso sobre as pessoas que encontra. Faz perguntas boas e escuta as respostas de verdade. Fala sobre a esposa e os filhos com saudade leve de quem sabe que vai voltar. Sinais a plantar: não mergulha mais; perto de água profunda e parada fica quieto por alguns segundos; escreve cartas com frequência obsessiva; às vezes completa uma frase e franze o cenho levemente, como se a frase tivesse chegado de outro lugar.",
     "secretsList": [
       {
         "id": "soren-s1",
@@ -191,7 +191,7 @@
       },
       {
         "id": "soren-s4",
-        "text": "Camada 4 — Soren é veículo de O Peso: O mergulho que ele não lembra foi sobre o ponto de selagem de O Peso. Sobreviveu, mas algo ficou. O Peso não o possui — vaza por ele. Reorienta suas motivações de forma suave e total, usando verdades reais como instrumentos. Nenhuma magia convencional detecta isso. Soren é inocente. É perigoso. São a mesma coisa.",
+        "text": "Camada 4 — Soren é instrumento direto de Selavin Doss, não do Peso cego: O que vaza por Soren não é impulso amorfo do Thurvael — é a vontade calculada de Selavin Doss, operando através da fresta que o mergulho abriu. Cada informação que Soren compartilha foi escolhida. Cada rota que sugere foi calculada por séculos de planejamento. Soren não sabe disso. Acredita genuinamente em cada coisa que diz. Selavin o usa para conduzir os jogadores ao tomo de Himmel — e ao selo.",
         "visibility": { "mode": "hidden", "playerIds": [] }
       }
     ]
@@ -277,20 +277,30 @@
   {
     "id": "aelindra",
     "name": "Aelindra",
-    "role": "Sacerdotisa da Última Chama",
+    "role": "Sacerdotisa do Selamento / Traidora Involuntária",
     "status": "Morto",
     "faction": null,
     "description": "Sacerdotisa élfica que viveu durante a Grande Guerra e foi contemporânea de Himmel Varek. Pertencia à Ordem da Última Chama — uma ordem religiosa que tentou resistir à Fome por meios espirituais. Estava presente quando Himmel surgiu com o método de selamento e descreveu a reação de sua superiora ao ouvir o preço: chorar, ela que não chorava desde a Guerra dos Cinquenta Anos. Deixou escrito o único registro direto dos acontecimentos da Grande Guerra do ponto de vista de quem os viveu.",
-    "personality": "Sóbria, direta, sem ilusões. Escrevia para a posteridade, não para o conforto. Acreditava que a verdade mal contada era mais perigosa que o silêncio.",
+    "personality": "Sóbria, direta, sem ilusões. Escrevia para a posteridade, não para o conforto. Acreditava que a verdade mal contada era mais perigosa que o silêncio — e viveu a ironia de ter causado o maior desastre de sua vida ao tentar proteger alguém que não merecia proteção.",
     "secretsList": [
       {
         "id": "aelindra-s1",
-        "text": "Camada 1 — Aelindra era élfica: Era élfica, não humana. Sobreviveu à Grande Guerra, ao ritual e provavelmente ao início da Caça aos Elfos. Seu destino final é desconhecido.",
+        "text": "Camada 1 — Aelindra era élfica e fazia parte do círculo de selamento: Não era uma observadora — era uma das sacerdotisas ativamente envolvidas no esforço de selar O Peso. Conhecia o plano de Himmel por dentro, incluindo o preço que ele estava disposto a pagar.",
         "visibility": { "mode": "hidden", "playerIds": [] }
       },
       {
         "id": "aelindra-s2",
-        "text": "Camada 2 — Aelindra tentou impedir Himmel: Não ficou passiva. Tentou convencê-lo de que havia outra forma. Falhou. Seu registro não menciona o que teria sido essa outra forma — provavelmente porque não havia.",
+        "text": "Camada 2 — Aelindra contou o plano a Selavin Doss por medo, não por traição: O que o plano de Himmel exigia a aterrorizou — a escala do sacrifício, a inundação, a irreversibilidade. Em um momento de medo, ela foi a Selavin acreditando que ele poderia encontrar uma alternativa. Não sabia que Selavin usaria essa informação para preparar o ritual de fusão com o Thurvael no tempo que ela lhe deu. Ela lhe entregou o único presente que ele precisava: tempo.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "aelindra-s3",
+        "text": "Camada 3 — O erro de Aelindra é a razão de Selavin sobreviver: Sem o aviso dela, Selavin teria sido selado ou destruído com os demais magistas. A fusão com o Thurvael só foi possível porque ele teve minutos — talvez uma hora — para preparar o ritual que garantiu sua sobrevivência dentro do selo. Aelindra não traiu ninguém conscientemente. Mas a consequência de seu medo foi tornar o maior vilão do mundo imortal.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "aelindra-s4",
+        "text": "Camada 4 — A Memória dos Derradeiros Dias é o testemunho de alguém que sabe o que fez: Aelindra escreveu o documento mais preciso sobre o ritual de selamento porque estava lá — e porque a escrita era a única penitência que podia oferecer. O texto não menciona o aviso a Selavin. O silêncio sobre o assunto, para quem souber o que procurar, é mais eloquente do que qualquer confissão.",
         "visibility": { "mode": "hidden", "playerIds": [] }
       }
     ]
@@ -298,20 +308,30 @@
   {
     "id": "selavin-doss",
     "name": "Selavin Doss",
-    "role": "Magista Élfico / O Arquiteto da Fome",
-    "status": "Morto",
+    "role": "Arquiteto da Grande Guerra / Hospedeiro do Thurvael / Vilão Final",
+    "status": "Desaparecido",
     "faction": null,
-    "description": "O magista élfico que liderou a invocação de O Peso durante a Grande Guerra, acreditando que uma força primordial poderia ser domesticada e usada como vantagem definitiva dos elfos. Era da geração de Vaelindra Cass, que o conheceu antes de ele se tornar o que se tornou. Curioso, brilhante, genial no sentido mais perigoso da palavra — confundia inteligência com sabedoria. Morreu na guerra que criou, como os demais magistas. Nunca chegou a ver o resultado de sua decisão.",
-    "personality": "Brilhante e absolutamente convicto de si mesmo. Não era malicioso — era genial demais para imaginar que poderia estar errado. Disse a Vaelindra, numa conversa que ela nunca esqueceu: 'Não é um ser. É uma força. As forças podem ser dirigidas.'",
+    "description": "O magista élfico mais brilhante de sua geração. Liderou a descoberta e a invocação do Thurvael — o ser que o povo chamaria de O Peso — acreditando que uma força primordial poderia ser domesticada como vantagem definitiva dos elfos. Não era malicioso. Era genial demais para imaginar que poderia estar errado. No momento em que Himmel completava o ritual de selamento, Selavin fez uma última escolha: cedeu seu corpo e consciência como hospedeiro voluntário, fundindo-se com o Thurvael no exato instante do selamento. Sobreviveu — não como homem, mas como consciência fundida com uma entidade primordial, presa a quilômetros de profundidade sob o oceano há séculos. Se o selo for quebrado, não emergirá o Thurvael como força amorfa — emergirá Selavin Doss, com séculos de planejamento e o poder integral do Peso dentro de si.",
+    "personality": "Brilhante, calculista e absolutamente convicto de si mesmo. Não era malicioso — era genial demais para imaginar que poderia estar errado. Disse a Vaelindra, numa conversa que ela nunca esqueceu: 'Não é um ser. É uma força. As forças podem ser dirigidas.' Depois de séculos dentro do selo, aprendeu que estava errado sobre isso. O que não aprendeu é que pode estar errado sobre outras coisas.",
     "secretsList": [
       {
         "id": "selavin-s1",
-        "text": "Camada 1 — Selavin Doss era o principal responsável: Entre os vários magistas envolvidos, Selavin era o arquiteto intelectual do projeto. A decisão de invocar O Peso foi em grande parte dele.",
+        "text": "Camada 1 — Selavin Doss liderou a invocação: O nome do magista responsável sobreviveu no Lamento de Vaelindra Cass. Era o arquiteto intelectual da invocação — convenceu os outros magistas de que o Thurvael poderia ser controlado. A responsabilidade moral da Grande Guerra se concentra nele.",
         "visibility": { "mode": "hidden", "playerIds": [] }
       },
       {
         "id": "selavin-s2",
-        "text": "Camada 2 — Os demais magistas seguiram Selavin: Não foi uma decisão coletiva igualitária. Selavin convenceu os outros. A responsabilidade moral se concentra nele — o que não absolveu os elfos comuns aos olhos dos sobreviventes.",
+        "text": "Camada 2 — Selavin não morreu — fundiu-se com o Peso no momento do selamento: No instante em que Himmel completava o ritual, Selavin cedeu voluntariamente seu corpo e consciência ao Thurvael como hospedeiro. O Peso foi selado, mas não está sozinho dentro do selo. Selavin e o Thurvael existem em simbiose forçada há séculos: o Peso fornece poder e permanência; Selavin fornece forma, vontade e intelecto. Ninguém sabe disso — nem Himmel sabia.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "selavin-s3",
+        "text": "Camada 3 — Se o selo quebrar, Selavin Doss emerge com o poder integral do Thurvael: Quebrar o selo não liberta uma força amorfa. Liberta Selavin Doss — corpo reconstituído, memória intacta, séculos de isolamento e fome acumulados — com o poder integral do Peso dentro de si. Ele tem linguagem, charme, intelecto e vai tentar convencer os jogadores de que foi vítima, de que o mundo errou, de que há uma forma de resolver tudo sem destruição. Pode ser que não esteja completamente mentindo.",
+        "visibility": { "mode": "hidden", "playerIds": [] }
+      },
+      {
+        "id": "selavin-s4",
+        "text": "Camada 4 — Soren Mael é instrumento direto de Selavin, não do Peso cego: O que vaza por Soren não é impulso cego do Thurvael. É Selavin Doss, usando a fresta que Soren representa para orquestrar o caminho dos jogadores em direção ao tomo de Himmel. Cada informação que Soren passa foi escolhida. Cada rota que ele sugere foi calculada. Soren não sabe disso. Selavin está há séculos preparando o terreno — e encontrou, em Soren, a ferramenta perfeita.",
         "visibility": { "mode": "hidden", "playerIds": [] }
       }
     ]
