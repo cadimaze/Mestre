@@ -1027,7 +1027,8 @@ async function syncCampaignContent() {
 
     npcs.forEach(n => {
       const ref = doc(db, base, 'npcs', n.id);
-      const { foundryJson: _f, ...npcData } = n;
+      const { foundryJson, ...rest } = n;
+      const npcData = { ...rest, foundryJsonStr: foundryJson ? JSON.stringify(foundryJson) : '' };
       batch.set(ref, npcData, { merge: true });
     });
 
@@ -1598,7 +1599,10 @@ function openNpcModal(npcId) {
 
   document.getElementById('npc-copy-json')?.addEventListener('click', async function() {
     try {
-      await navigator.clipboard.writeText(JSON.stringify(npc.foundryJson, null, 2));
+      const raw = npc.foundryJsonStr || '';
+      const pretty = raw ? JSON.stringify(JSON.parse(raw), null, 2) : '';
+      if (!pretty) { this.textContent = '✗ JSON não disponível'; setTimeout(() => { this.textContent = '📋 Copiar JSON'; }, 2000); return; }
+      await navigator.clipboard.writeText(pretty);
       this.textContent = '✓ Copiado!';
       setTimeout(() => { this.textContent = '📋 Copiar JSON'; }, 2000);
     } catch {
@@ -1648,7 +1652,7 @@ function buildNpcModalContent(npc) {
     ? `<span class="faction-badge" style="background:${fc}22;color:${fc};border:1px solid ${fc}44;border-radius:10px;padding:2px 7px;font-size:10px;text-transform:uppercase;letter-spacing:.5px;">${escHtml(getFactionById(npc.faction)?.name || npc.faction)}</span>`
     : '';
 
-  const jsonStr = JSON.stringify(npc.foundryJson, null, 2);
+  const hasJson = !!npc.foundryJsonStr;
 
   return `
     <div class="npc-modal-header">
@@ -1680,13 +1684,26 @@ function buildNpcModalContent(npc) {
     ${npc.notes ? `<div class="modal-section"><div class="modal-section-title">📌 Notas de Encontro</div><div class="modal-section-text">${escHtml(npc.notes)}</div></div>` : ''}
 
     <div class="modal-section npc-foundry-section">
-      <button class="npc-json-toggle-btn" id="npc-toggle-json">▶ Ver JSON (FoundryVTT)</button>
+      <button class="npc-json-toggle-btn" id="npc-toggle-json">▶ Importar no FoundryVTT</button>
       <div id="npc-json-block" style="display:none">
-        <div class="npc-json-actions">
-          <button class="npc-copy-btn" id="npc-copy-json">📋 Copiar JSON</button>
-          <span style="font-size:11px;color:var(--text-muted);font-family:var(--font-body);">No FoundryVTT: Atores → ⋮ → Importar Dados</span>
+        <div class="npc-foundry-guide">
+          <div class="npc-foundry-guide-title">Como importar este NPC no FoundryVTT</div>
+          <ol class="npc-foundry-steps">
+            <li><strong>Copie o JSON</strong> clicando no botão abaixo.</li>
+            <li>No FoundryVTT, abra a aba <strong>Atores</strong> (ícone de pessoa na barra lateral).</li>
+            <li>Clique em <strong>Criar Ator</strong>, defina o nome e o tipo como <em>NPC</em>.</li>
+            <li>Com o ator criado, clique no ícone <strong>⋮</strong> (três pontos) ao lado do nome na lista.</li>
+            <li>Selecione <strong>Importar Dados</strong>.</li>
+            <li>Cole o JSON copiado na caixa de texto e confirme.</li>
+            <li>O ator será preenchido automaticamente com atributos, ações e traços.</li>
+          </ol>
+          <div class="npc-foundry-note">💡 Itens como armas precisam ser arrastados do Compêndio para o ator após a importação para ficarem vinculados ao sistema de rolagem.</div>
         </div>
-        <pre class="npc-json-pre">${escHtml(jsonStr)}</pre>
+        <div class="npc-json-actions">
+          ${hasJson
+            ? `<button class="npc-copy-btn" id="npc-copy-json">📋 Copiar JSON</button>`
+            : `<span class="npc-json-unavailable">JSON não disponível — sincronize os dados novamente.</span>`}
+        </div>
       </div>
     </div>
   `;

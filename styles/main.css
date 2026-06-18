@@ -2360,3 +2360,47 @@ body::after {
   white-space: pre;
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
 }
+
+.npc-foundry-guide {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.npc-foundry-guide-title {
+  font-family: var(--font-title);
+  font-size: 12px;
+  letter-spacing: .5px;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.npc-foundry-steps {
+  margin: 0 0 10px 0;
+  padding-left: 18px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.npc-foundry-steps li { margin-bottom: 2px; }
+.npc-foundry-steps strong { color: var(--text-primary); }
+.npc-foundry-steps em { color: var(--accent-gold-dim); font-style: normal; }
+
+.npc-foundry-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.npc-json-unavailable {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
