@@ -2090,3 +2090,273 @@ body::after {
   .roteiro-doc-nome  { min-width: unset; }
   .roteiro-table th:last-child, .roteiro-table td:last-child { display: none; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   NPCs TAB
+═══════════════════════════════════════════════════════════════════════════ */
+.npcs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  padding: 0 24px 32px;
+}
+
+.npc-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--faction-color, var(--accent-gold));
+  border-radius: var(--radius);
+  padding: 16px;
+  cursor: pointer;
+  transition: background .18s, transform .18s, box-shadow .18s;
+  box-shadow: var(--shadow-card);
+}
+
+.npc-card:hover {
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.npc-card-name {
+  font-family: var(--font-title);
+  font-size: 15px;
+  color: var(--accent-gold-light);
+  letter-spacing: .5px;
+  margin-bottom: 2px;
+}
+
+.npc-card-role {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.npc-card-stats {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.npc-stat {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-accent);
+  border-radius: 6px;
+  padding: 4px 8px;
+  text-align: center;
+  min-width: 46px;
+}
+
+.npc-stat-label {
+  display: block;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--text-muted);
+  font-family: var(--font-title);
+}
+
+.npc-stat-value {
+  display: block;
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.npc-card-faction {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ── NPC modal ── */
+.npc-modal-header {
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.npc-modal-name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--accent-gold-light);
+  margin-bottom: 3px;
+}
+
+.npc-modal-type {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.npc-modal-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.npc-cr-badge {
+  background: var(--bg-raised);
+  border: 1px solid var(--accent-gold-dim);
+  color: var(--accent-gold);
+  border-radius: 8px;
+  padding: 2px 9px;
+  font-size: 11px;
+  font-family: var(--font-title);
+  letter-spacing: .5px;
+}
+
+/* ── D&D Stat Block ── */
+.stat-block {
+  background: #f8f0d4;
+  color: #1a0900;
+  border-radius: 6px;
+  margin: 16px 20px;
+  padding: 12px 16px;
+  box-shadow: inset 0 0 0 2px #c7a04a55, 0 2px 10px rgba(0,0,0,.45);
+  font-family: 'Georgia', serif;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.sb-divider {
+  height: 3px;
+  background: linear-gradient(to right, #8b1a1a, #c8a04a, #8b1a1a);
+  margin: 9px 0;
+  border: none;
+}
+
+.sb-row {
+  margin: 3px 0;
+}
+
+.sb-label {
+  font-weight: 700;
+  color: #5a0000;
+}
+
+.sb-abilities {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.sb-ability {
+  text-align: center;
+  min-width: 44px;
+}
+
+.sb-ability-name {
+  font-size: 10px;
+  font-weight: 700;
+  color: #5a0000;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  margin-bottom: 1px;
+}
+
+.sb-ability-score {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a0900;
+}
+
+.sb-ability-mod {
+  font-size: 12px;
+  color: #5a0000;
+}
+
+.sb-section-title {
+  font-family: 'Georgia', serif;
+  font-size: 14px;
+  color: #5a0000;
+  font-variant: small-caps;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #c7a04a77;
+  padding-bottom: 2px;
+  margin: 10px 0 6px;
+}
+
+.sb-trait {
+  margin: 5px 0;
+}
+
+.sb-trait-name {
+  font-weight: 700;
+  font-style: italic;
+}
+
+.sb-action {
+  margin: 6px 0;
+}
+
+.sb-action-name {
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* ── FoundryVTT JSON section ── */
+.npc-foundry-section {
+  padding: 4px 20px 20px !important;
+  border-top: 1px solid var(--border);
+}
+
+.npc-json-toggle-btn {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-accent);
+  color: var(--accent-gold);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  font-size: 12px;
+  font-family: var(--font-title);
+  letter-spacing: .5px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 10px;
+  transition: background .15s;
+}
+
+.npc-json-toggle-btn:hover {
+  background: var(--bg-card-hover);
+}
+
+.npc-json-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.npc-copy-btn {
+  background: var(--bg-raised);
+  border: 1px solid var(--accent-gold-dim);
+  color: var(--accent-gold);
+  border-radius: var(--radius-sm);
+  padding: 5px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background .15s;
+  white-space: nowrap;
+}
+
+.npc-copy-btn:hover {
+  background: rgba(207,172,110,.12);
+}
+
+.npc-json-pre {
+  background: #010a14;
+  border: 1px solid var(--border-accent);
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #7dbf7d;
+  overflow-x: auto;
+  max-height: 380px;
+  overflow-y: auto;
+  white-space: pre;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+}
