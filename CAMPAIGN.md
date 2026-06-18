@@ -430,7 +430,7 @@ Se o selo quebrar, o Thurvael não emergirá como força amorfa. Emergirá como 
 #### Segredos
 
 **🔒 Camada 1** — *Selavin Doss liderou a invocação do Thurvael*
-O nome do magista responsável sobreviveu nos registros de Vaelindra Cass. Qualquer jogador que encontre o Lamento de Vaelindra Cass descobre que Selavin Doss era o arquiteto intelectual da invocação — e que Vaelindra tentou avisá-lo pessoalmente antes.
+O nome do magista responsável sobreviveu nos registros de Galadriel Cass. Qualquer jogador que encontre o Lamento de Galadriel Cass descobre que Selavin Doss era o arquiteto intelectual da invocação — e que Galadriel tentou avisá-lo pessoalmente antes.
 
 **🔒 Camada 2** — *Selavin não morreu — fundiu-se com o Peso*
 No momento do selamento, Selavin Doss cedeu seu corpo e consciência ao Thurvael como hospedeiro voluntário. O Peso foi selado, mas não está sozinho. Ninguém sabe disso — nem Himmel sabia, nem Aelindra, nem Vaelindra. É o segredo mais bem guardado de Pelágos porque a única testemunha está dentro do selo.
@@ -445,7 +445,7 @@ O que vaza por Soren não é o impulso cego do Thurvael. É Selavin Doss, usando
 - **O Thurvael (O Peso)** — parte de si, não mais separável
 - **Soren Mael** — instrumento inconsciente
 - **Aelindra** — a sacerdotisa que, por medo, lhe deu o tempo necessário para a fusão; sem ela, não existiria mais
-- **Vaelindra Cass** — a única que o conhecia antes; se ainda viva, a única que pode reconhecê-lo pelo que se tornou
+- **Galadriel Cass** — a única que o conhecia antes; se ainda viva, a única que pode reconhecê-lo pelo que se tornou
 - **Himmel Varek** — o homem que o selou, cujo sacrifício Selavin passou séculos estudando para encontrar como reverter
 
 -----
@@ -821,6 +821,62 @@ O nome "Cid Maré, navegador de Aethon" consta nos registros portuários do Dom�
 
 -----
 
+### 4.7 ONDRA — A Cidade Que Se Esqueceu de Si Mesma
+
+**Tipo:** Ilha religiosa / Refúgio élfico secreto
+**Controle:** Ordens religiosas locais — nominalmente sob Velmarch, na prática autônoma
+**Tom:** Reverente e fechada — uma ilha que respira história e desconfia de estranhos. Quem chega sem recomendação encontra hospitalidade educada e portas que não abrem.
+
+#### Descrição
+
+Ondra é uma ilha de pedra escura e névoa permanente. Não tem os portos movimentados de Kaldera nem a grandiosidade militar de Velmyr — tem templos, arquivos e silêncio. As ordens religiosas que a habitam há séculos cultivam uma forma de devoção discreta que Velmarch nunca soube muito bem como classificar nem tributar. Tentou uma vez. Os navios que enviou voltaram com oficiais febris que não conseguiam explicar por que tinham virado e ido embora.
+
+A ilha não é agressiva. Simplesmente não recebe quem não deve receber.
+
+A comunidade religiosa vive em torno do Templo das Marés, uma estrutura de pedra negra construída com blocos recuperados do fundo do oceano — literalmente o mundo de antes da inundação, erguido em homenagem ao que o mundo perdeu. Os monges que mantêm o templo são conhecidos por sua longevidade incomum e sua recusa em aceitar aprendizes que não passem por um período de "avaliação" que pode durar meses.
+
+O que os visitantes ocasionais não percebem: a ilha tem mais habitantes do que os que aparecem no porto.
+
+#### O Segredo de Ondra
+
+Há séculos, os corredores mais internos do templo e as Celas dos Penitentes abrigam uma comunidade que não aparece em nenhum censo, não comercializa com nenhum porto e não recebe visitas. Vinte e três elfos — o que restou do grupo de Galadriel Cass após décadas de perseguição — vivem em Ondra sob a proteção de um acordo antigo entre Galadriel e os fundadores das ordens.
+
+O acordo funciona assim: os elfos habitam as seções internas da ilha, aparecem ao público apenas encapuzados como "penitentes em retiro espiritual prolongado" — um papel que a comunidade religiosa oferece a qualquer visitante que queira isolamento e que ninguém questiona — e, em troca, contribuem com séculos de conhecimento histórico para os Arquivos de Ondra.
+
+É por isso que os Arquivos de Ondra contêm textos sobre a Grande Guerra, sobre o Abraço das Águas Eternas e sobre "a escuridão que os elfos abriram nas profundezas" que nenhum arquivo humano conseguiu preservar com tanta precisão: foram escritos pelos próprios elfos, em linguagem cuidadosamente oblíqua, como forma de guardar sua história em plain sight. Os monges humanos leem esses textos como poesia espiritual. São memória literal.
+
+#### Galadriel Cass em Ondra
+
+Galadriel Cass tem mais de seiscentos anos e parece ter oitenta. É conhecida entre os monges como "a Anciã das Ordens" — a mais antiga membro da comunidade religiosa, que raramente sai do interior do templo mas cuja sabedoria é consultada em questões que os monges mais jovens não conseguem resolver.
+
+Ela conhecia Selavin Doss antes da Grande Guerra. Tentou pessoalmente dissuadi-lo da invocação. Falhou. Sobreviveu à guerra, à Maré Alta e à Caça. Chegou a Ondra com quarenta e dois outros elfos; vinte e três sobreviveram. O que ela carrega em memória é o registro mais preciso da história de Pelágos que ainda existe numa mente viva — mais completo que os arquivos de Kesvar, mais honesto que os fragmentos do Mosteiro da Costa Afogada, mais detalhado do que tudo que Frieren Talion ainda consegue lembrar.
+
+Ela sabe o que Aelindra fez. Sabe o que Selavin se tornou. Sabe, com uma certeza que veio de séculos de ruminar a mesma memória, que o selo um dia vai quebrar — e que quando isso acontecer, o que emergir vai ter o rosto de alguém que ela conheceu jovem.
+
+#### Pontos de Interesse
+
+- **O Templo das Marés** — estrutura de pedra negra pré-diluviana; o interior vai mais fundo do que sugere o exterior; as seções mais profundas não são abertas a visitantes
+- **Os Arquivos de Ondra** — biblioteca religiosa com textos que os monges interpretam como poesia espiritual e que são memória literal de sobreviventes élficos
+- **O Porto das Bênçãos** — único porto da ilha; navios recebem bênçãos rituais antes de partir; visitantes são recebidos aqui e raramente convidados a ir mais longe
+- **As Celas dos Penitentes** — estruturas de pedra no anel interno do templo, nominalmente para retiros religiosos prolongados; os "penitentes" que as habitam há décadas nunca saem sem capuz
+- **O Jardim da Maré** — espaço entre as celas e o templo, aberto ao céu; único lugar onde os elfos aparecem sem capuz, ao amanhecer, quando não há visitantes no porto
+
+#### Segredos
+
+**🔒 Camada 1** — *A comunidade de Ondra é mais fechada do que admite*
+Qualquer visitante percebe rapidamente que há setores da ilha que simplesmente não são mostrados. A hospitalidade é real — mas tem uma borda. "As seções internas são para retiro espiritual" é a resposta padrão. Quem perguntar mais de uma vez vai notar que a resposta não muda, nem o tom.
+
+**🔒 Camada 2** — *Os penitentes de Ondra nunca saem do retiro*
+Penitentes em retiro são comuns em ordens religiosas — mas em Ondra, nenhum "penitente em retiro prolongado" jamais encerrou o retiro e foi embora. Alguns estão lá há décadas. Visitantes que ficam tempo suficiente para comparar notas começam a perceber que os penitentes são sempre a mesma quantidade, nunca mais, nunca menos.
+
+**🔒 Camada 3** — *Ondra abriga sobreviventes élficos sob o comando de Galadriel Cass*
+Vinte e três elfos vivem nas seções internas do templo há gerações. A "Anciã das Ordens" é Galadriel Cass — sobrevivente da Grande Guerra, da Maré Alta e da Caça. Ela sabe sobre o Thurvael, sobre Selavin Doss e sobre o papel que Aelindra teve inadvertidamente na sobrevivência do grande vilão. Também sabe sobre o selo — e teme que alguém com as melhores intenções do mundo vá quebrá-lo.
+
+**🔒 Camada 4** — *Os Arquivos de Ondra foram escritos pelos elfos*
+Os textos históricos de Ondra que os monges leem como poesia espiritual são relatos literais de sobreviventes élficos, escritos em linguagem oblíqua para passar pela inspeção de Velmarch. "A escuridão que os elfos abriram nas profundezas" é o Thurvael. "O abraço eterno que selou o que não podia ser destruído" é o sacrifício de Himmel. "Aquele que ficou quando todos foram" é Selavin Doss. Os jogadores que chegarem a Ondra com contexto suficiente vão conseguir ler esses textos de uma forma que os monges nunca conseguiram.
+
+-----
+
 ## 5. EVENTOS HISTÓRICOS
 
 ### 5.1 A GRANDE GUERRA
@@ -941,7 +997,7 @@ Personagens com sensibilidade arcana ou divina que se aproximam do centro geogr�
 A Grande Guerra terminou com um selamento, não com uma destruição. O Peso ainda existe, ainda está sob o oceano, e o oceano é o único motivo pelo qual Pelágos existe.
 
 **🔒 Camada 3** — *Quebrar o selo liberta Selavin Doss com o poder do Peso*
-Se a inundação for revertida, o Thurvael não emerge como força amorfa — emerge como Selavin Doss, com séculos de fome e a inteligência de um dos maiores magistas élficos da história. Himmel não sabia disso quando escreveu o tomo. Ninguém sabe. Apenas Selavin e, possivelmente, Vaelindra Cass — se ela sobreviveu o suficiente para suspeitar.
+Se a inundação for revertida, o Thurvael não emerge como força amorfa — emerge como Selavin Doss, com séculos de fome e a inteligência de um dos maiores magistas élficos da história. Himmel não sabia disso quando escreveu o tomo. Ninguém sabe. Apenas Selavin e, possivelmente, Galadriel Cass — se ela sobreviveu o suficiente para suspeitar.
 
 **🔒 Camada 4** — *Soren Mael é instrumento de Selavin, não do Peso*
 O que vaza por Soren não é instinto cego. É manipulação deliberada. Selavin Doss, dentro do selo, encontrou a fresta que Soren representa e a usa com precisão cirúrgica. Cada "coincidência" no caminho de Soren, cada informação que ele passa, cada rota que ele toma — há uma inteligência por trás disso. Uma que conhece o tomo de Himmel de cor e quer que alguém o encontre.
@@ -1126,7 +1182,7 @@ VELMYR ── [sede de] ALDRIC XIV ── [guarda tomo de] HIMMEL VAREK
 > *Não porque alguém venceu. Mas porque não havia mais o suficiente para continuar.*
 
 #### Volume II — "Investigações sobre a Grande Guerra: Um Fragmento"
-**Tipo:** Pergaminho acadêmico · **Autoria:** Maren Oss, estudioso errante · **Período:** ~50 anos após a Maré Alta
+**Tipo:** Pergaminho acadêmico · **Autoria:** Maren Krill, estudioso errante · **Período:** ~50 anos após a Maré Alta
 **Segredos revelados:** Insinua envolvimento élfico e algo invocado — sem confirmar nada
 
 > *Após anos compilando testemunhos e fragmentos de arquivos que a inundação não destruiu completamente, chego a algumas conclusões preliminares — e a muitas mais perguntas.*
@@ -1141,7 +1197,7 @@ VELMYR ── [sede de] ALDRIC XIV ── [guarda tomo de] HIMMEL VAREK
 >
 > *Aguardo encontrar mais registros. Temo que não existam.*
 >
-> *— Maren Oss, estudioso errante, redigido em Kaldera*
+> *— Maren Krill, estudioso errante, redigido em Kaldera*
 
 #### Volume III — "Memória dos Derradeiros Dias"
 **Tipo:** Tomo · **Autoria:** Aelindra, Sacerdotisa da Última Chama · **Período:** Durante a Grande Guerra
@@ -1286,8 +1342,8 @@ VELMYR ── [sede de] ALDRIC XIV ── [guarda tomo de] HIMMEL VAREK
 >
 > *— Telvis Oran, Arquivista de Kaldera*
 
-#### Volume III — "Lamento de Vaelindra Cass, Última Anciã de Elarindë"
-**Tipo:** Carta · **Autoria:** Vaelindra Cass, Última Anciã de Elarindë · **Período:** Durante a Caça
+#### Volume III — "Lamento de Galadriel Cass, Última Anciã de Elarindë"
+**Tipo:** Carta · **Autoria:** Galadriel Cass, Última Anciã de Elarindë · **Período:** Durante a Caça
 **Segredos revelados:** Tudo — identidade dos magistas, o que invocaram, a inocência dos elfos comuns, os sobreviventes em esconderijos
 
 > *Eu tinha trezentos anos quando as águas subiram. Tinha visto guerras. Tinha enterrado amigos que os humanos teriam chamado de anciãos. Pensava que havia visto o suficiente para entender qualquer coisa que o mundo me enviasse.*
@@ -1314,7 +1370,7 @@ VELMYR ── [sede de] ALDRIC XIV ── [guarda tomo de] HIMMEL VAREK
 >
 > *Para que saibam: existimos. Existimos ainda. E não fomos nós.*
 >
-> *— Vaelindra Cass, Última Anciã de Elarindë*
+> *— Galadriel Cass, Última Anciã de Elarindë*
 
 -----
 
