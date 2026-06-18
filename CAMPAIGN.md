@@ -21,6 +21,7 @@
 - [A Família Varek](#31-a-família-varek)
 - [A Família Talion](#32-a-família-talion)
 - [NPCs Independentes](#33-npcs-independentes)
+- [NPCs de Combate](#34-npcs-de-combate)
 1. [Locais](#4-locais)
 1. [Eventos Históricos](#5-eventos-históricos)
 1. [Entidades e Forças Sobrenaturais](#6-entidades-e-forças-sobrenaturais)
@@ -624,6 +625,199 @@ O contrato existe porque Aldric foi o primeiro a chegar com dinheiro suficiente 
 - **A Corrente** — oposição formal / trégua informal; ordem de não engajar
 - **Gloria Vittar** — respeito mútuo e cauteloso
 - **Jogadores** — problema em potencial ou utilidade possível, dependendo de como se apresentam
+
+-----
+
+### 3.4 NPCs de Combate
+
+Esta seção reúne fichas mecânicas completas de inimigos recorrentes ou notáveis que os jogadores podem enfrentar. Cada entrada inclui stat block D&D 5e e JSON pronto para importação no FoundryVTT.
+
+-----
+
+#### O PUNHO DE TULO *(Grak)*
+
+**Papel:** Guarda-costas pessoal de Tulo Bresh — Arco 1, Kaldera
+**Raça:** Orc (Grande)
+**Alinhamento:** Caótico e Neutro
+
+Grak não é um soldado. É uma ferramenta. Tulo o comprou ainda jovem de um comerciante de Marvosa e nunca lhe ensinou nada além de obedecer. Grak não faz perguntas, não julga, não tem ambições. Quando Tulo diz "proteja", ele protege. Quando Tulo diz "quebre", ele quebra. A lealdade de Grak não é devoção — é a única identidade que lhe deram.
+
+É enorme, mais largo do que alto em proporção, com cicatrizes que parecem mapa de uma vida de violência. A sala de Tulo é pequena demais para ele se mover com facilidade — o que é, talvez, uma das poucas vantagens que os jogadores têm.
+
+> **[SEGREDO DO MESTRE]** Grak não morre facilmente porque não sabe que pode. Nunca encontrou alguém que o derrotasse de verdade. A primeira vez que tombar, será com genuína confusão — não raiva. O momento em que ele cai e ainda tenta se levantar é um dos melhores para narrativa dramática num primeiro combate.
+
+---
+
+##### Ficha Mecânica
+
+| | |
+|---|---|
+| **Nível de Desafio** | 7 (2.900 XP) |
+| **Tipo** | Humanoide Grande (Orc), Caótico e Neutro |
+| **Classe de Armadura** | 14 (armadura natural) |
+| **Pontos de Vida** | 157 (15d10+75) |
+| **Deslocamento** | 9 m (30 ft) |
+
+| FOR | DES | CON | INT | SAB | CAR |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| 22 (+6) | 9 (−1) | 20 (+5) | 7 (−2) | 8 (−1) | 7 (−2) |
+
+| | |
+|---|---|
+| **JTs de Resistência** | FOR +9, CON +8 |
+| **Perícias** | Atletismo +9 |
+| **Imunidades a Condições** | Amedrontado |
+| **Sentidos** | Visão no escuro 18 m, Percepção Passiva 9 |
+| **Idiomas** | Comum, Orc |
+
+---
+
+**Traços**
+
+**Inquebrável (1/dia).** Quando Grak é reduzido a 0 PV pela primeira vez, cai a 1 PV em vez disso. Ele ruge, se levanta e continua.
+
+**Fúria de Sangue.** Enquanto abaixo da metade dos PV, cada acerto dos seus ataques causa +1d8 de dano adicional de concussão.
+
+**Imparável.** Grak não pode ser derrubado à força por efeitos que exijam JT de Força ou Destreza para evitar a condição Prostrado (ex.: Onda de Trovão, empurrão mágico).
+
+---
+
+**Ações**
+
+**Multiattaque.** Grak faz dois ataques de Golpe Esmagador.
+
+**Golpe Esmagador.** *Ataque com Arma Corpo a Corpo:* +9 para acertar, alcance 1,5 m (5 ft), um alvo. *Acerto:* 2d10+6 de dano de concussão (média 17). Se o alvo for de tamanho Médio ou menor, deve ser bem-sucedido numa JT de Força (CD 17) ou será empurrado 3 m (10 ft) e ficará Prostrado.
+
+**Arremesso Devastador (Recarga 5–6).** Grak arranca um pedaço de mobília do escritório e arremessa. Todas as criaturas em uma área de 3 m de raio (10 ft) a até 9 m (30 ft) fazem uma JT de Destreza (CD 16). *Fracasso:* 4d8 de dano de concussão. *Êxito:* metade do dano.
+
+---
+
+**Ações Bônus**
+
+**Rugido de Guerra (1/combate).** Grak solta um rugido bestial. Todos os inimigos a até 9 m (30 ft) fazem JT de Sabedoria (CD 13). No fracasso, ficam com a condição Abalado até o início do próximo turno de Grak.
+
+---
+
+**Reações**
+
+**Ataque de Oportunidade Pesado.** Quando uma criatura sai do alcance de Grak, ele pode usar sua reação para fazer um ataque de Golpe Esmagador contra ela com desvantagem. Se acertar, o alvo não pode se mover pelo resto do seu turno.
+
+---
+
+##### Notas de Encontro — Arco 1: O Escritório de Tulo
+
+**Contexto:** Combate ocorre no escritório de Tulo Bresh, Kaldera. Os jogadores acabam de sair da cela — possivelmente com armas improvisadas ou sem equipamento completo.
+
+**Balanceamento:** CR 7 = 2.900 XP ajustado (×1 para monstro único) = **Encontro Difícil** para 7 jogadores nível 4 (entre Difícil 2.625 e Mortal 3.500). O traço Inquebrável efetivamente aumenta a dificuldade percebida sem elevar o CR.
+
+**Elementos do ambiente (incentive criatividade):**
+
+| Item | Efeito Mecânico |
+|---|---|
+| Garrafas de bebida cara | 1d4 cortante, Ação de Usar Objeto; quebrada cria vidro no chão (área 1,5 m, custo 1,5 m extra de movimento) |
+| Candelabros de ferro | Arma improvisada 1d6 concussão; pode ser usada para tentar acender fogo nas roupas de Grak (CD 14 + Ação Bônus) |
+| Escrivaninha pesada | Criação de cobertura (meia cobertura, +2 CA); empurrada contra Grak: CD 14 Atletismo, terreno difícil |
+| Tapete persa | Puxado dos pés de Grak: CD 15 Acrobacia Grak ou cai Prostrado (Ação de Ajuda) |
+| Frasco de tinta | Arremessado: CD 13 DES ou Grak fica Cego até o fim do próximo turno dele |
+
+**Ritmo recomendado:**
+- **Rounds 1–3:** Grak pleno — intimidador, implacável
+- **Round 4+ (abaixo de 78 PV):** Fúria de Sangue ativa — os ataques ficam mais perigosos, mas ele começa a ignorar alvos secundários
+- **Inquebrável:** Use para um momento dramático — Grak tomba, todos respiram, ele se levanta devagar com olho sangrando
+
+**Pós-combate:** Grak pode ser deixado inconsciente em vez de morto sem consequências narrativas. Serve como oportunidade para os jogadores mostrarem que não matam sem necessidade — ou que matam. Ambas as escolhas têm peso.
+
+---
+
+##### JSON FoundryVTT
+
+```json
+{
+  "name": "O Punho de Tulo (Grak)",
+  "type": "npc",
+  "system": {
+    "abilities": {
+      "str": { "value": 22, "proficient": 1 },
+      "dex": { "value": 9 },
+      "con": { "value": 20, "proficient": 1 },
+      "int": { "value": 7 },
+      "wis": { "value": 8 },
+      "cha": { "value": 7 }
+    },
+    "attributes": {
+      "ac": { "flat": 14, "calc": "default" },
+      "hp": { "value": 157, "max": 157, "formula": "15d10+75" },
+      "movement": { "walk": 30, "units": "ft" }
+    },
+    "details": {
+      "cr": 7,
+      "alignment": "Chaotic Neutral",
+      "type": { "value": "humanoid", "subtype": "orc", "swarm": "" }
+    },
+    "traits": {
+      "languages": { "value": ["common", "orc"] },
+      "size": "lg",
+      "ci": { "value": ["frightened"] }
+    },
+    "skills": {
+      "ath": { "value": 1 }
+    }
+  },
+  "items": [
+    {
+      "name": "Golpe Esmagador",
+      "type": "weapon",
+      "system": {
+        "description": { "value": "<p>Se o alvo for Médio ou menor, JT FOR CD 17 ou empurrado 3m e Prostrado.</p>" },
+        "quantity": 1, "weight": 0, "equipped": true, "proficient": 1,
+        "actionType": "mwak", "ability": "str", "attackBonus": "",
+        "damage": { "parts": [["2d10 + @mod", "bludgeoning"]], "versatile": "" },
+        "range": { "value": 5, "long": null, "units": "ft" },
+        "properties": {}
+      }
+    },
+    {
+      "name": "Arremesso Devastador",
+      "type": "feat",
+      "system": {
+        "description": { "value": "<p><strong>Recarga 5–6.</strong> Área de 3m de raio a 9m. JT DES CD 16 ou 4d8 concussão (metade no êxito).</p>" }
+      }
+    },
+    {
+      "name": "Inquebrável",
+      "type": "feat",
+      "system": {
+        "description": { "value": "<p><strong>1/dia.</strong> Quando reduzido a 0 PV pela primeira vez, cai a 1 PV em vez disso.</p>" }
+      }
+    },
+    {
+      "name": "Fúria de Sangue",
+      "type": "feat",
+      "system": {
+        "description": { "value": "<p>Abaixo da metade dos PV: +1d8 de dano de concussão em cada acerto.</p>" }
+      }
+    },
+    {
+      "name": "Rugido de Guerra",
+      "type": "feat",
+      "system": {
+        "description": { "value": "<p><strong>1/combate. Ação Bônus.</strong> Inimigos a 9m: JT SAB CD 13 ou Abalado até início do próximo turno de Grak.</p>" }
+      }
+    }
+  ],
+  "prototypeToken": {
+    "name": "O Punho de Tulo",
+    "displayName": 20,
+    "actorLink": false,
+    "disposition": -1,
+    "displayBars": 20,
+    "bar1": { "attribute": "attributes.hp" },
+    "vision": true,
+    "dimSight": 18,
+    "brightSight": 0
+  }
+}
+```
 
 -----
 
