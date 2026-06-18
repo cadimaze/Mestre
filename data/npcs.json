@@ -1,0 +1,258 @@
+[
+  {
+    "id": "guerreiro-corrente",
+    "name": "Guerreiro da Corrente",
+    "role": "Soldado de Infantaria",
+    "faction": "a-corrente",
+    "cr": "1/2",
+    "xp": 100,
+    "alignment": "Leal e Neutro",
+    "type": "Humanoide (humano)",
+    "ac": 16,
+    "acType": "Cota de malha + escudo",
+    "hp": 22,
+    "hpFormula": "4d8+4",
+    "speed": "9 m (30 ft)",
+    "abilities": {
+      "str": 16, "dex": 12, "con": 13,
+      "int": 10, "wis": 11, "cha": 10
+    },
+    "saves": [
+      {"name": "FOR", "value": "+5"},
+      {"name": "CON", "value": "+3"}
+    ],
+    "skills": [
+      {"name": "Atletismo", "value": "+5"},
+      {"name": "Percepção", "value": "+2"}
+    ],
+    "languages": "Comum",
+    "actions": [
+      {
+        "name": "Espada Longa",
+        "type": "Ataque com Arma Corpo a Corpo",
+        "attack": "+5",
+        "reach": "1,5 m (5 ft)",
+        "hit": "1d8+3 de dano cortante; ou 1d10+3 com as duas mãos (versátil)"
+      }
+    ],
+    "traits": [
+      {
+        "name": "Formação de Combate",
+        "description": "O guerreiro tem vantagem em rolagens de ataque corpo a corpo enquanto houver um aliado adjacente ao alvo que não esteja incapacitado."
+      }
+    ],
+    "notes": "Use 7 guerreiros para um combate Médio com 7 jogadores nível 4 (1.750 XP ajustado). Combine 4 guerreiros + 3 arqueiros para variação tática.",
+    "foundryJson": {
+      "name": "Guerreiro da Corrente",
+      "type": "npc",
+      "system": {
+        "abilities": {
+          "str": {"value": 16, "proficient": 1},
+          "dex": {"value": 12},
+          "con": {"value": 13, "proficient": 1},
+          "int": {"value": 10},
+          "wis": {"value": 11},
+          "cha": {"value": 10}
+        },
+        "attributes": {
+          "ac": {"flat": 16, "calc": "default"},
+          "hp": {"value": 22, "max": 22, "formula": "4d8+4"},
+          "movement": {"walk": 30, "units": "ft"}
+        },
+        "details": {
+          "cr": 0.5,
+          "alignment": "Lawful Neutral",
+          "type": {"value": "humanoid", "subtype": "human", "swarm": ""}
+        },
+        "traits": {
+          "languages": {"value": ["common"]}
+        },
+        "skills": {
+          "ath": {"value": 1},
+          "prc": {"value": 1}
+        }
+      },
+      "items": [
+        {
+          "name": "Longsword",
+          "type": "weapon",
+          "system": {
+            "description": {"value": "<p>Longsword (versatile).</p>"},
+            "quantity": 1,
+            "weight": 3,
+            "equipped": true,
+            "proficient": 1,
+            "actionType": "mwak",
+            "ability": "str",
+            "attackBonus": "",
+            "damage": {
+              "parts": [["1d8 + @mod", "slashing"]],
+              "versatile": "1d10 + @mod"
+            },
+            "range": {"value": 5, "long": null, "units": "ft"},
+            "properties": {"ver": true}
+          }
+        },
+        {
+          "name": "Formação de Combate",
+          "type": "feat",
+          "system": {
+            "description": {"value": "<p>The warrior has advantage on melee attack rolls while an ally is adjacent to the target and not incapacitated.</p>"}
+          }
+        }
+      ],
+      "prototypeToken": {
+        "name": "Guerreiro da Corrente",
+        "displayName": 20,
+        "actorLink": false,
+        "disposition": -1,
+        "displayBars": 20,
+        "bar1": {"attribute": "attributes.hp"},
+        "vision": true,
+        "dimSight": 0,
+        "brightSight": 0
+      }
+    }
+  },
+  {
+    "id": "arqueiro-corrente",
+    "name": "Arqueiro da Corrente",
+    "role": "Soldado de Suporte à Distância",
+    "faction": "a-corrente",
+    "cr": "1/2",
+    "xp": 100,
+    "alignment": "Leal e Neutro",
+    "type": "Humanoide (humano)",
+    "ac": 15,
+    "acType": "Couro Tachonado",
+    "hp": 16,
+    "hpFormula": "3d8+3",
+    "speed": "9 m (30 ft)",
+    "abilities": {
+      "str": 10, "dex": 16, "con": 12,
+      "int": 11, "wis": 12, "cha": 10
+    },
+    "saves": [
+      {"name": "DES", "value": "+5"}
+    ],
+    "skills": [
+      {"name": "Acrobacia", "value": "+5"},
+      {"name": "Percepção", "value": "+3"}
+    ],
+    "languages": "Comum",
+    "actions": [
+      {
+        "name": "Arco Longo",
+        "type": "Ataque com Arma à Distância",
+        "attack": "+5",
+        "reach": "45/180 m (150/600 ft)",
+        "hit": "1d8+3 de dano perfurante"
+      },
+      {
+        "name": "Espada Curta",
+        "type": "Ataque com Arma Corpo a Corpo",
+        "attack": "+5",
+        "reach": "1,5 m (5 ft)",
+        "hit": "1d6+3 de dano perfurante"
+      }
+    ],
+    "traits": [
+      {
+        "name": "Tiro Preciso",
+        "description": "O arqueiro ignora a penalidade de cobertura parcial e de três quartos em rolagens de ataque à distância."
+      }
+    ],
+    "notes": "Use 7 arqueiros para um combate Médio com 7 jogadores nível 4 (1.750 XP ajustado). Combine 4 guerreiros + 3 arqueiros para variação tática eficiente.",
+    "foundryJson": {
+      "name": "Arqueiro da Corrente",
+      "type": "npc",
+      "system": {
+        "abilities": {
+          "str": {"value": 10},
+          "dex": {"value": 16, "proficient": 1},
+          "con": {"value": 12},
+          "int": {"value": 11},
+          "wis": {"value": 12},
+          "cha": {"value": 10}
+        },
+        "attributes": {
+          "ac": {"flat": 15, "calc": "default"},
+          "hp": {"value": 16, "max": 16, "formula": "3d8+3"},
+          "movement": {"walk": 30, "units": "ft"}
+        },
+        "details": {
+          "cr": 0.5,
+          "alignment": "Lawful Neutral",
+          "type": {"value": "humanoid", "subtype": "human", "swarm": ""}
+        },
+        "traits": {
+          "languages": {"value": ["common"]}
+        },
+        "skills": {
+          "acr": {"value": 1},
+          "prc": {"value": 1}
+        }
+      },
+      "items": [
+        {
+          "name": "Longbow",
+          "type": "weapon",
+          "system": {
+            "description": {"value": "<p>Ranged weapon.</p>"},
+            "quantity": 1,
+            "weight": 2,
+            "equipped": true,
+            "proficient": 1,
+            "actionType": "rwak",
+            "ability": "dex",
+            "attackBonus": "",
+            "damage": {
+              "parts": [["1d8 + @mod", "piercing"]],
+              "versatile": ""
+            },
+            "range": {"value": 150, "long": 600, "units": "ft"},
+            "properties": {"two": true, "amm": true}
+          }
+        },
+        {
+          "name": "Shortsword",
+          "type": "weapon",
+          "system": {
+            "description": {"value": "<p>Melee sidearm.</p>"},
+            "quantity": 1,
+            "weight": 2,
+            "equipped": true,
+            "proficient": 1,
+            "actionType": "mwak",
+            "ability": "dex",
+            "attackBonus": "",
+            "damage": {
+              "parts": [["1d6 + @mod", "piercing"]],
+              "versatile": ""
+            },
+            "range": {"value": 5, "long": null, "units": "ft"},
+            "properties": {"fin": true, "lgt": true}
+          }
+        },
+        {
+          "name": "Tiro Preciso",
+          "type": "feat",
+          "system": {
+            "description": {"value": "<p>The archer ignores half and three-quarters cover penalties on ranged attack rolls.</p>"}
+          }
+        }
+      ],
+      "prototypeToken": {
+        "name": "Arqueiro da Corrente",
+        "displayName": 20,
+        "actorLink": false,
+        "disposition": -1,
+        "displayBars": 20,
+        "bar1": {"attribute": "attributes.hp"},
+        "vision": true,
+        "dimSight": 0,
+        "brightSight": 0
+      }
+    }
+  }
+]
