@@ -24,7 +24,7 @@ const STATE = {
   isMaster:       false,
   players:        [],
   unsubscribers:  [],
-  data: { characters: [], locations: [], events: [], factions: [], relations: [], annotations: [], documents: [], items: [] },
+  data: { characters: [], locations: [], events: [], factions: [], relations: [], annotations: [], documents: [], items: [], npcs: [] },
 
   activeTab:       'painel',
   secretsVisible:  localStorage.getItem('secretsVisible') !== 'false',
@@ -861,6 +861,7 @@ function switchTab(tab) {
   if (tab === 'jogadores')      renderJogadores();
   if (tab === 'meu-personagem') renderMeuPersonagem();
   if (tab === 'roteiro')        renderRoteiro();
+  if (tab === 'npcs')           renderNpcs();
 }
 
 // ── SECRETS TOGGLE ────────────────────────────────────────────────────────────
@@ -925,6 +926,7 @@ function getEntityName(id, type) {
     const p = getPlayerByUid(id);
     return p ? playerCharName(p) : id;
   }
+  if (type === 'npc') return STATE.data.npcs.find(n => n.id === id)?.name || id;
   const fn = { character: getCharById, location: getLocationById, event: getEventById, faction: getFactionById, document: getDocumentById, item: getItemByIdFn }[type];
   return fn?.(id)?.name || id;
 }
@@ -1520,6 +1522,168 @@ function renderRoteiro() {
 
       ${docMapHtml}
     </div>`;
+}
+
+// ── NPCs TAB (master only) ────────────────────────────────────────────────────
+function abilityMod(score) {
+  const m = Math.floor((score - 10) / 2);
+  return (m >= 0 ? '+' : '') + m;
+}
+
+async function loadNpcs() {
+  if (STATE.data.npcs.length) return;
+  try {
+    STATE.data.npcs = await fetch('data/npcs.json').then(r => r.json());
+  } catch (err) {
+    console.error('Failed to load npcs.json:', err);
+    STATE.data.npcs = [];
+  }
+}
+
+async function renderNpcs() {
+  await loadNpcs();
+  const grid = document.getElementById('npcs-grid');
+  if (!grid) return;
+
+  if (!STATE.data.npcs.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">⚔️</div><p>Nenhum NPC cadastrado.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = STATE.data.npcs.map(npc => {
+    const fc = npc.faction ? factionColor(npc.faction) : '#5a8ab0';
+    return `<div class="npc-card" data-id="${npc.id}" style="--faction-color:${fc}">
+      <div class="npc-card-header">
+        <div class="npc-card-name">${npc.name}</div>
+        <div class="npc-card-role">${npc.role || ''}</div>
+      </div>
+      <div class="npc-card-stats">
+        <div class="npc-stat"><span class="npc-stat-label">CR</span><span class="npc-stat-value">${npc.cr}</span></div>
+        <div class="npc-stat"><span class="npc-stat-label">CA</span><span class="npc-stat-value">${npc.ac}</span></div>
+        <div class="npc-stat"><span class="npc-stat-label">PV</span><span class="npc-stat-value">${npc.hp}</span></div>
+        <div class="npc-stat"><span class="npc-stat-label">XP</span><span class="npc-stat-value">${npc.xp}</span></div>
+      </div>
+      <div class="npc-card-faction">${npc.faction ? (getFactionById(npc.faction)?.name || npc.faction) : '—'}</div>
+    </div>`;
+  }).join('');
+
+  grid.querySelectorAll('.npc-card').forEach(card => {
+    card.addEventListener('click', () => openNpcModal(card.dataset.id));
+  });
+}
+
+function openNpcModal(npcId) {
+  const npc = STATE.data.npcs.find(n => n.id === npcId);
+  if (!npc) return;
+
+  STATE.modal.current = { id: npcId, type: 'npc' };
+  STATE.modal.stack   = [];
+
+  document.getElementById('modal-body').innerHTML = buildNpcModalContent(npc);
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('modal-panel').classList.add('open');
+
+  const editBtn = document.getElementById('modal-edit-btn');
+  if (editBtn) editBtn.style.visibility = 'hidden';
+
+  document.getElementById('modal-breadcrumb').innerHTML =
+    `<span class="bc-item current">${escHtml(npc.name)}</span>`;
+  document.getElementById('modal-back-btn').disabled = true;
+
+  document.getElementById('npc-copy-json')?.addEventListener('click', async function() {
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(npc.foundryJson, null, 2));
+      this.textContent = '✓ Copiado!';
+      setTimeout(() => { this.textContent = '📋 Copiar JSON'; }, 2000);
+    } catch {
+      this.textContent = '✗ Erro ao copiar';
+      setTimeout(() => { this.textContent = '📋 Copiar JSON'; }, 2000);
+    }
+  });
+
+  document.getElementById('npc-toggle-json')?.addEventListener('click', function() {
+    const block = document.getElementById('npc-json-block');
+    const visible = block?.style.display !== 'none';
+    if (block) block.style.display = visible ? 'none' : 'block';
+    this.textContent = visible ? '▶ Ver JSON (FoundryVTT)' : '▼ Ocultar JSON';
+  });
+}
+
+function buildNpcModalContent(npc) {
+  const ab     = npc.abilities || {};
+  const abKeys = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+  const abPt   = { str: 'FOR', dex: 'DES', con: 'CON', int: 'INT', wis: 'SAB', cha: 'CAR' };
+
+  const abHtml = abKeys.map(k => {
+    const score = ab[k] ?? 10;
+    return `<div class="sb-ability">
+      <div class="sb-ability-name">${abPt[k]}</div>
+      <div class="sb-ability-score">${score}</div>
+      <div class="sb-ability-mod">${abilityMod(score)}</div>
+    </div>`;
+  }).join('');
+
+  const savesHtml  = (npc.saves  || []).map(s => `${s.name} ${s.value}`).join(', ');
+  const skillsHtml = (npc.skills || []).map(s => `${s.name} ${s.value}`).join(', ');
+
+  const traitsHtml = (npc.traits || []).map(t =>
+    `<div class="sb-trait"><span class="sb-trait-name">${escHtml(t.name)}.</span> ${escHtml(t.description)}</div>`
+  ).join('');
+
+  const actionsHtml = (npc.actions || []).map(a =>
+    `<div class="sb-action">
+      <span class="sb-action-name">${escHtml(a.name)}.</span>
+      <span> <em>${escHtml(a.type)}:</em> Acerto ${escHtml(a.attack)}, ${escHtml(a.reach)}. <em>Acerto:</em> ${escHtml(a.hit)}.</span>
+    </div>`
+  ).join('');
+
+  const fc = npc.faction ? factionColor(npc.faction) : '#5a8ab0';
+  const factionBadge = npc.faction
+    ? `<span class="faction-badge" style="background:${fc}22;color:${fc};border:1px solid ${fc}44;border-radius:10px;padding:2px 7px;font-size:10px;text-transform:uppercase;letter-spacing:.5px;">${escHtml(getFactionById(npc.faction)?.name || npc.faction)}</span>`
+    : '';
+
+  const jsonStr = JSON.stringify(npc.foundryJson, null, 2);
+
+  return `
+    <div class="npc-modal-header">
+      <div class="npc-modal-name">${escHtml(npc.name)}</div>
+      <div class="npc-modal-type">${escHtml(npc.type || '')} — ${escHtml(npc.alignment || '')}</div>
+      <div class="npc-modal-meta">
+        <span class="npc-cr-badge">CR ${escHtml(npc.cr)} (${npc.xp} XP)</span>
+        ${factionBadge}
+      </div>
+    </div>
+
+    <div class="stat-block">
+      <div class="sb-divider"></div>
+      <div class="sb-row"><span class="sb-label">Classe de Armadura</span> ${npc.ac} (${escHtml(npc.acType)})</div>
+      <div class="sb-row"><span class="sb-label">Pontos de Vida</span> ${npc.hp} (${escHtml(npc.hpFormula)})</div>
+      <div class="sb-row"><span class="sb-label">Deslocamento</span> ${escHtml(npc.speed)}</div>
+      <div class="sb-divider"></div>
+      <div class="sb-abilities">${abHtml}</div>
+      <div class="sb-divider"></div>
+      ${savesHtml  ? `<div class="sb-row"><span class="sb-label">JTs de Resistência</span> ${savesHtml}</div>` : ''}
+      ${skillsHtml ? `<div class="sb-row"><span class="sb-label">Perícias</span> ${skillsHtml}</div>` : ''}
+      <div class="sb-row"><span class="sb-label">Idiomas</span> ${escHtml(npc.languages || '—')}</div>
+      <div class="sb-row"><span class="sb-label">Nível de Desafio</span> ${escHtml(npc.cr)} (${npc.xp} XP)</div>
+      <div class="sb-divider"></div>
+      ${traitsHtml}
+      ${actionsHtml ? `<div class="sb-section-title">Ações</div>${actionsHtml}` : ''}
+    </div>
+
+    ${npc.notes ? `<div class="modal-section"><div class="modal-section-title">📌 Notas de Encontro</div><div class="modal-section-text">${escHtml(npc.notes)}</div></div>` : ''}
+
+    <div class="modal-section npc-foundry-section">
+      <button class="npc-json-toggle-btn" id="npc-toggle-json">▶ Ver JSON (FoundryVTT)</button>
+      <div id="npc-json-block" style="display:none">
+        <div class="npc-json-actions">
+          <button class="npc-copy-btn" id="npc-copy-json">📋 Copiar JSON</button>
+          <span style="font-size:11px;color:var(--text-muted);font-family:var(--font-body);">No FoundryVTT: Atores → ⋮ → Importar Dados</span>
+        </div>
+        <pre class="npc-json-pre">${escHtml(jsonStr)}</pre>
+      </div>
+    </div>
+  `;
 }
 
 // ── JOGADORES TAB ─────────────────────────────────────────────────────────────
