@@ -78,6 +78,10 @@ service cloud.firestore {
         allow read: if isAuth() && isVisible();
       }
 
+      match /npcs/{id} {
+        allow read, write: if isMaster();
+      }
+
       // Anotações — todos autenticados podem ler e criar as próprias
       match /annotations/{id} {
         allow read:   if isAuth();

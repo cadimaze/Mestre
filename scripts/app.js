@@ -219,6 +219,7 @@ function rerenderSection(collName) {
     case 'relations':  renderPainel(); if (STATE.activeTab === 'relacoes') renderGraph(); break;
     case 'documents':  renderAcervo(); break;
     case 'items':      renderAcervo(); break;
+    case 'npcs':       if (STATE.activeTab === 'npcs') renderNpcs(); break;
   }
 }
 
@@ -231,6 +232,15 @@ async function setupFirestoreListeners() {
   subscribeToCollection('documents');
   subscribeToCollection('items');
   subscribeToAnnotations();
+
+  if (STATE.isMaster) {
+    const npcRef = collection(db, 'campaigns', CAMPAIGN_ID, 'npcs');
+    const unsub = onSnapshot(npcRef, snap => {
+      STATE.data.npcs = snap.docs.map(d => ({ ...d.data(), id: d.id }));
+      rerenderSection('npcs');
+    }, err => console.error('[npcs]', err));
+    STATE.unsubscribers.push(unsub);
+  }
 }
 
 // ── VISIBILITY ────────────────────────────────────────────────────────────────
@@ -937,12 +947,13 @@ async function syncCampaignContent() {
   if (btn) { btn.disabled = true; btn.textContent = 'Sincronizando...'; }
 
   try {
-    const [chars, locs, evts, facts, docs] = await Promise.all([
+    const [chars, locs, evts, facts, docs, npcs] = await Promise.all([
       fetch('data/characters.json').then(r => r.json()),
       fetch('data/locations.json').then(r => r.json()),
       fetch('data/events.json').then(r => r.json()),
       fetch('data/factions.json').then(r => r.json()),
       fetch('data/documents.json').then(r => r.json()),
+      fetch('npcs.json').then(r => r.json()),
     ]);
 
     // Preserve existing secret visibility when syncing secretsList
@@ -1012,6 +1023,11 @@ async function syncCampaignContent() {
       };
       if (d.imageUrl) update.imageUrl = d.imageUrl;
       batch.set(ref, update, { merge: true });
+    });
+
+    npcs.forEach(n => {
+      const ref = doc(db, base, 'npcs', n.id);
+      batch.set(ref, n, { merge: true });
     });
 
     await batch.commit();
@@ -1530,271 +1546,7 @@ function abilityMod(score) {
   return (m >= 0 ? '+' : '') + m;
 }
 
-function loadNpcs() {
-  if (STATE.data.npcs.length) return;
-  STATE.data.npcs = [
-    {
-      id: 'guerreiro-corrente',
-      name: 'Guerreiro da Corrente',
-      role: 'Soldado de Infantaria',
-      faction: 'a-corrente',
-      cr: '1/2', xp: 100,
-      alignment: 'Leal e Neutro',
-      type: 'Humanoide (humano)',
-      ac: 16, acType: 'Cota de malha + escudo',
-      hp: 22, hpFormula: '4d8+4',
-      speed: '9 m (30 ft)',
-      abilities: { str: 16, dex: 12, con: 13, int: 10, wis: 11, cha: 10 },
-      saves:  [{ name: 'FOR', value: '+5' }, { name: 'CON', value: '+3' }],
-      skills: [{ name: 'Atletismo', value: '+5' }, { name: 'Percepção', value: '+2' }],
-      languages: 'Comum',
-      actions: [
-        {
-          name: 'Espada Longa',
-          type: 'Ataque com Arma Corpo a Corpo',
-          attack: '+5', reach: '1,5 m (5 ft)',
-          hit: '1d8+3 de dano cortante; ou 1d10+3 com as duas mãos (versátil)',
-        },
-      ],
-      traits: [
-        {
-          name: 'Formação de Combate',
-          description: 'O guerreiro tem vantagem em rolagens de ataque corpo a corpo enquanto houver um aliado adjacente ao alvo que não esteja incapacitado.',
-        },
-      ],
-      notes: 'Use 7 guerreiros para um combate Médio com 7 jogadores nível 4 (1.750 XP ajustado). Combine 4 guerreiros + 3 arqueiros para variação tática.',
-      foundryJson: {
-        name: 'Guerreiro da Corrente', type: 'npc',
-        system: {
-          abilities: {
-            str: { value: 16, proficient: 1 }, dex: { value: 12 },
-            con: { value: 13, proficient: 1 }, int: { value: 10 },
-            wis: { value: 11 }, cha: { value: 10 },
-          },
-          attributes: {
-            ac: { flat: 16, calc: 'default' },
-            hp: { value: 22, max: 22, formula: '4d8+4' },
-            movement: { walk: 30, units: 'ft' },
-          },
-          details: { cr: 0.5, alignment: 'Lawful Neutral', type: { value: 'humanoid', subtype: 'human', swarm: '' } },
-          traits: { languages: { value: ['common'] } },
-          skills: { ath: { value: 1 }, prc: { value: 1 } },
-        },
-        items: [
-          {
-            name: 'Longsword', type: 'weapon',
-            system: {
-              description: { value: '<p>Longsword (versatile).</p>' },
-              quantity: 1, weight: 3, equipped: true, proficient: 1,
-              actionType: 'mwak', ability: 'str', attackBonus: '',
-              damage: { parts: [['1d8 + @mod', 'slashing']], versatile: '1d10 + @mod' },
-              range: { value: 5, long: null, units: 'ft' },
-              properties: { ver: true },
-            },
-          },
-          {
-            name: 'Formação de Combate', type: 'feat',
-            system: { description: { value: '<p>Advantage on melee attack rolls while an ally is adjacent to the target and not incapacitated.</p>' } },
-          },
-        ],
-        prototypeToken: { name: 'Guerreiro da Corrente', displayName: 20, actorLink: false, disposition: -1, displayBars: 20, bar1: { attribute: 'attributes.hp' }, vision: true },
-      },
-    },
-    {
-      id: 'arqueiro-corrente',
-      name: 'Arqueiro da Corrente',
-      role: 'Soldado de Suporte à Distância',
-      faction: 'a-corrente',
-      cr: '1/2', xp: 100,
-      alignment: 'Leal e Neutro',
-      type: 'Humanoide (humano)',
-      ac: 15, acType: 'Couro Tachonado',
-      hp: 16, hpFormula: '3d8+3',
-      speed: '9 m (30 ft)',
-      abilities: { str: 10, dex: 16, con: 12, int: 11, wis: 12, cha: 10 },
-      saves:  [{ name: 'DES', value: '+5' }],
-      skills: [{ name: 'Acrobacia', value: '+5' }, { name: 'Percepção', value: '+3' }],
-      languages: 'Comum',
-      actions: [
-        {
-          name: 'Arco Longo',
-          type: 'Ataque com Arma à Distância',
-          attack: '+5', reach: '45/180 m (150/600 ft)',
-          hit: '1d8+3 de dano perfurante',
-        },
-        {
-          name: 'Espada Curta',
-          type: 'Ataque com Arma Corpo a Corpo',
-          attack: '+5', reach: '1,5 m (5 ft)',
-          hit: '1d6+3 de dano perfurante',
-        },
-      ],
-      traits: [
-        {
-          name: 'Tiro Preciso',
-          description: 'O arqueiro ignora a penalidade de cobertura parcial e de três quartos em rolagens de ataque à distância.',
-        },
-      ],
-      notes: 'Use 7 arqueiros para um combate Médio com 7 jogadores nível 4 (1.750 XP ajustado). Combine 4 guerreiros + 3 arqueiros para variação tática eficiente.',
-      foundryJson: {
-        name: 'Arqueiro da Corrente', type: 'npc',
-        system: {
-          abilities: {
-            str: { value: 10 }, dex: { value: 16, proficient: 1 },
-            con: { value: 12 }, int: { value: 11 },
-            wis: { value: 12 }, cha: { value: 10 },
-          },
-          attributes: {
-            ac: { flat: 15, calc: 'default' },
-            hp: { value: 16, max: 16, formula: '3d8+3' },
-            movement: { walk: 30, units: 'ft' },
-          },
-          details: { cr: 0.5, alignment: 'Lawful Neutral', type: { value: 'humanoid', subtype: 'human', swarm: '' } },
-          traits: { languages: { value: ['common'] } },
-          skills: { acr: { value: 1 }, prc: { value: 1 } },
-        },
-        items: [
-          {
-            name: 'Longbow', type: 'weapon',
-            system: {
-              description: { value: '<p>Ranged weapon.</p>' },
-              quantity: 1, weight: 2, equipped: true, proficient: 1,
-              actionType: 'rwak', ability: 'dex', attackBonus: '',
-              damage: { parts: [['1d8 + @mod', 'piercing']], versatile: '' },
-              range: { value: 150, long: 600, units: 'ft' },
-              properties: { two: true, amm: true },
-            },
-          },
-          {
-            name: 'Shortsword', type: 'weapon',
-            system: {
-              description: { value: '<p>Melee sidearm.</p>' },
-              quantity: 1, weight: 2, equipped: true, proficient: 1,
-              actionType: 'mwak', ability: 'dex', attackBonus: '',
-              damage: { parts: [['1d6 + @mod', 'piercing']], versatile: '' },
-              range: { value: 5, long: null, units: 'ft' },
-              properties: { fin: true, lgt: true },
-            },
-          },
-          {
-            name: 'Tiro Preciso', type: 'feat',
-            system: { description: { value: '<p>Ignores half and three-quarters cover penalties on ranged attack rolls.</p>' } },
-          },
-        ],
-        prototypeToken: { name: 'Arqueiro da Corrente', displayName: 20, actorLink: false, disposition: -1, displayBars: 20, bar1: { attribute: 'attributes.hp' }, vision: true },
-      },
-    },
-    {
-      id: 'grak-punho-de-tulo',
-      name: 'O Punho de Tulo (Grak)',
-      role: 'Guarda-costas de Tulo Bresh — Boss Arco 1',
-      faction: 'velmarch',
-      cr: '7', xp: 2900,
-      alignment: 'Caótico e Neutro',
-      type: 'Humanoide Grande (Orc)',
-      ac: 14, acType: 'Armadura natural',
-      hp: 157, hpFormula: '15d10+75',
-      speed: '9 m (30 ft)',
-      abilities: { str: 22, dex: 9, con: 20, int: 7, wis: 8, cha: 7 },
-      saves:  [{ name: 'FOR', value: '+9' }, { name: 'CON', value: '+8' }],
-      skills: [{ name: 'Atletismo', value: '+9' }],
-      languages: 'Comum, Orc',
-      actions: [
-        {
-          name: 'Multiattaque',
-          type: 'Ação',
-          attack: '—',
-          reach: '—',
-          hit: 'Grak faz dois ataques de Golpe Esmagador.',
-        },
-        {
-          name: 'Golpe Esmagador',
-          type: 'Ataque com Arma Corpo a Corpo',
-          attack: '+9',
-          reach: '1,5 m (5 ft)',
-          hit: '2d10+6 de dano de concussão (média 17). Alvos Médios ou menores: JT FOR CD 17 ou empurrado 3 m e Prostrado.',
-        },
-        {
-          name: 'Arremesso Devastador',
-          type: 'Ação — Recarga 5–6',
-          attack: '—',
-          reach: 'Área 3 m raio a 9 m de distância',
-          hit: 'JT DES CD 16 — Fracasso: 4d8 concussão. Êxito: metade.',
-        },
-      ],
-      traits: [
-        {
-          name: 'Inquebrável (1/dia)',
-          description: 'Quando reduzido a 0 PV pela primeira vez, cai a 1 PV em vez disso. Grak ruge e continua lutando.',
-        },
-        {
-          name: 'Fúria de Sangue',
-          description: 'Enquanto abaixo da metade dos PV, cada acerto causa +1d8 de dano de concussão adicional.',
-        },
-        {
-          name: 'Imparável',
-          description: 'Grak não pode ser derrubado à força por efeitos que exijam JT de Força ou Destreza para evitar Prostrado.',
-        },
-        {
-          name: 'Rugido de Guerra (1/combate — Ação Bônus)',
-          description: 'Todos os inimigos a 9 m: JT SAB CD 13 ou Abalados até início do próximo turno de Grak.',
-        },
-      ],
-      notes: 'Boss do Arco 1 — Escritório de Tulo Bresh, Kaldera. CR 7 = Encontro Difícil para 7 jogadores nível 4. Use elementos do ambiente: garrafas (1d4), candelabros (1d6), tapete (CD 15 Atletismo → Grak Prostrado), tinta (Cego 1 turno). Inquebrável cria momento dramático garantido.',
-      foundryJson: {
-        name: 'O Punho de Tulo (Grak)', type: 'npc',
-        system: {
-          abilities: {
-            str: { value: 22, proficient: 1 }, dex: { value: 9 },
-            con: { value: 20, proficient: 1 }, int: { value: 7 },
-            wis: { value: 8 }, cha: { value: 7 },
-          },
-          attributes: {
-            ac: { flat: 14, calc: 'default' },
-            hp: { value: 157, max: 157, formula: '15d10+75' },
-            movement: { walk: 30, units: 'ft' },
-          },
-          details: { cr: 7, alignment: 'Chaotic Neutral', type: { value: 'humanoid', subtype: 'orc', swarm: '' } },
-          traits: { languages: { value: ['common', 'orc'] }, size: 'lg', ci: { value: ['frightened'] } },
-          skills: { ath: { value: 1 } },
-        },
-        items: [
-          {
-            name: 'Golpe Esmagador', type: 'weapon',
-            system: {
-              description: { value: '<p>Se alvo for Médio ou menor: JT FOR CD 17 ou empurrado 3m e Prostrado.</p>' },
-              quantity: 1, weight: 0, equipped: true, proficient: 1,
-              actionType: 'mwak', ability: 'str', attackBonus: '',
-              damage: { parts: [['2d10 + @mod', 'bludgeoning']], versatile: '' },
-              range: { value: 5, long: null, units: 'ft' },
-              properties: {},
-            },
-          },
-          {
-            name: 'Arremesso Devastador', type: 'feat',
-            system: { description: { value: '<p><strong>Recarga 5–6.</strong> Área 3m de raio a 9m. JT DES CD 16 ou 4d8 concussão (metade no êxito).</p>' } },
-          },
-          {
-            name: 'Inquebrável', type: 'feat',
-            system: { description: { value: '<p><strong>1/dia.</strong> Quando reduzido a 0 PV pela primeira vez, cai a 1 PV em vez disso.</p>' } },
-          },
-          {
-            name: 'Fúria de Sangue', type: 'feat',
-            system: { description: { value: '<p>Abaixo da metade dos PV: +1d8 de dano de concussão em cada acerto.</p>' } },
-          },
-          {
-            name: 'Rugido de Guerra', type: 'feat',
-            system: { description: { value: '<p><strong>1/combate. Ação Bônus.</strong> Inimigos a 9m: JT SAB CD 13 ou Abalados até início do próximo turno.</p>' } },
-          },
-        ],
-        prototypeToken: { name: 'O Punho de Tulo', displayName: 20, actorLink: false, disposition: -1, displayBars: 20, bar1: { attribute: 'attributes.hp' }, vision: true, dimSight: 18, brightSight: 0 },
-      },
-    },
-  ];
-}
-
 function renderNpcs() {
-  loadNpcs();
   const grid = document.getElementById('npcs-grid');
   if (!grid) return;
 
