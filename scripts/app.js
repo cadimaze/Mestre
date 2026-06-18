@@ -1027,7 +1027,8 @@ async function syncCampaignContent() {
 
     npcs.forEach(n => {
       const ref = doc(db, base, 'npcs', n.id);
-      batch.set(ref, n, { merge: true });
+      const { foundryJson: _f, ...npcData } = n;
+      batch.set(ref, npcData, { merge: true });
     });
 
     await batch.commit();
