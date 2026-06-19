@@ -2163,10 +2163,40 @@ body::after {
   font-weight: 600;
 }
 
+.npc-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
 .npc-card-faction {
   font-size: 11px;
   color: var(--text-muted);
   font-style: italic;
+}
+
+.npc-wotc-btn {
+  background: transparent;
+  border: 1px solid var(--border-accent);
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  padding: 2px 8px;
+  font-size: 10px;
+  cursor: pointer;
+  transition: color .15s, border-color .15s, background .15s;
+  white-space: nowrap;
+}
+
+.npc-wotc-btn:hover {
+  color: var(--accent-gold);
+  border-color: var(--accent-gold-dim);
+  background: rgba(207,172,110,.08);
+}
+
+.npc-wotc-modal-section {
+  padding: 10px 20px 0 !important;
+  border-top: 1px solid var(--border);
 }
 
 /* ── NPC modal ── */

@@ -1548,6 +1548,56 @@ function abilityMod(score) {
   return (m >= 0 ? '+' : '') + m;
 }
 
+function buildWotcText(npc) {
+  const ab    = npc.abilities || {};
+  const abPt  = { str: 'FOR', dex: 'DES', con: 'CON', int: 'INT', wis: 'SAB', cha: 'CAR' };
+  const keys  = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+  const scores = keys.map(k => ab[k] ?? 10);
+  const mods   = scores.map(s => abilityMod(s));
+
+  const headerRow = keys.map(k => abPt[k].padEnd(7)).join('');
+  const scoreRow  = scores.map((s, i) => `${s}(${mods[i]})`.padEnd(7)).join('');
+
+  const saves  = (npc.saves  || []).map(s => `${s.name} ${s.value}`).join(', ');
+  const skills = (npc.skills || []).map(s => `${s.name} ${s.value}`).join(', ');
+
+  const traits  = (npc.traits  || []).map(t => `${t.name}. ${t.description}`).join('\n');
+  const actions = (npc.actions || []).map(a =>
+    `${a.name}. ${a.type}: ${a.attack} para acertar, alcance ${a.reach}. Acerto: ${a.hit}.`
+  ).join('\n');
+
+  return [
+    npc.name.toUpperCase(),
+    `${npc.type || ''}, ${npc.alignment || ''}`,
+    '',
+    `Classe de Armadura ${npc.ac} (${npc.acType})`,
+    `Pontos de Vida ${npc.hp} (${npc.hpFormula})`,
+    `Deslocamento ${npc.speed}`,
+    '',
+    headerRow,
+    scoreRow,
+    '',
+    ...(saves  ? [`Salvaguardas ${saves}`]  : []),
+    ...(skills ? [`Perícias ${skills}`]     : []),
+    `Idiomas ${npc.languages || '—'}`,
+    `Nível de Desafio ${npc.cr} (${npc.xp} XP)`,
+    ...(traits  ? ['', 'TRAÇOS',  traits]  : []),
+    ...(actions ? ['', 'AÇÕES',   actions] : []),
+    ...(npc.notes ? ['', '---', npc.notes] : []),
+  ].join('\n');
+}
+
+window.copyWotcText = async function(npcId, btn) {
+  const npc = STATE.data.npcs.find(n => n.id === npcId);
+  if (!npc) return;
+  try {
+    await navigator.clipboard.writeText(buildWotcText(npc));
+    if (btn) { const orig = btn.textContent; btn.textContent = '✓ Copiado!'; setTimeout(() => { btn.textContent = orig; }, 2000); }
+  } catch {
+    if (btn) { btn.textContent = '✗ Erro'; setTimeout(() => { btn.textContent = '📄 WotC'; }, 2000); }
+  }
+};
+
 function renderNpcs() {
   const grid = document.getElementById('npcs-grid');
   if (!grid) return;
@@ -1570,7 +1620,10 @@ function renderNpcs() {
         <div class="npc-stat"><span class="npc-stat-label">PV</span><span class="npc-stat-value">${npc.hp}</span></div>
         <div class="npc-stat"><span class="npc-stat-label">XP</span><span class="npc-stat-value">${npc.xp}</span></div>
       </div>
-      <div class="npc-card-faction">${npc.faction ? (getFactionById(npc.faction)?.name || npc.faction) : '—'}</div>
+      <div class="npc-card-footer">
+        <span class="npc-card-faction">${npc.faction ? (getFactionById(npc.faction)?.name || npc.faction) : '—'}</span>
+        <button class="npc-wotc-btn" onclick="event.stopPropagation(); copyWotcText('${npc.id}', this)" title="Copiar bloco de estatísticas (WotC)">📄 WotC</button>
+      </div>
     </div>`;
   }).join('');
 
@@ -1596,6 +1649,12 @@ function openNpcModal(npcId) {
   document.getElementById('modal-breadcrumb').innerHTML =
     `<span class="bc-item current">${escHtml(npc.name)}</span>`;
   document.getElementById('modal-back-btn').disabled = true;
+
+  document.getElementById('npc-wotc-modal-btn')?.addEventListener('click', function() {
+    copyWotcText(npcId, this);
+    const orig = this.textContent;
+    this.textContent = orig; // copyWotcText já atualiza o btn
+  });
 
   document.getElementById('npc-export-json')?.addEventListener('click', function() {
     const raw = npc.foundryJsonStr || '';
@@ -1681,6 +1740,10 @@ function buildNpcModalContent(npc) {
     </div>
 
     ${npc.notes ? `<div class="modal-section"><div class="modal-section-title">📌 Notas de Encontro</div><div class="modal-section-text">${escHtml(npc.notes)}</div></div>` : ''}
+
+    <div class="modal-section npc-wotc-modal-section">
+      <button class="npc-copy-btn" id="npc-wotc-modal-btn">📄 Copiar bloco WotC</button>
+    </div>
 
     <div class="modal-section npc-foundry-section">
       <button class="npc-json-toggle-btn" id="npc-toggle-json">▶ Importar no FoundryVTT</button>
