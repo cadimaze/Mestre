@@ -1597,18 +1597,17 @@ function openNpcModal(npcId) {
     `<span class="bc-item current">${escHtml(npc.name)}</span>`;
   document.getElementById('modal-back-btn').disabled = true;
 
-  document.getElementById('npc-copy-json')?.addEventListener('click', async function() {
-    try {
-      const raw = npc.foundryJsonStr || '';
-      const pretty = raw ? JSON.stringify(JSON.parse(raw), null, 2) : '';
-      if (!pretty) { this.textContent = '✗ JSON não disponível'; setTimeout(() => { this.textContent = '📋 Copiar JSON'; }, 2000); return; }
-      await navigator.clipboard.writeText(pretty);
-      this.textContent = '✓ Copiado!';
-      setTimeout(() => { this.textContent = '📋 Copiar JSON'; }, 2000);
-    } catch {
-      this.textContent = '✗ Erro ao copiar';
-      setTimeout(() => { this.textContent = '📋 Copiar JSON'; }, 2000);
-    }
+  document.getElementById('npc-export-json')?.addEventListener('click', function() {
+    const raw = npc.foundryJsonStr || '';
+    if (!raw) { alert('JSON não disponível — sincronize os dados novamente.'); return; }
+    const pretty = JSON.stringify(JSON.parse(raw), null, 2);
+    const blob = new Blob([pretty], { type: 'application/json' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = `${npc.id}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
   });
 
   document.getElementById('npc-toggle-json')?.addEventListener('click', function() {
@@ -1689,19 +1688,18 @@ function buildNpcModalContent(npc) {
         <div class="npc-foundry-guide">
           <div class="npc-foundry-guide-title">Como importar este NPC no FoundryVTT</div>
           <ol class="npc-foundry-steps">
-            <li><strong>Copie o JSON</strong> clicando no botão abaixo.</li>
+            <li><strong>Exporte o arquivo JSON</strong> clicando no botão abaixo.</li>
             <li>No FoundryVTT, abra a aba <strong>Atores</strong> (ícone de pessoa na barra lateral).</li>
             <li>Clique em <strong>Criar Ator</strong>, defina o nome e o tipo como <em>NPC</em>.</li>
             <li>Com o ator criado, clique no ícone <strong>⋮</strong> (três pontos) ao lado do nome na lista.</li>
-            <li>Selecione <strong>Importar Dados</strong>.</li>
-            <li>Cole o JSON copiado na caixa de texto e confirme.</li>
+            <li>Selecione <strong>Importar Dados</strong> e escolha o arquivo <em>${npc.id}.json</em> baixado.</li>
             <li>O ator será preenchido automaticamente com atributos, ações e traços.</li>
           </ol>
           <div class="npc-foundry-note">💡 Itens como armas precisam ser arrastados do Compêndio para o ator após a importação para ficarem vinculados ao sistema de rolagem.</div>
         </div>
         <div class="npc-json-actions">
           ${hasJson
-            ? `<button class="npc-copy-btn" id="npc-copy-json">📋 Copiar JSON</button>`
+            ? `<button class="npc-copy-btn" id="npc-export-json">⬇ Exportar JSON</button>`
             : `<span class="npc-json-unavailable">JSON não disponível — sincronize os dados novamente.</span>`}
         </div>
       </div>
