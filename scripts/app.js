@@ -150,11 +150,19 @@ function authErrMsg(code) {
 }
 
 // ── USER PROFILE ──────────────────────────────────────────────────────────────
+function applyCharTheme(charClass) {
+  const THEMES = ['warrior','arcane','divine','nature','bard','rogue'];
+  THEMES.forEach(t => document.body.classList.remove('pc-theme-'+t));
+  const theme = CLASS_THEME[charClass || ''] || '';
+  if (theme) document.body.classList.add('pc-theme-'+theme);
+}
+
 async function loadUserProfile(uid) {
   const snap = await getDoc(doc(db, 'users', uid));
   if (snap.exists()) {
     STATE.profile  = snap.data();
     STATE.isMaster = STATE.profile.role === 'master';
+    if (!STATE.isMaster) applyCharTheme(STATE.profile.playerCharacter?.charClass);
     return STATE.profile;
   }
   return null;
@@ -2271,10 +2279,11 @@ function renderMeuPersonagem() {
 
   // ── Class theme live ──────────────────────────────────────────────────────
   document.getElementById('pc-class-select')?.addEventListener('change', function() {
-    const theme = CLASS_THEME[this.value] || '';
-    const hero  = document.getElementById('pc-hero');
+    applyCharTheme(this.value);
+    const hero = document.getElementById('pc-hero');
     if (!hero) return;
     ['warrior','arcane','divine','nature','bard','rogue'].forEach(t => hero.classList.remove('pc-theme-'+t));
+    const theme = CLASS_THEME[this.value] || '';
     if (theme) hero.classList.add('pc-theme-'+theme);
   });
 
@@ -4654,6 +4663,7 @@ function onUserLoggedOut() {
   STATE.isMaster = false;
   STATE.data = { characters: [], locations: [], events: [], factions: [], relations: [], annotations: [] };
   document.body.classList.remove('is-master', 'is-player');
+  applyCharTheme('');
   showAuthOverlay();
 }
 

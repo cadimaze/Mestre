@@ -2500,21 +2500,119 @@ body::after {
 /* ═══════════════════════════════════════════════════════════════════════════
    CHARACTER SHEET — CLASS THEMES (animated hero background)
 ═══════════════════════════════════════════════════════════════════════════ */
-.pc-hero { transition: background .6s ease; }
+/* pc-hero ainda pode ter leve tint próprio */
+.pc-hero { transition: box-shadow .6s ease; }
 
-.pc-theme-warrior { background: linear-gradient(135deg, #1a0a0a 0%, #2d1010 40%, #1a1008 100%) !important; animation: theme-warrior 8s ease-in-out infinite alternate; }
-.pc-theme-arcane  { background: linear-gradient(135deg, #0a0a2a 0%, #1a0a3d 40%, #0d1a35 100%) !important; animation: theme-arcane  8s ease-in-out infinite alternate; }
-.pc-theme-divine  { background: linear-gradient(135deg, #1a1500 0%, #2d2200 40%, #1a1a0a 100%) !important; animation: theme-divine  8s ease-in-out infinite alternate; }
-.pc-theme-nature  { background: linear-gradient(135deg, #061a06 0%, #0f2d10 40%, #0a1a12 100%) !important; animation: theme-nature  8s ease-in-out infinite alternate; }
-.pc-theme-bard    { background: linear-gradient(135deg, #0a1520 0%, #1a0a2a 40%, #0a1a1a 100%) !important; animation: theme-bard    8s ease-in-out infinite alternate; }
-.pc-theme-rogue   { background: linear-gradient(135deg, #0a0a0a 0%, #181820 40%, #0a1018 100%) !important; animation: theme-rogue   8s ease-in-out infinite alternate; }
+/* ── Full-page theme overlay via body::before ────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  background: transparent;
+}
 
-@keyframes theme-warrior { 0%{background-position:0% 50%} 100%{background-position:100% 50%} }
-@keyframes theme-arcane  { 0%{box-shadow:inset 0 0 80px rgba(120,60,200,.15)} 100%{box-shadow:inset 0 0 80px rgba(80,120,255,.2)} }
-@keyframes theme-divine  { 0%{box-shadow:inset 0 0 80px rgba(207,172,110,.1)} 100%{box-shadow:inset 0 0 80px rgba(255,230,120,.18)} }
-@keyframes theme-nature  { 0%{box-shadow:inset 0 0 80px rgba(60,160,80,.1)}  100%{box-shadow:inset 0 0 80px rgba(80,200,100,.15)} }
-@keyframes theme-bard    { 0%{box-shadow:inset 0 0 80px rgba(80,160,160,.1)} 100%{box-shadow:inset 0 0 80px rgba(160,80,180,.15)} }
-@keyframes theme-rogue   { 0%{box-shadow:inset 0 0 80px rgba(60,80,120,.1)}  100%{box-shadow:inset 0 0 80px rgba(80,80,80,.12)} }
+body.pc-theme-warrior::before,
+body.pc-theme-arcane::before,
+body.pc-theme-divine::before,
+body.pc-theme-nature::before,
+body.pc-theme-bard::before,
+body.pc-theme-rogue::before { opacity: 1; }
+
+/* WARRIOR — Guerreiro / Bárbaro / Paladino */
+body.pc-theme-warrior::before {
+  background:
+    radial-gradient(ellipse 70% 50% at 10% 90%, rgba(180,40,15,.35) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 60% at 90% 10%, rgba(140,25,10,.25) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 30% at 50% 50%, rgba(100,20,5,.1) 0%, transparent 70%);
+  animation: bg-warrior 12s ease-in-out infinite alternate;
+}
+@keyframes bg-warrior {
+  0%   { transform: scale(1)    rotate(0deg);   filter: brightness(1); }
+  50%  { transform: scale(1.04) rotate(.5deg);  filter: brightness(1.1); }
+  100% { transform: scale(1.02) rotate(-.3deg); filter: brightness(.95); }
+}
+
+/* ARCANE — Mago / Feiticeiro / Bruxo / Artífice */
+body.pc-theme-arcane::before {
+  background:
+    radial-gradient(ellipse 65% 55% at 85% 15%, rgba(110,40,210,.35) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 65% at 15% 85%, rgba(60,80,230,.25) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(80,30,150,.12) 0%, transparent 70%);
+  animation: bg-arcane 14s ease-in-out infinite alternate;
+}
+@keyframes bg-arcane {
+  0%   { transform: scale(1)    rotate(0deg);  filter: hue-rotate(0deg); }
+  50%  { transform: scale(1.05) rotate(1deg);  filter: hue-rotate(20deg); }
+  100% { transform: scale(1.02) rotate(-.5deg);filter: hue-rotate(-15deg); }
+}
+
+/* DIVINE — Clérigo / Monge */
+body.pc-theme-divine::before {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%,  rgba(207,172,60,.28) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 55% at 90% 90%, rgba(200,160,40,.18) 0%, transparent 65%),
+    radial-gradient(ellipse 35% 35% at 10% 60%, rgba(180,140,50,.12) 0%, transparent 70%);
+  animation: bg-divine 10s ease-in-out infinite alternate;
+}
+@keyframes bg-divine {
+  0%   { opacity: .9; filter: brightness(1); }
+  50%  { opacity: 1;  filter: brightness(1.15); }
+  100% { opacity: .85;filter: brightness(.95); }
+}
+
+/* NATURE — Druida / Patrulheiro */
+body.pc-theme-nature::before {
+  background:
+    radial-gradient(ellipse 65% 60% at 5% 95%,  rgba(40,150,55,.3) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 50% at 95% 5%,  rgba(30,130,50,.2) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(50,110,40,.1) 0%, transparent 70%);
+  animation: bg-nature 16s ease-in-out infinite alternate;
+}
+@keyframes bg-nature {
+  0%   { transform: scale(1)    rotate(0deg); }
+  50%  { transform: scale(1.03) rotate(.8deg); }
+  100% { transform: scale(1.01) rotate(-.4deg); }
+}
+
+/* BARD — Bardo */
+body.pc-theme-bard::before {
+  background:
+    radial-gradient(ellipse 60% 55% at 20% 20%, rgba(60,180,180,.28) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 60% at 80% 80%, rgba(170,60,190,.22) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(100,100,200,.1) 0%, transparent 70%);
+  animation: bg-bard 9s ease-in-out infinite alternate;
+}
+@keyframes bg-bard {
+  0%   { filter: hue-rotate(0deg)   brightness(1); }
+  50%  { filter: hue-rotate(25deg)  brightness(1.12); }
+  100% { filter: hue-rotate(-20deg) brightness(.95); }
+}
+
+/* ROGUE — Ladino */
+body.pc-theme-rogue::before {
+  background:
+    radial-gradient(ellipse 55% 45% at 90% 60%, rgba(50,70,100,.25) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 55% at 10% 40%, rgba(35,50,80,.18) 0%, transparent 65%),
+    radial-gradient(ellipse 35% 35% at 50% 50%, rgba(30,40,60,.1) 0%, transparent 70%);
+  animation: bg-rogue 18s ease-in-out infinite alternate;
+}
+@keyframes bg-rogue {
+  0%   { transform: scale(1)    translateX(0); }
+  50%  { transform: scale(1.02) translateX(8px); }
+  100% { transform: scale(1)    translateX(-5px); }
+}
+
+/* pc-hero tint leve, complementar ao body */
+.pc-hero.pc-theme-warrior { box-shadow: inset 0 0 80px rgba(180,40,15,.18); }
+.pc-hero.pc-theme-arcane  { box-shadow: inset 0 0 80px rgba(110,40,210,.18); }
+.pc-hero.pc-theme-divine  { box-shadow: inset 0 0 80px rgba(207,172,60,.15); }
+.pc-hero.pc-theme-nature  { box-shadow: inset 0 0 80px rgba(40,150,55,.15); }
+.pc-hero.pc-theme-bard    { box-shadow: inset 0 0 80px rgba(60,180,180,.15); }
+.pc-hero.pc-theme-rogue   { box-shadow: inset 0 0 80px rgba(50,70,100,.15); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    CHARACTER SHEET — COMBAT META
