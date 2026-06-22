@@ -2729,3 +2729,158 @@ body.pc-theme-rogue::before {
 .poi-item:last-child { border-bottom: none; }
 /* Subtle page background depth */
 body { background-image: radial-gradient(ellipse at 50% 0%, rgba(20,50,90,.35) 0%, transparent 70%); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DICE ROLL — ANIMATED PHASES
+═══════════════════════════════════════════════════════════════════════════ */
+/* Rolling phase */
+.dice-toast.dice-rolling-phase {
+  background: var(--bg-raised);
+}
+.dice-anim-num {
+  font-size: 90px; font-family: var(--font-title); line-height: 1;
+  color: var(--text-muted); min-height: 100px; display: flex;
+  align-items: center; justify-content: center;
+  animation: dice-cycle .1s steps(1) infinite;
+}
+@keyframes dice-cycle {
+  0%,100% { opacity: 1; }
+  50%      { opacity: .5; }
+}
+.dice-rolling-hint {
+  font-size: 12px; text-transform: uppercase; letter-spacing: 2px;
+  color: var(--text-muted); margin-top: 8px;
+  animation: dice-blink 1s ease-in-out infinite;
+}
+@keyframes dice-blink {
+  0%,100% { opacity: .4; }
+  50%      { opacity: 1; }
+}
+
+/* Reveal phase pop-in */
+.dice-toast.dice-reveal-phase {
+  animation: dice-reveal-pop .35s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes dice-reveal-pop {
+  0%   { transform: scale(.7) translateY(12px); opacity: 0; }
+  100% { transform: scale(1)  translateY(0);    opacity: 1; }
+}
+
+/* Details button & panel */
+.dice-details-btn {
+  background: rgba(207,172,110,.1); border: 1px solid rgba(207,172,110,.2);
+  color: var(--accent-gold-dim); border-radius: 20px; padding: 4px 14px;
+  font-size: 12px; cursor: pointer; margin-top: 10px;
+  font-family: var(--font-title); letter-spacing: .5px;
+  transition: background .15s, border-color .15s;
+}
+.dice-details-btn:hover { background: rgba(207,172,110,.18); border-color: rgba(207,172,110,.4); }
+.dice-details-panel {
+  display: none; margin-top: 10px; border-top: 1px solid var(--border);
+  padding-top: 10px; width: 100%; text-align: left;
+}
+.dice-details-panel.open { display: block; }
+.dice-detail-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.dice-detail-row:last-child { border-bottom: none; }
+.dice-detail-label { font-size: 12px; color: var(--text-muted); }
+.dice-detail-val   { font-size: 14px; font-family: var(--font-title); color: var(--text-primary); }
+
+/* Close button */
+.dice-close {
+  position: absolute; top: 8px; right: 10px; background: none; border: none;
+  color: var(--text-muted); font-size: 14px; cursor: pointer; padding: 2px 6px;
+  line-height: 1; border-radius: 4px; transition: color .15s;
+}
+.dice-close:hover { color: var(--text-primary); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MASTER PLAYER SHEET (pms-*) — in player modal
+═══════════════════════════════════════════════════════════════════════════ */
+.pms-section { background: rgba(255,255,255,.018); border-radius: var(--radius); border: 1px solid var(--border); padding: 16px; margin-bottom: 12px; }
+.pms-section .modal-section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 10px; }
+
+/* Combat meta boxes */
+.pms-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.pms-stat {
+  background: var(--bg-raised); border: 1px solid var(--border-accent);
+  border-radius: 10px; padding: 8px 12px; display: flex; flex-direction: column;
+  align-items: center; min-width: 64px; flex: 1;
+}
+.pms-stat label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 3px; }
+.pms-stat span  { font-size: 18px; font-family: var(--font-title); color: var(--text-primary); }
+
+/* Abilities grid */
+.pms-abilities { display: grid; grid-template-columns: repeat(6,1fr); gap: 8px; }
+@media (max-width: 500px) { .pms-abilities { grid-template-columns: repeat(3,1fr); } }
+.pms-ab {
+  background: var(--bg-raised); border: 1px solid var(--border-accent);
+  border-radius: 10px; padding: 10px 4px 8px; text-align: center;
+  cursor: pointer; user-select: none;
+  transition: border-color .15s, transform .15s, box-shadow .2s;
+}
+.pms-ab:hover { border-color: var(--accent-gold-dim); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(207,172,110,.14); }
+.pms-ab-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+.pms-ab-mod   { font-size: 22px; font-family: var(--font-title); color: var(--accent-gold); line-height: 1.1; margin: 2px 0; }
+.pms-ab-score { font-size: 12px; color: var(--text-secondary); }
+
+/* Two-column layout for saves + skills */
+.pms-two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 540px) { .pms-two-cols { grid-template-columns: 1fr; } }
+.pms-saves, .pms-skills { display: flex; flex-direction: column; gap: 3px; }
+
+.pms-save-row, .pms-skill-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 4px 6px; border-radius: 6px; cursor: pointer;
+  transition: background .15s;
+}
+.pms-save-row:hover, .pms-skill-row:hover { background: rgba(207,172,110,.07); }
+
+.pms-prof-dot {
+  width: 10px; height: 10px; flex-shrink: 0; border-radius: 50%;
+  border: 1px solid var(--text-muted); background: transparent;
+  transition: background .15s, border-color .15s;
+}
+.pms-prof-dot.pms-prof-on { background: var(--accent-gold); border-color: var(--accent-gold); }
+
+.pms-save-val, .pms-skill-val {
+  font-family: var(--font-title); font-size: 13px; color: var(--accent-gold);
+  min-width: 28px; text-align: center; flex-shrink: 0;
+}
+.pms-save-name, .pms-skill-name { font-size: 12px; color: var(--text-secondary); flex: 1; }
+.pms-skill-ab { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHARACTER EDIT FORM — Visual improvements
+═══════════════════════════════════════════════════════════════════════════ */
+/* Section cards in the edit form */
+.pc-sheet-section {
+  padding: 16px 18px !important;
+  transition: border-color .2s;
+}
+.pc-sheet-section:focus-within { border-color: rgba(207,172,110,.3) !important; }
+
+/* Section headings */
+.pc-section-title {
+  font-size: 11px !important; text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--text-muted) !important; margin-bottom: 12px !important; margin-top: 4px !important;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+
+/* Meta box inputs — larger, more breathing room */
+.pc-meta-box { padding: 10px 14px !important; border-radius: 12px !important; gap: 2px; }
+.pc-meta-box label { font-size: 9px !important; letter-spacing: 1.5px; }
+.pc-sheet-input { font-size: 22px !important; font-family: var(--font-title); }
+.pc-sheet-input:focus { color: var(--accent-gold) !important; }
+
+/* Ability boxes — more space */
+.pc-ability-box { padding: 12px 8px 10px !important; border-radius: 14px !important; }
+.pc-ab-label { font-size: 11px !important; letter-spacing: 1.2px; }
+.pc-ab-mod   { font-size: 26px !important; }
+.pc-ab-full  { font-size: 10px !important; margin-top: 3px !important; }
+
+/* Save / skill rows — more padding */
+.pc-save-row, .pc-skill-row { padding: 6px 10px !important; gap: 12px !important; border-radius: 8px !important; }
+.pc-save-name, .pc-skill-name { font-size: 13px !important; }

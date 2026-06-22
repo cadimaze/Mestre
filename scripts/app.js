@@ -316,7 +316,7 @@ async function sendRevealNotifications(targetUids, entityType, entityId, entityN
 }
 
 // ── DICE ROLLER ───────────────────────────────────────────────────────────────
-function showDiceToast({ label, sides, roll, modifier, total }) {
+function showDiceToast({ label, sides, roll, modifier, total, details }) {
   let overlay = document.getElementById('dice-overlay');
   if (!overlay) {
     overlay = document.createElement('div');
@@ -325,27 +325,83 @@ function showDiceToast({ label, sides, roll, modifier, total }) {
     overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
     document.body.appendChild(overlay);
   }
-  const modStr = modifier > 0 ? `+${modifier}` : modifier < 0 ? `${modifier}` : '';
-  const isCrit   = roll === sides;
-  const isFumble = roll === 1 && sides === 20;
+  clearTimeout(overlay._timer);
+  clearTimeout(overlay._closeTimer);
+  clearInterval(overlay._rollInterval);
+
+  // ── Phase 1: suspense animation ────────────────────────────────────────────
   overlay.innerHTML = `
-    <div class="dice-toast${isCrit ? ' dice-crit' : ''}${isFumble ? ' dice-fumble' : ''}">
-      <button class="dice-close" onclick="document.getElementById('dice-overlay').classList.remove('open')">✕</button>
+    <div class="dice-toast dice-rolling-phase">
       <div class="dice-label">${escHtml(label)}</div>
       <div class="dice-die">d${sides}</div>
-      <div class="dice-value">${roll}</div>
-      ${modifier !== 0 ? `<div class="dice-equation">${roll} ${modStr}</div>` : ''}
-      <div class="dice-total-wrap">
-        <div class="dice-total">${total}</div>
-        <div class="dice-total-label">TOTAL</div>
-      </div>
-      ${isCrit   ? '<div class="dice-badge dice-badge-crit">⚡ CRÍTICO!</div>'       : ''}
-      ${isFumble ? '<div class="dice-badge dice-badge-fumble">💀 FALHA CRÍTICA</div>' : ''}
+      <div class="dice-anim-num" id="dice-anim-num">?</div>
+      <div class="dice-rolling-hint">Rolando...</div>
     </div>`;
   overlay.classList.add('open');
-  clearTimeout(overlay._timer);
-  overlay._timer = setTimeout(() => overlay.classList.remove('open'), 5000);
+
+  let tick = 0;
+  overlay._rollInterval = setInterval(() => {
+    const el = document.getElementById('dice-anim-num');
+    if (el) { el.textContent = Math.floor(Math.random() * sides) + 1; tick++; }
+  }, 55);
+
+  // ── Phase 2: reveal result ─────────────────────────────────────────────────
+  overlay._timer = setTimeout(() => {
+    clearInterval(overlay._rollInterval);
+    const isCrit   = roll === sides;
+    const isFumble = roll === 1 && sides === 20;
+    const modStr   = modifier > 0 ? `+${modifier}` : modifier < 0 ? `${modifier}` : '';
+
+    const detailRows = (details || []).map(d =>
+      `<div class="dice-detail-row">
+        <span class="dice-detail-label">${escHtml(String(d.label))}</span>
+        <span class="dice-detail-val">${escHtml(String(d.value))}</span>
+      </div>`
+    ).join('');
+
+    overlay.innerHTML = `
+      <div class="dice-toast dice-reveal-phase${isCrit ? ' dice-crit' : ''}${isFumble ? ' dice-fumble' : ''}">
+        <button class="dice-close" onclick="document.getElementById('dice-overlay').classList.remove('open')">✕</button>
+        <div class="dice-label">${escHtml(label)}</div>
+        <div class="dice-die">d${sides}</div>
+        <div class="dice-value">${roll}</div>
+        ${modifier !== 0 ? `<div class="dice-equation">${roll} ${modStr}</div>` : ''}
+        <div class="dice-total-wrap">
+          <div class="dice-total">${total}</div>
+          <div class="dice-total-label">TOTAL</div>
+        </div>
+        ${isCrit   ? '<div class="dice-badge dice-badge-crit">⚡ CRÍTICO!</div>'        : ''}
+        ${isFumble ? '<div class="dice-badge dice-badge-fumble">💀 FALHA CRÍTICA</div>' : ''}
+        ${detailRows ? `
+          <button class="dice-details-btn" id="dice-details-btn">📊 Ver detalhes</button>
+          <div class="dice-details-panel" id="dice-details-panel">${detailRows}</div>` : ''}
+      </div>`;
+
+    document.getElementById('dice-details-btn')?.addEventListener('click', function() {
+      const panel = document.getElementById('dice-details-panel');
+      const open  = panel.classList.toggle('open');
+      this.textContent = open ? '▲ Ocultar detalhes' : '📊 Ver detalhes';
+    });
+
+    overlay._closeTimer = setTimeout(() => overlay.classList.remove('open'), 7000);
+  }, 1350);
 }
+
+window.masterRoll = function(playerName, label, score, profBonus, isProficient) {
+  const baseMod = Math.floor((score - 10) / 2);
+  const mod     = baseMod + (isProficient ? profBonus : 0);
+  const roll    = Math.floor(Math.random() * 20) + 1;
+  const total   = roll + mod;
+  showDiceToast({
+    label: `${playerName} — ${label}`, sides: 20, roll, modifier: mod, total,
+    details: [
+      { label: 'Rolagem', value: roll },
+      { label: 'Modificador', value: (baseMod >= 0 ? '+' : '') + baseMod },
+      ...(isProficient ? [{ label: 'Bônus de Proficiência', value: '+' + profBonus }] : []),
+      { label: 'Total', value: total },
+    ]
+  });
+};
 
 let _notifQueue  = [];
 let _notifActive = false;
@@ -2243,37 +2299,56 @@ function renderMeuPersonagem() {
   container.querySelectorAll('.pc-ability-box').forEach(box => {
     box.addEventListener('click', e => {
       if (e.target.tagName === 'INPUT') return;
-      const k  = box.dataset.ab;
-      const sc = parseInt(container.querySelector(`[name="sheet_ab_${k}"]`)?.value) || 10;
+      const k   = box.dataset.ab;
+      const sc  = parseInt(container.querySelector(`[name="sheet_ab_${k}"]`)?.value) || 10;
       const mod = Math.floor((sc - 10) / 2);
       const roll = Math.floor(Math.random() * 20) + 1;
-      showDiceToast({ label: AB_FULL[k], sides: 20, roll, modifier: mod, total: roll + mod });
+      const total = roll + mod;
+      showDiceToast({ label: AB_FULL[k], sides: 20, roll, modifier: mod, total, details: [
+        { label: 'Rolagem do dado', value: roll },
+        { label: `Modificador de ${AB_FULL[k]}`, value: (mod >= 0 ? '+' : '') + mod },
+        { label: 'Total', value: total },
+      ]});
     });
   });
 
   container.querySelectorAll('.pc-save-row').forEach(row => {
     row.addEventListener('click', e => {
       if (e.target.tagName === 'INPUT') return;
-      const k   = row.dataset.save;
-      const sc  = parseInt(container.querySelector(`[name="sheet_ab_${k}"]`)?.value) || 10;
-      const pbv = parseInt(document.getElementById('pc-prof-bonus')?.value) || 2;
-      const prof = row.querySelector('.pc-prof-dot')?.checked;
-      const mod  = Math.floor((sc - 10) / 2) + (prof ? pbv : 0);
-      const roll = Math.floor(Math.random() * 20) + 1;
-      showDiceToast({ label: `Resistência — ${AB_FULL[k]}`, sides: 20, roll, modifier: mod, total: roll + mod });
+      const k      = row.dataset.save;
+      const sc     = parseInt(container.querySelector(`[name="sheet_ab_${k}"]`)?.value) || 10;
+      const pbv    = parseInt(document.getElementById('pc-prof-bonus')?.value) || 2;
+      const prof   = row.querySelector('.pc-prof-dot')?.checked;
+      const base   = Math.floor((sc - 10) / 2);
+      const mod    = base + (prof ? pbv : 0);
+      const roll   = Math.floor(Math.random() * 20) + 1;
+      const total  = roll + mod;
+      showDiceToast({ label: `Resistência — ${AB_FULL[k]}`, sides: 20, roll, modifier: mod, total, details: [
+        { label: 'Rolagem do dado', value: roll },
+        { label: `Mod. de ${AB_FULL[k]}`, value: (base >= 0 ? '+' : '') + base },
+        ...(prof ? [{ label: 'Bônus de Proficiência', value: '+' + pbv }] : []),
+        { label: 'Total', value: total },
+      ]});
     });
   });
 
   container.querySelectorAll('.pc-skill-row').forEach(row => {
     row.addEventListener('click', e => {
       if (e.target.tagName === 'INPUT') return;
-      const sk  = DND_SKILLS.find(s => s.id === row.dataset.skill);
-      const sc  = parseInt(container.querySelector(`[name="sheet_ab_${row.dataset.ab}"]`)?.value) || 10;
-      const pbv = parseInt(document.getElementById('pc-prof-bonus')?.value) || 2;
+      const sk   = DND_SKILLS.find(s => s.id === row.dataset.skill);
+      const sc   = parseInt(container.querySelector(`[name="sheet_ab_${row.dataset.ab}"]`)?.value) || 10;
+      const pbv  = parseInt(document.getElementById('pc-prof-bonus')?.value) || 2;
       const prof = row.querySelector('.pc-prof-dot')?.checked;
-      const mod  = Math.floor((sc - 10) / 2) + (prof ? pbv : 0);
+      const base = Math.floor((sc - 10) / 2);
+      const mod  = base + (prof ? pbv : 0);
       const roll = Math.floor(Math.random() * 20) + 1;
-      showDiceToast({ label: sk?.name || row.dataset.skill, sides: 20, roll, modifier: mod, total: roll + mod });
+      const total = roll + mod;
+      showDiceToast({ label: sk?.name || row.dataset.skill, sides: 20, roll, modifier: mod, total, details: [
+        { label: 'Rolagem do dado', value: roll },
+        { label: `Mod. de ${AB_FULL[row.dataset.ab] || row.dataset.ab}`, value: (base >= 0 ? '+' : '') + base },
+        ...(prof ? [{ label: 'Bônus de Proficiência', value: '+' + pbv }] : []),
+        { label: 'Total', value: total },
+      ]});
     });
   });
 
@@ -3043,6 +3118,74 @@ function buildPlayerModalContent(uid) {
        </div>`
     : `<div class="modal-char-avatar"><div class="modal-char-avatar-placeholder">${escHtml(name.charAt(0).toUpperCase())}</div></div>`;
 
+  const sheet  = pc.sheet || {};
+  const hasSh  = !!(sheet.abilities || sheet.level);
+  const pb     = sheet.profBonus || 2;
+
+  const masterSheetHtml = (STATE.isMaster && hasSh) ? (() => {
+    const abGrid = AB_KEYS.map(k => {
+      const sc  = (sheet.abilities || {})[k] ?? 10;
+      const mod = Math.floor((sc - 10) / 2);
+      return `<div class="pms-ab" onclick="window.masterRoll('${escHtml(name)}','${AB_FULL[k]}',${sc},${pb},false)" title="Rolar ${AB_FULL[k]}">
+        <span class="pms-ab-label">${AB_PT[k]}</span>
+        <span class="pms-ab-mod">${mod >= 0 ? '+'+mod : mod}</span>
+        <span class="pms-ab-score">${sc}</span>
+      </div>`;
+    }).join('');
+
+    const savesHtml = AB_KEYS.map(k => {
+      const sc   = (sheet.abilities || {})[k] ?? 10;
+      const prof = (sheet.savingThrows || {})[k];
+      const base = Math.floor((sc - 10) / 2);
+      const mod  = base + (prof ? pb : 0);
+      return `<div class="pms-save-row" onclick="window.masterRoll('${escHtml(name)}','Resistência ${AB_PT[k]}',${sc},${pb},${!!prof})" title="Rolar">
+        <span class="pms-prof-dot${prof ? ' pms-prof-on' : ''}"></span>
+        <span class="pms-save-val">${mod >= 0 ? '+'+mod : mod}</span>
+        <span class="pms-save-name">${AB_PT[k]} — ${AB_FULL[k]}</span>
+      </div>`;
+    }).join('');
+
+    const skillsHtml = DND_SKILLS.map(sk => {
+      const sc   = (sheet.abilities || {})[sk.ability] ?? 10;
+      const prof = (sheet.skills || {})[sk.id];
+      const base = Math.floor((sc - 10) / 2);
+      const mod  = base + (prof ? pb : 0);
+      return `<div class="pms-skill-row" onclick="window.masterRoll('${escHtml(name)}','${sk.name}',${sc},${pb},${!!prof})" title="Rolar">
+        <span class="pms-prof-dot${prof ? ' pms-prof-on' : ''}"></span>
+        <span class="pms-skill-val">${mod >= 0 ? '+'+mod : mod}</span>
+        <span class="pms-skill-name">${sk.name}</span>
+        <span class="pms-skill-ab">${AB_PT[sk.ability]}</span>
+      </div>`;
+    }).join('');
+
+    return `
+      <div class="modal-section pms-section">
+        <div class="modal-section-title">⚔️ Ficha — Combate</div>
+        <div class="pms-meta">
+          ${sheet.level   ? `<div class="pms-stat"><label>Nível</label><span>${sheet.level}</span></div>` : ''}
+          ${sheet.maxHp   ? `<div class="pms-stat"><label>PV</label><span>${sheet.hp ?? '?'}/${sheet.maxHp}</span></div>` : ''}
+          ${sheet.ac      ? `<div class="pms-stat"><label>CA</label><span>${sheet.ac}</span></div>` : ''}
+          ${sheet.initiative != null ? `<div class="pms-stat"><label>Iniciativa</label><span>${sheet.initiative >= 0 ? '+'+sheet.initiative : sheet.initiative}</span></div>` : ''}
+          <div class="pms-stat"><label>Prof.</label><span>+${pb}</span></div>
+          ${sheet.speed   ? `<div class="pms-stat"><label>Deslocamento</label><span>${sheet.speed}</span></div>` : ''}
+        </div>
+      </div>
+      <div class="modal-section pms-section">
+        <div class="modal-section-title">🎲 Atributos — clique para rolar</div>
+        <div class="pms-abilities">${abGrid}</div>
+      </div>
+      <div class="modal-section pms-section pms-two-cols">
+        <div>
+          <div class="modal-section-title">🛡️ Resistências</div>
+          <div class="pms-saves">${savesHtml}</div>
+        </div>
+        <div>
+          <div class="modal-section-title">📋 Perícias</div>
+          <div class="pms-skills">${skillsHtml}</div>
+        </div>
+      </div>`;
+  })() : '';
+
   return `
     <div class="modal-char-hero">
       ${avatarHtml}
@@ -3052,6 +3195,7 @@ function buildPlayerModalContent(uid) {
         <div class="badges"><span class="badge player-badge">⚔ Jogador: ${escHtml(p.displayName || '')}</span></div>
       </div>
     </div>
+    ${masterSheetHtml}
     ${pc.appearance && (STATE.isMaster || isFieldVisible(pc, 'appearance', STATE.user.uid)) ? `<div class="modal-section"><div class="modal-section-title">Aparência</div><div class="modal-section-text">${escHtml(pc.appearance)}</div></div>` : ''}
     ${pc.personality && (STATE.isMaster || isFieldVisible(pc, 'personality', STATE.user.uid)) ? `<div class="modal-section"><div class="modal-section-title">Personalidade &amp; Motivações</div><div class="modal-section-text">${escHtml(pc.personality)}</div></div>` : ''}
     ${pc.history && (STATE.isMaster || isFieldVisible(pc, 'history', STATE.user.uid)) ? `<div class="modal-section"><div class="modal-section-title">História</div><div class="modal-section-text">${escHtml(pc.history)}</div></div>` : ''}
