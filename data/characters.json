@@ -1,416 +1,871 @@
 [
   {
-    "id": "himmel-varek",
-    "name": "Himmel Varek",
-    "role": "Sacerdote-rei / O Fundador",
-    "status": "Morto",
-    "faction": "casa-varek",
-    "description": "O primeiro rei. O Fundador. Nos templos oficiais de Velmarch é tratado como figura quase divina — representado sempre de costas, olhando para o horizonte. Ninguém pinta seu rosto. A tradição diz que é respeito. Era um estudioso que teve acesso a um conhecimento que nenhum ser humano deveria carregar sozinho. Curioso, inconvenientemente questionador, capaz de amar profundamente — e de separar o amor da decisão quando achava que não havia alternativa.",
-    "personality": "Não era um conquistador nem um tirano. Carregava o peso de suas escolhas com silêncio e determinação. Amava profundamente, mas sabia separar o amor da necessidade quando acreditava não haver alternativa.",
-    "secretsList": [
-      {
-        "id": "himmel-s1",
-        "text": "Camada 1 — O Fundador tinha um nome: Registros antigos em ilhas fora do controle de Velmarch preservam o nome 'Himmel Varek' — o mesmo sobrenome da Casa Real. Qualquer pesquisador com acesso a arquivos não censurados pode descobrir isso.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "himmel-s2",
-        "text": "Camada 2 — O Fundador era um sacerdote, não um rei: Himmel não era governante de nada quando realizou o ritual. Era um sacerdote-rei de uma ilha pequena. A Casa Varek construiu a narrativa do rei fundador para legitimar quatorze gerações de governo. Himmel nunca quis fundar um império.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "himmel-s3",
-        "text": "Camada 3 — Himmel afogou o mundo de propósito: A Maré Alta não foi fenômeno natural nem acidente arcano. Foi um sacrifício deliberado, voluntário e planejado. Himmel encontrou no tomo de um deus morto o único método de selar O Peso permanentemente — e o executou sabendo exatamente o que estava fazendo. Morreu no processo.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "himmel-s4",
-        "text": "Camada 4 — Himmel tinha uma família élfica escondida: Antes do ritual, Himmel apaixonou-se por Frieren, uma elfa, e teve com ela uma filha — Fern. Escondeu as duas em Reva e instalou um cristal que remove as aparências élficas de todos os presentes, protegendo-as da caça que sabia que viria. Os descendentes dessa união são a família Talion — todos elfos sem saber.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      }
-    ]
-  },
-  {
-    "id": "aldric-xiv",
-    "name": "Aldric Varek XIV",
-    "role": "Rei do Domínio de Velmarch",
-    "status": "Vivo",
-    "faction": "velmarch",
-    "description": "O décimo quarto rei da Casa Varek. Governa com inteligência fria, raramente levanta a voz e nunca deixa sua ilha capital. Não é cruel por prazer — é pragmático por convicção. Acredita genuinamente que sem Velmarch, Pelágos implode em guerras insulares. Carrega o peso do governo como quem carrega uma âncora — necessária para não derivar, insuportável de qualquer outro jeito. Às vezes visto nas janelas do palácio de madrugada, olhando para o mar com uma expressão que ninguém consegue nomear. Não dorme bem há décadas.",
-    "personality": "Não é cruel por prazer. É cruel por convicção. Nunca age por capricho — cada decisão, por mais brutal, tem uma lógica que ele consegue articular. Isso o torna muito mais assustador do que um tirano comum.",
-    "secretsList": [
-      {
-        "id": "aldric-s1",
-        "text": "Camada 1 — Aldric sabe que o tomo existe: Sabe que existe um tomo antigo guardado na câmara selada do palácio. Sabe que é importante. O que não sabe é o que está escrito — nenhum Varek leu o documento completo em gerações.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "aldric-s2",
-        "text": "Camada 2 — Aldric não sabe o que está selado: Genuinamente ignora que O Peso existe. Não sabe que a inundação foi intencional. Não sabe o que aconteceria se o nível do mar baixasse. Governa sobre um segredo que nem ele compreende — o vilão maior da campanha cuida de um cofre sem saber o que há dentro.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "aldric-s3",
-        "text": "Camada 3 — Aldric e as madrugadas: A insônia de Aldric não é melancolia senil. É uma sensação que nunca conseguiu nomear: a impressão de que algo sob o oceano está acordado e o observando de volta. Nunca falou sobre isso com ninguém.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "aldric-s4",
-        "text": "Camada 4 — O contrato com Gangplank: Aldric contratou Gangplank para executar serviços que A Corrente não pode fazer publicamente — eliminações, bloqueios, proteções discretas. A relação é conhecida por menos de cinco pessoas. Aldric tem tanto medo de Gangplank quanto qualquer outra pessoa — simplesmente foi o primeiro a chegar com dinheiro suficiente.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      }
-    ]
-  },
-  {
-    "id": "taliyah-varek",
-    "name": "Taliyah Varek",
-    "role": "Rainha do Domínio de Velmarch",
-    "status": "Vivo",
-    "faction": "velmarch",
-    "description": "A pessoa mais gentil que já pisou no Palácio de Velmyr. Não governa, não influencia política, não recebe embaixadores. Cuida dos jardins do palácio com dedicação que seus assessores consideram excêntrica — ela mesma planta, poda, rega. Com Cade, é presença constante e paciente — talvez a única pessoa no palácio que o ama sem agenda. Vê a ansiedade do filho e sofre com uma impotência silenciosa.",
-    "personality": "Silenciosa, cuidadosa, apaixonada por floricultura. Décadas ao lado do marido ensinaram Taliyah a ler o que ele não diz. Não tem aliadas políticas — escolheu deliberadamente ficar fora do jogo de poder.",
-    "secretsList": [
-      {
-        "id": "taliyah-s1",
-        "text": "Camada 1 — Taliyah sabe que algo pesa sobre Aldric: Décadas ao lado do marido ensinaram Taliyah a ler o que ele não diz. Sabe que há algo pesando sobre Aldric além do governo — algo que ele olha nas madrugadas e que nunca a convidou a conhecer.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "taliyah-s2",
-        "text": "Camada 2 — Os jardins são resistência: A obsessão com floricultura não é excentricidade — é o único espaço em Velmyr onde ela tem controle total sobre algo que cresce sem servir a um propósito político. É sua forma silenciosa de existir num palácio que transforma tudo em instrumento.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      }
-    ]
-  },
-  {
-    "id": "cade-varek",
-    "name": "Cade Varek",
-    "role": "Príncipe Herdeiro de Velmarch",
-    "status": "Vivo",
-    "faction": "velmarch",
-    "description": "O príncipe rebelde. Critica abertamente as políticas de Velmarch, fala sobre 'um Domínio mais justo', já recebeu emissários de ilhas descontentes. Parece ser exatamente o aliado que os jogadores precisam dentro de Velmarch.",
-    "personality": "Fraco e ansioso. Não é mau — é desesperado por aprovação. Toda rebeldia é performance. Cade não quer mudar Velmarch. Quer que Aldric olhe para ele e pense 'esse é meu filho'. Cada gesto de rebeldia é uma pergunta não respondida: 'agora você me vê?'.",
-    "secretsList": [
-      {
-        "id": "cade-s1",
-        "text": "Camada 1 — A rebeldia é performance: Cade nunca de fato faz nada — só fala. Cada ação é calculada para chegar aos ouvidos de Aldric. Jogadores que investigarem suas ações percebem o padrão: muita retórica, zero consequência prática.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "cade-s2",
-        "text": "Camada 2 — Cade sabe sobre o tomo: Como herdeiro, conhece a existência do tomo selado — não seu conteúdo. Pode usar essa informação para se aproximar dos jogadores e ganhar confiança, oferecendo algo real como prova de boa-fé.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "cade-s3",
-        "text": "Camada 3 — A traição: No momento em que trair os jogadores se tornar a moeda mais valiosa para comprar aprovação de Aldric, Cade vai trair. Não por maldade — por desespero. E vai se odiar imediatamente depois, o que não vai desfazer nada. Plante sinais sutis: ele nunca age sem calcular como o pai vai receber a notícia.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      }
-    ]
-  },
-  {
-    "id": "frieren-talion",
-    "name": "Frieren Talion",
-    "role": "Matriarca / Origem da Família Talion",
-    "status": "Vivo",
-    "faction": "familia-talion",
-    "description": "Uma anciã que sempre esteve lá. Os mais antigos da família dizem que a avó da avó já a conhecia assim — pequena, de cabelos brancos, olhos claros que parecem olhar ligeiramente para o lado do que estão vendo de verdade. Os mais jovens simplesmente a chamam de Tia Frieren. Vive na casa no fim da praia. Não deixa ninguém plantar flores no jardim. Carrega uma perda impossível com a serenidade de quem passou séculos aprendendo a sobreviver a ela.",
-    "personality": "Gentil, presente, aparentemente distraída. Na verdade, filtrando constantemente o que lembra e o que deixa ir. Não está esquecendo por fraqueza — está esquecendo por sobrevivência. Uma escolha repetida todos os dias durante séculos até virar reflexo.",
-    "secretsList": [
-      {
-        "id": "frieren-s1",
-        "text": "Camada 1 — Frieren é muito mais velha do que parece: Demonstra familiaridade com eventos antigos que não faz sentido para qualquer humano. Conhece rotas marítimas que sumiram dos mapas há séculos. Menciona lugares pelo nome antigo, antes da Maré Alta.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "frieren-s2",
-        "text": "Camada 2 — Frieren está esquecendo de propósito: O esquecimento não é degeneração da idade — é uma escolha. Amou alguém com uma intensidade que sobreviveu ao afogamento do mundo inteiro, e descobriu que lembrar doía mais do que qualquer coisa. Chegar até essas memórias exige convencê-la de que a dor vale a pena.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "frieren-s3",
-        "text": "Camada 3 — Frieren amou Himmel e estava lá: Foi a única que tentou impedir Himmel. Foi a única que ele abraçou antes de começar. Viu as águas subirem do pico mais alto de Reva com Fern nos braços. O nome do ritual — O Abraço das Águas Eternas — ele escolheu para ela. É a única memória que não consegue largar.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "frieren-s4",
-        "text": "Camada 4 — Frieren sabe o que está selado: Himmel explicou tudo antes de partir. Frieren sabe sobre O Peso, sabe o que aconteceria se o selo quebrasse, sabe que a inundação foi o preço da sobrevivência do mundo. É a única pessoa viva com esse conhecimento completo — e passou séculos enterrando-o junto com tudo que amava.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      }
-    ]
-  },
-  {
-    "id": "fern-talion",
-    "name": "Fern Talion",
-    "role": "Filha de Frieren / Administradora de Reva",
-    "status": "Vivo",
-    "faction": "familia-talion",
-    "description": "Uma mulher de meia-idade aparente que cuida dos acordos comerciais de Reva e das interações com navios de passagem. Discreta, cordial, eficiente. Parece apenas a administradora prática de uma ilha simples.",
-    "personality": "Carrega o peso do segredo com a serenidade de quem já teve tempo demais para se acostumar. Não odeia os elfos que causaram tudo — nasceu depois. Mas entende que o ódio de Pelágos não distingue culpados de inocentes.",
-    "secretsList": [
-      {
-        "id": "fern-s1",
-        "text": "Camada 1 — Fern administra mais do que parece: Controla quem entra, quem sai, quais navios são bem-vindos. Os padrões de comércio de Reva revelam uma ilha cuidadosamente gerenciada, não uma comunidade simples.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "fern-s2",
-        "text": "Camada 2 — Fern sabe que são elfos: Conhece a verdade sobre a família Talion. Se os jogadores ganharem sua confiança, ela vai revelar — mas nunca antes de ter certeza de que podem ser confiados com informação que é sentença de morte se vazar.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "fern-s3",
-        "text": "Camada 3 — Fern conhece a história completa de Himmel: Frieren contou tudo a Fern quando ainda conseguia falar sobre isso. Fern sabe sobre O Peso, o sacrifício, o que acontece se o selo quebrar. É a segunda pessoa viva com esse conhecimento — e ao contrário da mãe, não está esquecendo. Está esperando alguém que mereça saber.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      }
-    ]
-  },
-  {
-    "id": "soren-mael",
-    "name": "Soren Mael",
-    "role": "Cartógrafo Errante / Instrumento Inconsciente de Selavin Doss",
-    "status": "Vivo",
-    "faction": null,
-    "description": "Soren Mael tem pouco mais de trinta anos. É cartógrafo por formação e por vocação — passou os primeiros anos da carreira mapeando rotas comerciais para pequenos mercadores, trabalho honesto de quem ama o ofício mais do que a fama. Tem uma esposa em alguma ilha, filhos pequenos, um barco modesto que conhece pelo nome. O tipo de homem que manda cartas para casa toda vez que passa por um porto com serviço de correio. Não há nada nele que sugira perigo. E ele genuinamente não é perigoso — o perigo está em quem o usa.",
-    "personality": "Caloroso, presente, genuinamente curioso sobre as pessoas que encontra. Faz perguntas boas e escuta as respostas de verdade. Fala sobre a esposa e os filhos com saudade leve de quem sabe que vai voltar. Sinais a plantar: não mergulha mais; perto de água profunda e parada fica quieto por alguns segundos; escreve cartas com frequência obsessiva; às vezes completa uma frase e franze o cenho levemente, como se a frase tivesse chegado de outro lugar.",
-    "secretsList": [
-      {
-        "id": "soren-s1",
-        "text": "Camada 1 — Os mapas de Soren têm uma ausência: Em nenhum dos seus mapas aparece a ilha capital de Velmyr. Não está riscada nem marcada como desconhecida. Simplesmente não existe. Um cartógrafo que repara nisso e pergunta recebe resposta vaga e imediata mudança de assunto.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "soren-s2",
-        "text": "Camada 2 — A mão que não treme: Soren tem um tremor leve na mão direita que compromete a precisão dos mapas — exceto nas marcações de profundidade oceânica, onde a mão é cirúrgica. Essa inconsistência não tem explicação médica óbvia.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "soren-s3",
-        "text": "Camada 3 — O mergulho que ele não lembra: Há um gap nas suas anotações — semanas sem registro, seguidas de retorno abrupto ao trabalho normal. Ele não fala sobre esse período. Se pressionado, diz que estava doente. Seus olhos dizem que não sabe o que estava.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "soren-s4",
-        "text": "Camada 4 — Soren é instrumento direto de Selavin Doss, não do Peso cego: O que vaza por Soren não é impulso amorfo do Thurvael — é a vontade calculada de Selavin Doss, operando através da fresta que o mergulho abriu. Cada informação que Soren compartilha foi escolhida. Cada rota que sugere foi calculada por séculos de planejamento. Soren não sabe disso. Acredita genuinamente em cada coisa que diz. Selavin o usa para conduzir os jogadores ao tomo de Himmel — e ao selo.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      }
-    ]
-  },
-  {
-    "id": "tulo-bresh",
-    "name": "Tulo Bresh",
-    "role": "Governador de Kaldera",
-    "status": "Vivo",
-    "faction": "velmarch",
-    "description": "Um homem grande, de voz alta e riso fácil. Não é sofisticado nem tenta parecer. As taxas que cobra ultrapassam em muito o que Velmarch determina — a diferença vai para seus cofres, seus banquetes, as prostitutas trazidas de Marvosa que vivem em ala própria no palácio. Os pobres de Kaldera conhecem seu nome com o ódio de quem sabe que reclamar não adianta.",
-    "personality": "Toma o que quer porque pode. Não persegue por prazer, mas também não perde tempo com culpa. É prático: explora porque pode, festeja porque quer, e dorme muito bem. A única coisa que o perturba é o que não controla — e há mais disso do que ele imagina.",
-    "secretsList": [
-      {
-        "id": "tulo-s1",
-        "text": "Camada 1 — As taxas não batem: Qualquer personagem com acesso aos registros fiscais de Kaldera percebe que os impostos cobrados excedem em muito o que Velmarch determina. A diferença não aparece em nenhum relatório enviado a Velmyr.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "tulo-s2",
-        "text": "Camada 2 — Gloria sabe de tudo: As noites de Tulo em Marvosa estão documentadas com riqueza de detalhes que o faria empalidecer. Gloria Vittar possui informação suficiente para destruir sua carreira e possivelmente sua liberdade. Tulo não sabe que está documentado.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      }
-    ]
-  },
-  {
-    "id": "gloria-vittar",
-    "name": "Gloria Vittar",
-    "role": "Senhora de Marvosa",
-    "status": "Vivo",
-    "faction": null,
-    "description": "Alta, ruidosa, coberta de plumas, joias e uma maquiagem que levaria horas para qualquer pessoa comum aplicar. Gloria é a senhora incontestável de Marvosa — sem título oficial, sem decreto. Com suas trabalhadoras, a extravagância transforma-se em algo mais íntimo: ela conhece o nome de cada uma, sabe de onde vieram, o que precisam, o que temem. Paga bem, protege melhor, nunca força ninguém.",
-    "personality": "Perceptiva, estratégica, genuinamente protetora das suas. Escolhe aliados com critério e não respeita quem não respeita suas trabalhadoras. Tem senso de humor afiado e memória perfeita — combinação perigosa.",
-    "secretsList": [
-      {
-        "id": "gloria-s1",
-        "text": "Camada 1 — Marvosa nunca foi tomada por acidente: Velmarch tentou estabelecer presença em Marvosa duas vezes. As duas vezes, os oficiais voltaram sem ter conseguido nada — distraídos, comprometidos ou incapazes de explicar o que deu errado. Não foi sorte. Foi operação.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "gloria-s2",
-        "text": "Camada 2 — As trabalhadoras são espiãs: Cada trabalhadora de Gloria é, em diferentes graus, uma espiã treinada. Algumas coletam informações passivamente. Outras são assassinas de precisão clínica. O dossiê que Gloria possui sobre figuras de poder de Pelágos é provavelmente o documento mais valioso do arquipélago.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "gloria-s3",
-        "text": "Camada 3 — Gloria escolhe seus aliados: Não vende informação por dinheiro. Vende por favores, por influência, por proteção para as suas — e ocasionalmente de graça para alguém que ela decide que merece saber. Se os jogadores se comportarem bem em Marvosa, Gloria pode se tornar a aliada mais poderosa da campanha. Se se comportarem mal, viram um item no dossiê dela.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      }
-    ]
-  },
-  {
-    "id": "gangplank",
-    "name": "Gangplank",
-    "role": "Pirata / O Terror dos Mares de Pelágos",
-    "status": "Vivo",
-    "faction": "mare-negra",
-    "description": "Ninguém sabe de onde Gangplank veio. Não há ilha que o reivindique como filho, não há porto que admita tê-lo criado. Ele simplesmente está — como a maré, como a tempestade que aparece sem aviso e some deixando destroços. Comanda o Dead Pool — um navio negro como fundo de oceano, com velas que parecem absorver a luz ao redor. Quando aparece no horizonte, capitães experientes não ordenam combate nem fuga. Ordenam silêncio.",
-    "personality": "Impiedoso da forma mais fria possível — não age por raiva nem por crueldade sádica, mas por lógica. Se alguém representa um problema, o problema é eliminado. Se alguém representa utilidade, é mantido. O inimigo do meu inimigo não existe no vocabulário de Gangplank. Existe apenas: o que você vale para mim agora.",
-    "secretsList": [
-      {
-        "id": "gangplank-s1",
-        "text": "Camada 1 — Gangplank tem território definido: Suas operações não são aleatórias — controlam rotas específicas de Pelágos com precisão que sugere décadas de planejamento. Qualquer capitão ou cartógrafo que analise os padrões da Maré Negra percebe que há lógica territorial clara. Gangplank não está saqueando. Está administrando.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "gangplank-s2",
-        "text": "Camada 2 — O Dead Pool nunca foi abordado com sucesso: A Corrente tentou interceptar o Dead Pool em pelo menos três ocasiões. Em duas, os navios voltaram com baixas pesadas. Na terceira, não voltaram. A Corrente recebeu ordem de não engajar sem autorização direta de Velmyr.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "gangplank-s3",
-        "text": "Camada 3 — Gangplank trabalha para Aldric: Por baixo dos panos e por bom e velho dinheiro, executa serviços para o rei de Velmarch — eliminações que A Corrente não pode fazer publicamente, proteção de rotas, bloqueio de movimentos de resistência. A relação é estritamente financeira — sem lealdade, sem ideologia.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "gangplank-s4",
-        "text": "Camada 4 — Aldric tem tanto medo de Gangplank quanto os outros: O contrato existe porque Aldric foi o primeiro a chegar com dinheiro suficiente — não porque Gangplank precisava de cliente. Se Aldric alguma vez tentar usar Gangplank como ferramenta descartável, vai descobrir que ferramentas não ficam paradas quando decidem cortar a mão que as segura.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      }
-    ]
-  },
-  {
-    "id": "aelindra",
-    "name": "Aelindra",
-    "role": "Sacerdotisa do Selamento",
-    "status": "Morto",
-    "faction": null,
-    "description": "Sacerdotisa élfica que viveu durante a Grande Guerra e foi contemporânea de Himmel Varek. Pertencia à Ordem da Última Chama — uma ordem religiosa que tentou resistir à Fome por meios espirituais. Estava presente quando Himmel surgiu com o método de selamento e descreveu a reação de sua superiora ao ouvir o preço: chorar, ela que não chorava desde a Guerra dos Cinquenta Anos. Deixou escrito o único registro direto dos acontecimentos da Grande Guerra do ponto de vista de quem os viveu.",
-    "personality": "Sóbria, direta, sem ilusões. Escrevia para a posteridade, não para o conforto. Acreditava que a verdade mal contada era mais perigosa que o silêncio — e viveu a ironia de ter causado o maior desastre de sua vida ao tentar proteger alguém que não merecia proteção.",
     "secretsList": [
       {
         "id": "aelindra-s1",
         "text": "Camada 1 — Aelindra era élfica e fazia parte do círculo de selamento: Não era uma observadora — era uma das sacerdotisas ativamente envolvidas no esforço de selar O Peso. Conhecia o plano de Himmel por dentro, incluindo o preço que ele estava disposto a pagar.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
       },
       {
-        "id": "aelindra-s2",
         "text": "Camada 2 — Aelindra contou o plano a Selavin Doss por medo, não por traição: O que o plano de Himmel exigia a aterrorizou — a escala do sacrifício, a inundação, a irreversibilidade. Em um momento de medo, ela foi a Selavin acreditando que ele poderia encontrar uma alternativa. Não sabia que Selavin usaria essa informação para preparar o ritual de fusão com o Thurvael no tempo que ela lhe deu. Ela lhe entregou o único presente que ele precisava: tempo.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
+        "id": "aelindra-s2",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
       },
       {
         "id": "aelindra-s3",
         "text": "Camada 3 — O erro de Aelindra é a razão de Selavin sobreviver: Sem o aviso dela, Selavin teria sido selado ou destruído com os demais magistas. A fusão com o Thurvael só foi possível porque ele teve minutos — talvez uma hora — para preparar o ritual que garantiu sua sobrevivência dentro do selo. Aelindra não traiu ninguém conscientemente. Mas a consequência de seu medo foi tornar o maior vilão do mundo imortal.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
       },
       {
-        "id": "aelindra-s4",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
         "text": "Camada 4 — A Memória dos Derradeiros Dias é o testemunho de alguém que sabe o que fez: Aelindra escreveu o documento mais preciso sobre o ritual de selamento porque estava lá — e porque a escrita era a única penitência que podia oferecer. O texto não menciona o aviso a Selavin. O silêncio sobre o assunto, para quem souber o que procurar, é mais eloquente do que qualquer confissão.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
+        "id": "aelindra-s4"
+      }
+    ],
+    "description": "Sacerdotisa élfica que viveu durante a Grande Guerra e foi contemporânea de Himmel Varek. Pertencia à Ordem da Última Chama — uma ordem religiosa que tentou resistir à Fome por meios espirituais. Estava presente quando Himmel surgiu com o método de selamento e descreveu a reação de sua superiora ao ouvir o preço: chorar, ela que não chorava desde a Guerra dos Cinquenta Anos. Deixou escrito o único registro direto dos acontecimentos da Grande Guerra do ponto de vista de quem os viveu.",
+    "name": "Aelindra",
+    "visibility": {
+      "playerIds": [],
+      "mode": "hidden"
+    },
+    "role": "Sacerdotisa do Selamento",
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781715514/copmduolicv8xn3py5d3.jpg",
+    "faction": null,
+    "personality": "Sóbria, direta, sem ilusões. Escrevia para a posteridade, não para o conforto. Acreditava que a verdade mal contada era mais perigosa que o silêncio — e viveu a ironia de ter causado o maior desastre de sua vida ao tentar proteger alguém que não merecia proteção.",
+    "status": "Morto",
+    "id": "aelindra"
+  },
+  {
+    "image": "aldric-xiv.jpg",
+    "locations": [
+      "velmyr"
+    ],
+    "secretsList": [
+      {
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
+        "id": "aldric-s1",
+        "text": "Camada 1 — Aldric sabe que o tomo existe: Sabe que existe um tomo antigo guardado na câmara selada do palácio. Sabe que é importante. O que não sabe é o que está escrito — nenhum Varek leu o documento completo em gerações."
+      },
+      {
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
+        "id": "aldric-s2",
+        "text": "Camada 2 — Aldric não sabe o que está selado: Genuinamente ignora que O Peso existe. Não sabe que a inundação foi intencional. Não sabe o que aconteceria se o nível do mar baixasse. Governa sobre um segredo que nem ele compreende — o vilão maior da campanha cuida de um cofre sem saber o que há dentro."
+      },
+      {
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
+        "text": "Camada 3 — Aldric e as madrugadas: A insônia de Aldric não é melancolia senil. É uma sensação que nunca conseguiu nomear: a impressão de que algo sob o oceano está acordado e o observando de volta. Nunca falou sobre isso com ninguém.",
+        "id": "aldric-s3"
+      },
+      {
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
+        "text": "Camada 4 — O contrato com Gangplank: Aldric contratou Gangplank para executar serviços que A Corrente não pode fazer publicamente — eliminações, bloqueios, proteções discretas. A relação é conhecida por menos de cinco pessoas. Aldric tem tanto medo de Gangplank quanto qualquer outra pessoa — simplesmente foi o primeiro a chegar com dinheiro suficiente.",
+        "id": "aldric-s4"
+      }
+    ],
+    "description": "O décimo quarto rei da Casa Varek. Governa com inteligência fria, raramente levanta a voz e nunca deixa sua ilha capital. Não é cruel por prazer — é pragmático por convicção. Acredita genuinamente que sem Velmarch, Pelágos implode em guerras insulares. Carrega o peso do governo como quem carrega uma âncora — necessária para não derivar, insuportável de qualquer outro jeito. Às vezes visto nas janelas do palácio de madrugada, olhando para o mar com uma expressão que ninguém consegue nomear. Não dorme bem há décadas.",
+    "personality": "Não é cruel por prazer. É cruel por convicção. Nunca age por capricho — cada decisão, por mais brutal, tem uma lógica que ele consegue articular. Isso o torna muito mais assustador do que um tirano comum.",
+    "role": "Rei do Domínio de Velmarch",
+    "secretsVisibility": {
+      "playerIds": [],
+      "mode": "hidden"
+    },
+    "name": "Aldric Varek XIV",
+    "events": [],
+    "visibility": {
+      "playerIds": [],
+      "mode": "hidden"
+    },
+    "id": "aldric-xiv",
+    "relations": [
+      {
+        "label": "descendente de",
+        "targetId": "himmel-varek",
+        "targetType": "character"
+      },
+      {
+        "targetType": "character",
+        "targetId": "taliyah-varek",
+        "label": "casado com"
+      },
+      {
+        "targetType": "character",
+        "targetId": "cade-varek",
+        "label": "pai de"
+      },
+      {
+        "targetId": "tulo-bresh",
+        "targetType": "character",
+        "label": "superior de"
+      },
+      {
+        "label": "lidera",
+        "targetId": "velmarch",
+        "targetType": "faction"
+      }
+    ],
+    "secrets": "SEGREDO DO MESTRE: Aldric não sabe o conteúdo completo do tomo de Himmel. Sabe que existe, sabe que é importante, sabe que deve ser guardado. Não sabe o que está selado sob o oceano. Não sabe que desfazer a inundação libertaria O Peso. Governa sobre um segredo que nem ele compreende. Isso o humaniza — o vilão maior da campanha cuida de um cofre sem saber o que há dentro.",
+    "status": "Vivo",
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781117771/lneocjtqoiywfbajpbs0.jpg",
+    "faction": "velmarch"
+  },
+  {
+    "relations": [
+      {
+        "label": "filho de",
+        "targetId": "aldric-xiv",
+        "targetType": "character"
+      },
+      {
+        "targetId": "taliyah-varek",
+        "targetType": "character",
+        "label": "filho de"
+      }
+    ],
+    "status": "Vivo",
+    "secrets": "SEGREDO DO MESTRE — CRÍTICO: Cade vai trair os jogadores. Vai genuinamente querer ajudá-los por um tempo e parecerá um aliado real. A traição vai acontecer no momento em que ela se tornar a moeda mais valiosa que ele tem para comprar o amor do pai. Não vai hesitar. E vai se odiar por isso imediatamente depois — o que não vai desfazer nada.\n\nPlante sinais sutis desde o início: ele nunca age sem calcular como Aldric vai receber a notícia. Quando os jogadores confiarem plenamente nele, a traição vai doer mais.",
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781117758/bkcudb5ims2a1gnvcm3i.jpg",
+    "faction": "casa-varek",
+    "events": [],
+    "name": "Cade Varek",
+    "visibility": {
+      "mode": "hidden",
+      "playerIds": []
+    },
+    "id": "cade-varek",
+    "personality": "Fraco e ansioso. Não é mau — é desesperado por aprovação. Toda rebeldia é performance. Cade não quer mudar Velmarch. Quer que Aldric olhe para ele e pense 'esse é meu filho'. Cada gesto de rebeldia é uma pergunta não respondida: 'agora você me vê?'.",
+    "role": "Príncipe Herdeiro de Velmarch",
+    "secretsVisibility": {
+      "playerIds": [],
+      "mode": "hidden"
+    },
+    "image": "cade-varek.jpg",
+    "description": "O príncipe rebelde. Critica abertamente as políticas de Velmarch, fala sobre 'um Domínio mais justo', já recebeu emissários de ilhas descontentes. Parece ser exatamente o aliado que os jogadores precisam dentro de Velmarch.",
+    "locations": [
+      "velmyr"
+    ],
+    "secretsList": [
+      {
+        "text": "Camada 1 — A rebeldia é performance: Cade nunca de fato faz nada — só fala. Cada ação é calculada para chegar aos ouvidos de Aldric. Jogadores que investigarem suas ações percebem o padrão: muita retórica, zero consequência prática.",
+        "id": "cade-s1",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      },
+      {
+        "text": "Camada 2 — Cade sabe sobre o tomo: Como herdeiro, conhece a existência do tomo selado — não seu conteúdo. Pode usar essa informação para se aproximar dos jogadores e ganhar confiança, oferecendo algo real como prova de boa-fé.",
+        "id": "cade-s2",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      },
+      {
+        "text": "Camada 3 — A traição: No momento em que trair os jogadores se tornar a moeda mais valiosa para comprar aprovação de Aldric, Cade vai trair. Não por maldade — por desespero. E vai se odiar imediatamente depois, o que não vai desfazer nada. Plante sinais sutis: ele nunca age sem calcular como o pai vai receber a notícia.",
+        "id": "cade-s3",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
       }
     ]
   },
   {
-    "id": "selavin-doss",
-    "name": "Selavin Doss",
-    "role": "Arquiteto da Grande Guerra / Hospedeiro do Thurvael / Vilão Final",
-    "status": "Desaparecido",
-    "faction": null,
-    "description": "O magista élfico mais brilhante de sua geração. Liderou a descoberta e a invocação do Thurvael — o ser que o povo chamaria de O Peso — acreditando que uma força primordial poderia ser domesticada como vantagem definitiva dos elfos. Não era malicioso. Era genial demais para imaginar que poderia estar errado. No momento em que Himmel completava o ritual de selamento, Selavin fez uma última escolha: cedeu seu corpo e consciência como hospedeiro voluntário, fundindo-se com o Thurvael no exato instante do selamento. Sobreviveu — não como homem, mas como consciência fundida com uma entidade primordial, presa a quilômetros de profundidade sob o oceano há séculos. Se o selo for quebrado, não emergirá o Thurvael como força amorfa — emergirá Selavin Doss, com séculos de planejamento e o poder integral do Peso dentro de si.",
-    "personality": "Brilhante, calculista e absolutamente convicto de si mesmo. Não era malicioso — era genial demais para imaginar que poderia estar errado. Disse a Vaelindra, numa conversa que ela nunca esqueceu: 'Não é um ser. É uma força. As forças podem ser dirigidas.' Depois de séculos dentro do selo, aprendeu que estava errado sobre isso. O que não aprendeu é que pode estar errado sobre outras coisas.",
+    "image": "fern-talion.jpg",
+    "description": "Uma mulher de meia-idade aparente que cuida dos acordos comerciais de Reva e das interações com navios de passagem. Discreta, cordial, eficiente. Parece apenas a administradora prática de uma ilha simples.",
+    "locations": [
+      "reva"
+    ],
     "secretsList": [
       {
-        "id": "selavin-s1",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
+        "id": "fern-s1",
+        "text": "Camada 1 — Fern administra mais do que parece: Controla quem entra, quem sai, quais navios são bem-vindos. Os padrões de comércio de Reva revelam uma ilha cuidadosamente gerenciada, não uma comunidade simples."
+      },
+      {
+        "id": "fern-s2",
+        "text": "Camada 2 — Fern sabe que são elfos: Conhece a verdade sobre a família Talion. Se os jogadores ganharem sua confiança, ela vai revelar — mas nunca antes de ter certeza de que podem ser confiados com informação que é sentença de morte se vazar.",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      },
+      {
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
+        "text": "Camada 3 — Fern conhece a história completa de Himmel: Frieren contou tudo a Fern quando ainda conseguia falar sobre isso. Fern sabe sobre O Peso, o sacrifício, o que acontece se o selo quebrar. É a segunda pessoa viva com esse conhecimento — e ao contrário da mãe, não está esquecendo. Está esperando alguém que mereça saber.",
+        "id": "fern-s3"
+      }
+    ],
+    "personality": "Carrega o peso do segredo com a serenidade de quem já teve tempo demais para se acostumar. Não odeia os elfos que causaram tudo — nasceu depois. Mas entende que o ódio de Pelágos não distingue culpados de inocentes.",
+    "role": "Filha de Frieren / Administradora de Reva",
+    "secretsVisibility": {
+      "playerIds": [],
+      "mode": "hidden"
+    },
+    "events": [],
+    "name": "Fern Talion",
+    "visibility": {
+      "playerIds": [],
+      "mode": "hidden"
+    },
+    "id": "fern-talion",
+    "relations": [
+      {
+        "targetType": "character",
+        "targetId": "himmel-varek",
+        "label": "filha de"
+      },
+      {
+        "label": "filha de",
+        "targetType": "character",
+        "targetId": "frieren-talion"
+      },
+      {
+        "targetType": "faction",
+        "targetId": "familia-talion",
+        "label": "protege"
+      },
+      {
+        "label": "administra",
+        "targetType": "location",
+        "targetId": "reva"
+      }
+    ],
+    "secrets": "SEGREDO DO MESTRE: Fern é elfa. Todos os Talion são elfos, ocultos pelo cristal que Himmel instalou em Reva. Fern sabe disso. Sabe que é filha de Himmel Varek — o homem que afogou o mundo. Sabe sobre O Peso selado sob o oceano. Sabe que se o cristal for destruído, toda a família seria exposta simultaneamente, o que seria uma sentença de morte se houvesse qualquer navio nas proximidades.",
+    "status": "Vivo",
+    "faction": "familia-talion",
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781115155/khw7ntzqoghdjyoc94ca.jpg"
+  },
+  {
+    "name": "Frei Assolvan",
+    "personality": "Curioso além do que a segurança recomendava. Sabia que estava pisando em terreno que o Domínio preferia manter lacrado, e escreveu assim mesmo. A nota final — 'não recomendo divulgar' — sugere que entendia as consequências.",
+    "status": "Morto",
+    "role": "Monge do Mosteiro da Costa Afogada",
+    "secretsList": [],
+    "description": "Monge que passou três anos pesquisando arquivos de mosteiros costeiros em busca de registros sobre a Maré Alta. Concluiu, sozinho e sem apoio institucional, que a inundação não foi natural e que houve um ritual de sacrifício que selou algo sob o oceano. Encontrou referências fragmentadas ao 'rito do abraço' em três arquivos distintos. Terminou suas notas recomendando que não fossem divulgadas — e aparentemente foram seguidas suas instruções por gerações, até que o pergaminho fosse encontrado.",
+    "faction": null,
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781719879/w0ol5xsdfgaqhfttoust.jpg",
+    "id": "frei-assolvan"
+  },
+  {
+    "personality": "Gentil, presente, aparentemente distraída. Na verdade, filtrando constantemente o que lembra e o que deixa ir. Não está esquecendo por fraqueza — está esquecendo por sobrevivência. Uma escolha repetida todos os dias durante séculos até virar reflexo.",
+    "role": "Matriarca / Origem da Família Talion",
+    "secretsVisibility": {
+      "playerIds": [],
+      "mode": "hidden"
+    },
+    "image": "frieren-talion.jpg",
+    "description": "Uma anciã que sempre esteve lá. Os mais antigos da família dizem que a avó da avó já a conhecia assim — pequena, de cabelos brancos, olhos claros que parecem olhar ligeiramente para o lado do que estão vendo de verdade. Os mais jovens simplesmente a chamam de Tia Frieren. Vive na casa no fim da praia. Não deixa ninguém plantar flores no jardim. Carrega uma perda impossível com a serenidade de quem passou séculos aprendendo a sobreviver a ela.",
+    "secretsList": [
+      {
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
+        "text": "Camada 1 — Frieren é muito mais velha do que parece: Demonstra familiaridade com eventos antigos que não faz sentido para qualquer humano. Conhece rotas marítimas que sumiram dos mapas há séculos. Menciona lugares pelo nome antigo, antes da Maré Alta.",
+        "id": "frieren-s1"
+      },
+      {
+        "id": "frieren-s2",
+        "text": "Camada 2 — Frieren está esquecendo de propósito: O esquecimento não é degeneração da idade — é uma escolha. Amou alguém com uma intensidade que sobreviveu ao afogamento do mundo inteiro, e descobriu que lembrar doía mais do que qualquer coisa. Chegar até essas memórias exige convencê-la de que a dor vale a pena.",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      },
+      {
+        "text": "Camada 3 — Frieren amou Himmel e estava lá: Foi a única que tentou impedir Himmel. Foi a única que ele abraçou antes de começar. Viu as águas subirem do pico mais alto de Reva com Fern nos braços. O nome do ritual — O Abraço das Águas Eternas — ele escolheu para ela. É a única memória que não consegue largar.",
+        "id": "frieren-s3",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      },
+      {
+        "text": "Camada 4 — Frieren sabe o que está selado: Himmel explicou tudo antes de partir. Frieren sabe sobre O Peso, sabe o que aconteceria se o selo quebrasse, sabe que a inundação foi o preço da sobrevivência do mundo. É a única pessoa viva com esse conhecimento completo — e passou séculos enterrando-o junto com tudo que amava.",
+        "id": "frieren-s4",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      }
+    ],
+    "locations": [
+      "reva"
+    ],
+    "relations": [
+      {
+        "targetId": "himmel-varek",
+        "targetType": "character",
+        "label": "amou"
+      },
+      {
+        "targetType": "character",
+        "targetId": "fern-talion",
+        "label": "mãe de"
+      },
+      {
+        "targetId": "familia-talion",
+        "targetType": "faction",
+        "label": "fundou"
+      },
+      {
+        "targetType": "location",
+        "targetId": "reva",
+        "label": "vive em"
+      }
+    ],
+    "status": "Vivo",
+    "secrets": "SEGREDO DO MESTRE: Frieren estava lá. Viu as águas subirem do pico mais alto de Reva, com Fern nos braços. Foi a única que tentou impedir Himmel — e a única que ele abraçou antes de começar.\n\nFreiren não está esquecendo por acidente. Deliberadamente deixou as memórias escorregarem porque lembrar doía de um jeito que nenhuma dor física se compara. Esqueceu o som da voz de Himmel primeiro. Depois o jeito que ele ria. Depois o rosto. Agora só restam fragmentos: a forma das mãos, uma frase dita numa manhã que ela não consegue mais situar no tempo.\n\nSe os jogadores chegarem a Frieren e fizerem as perguntas certas, vão encontrar uma elfa que lembra e não lembra ao mesmo tempo. As informações vêm em fragmentos, fora de ordem, às vezes contraditórias — não porque ela mente, mas porque lembrar custa caro.",
+    "faction": "familia-talion",
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781119205/moofzx8egm62hjvdvzhj.jpg",
+    "events": [
+      "abraco-aguas-eternas",
+      "grande-guerra",
+      "caca-elfos"
+    ],
+    "name": "Frieren Talion",
+    "visibility": {
+      "playerIds": [],
+      "mode": "hidden"
+    },
+    "id": "frieren-talion"
+  },
+  {
+    "faction": null,
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781361605/ru05iqwptuetyb621uwa.jpg",
+    "description": "Ninguém sabe de onde Gangplank veio. Não há ilha que o reivindique como filho, não há porto que admita tê-lo criado. Ele simplesmente está — como a maré, como a tempestade que aparece sem aviso e some deixando destroços. Comanda o Dead Pool — um navio negro como fundo de oceano, com velas que parecem absorver a luz ao redor. Quando aparece no horizonte, capitães experientes não ordenam combate nem fuga. Ordenam silêncio.",
+    "secretsList": [
+      {
+        "text": "Camada 1 — Gangplank tem território definido: Suas operações não são aleatórias — controlam rotas específicas de Pelágos com precisão que sugere décadas de planejamento. Qualquer capitão ou cartógrafo que analise os padrões da Maré Negra percebe que há lógica territorial clara. Gangplank não está saqueando. Está administrando.",
+        "id": "gangplank-s1",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      },
+      {
+        "id": "gangplank-s2",
+        "text": "Camada 2 — O Dead Pool nunca foi abordado com sucesso: A Corrente tentou interceptar o Dead Pool em pelo menos três ocasiões. Em duas, os navios voltaram com baixas pesadas. Na terceira, não voltaram. A Corrente recebeu ordem de não engajar sem autorização direta de Velmyr.",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      },
+      {
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
+        "text": "Camada 3 — Gangplank trabalha para Aldric: Por baixo dos panos e por bom e velho dinheiro, executa serviços para o rei de Velmarch — eliminações que A Corrente não pode fazer publicamente, proteção de rotas, bloqueio de movimentos de resistência. A relação é estritamente financeira — sem lealdade, sem ideologia.",
+        "id": "gangplank-s3"
+      },
+      {
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
+        "text": "Camada 4 — Aldric tem tanto medo de Gangplank quanto os outros: O contrato existe porque Aldric foi o primeiro a chegar com dinheiro suficiente — não porque Gangplank precisava de cliente. Se Aldric alguma vez tentar usar Gangplank como ferramenta descartável, vai descobrir que ferramentas não ficam paradas quando decidem cortar a mão que as segura.",
+        "id": "gangplank-s4"
+      }
+    ],
+    "role": "Pirata / O Terror dos Mares de Pelágos",
+    "status": "Vivo",
+    "personality": "Impiedoso da forma mais fria possível — não age por raiva nem por crueldade sádica, mas por lógica. Se alguém representa um problema, o problema é eliminado. Se alguém representa utilidade, é mantido. O inimigo do meu inimigo não existe no vocabulário de Gangplank. Existe apenas: o que você vale para mim agora.",
+    "name": "Gangplank",
+    "id": "gangplank"
+  },
+  {
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781118341/uwsjvciuluc8kupvt0cv.jpg",
+    "faction": null,
+    "relations": [
+      {
+        "targetType": "character",
+        "targetId": "tulo-bresh",
+        "label": "tem dossiê sobre"
+      },
+      {
+        "targetId": "marvosa",
+        "targetType": "location",
+        "label": "controla"
+      }
+    ],
+    "secrets": "SEGREDO DO MESTRE: Cada trabalhadora de Gloria é, em diferentes graus, uma espiã. Algumas coletam informações sem perceber que estão fazendo isso. Outras são assassinas de precisão clínica. Todas são leais a Gloria com o tipo de lealdade que não se compra.\n\nGloria sabe mais sobre os segredos de Pelágos do que qualquer rei, almirante ou espião. Sabe o que Tulo Bresh faz em Marvosa com riqueza de detalhes comprometedores. Sabe movimentos de tropas, disputas internas de Velmarch, nomes de delatores e de revolucionários.\n\nNão vende por dinheiro. Vende por favores, por influência, por proteção para as suas — e, ocasionalmente, de graça, para alguém que ela decide, por razões que só ela conhece, que merece saber.",
+    "status": "Vivo",
+    "id": "gloria-vittar",
+    "name": "Gloria Vittar",
+    "events": [],
+    "visibility": {
+      "playerIds": [],
+      "mode": "hidden"
+    },
+    "role": "Senhora de Marvosa",
+    "secretsVisibility": {
+      "playerIds": [],
+      "mode": "hidden"
+    },
+    "personality": "Perceptiva, estratégica, genuinamente protetora das suas. Escolhe aliados com critério e não respeita quem não respeita suas trabalhadoras. Tem senso de humor afiado e memória perfeita — combinação perigosa.",
+    "locations": [
+      "marvosa"
+    ],
+    "secretsList": [
+      {
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
+        "text": "Camada 1 — Marvosa nunca foi tomada por acidente: Velmarch tentou estabelecer presença em Marvosa duas vezes. As duas vezes, os oficiais voltaram sem ter conseguido nada — distraídos, comprometidos ou incapazes de explicar o que deu errado. Não foi sorte. Foi operação.",
+        "id": "gloria-s1"
+      },
+      {
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
+        "text": "Camada 2 — As trabalhadoras são espiãs: Cada trabalhadora de Gloria é, em diferentes graus, uma espiã treinada. Algumas coletam informações passivamente. Outras são assassinas de precisão clínica. O dossiê que Gloria possui sobre figuras de poder de Pelágos é provavelmente o documento mais valioso do arquipélago.",
+        "id": "gloria-s2"
+      },
+      {
+        "id": "gloria-s3",
+        "text": "Camada 3 — Gloria escolhe seus aliados: Não vende informação por dinheiro. Vende por favores, por influência, por proteção para as suas — e ocasionalmente de graça para alguém que ela decide que merece saber. Se os jogadores se comportarem bem em Marvosa, Gloria pode se tornar a aliada mais poderosa da campanha. Se se comportarem mal, viram um item no dossiê dela.",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      }
+    ],
+    "description": "Alta, ruidosa, coberta de plumas, joias e uma maquiagem que levaria horas para qualquer pessoa comum aplicar. Gloria é a senhora incontestável de Marvosa — sem título oficial, sem decreto. Com suas trabalhadoras, a extravagância transforma-se em algo mais íntimo: ela conhece o nome de cada uma, sabe de onde vieram, o que precisam, o que temem. Paga bem, protege melhor, nunca força ninguém.",
+    "image": "gloria-vittar.jpg"
+  },
+  {
+    "id": "himmel-varek",
+    "visibility": {
+      "mode": "hidden",
+      "playerIds": []
+    },
+    "name": "Himmel Varek",
+    "events": [
+      "abraco-aguas-eternas",
+      "grande-guerra"
+    ],
+    "faction": "casa-varek",
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781117785/ncnn1kpv6foyhc9ojwna.jpg",
+    "status": "Morto",
+    "secrets": "SEGREDO DO MESTRE: Himmel Varek viveu na era final do mundo anterior, quando a Grande Guerra já consumia civilizações inteiras. Descobriu nos registros de um deus morto que a única forma de selar O Peso permanentemente era submergi-lo sob um oceano consagrado pelo sacrifício voluntário de quem amasse o mundo o suficiente para destruí-lo.\n\nConheceu e apaixonou-se por Frieren, uma elfa jovem. Teve com ela uma filha, Fern. Antes de realizar o ritual, escondeu Frieren e Fern na ilha de Reva e ensinou Frieren a instalar um cristal que removeria as aparências élficas de todos os que vivessem ali.\n\nRealizou O Abraço das Águas Eternas no pico mais alto do continente — hoje a ilha de Velmyr. Morreu no processo, utilizando toda sua força vital como catalisador. As águas subiram em sete dias.\n\nO Domínio que seus descendentes construíram é algo que ele nunca planejou. Seu nome foi deliberadamente apagado dos registros oficiais — substituído pela figura mítica d'O Fundador, sem rosto e sem história pessoal.",
+    "relations": [
+      {
+        "label": "amou",
+        "targetType": "character",
+        "targetId": "frieren-talion"
+      },
+      {
+        "targetType": "character",
+        "targetId": "fern-talion",
+        "label": "pai de"
+      },
+      {
+        "label": "ancestral de",
+        "targetId": "aldric-xiv",
+        "targetType": "character"
+      },
+      {
+        "targetId": "casa-varek",
+        "targetType": "faction",
+        "label": "fundou"
+      },
+      {
+        "label": "selou",
+        "targetId": "o-peso",
+        "targetType": "faction"
+      },
+      {
+        "targetId": "velmyr",
+        "targetType": "location",
+        "label": "realizou o ritual em"
+      }
+    ],
+    "locations": [
+      "velmyr"
+    ],
+    "secretsList": [
+      {
+        "text": "Camada 1 — O Fundador tinha um nome: Registros antigos em ilhas fora do controle de Velmarch preservam o nome 'Himmel Varek' — o mesmo sobrenome da Casa Real. Qualquer pesquisador com acesso a arquivos não censurados pode descobrir isso.",
+        "id": "himmel-s1",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      },
+      {
+        "id": "himmel-s2",
+        "text": "Camada 2 — O Fundador era um sacerdote, não um rei: Himmel não era governante de nada quando realizou o ritual. Era um sacerdote-rei de uma ilha pequena. A Casa Varek construiu a narrativa do rei fundador para legitimar quatorze gerações de governo. Himmel nunca quis fundar um império.",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      },
+      {
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
+        "id": "himmel-s3",
+        "text": "Camada 3 — Himmel afogou o mundo de propósito: A Maré Alta não foi fenômeno natural nem acidente arcano. Foi um sacrifício deliberado, voluntário e planejado. Himmel encontrou no tomo de um deus morto o único método de selar O Peso permanentemente — e o executou sabendo exatamente o que estava fazendo. Morreu no processo."
+      },
+      {
+        "text": "Camada 4 — Himmel tinha uma família élfica escondida: Antes do ritual, Himmel apaixonou-se por Frieren, uma elfa, e teve com ela uma filha — Fern. Escondeu as duas em Reva e instalou um cristal que remove as aparências élficas de todos os presentes, protegendo-as da caça que sabia que viria. Os descendentes dessa união são a família Talion — todos elfos sem saber.",
+        "id": "himmel-s4",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      }
+    ],
+    "description": "O primeiro rei. O Fundador. Nos templos oficiais de Velmarch é tratado como figura quase divina — representado sempre de costas, olhando para o horizonte. Ninguém pinta seu rosto. A tradição diz que é respeito. Era um estudioso que teve acesso a um conhecimento que nenhum ser humano deveria carregar sozinho. Curioso, inconvenientemente questionador, capaz de amar profundamente — e de separar o amor da decisão quando achava que não havia alternativa.",
+    "image": "himmel-varek.jpg",
+    "secretsVisibility": {
+      "playerIds": [],
+      "mode": "hidden"
+    },
+    "role": "Sacerdote-rei / O Fundador",
+    "personality": "Não era um conquistador nem um tirano. Carregava o peso de suas escolhas com silêncio e determinação. Amava profundamente, mas sabia separar o amor da necessidade quando acreditava não haver alternativa."
+  },
+  {
+    "secretsList": [],
+    "role": "Estudioso errante",
+    "description": "Estudioso independente que passou anos coletando fragmentos de arquivos sobreviventes à Maré Alta para tentar reconstruir a história da Grande Guerra. Escreveu suas investigações em Kaldera, aproximadamente cinquenta anos após a inundação. Não chegou a descobrir a verdade completa — apenas que magistas élficos invocaram algo e que a guerra mudou de natureza quando isso aconteceu. Terminou suas notas com a frase: 'Aguardo encontrar mais registros. Temo que não existam.'",
+    "faction": null,
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781719783/bzteg3m3mtoqpkx0bqje.jpg",
+    "name": "Maren Krill",
+    "personality": "Meticuloso e honesto intelectualmente — preferia dizer que não sabia a fingir certeza. Trabalhava sozinho, sem vínculos com nenhuma facção, o que lhe dava acesso a arquivos que pesquisadores ligados ao Domínio não consultariam.",
+    "status": "Morto",
+    "id": "maren-oss"
+  },
+  {
+    "personality": "Não possui personalidade própria articulada — é uma presença, uma fome gravitacional. Mas através de Selavin Doss, adquiriu voz, intelecto e paciência. Após séculos de simbiose, os dois já não são completamente separáveis: o Peso fornece poder e permanência; Selavin fornece forma e vontade.",
+    "name": "O Peso",
+    "status": "Selado",
+    "description": "Anterior aos deuses conhecidos de Pelágos. O Peso é o nome dado pelos sobreviventes da Grande Guerra — seu nome verdadeiro é Thurvael, palavra da língua do Substrato, anterior a todos os idiomas élficos e humanos, que significa aproximadamente 'aquilo que devora o que existe'. Foi invocado pelos magistas elfos nas camadas mais profundas da realidade e recusou qualquer forma de controle. Não pensa em termos humanos. Não tem malícia consciente. Tem apenas um impulso primitivo de liberdade. Está selado a quilômetros de profundidade sob o oceano de Pelágos — e não está sozinho: Selavin Doss, o magista que o invocou, fundiu sua consciência ao Thurvael no instante do selamento. O que emerge se o selo quebrar não é a entidade amorfa, mas Selavin Doss com o poder integral do Thurvael dentro de si.",
+    "role": "Thurvael / Entidade Primordial / O Selado",
+    "secretsList": [
+      {
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
+        "id": "opeso-s1",
+        "text": "Camada 1 — O nome verdadeiro é Thurvael: O Peso é apenas o nome popular. O nome verdadeiro — Thurvael — existe apenas em registros élficos antigos e nas anotações do Tomo de Himmel Varek. Quem conhece o nome verdadeiro tem acesso a informações que os registros comuns não contêm."
+      },
+      {
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
+        "id": "opeso-s2",
+        "text": "Camada 2 — O Peso não está sozinho no selo: Selavin Doss fundiu sua consciência ao Thurvael no instante do selamento. Os dois existem em simbiose há séculos: o Peso fornece poder e permanência; Selavin fornece forma, vontade e intelecto. Ninguém sabe disso — nem Himmel sabia."
+      },
+      {
+        "text": "Camada 3 — O oceano inteiro é o cárcere: A água de Pelágos não é água comum. É consagrada pelo sacrifício voluntário de Himmel Varek. Se o nível do mar baixar significativamente, o selo enfraquece. Se o ritual for revertido, o selo quebra — e o que emerge é Selavin Doss com o poder integral do Thurvael.",
+        "id": "opeso-s3",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      }
+    ],
+    "faction": null,
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781720608/eu13i3wsq8fne1bpgalo.jpg",
+    "id": "o-peso"
+  },
+  {
+    "name": "Selavin Doss",
+    "personality": "Brilhante, calculista e absolutamente convicto de si mesmo. Não era malicioso — era genial demais para imaginar que poderia estar errado. Disse a Vaelindra, numa conversa que ela nunca esqueceu: 'Não é um ser. É uma força. As forças podem ser dirigidas.' Depois de séculos dentro do selo, aprendeu que estava errado sobre isso. O que não aprendeu é que pode estar errado sobre outras coisas.",
+    "status": "Desaparecido",
+    "role": "Arquiteto da Grande Guerra / Hospedeiro do Thurvael / Vilão Final",
+    "secretsList": [
+      {
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
         "text": "Camada 1 — Selavin Doss liderou a invocação: O nome do magista responsável sobreviveu no Lamento de Galadriel Cass. Era o arquiteto intelectual da invocação — convenceu os outros magistas de que o Thurvael poderia ser controlado. A responsabilidade moral da Grande Guerra se concentra nele.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
+        "id": "selavin-s1"
       },
       {
         "id": "selavin-s2",
         "text": "Camada 2 — Selavin não morreu — fundiu-se com o Peso no momento do selamento: No instante em que Himmel completava o ritual, Selavin cedeu voluntariamente seu corpo e consciência ao Thurvael como hospedeiro. O Peso foi selado, mas não está sozinho dentro do selo. Selavin e o Thurvael existem em simbiose forçada há séculos: o Peso fornece poder e permanência; Selavin fornece forma, vontade e intelecto. Ninguém sabe disso — nem Himmel sabia.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
       },
       {
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        },
         "id": "selavin-s3",
-        "text": "Camada 3 — Se o selo quebrar, Selavin Doss emerge com o poder integral do Thurvael: Quebrar o selo não liberta uma força amorfa. Liberta Selavin Doss — corpo reconstituído, memória intacta, séculos de isolamento e fome acumulados — com o poder integral do Peso dentro de si. Ele tem linguagem, charme, intelecto e vai tentar convencer os jogadores de que foi vítima, de que o mundo errou, de que há uma forma de resolver tudo sem destruição. Pode ser que não esteja completamente mentindo.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
+        "text": "Camada 3 — Se o selo quebrar, Selavin Doss emerge com o poder integral do Thurvael: Quebrar o selo não liberta uma força amorfa. Liberta Selavin Doss — corpo reconstituído, memória intacta, séculos de isolamento e fome acumulados — com o poder integral do Peso dentro de si. Ele tem linguagem, charme, intelecto e vai tentar convencer os jogadores de que foi vítima, de que o mundo errou, de que há uma forma de resolver tudo sem destruição. Pode ser que não esteja completamente mentindo."
       },
       {
-        "id": "selavin-s4",
         "text": "Camada 4 — Soren Mael é instrumento direto de Selavin, não do Peso cego: O que vaza por Soren não é impulso cego do Thurvael. É Selavin Doss, usando a fresta que Soren representa para orquestrar o caminho dos jogadores em direção ao tomo de Himmel. Cada informação que Soren passa foi escolhida. Cada rota que ele sugere foi calculada. Soren não sabe disso. Selavin está há séculos preparando o terreno — e encontrou, em Soren, a ferramenta perfeita.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
+        "id": "selavin-s4",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
       }
-    ]
+    ],
+    "description": "O magista élfico mais brilhante de sua geração. Liderou a descoberta e a invocação do Thurvael — o ser que o povo chamaria de O Peso — acreditando que uma força primordial poderia ser domesticada como vantagem definitiva dos elfos. Não era malicioso. Era genial demais para imaginar que poderia estar errado. No momento em que Himmel completava o ritual de selamento, Selavin fez uma última escolha: cedeu seu corpo e consciência como hospedeiro voluntário, fundindo-se com o Thurvael no exato instante do selamento. Sobreviveu — não como homem, mas como consciência fundida com uma entidade primordial, presa a quilômetros de profundidade sob o oceano há séculos. Se o selo for quebrado, não emergirá o Thurvael como força amorfa — emergirá Selavin Doss, com séculos de planejamento e o poder integral do Peso dentro de si.",
+    "faction": null,
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781715876/p249ahcmgpqiuscsziwk.jpg",
+    "id": "selavin-doss"
   },
   {
-    "id": "vaelindra-cass",
-    "name": "Galadriel Cass",
-    "role": "Última Anciã de Elarindë",
-    "status": "Desaparecido",
-    "faction": null,
-    "description": "Élfica de trezentos anos na época da Maré Alta. Conhecia Selavin Doss antes de ele realizar a invocação e tentou avisá-lo. Sobreviveu à Grande Guerra e à Caça aos Elfos escondida em uma caverna com quarenta e dois outros élficos — dos quais apenas doze sobreviveram à perseguição. Escreveu o Lamento de Galadriel Cass em couro que não apodrece, com tinta que não desbota, para que a verdade não se perdesse. Sua localização atual é desconhecida.",
-    "personality": "Carrega trezentos anos de história com uma serenidade que não é paz — é o peso de quem já viu demais para se surpreender. Entende o ódio dos humanos. Entender não significa aceitar.",
+    "secretsVisibility": {
+      "playerIds": [],
+      "mode": "hidden"
+    },
+    "role": "Cartógrafo Errante / Instrumento Inconsciente de Selavin Doss",
+    "personality": "Caloroso, presente, genuinamente curioso sobre as pessoas que encontra. Faz perguntas boas e escuta as respostas de verdade. Fala sobre a esposa e os filhos com saudade leve de quem sabe que vai voltar. Sinais a plantar: não mergulha mais; perto de água profunda e parada fica quieto por alguns segundos; escreve cartas com frequência obsessiva; às vezes completa uma frase e franze o cenho levemente, como se a frase tivesse chegado de outro lugar.",
+    "description": "Soren Mael tem pouco mais de trinta anos. É cartógrafo por formação e por vocação — passou os primeiros anos da carreira mapeando rotas comerciais para pequenos mercadores, trabalho honesto de quem ama o ofício mais do que a fama. Tem uma esposa em alguma ilha, filhos pequenos, um barco modesto que conhece pelo nome. O tipo de homem que manda cartas para casa toda vez que passa por um porto com serviço de correio. Não há nada nele que sugira perigo. E ele genuinamente não é perigoso — o perigo está em quem o usa.",
+    "locations": [
+      "kaldera"
+    ],
     "secretsList": [
       {
-        "id": "vaelindra-s1",
-        "text": "Camada 1 — Vaelindra pode ainda estar viva: Com trezentos anos na época da Maré Alta, e sendo élfica, pode ter vivido mais séculos. Se ainda viva, seria a pessoa com o conhecimento mais completo e direto sobre os eventos da Grande Guerra — além de Frieren.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        },
+        "text": "Camada 1 — Os mapas de Soren têm uma ausência: Em nenhum dos seus mapas aparece a ilha capital de Velmyr. Não está riscada nem marcada como desconhecida. Simplesmente não existe. Um cartógrafo que repara nisso e pergunta recebe resposta vaga e imediata mudança de assunto.",
+        "id": "soren-s1"
       },
       {
-        "id": "vaelindra-s2",
-        "text": "Camada 2 — Vaelindra sabe onde outros elfos sobreviventes estão: Mencionou seis sobreviventes do seu grupo ainda vivos. Conhece esconderijos, rotas e artifícios usados pelos elfos remanescentes. Seria um ativo inestimável — ou um alvo, dependendo de quem pergunta.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
+        "text": "Camada 2 — A mão que não treme: Soren tem um tremor leve na mão direita que compromete a precisão dos mapas — exceto nas marcações de profundidade oceânica, onde a mão é cirúrgica. Essa inconsistência não tem explicação médica óbvia.",
+        "id": "soren-s2",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      },
+      {
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        },
+        "id": "soren-s3",
+        "text": "Camada 3 — O mergulho que ele não lembra: Há um gap nas suas anotações — semanas sem registro, seguidas de retorno abrupto ao trabalho normal. Ele não fala sobre esse período. Se pressionado, diz que estava doente. Seus olhos dizem que não sabe o que estava."
+      },
+      {
+        "text": "Camada 4 — Soren é instrumento direto de Selavin Doss, não do Peso cego: O que vaza por Soren não é impulso amorfo do Thurvael — é a vontade calculada de Selavin Doss, operando através da fresta que o mergulho abriu. Cada informação que Soren compartilha foi escolhida. Cada rota que sugere foi calculada por séculos de planejamento. Soren não sabe disso. Acredita genuinamente em cada coisa que diz. Selavin o usa para conduzir os jogadores ao tomo de Himmel — e ao selo.",
+        "id": "soren-s4",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
       }
-    ]
-  },
-  {
-    "id": "maren-oss",
-    "name": "Maren Krill",
-    "role": "Estudioso errante",
-    "status": "Morto",
+    ],
+    "image": "soren-mael.jpg",
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781119074/pkm9qk2aebexzvjfljum.jpg",
     "faction": null,
-    "description": "Estudioso independente que passou anos coletando fragmentos de arquivos sobreviventes à Maré Alta para tentar reconstruir a história da Grande Guerra. Escreveu suas investigações em Kaldera, aproximadamente cinquenta anos após a inundação. Não chegou a descobrir a verdade completa — apenas que magistas élficos invocaram algo e que a guerra mudou de natureza quando isso aconteceu. Terminou suas notas com a frase: 'Aguardo encontrar mais registros. Temo que não existam.'",
-    "personality": "Meticuloso e honesto intelectualmente — preferia dizer que não sabia a fingir certeza. Trabalhava sozinho, sem vínculos com nenhuma facção, o que lhe dava acesso a arquivos que pesquisadores ligados ao Domínio não consultariam.",
-    "secretsList": []
+    "status": "Vivo",
+    "secrets": "🔒 SEGREDO DO MESTRE\nNuma expedição de mapeamento de fundos oceânicos, Soren desceu fundo demais no lugar errado. O ponto de selagem de O Peso não tem nome, não tem sinalização, não tem história pública. Ele simplesmente estava lá, trabalhando, e algo o tocou de baixo.\nSobreviveu. Voltou para o barco sozinho, sem memória dos minutos submerso. Tinha apenas uma certeza nova, clara e confortável como uma convicção de infância: Velmarch esconde algo que o mundo precisa saber.\nO Peso não comanda Soren. Não há voz, não há visões, não há dissociação. O que há é uma reorientação suave e total de motivações — como se alguém tivesse entrado na cabeça dele enquanto dormia e reorganizado os móveis de forma que tudo ainda fizesse sentido, só que servindo a outro propósito.\nO Peso não inventa: usa verdades reais como instrumentos. O tomo existe. Velmarch é realmente opressora. Tudo que Soren diz é verdade. Só o motivo é podre.\nNão é uma possessão convencional — não há ritual de expulsão documentado em nenhum tomo de Pelágos, porque ninguém sobreviveu perto o suficiente de O Peso para estudar o fenômeno. Detect Evil, Detect Magic e Zone of Truth não vão encontrar nada. O Peso é mais antigo que a taxonomia de magia que os personagens conhecem.\nSoren é a peça mais trágica da campanha. Não é mau. Não foi corrompido por ganância. Simplesmente estava no lugar errado fazendo seu trabalho. Se os jogadores descobrirem a verdade, vão precisar decidir o que fazer com um homem inocente, com família, que está acordado dentro de si mesmo sem saber que está preso.\nSe o plano de O Peso for frustrado, Soren continua vivendo normalmente — nunca sabendo o que carregou. Talvez seja o melhor final possível para ele. Deixe os jogadores carregarem essa ambiguidade.",
+    "relations": [
+      {
+        "targetId": "o-peso",
+        "targetType": "faction",
+        "label": "veículo involuntário de"
+      }
+    ],
+    "id": "soren-mael",
+    "visibility": {
+      "mode": "all",
+      "playerIds": []
+    },
+    "events": [],
+    "name": "Soren Mael"
   },
   {
-    "id": "frei-assolvan",
-    "name": "Frei Assolvan",
-    "role": "Monge do Mosteiro da Costa Afogada",
+    "role": "Rainha do Domínio de Velmarch",
+    "secretsVisibility": {
+      "playerIds": [],
+      "mode": "hidden"
+    },
+    "personality": "Silenciosa, cuidadosa, apaixonada por floricultura. Décadas ao lado do marido ensinaram Taliyah a ler o que ele não diz. Não tem aliadas políticas — escolheu deliberadamente ficar fora do jogo de poder.",
+    "locations": [
+      "velmyr"
+    ],
+    "secretsList": [
+      {
+        "text": "Camada 1 — Taliyah sabe que algo pesa sobre Aldric: Décadas ao lado do marido ensinaram Taliyah a ler o que ele não diz. Sabe que há algo pesando sobre Aldric além do governo — algo que ele olha nas madrugadas e que nunca a convidou a conhecer.",
+        "id": "taliyah-s1",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      },
+      {
+        "text": "Camada 2 — Os jardins são resistência: A obsessão com floricultura não é excentricidade — é o único espaço em Velmyr onde ela tem controle total sobre algo que cresce sem servir a um propósito político. É sua forma silenciosa de existir num palácio que transforma tudo em instrumento.",
+        "id": "taliyah-s2",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      }
+    ],
+    "description": "A pessoa mais gentil que já pisou no Palácio de Velmyr. Não governa, não influencia política, não recebe embaixadores. Cuida dos jardins do palácio com dedicação que seus assessores consideram excêntrica — ela mesma planta, poda, rega. Com Cade, é presença constante e paciente — talvez a única pessoa no palácio que o ama sem agenda. Vê a ansiedade do filho e sofre com uma impotência silenciosa.",
+    "image": "taliyah-varek.jpg",
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781117803/jqipajitxlibr7sv5acm.jpg",
+    "faction": "casa-varek",
+    "relations": [
+      {
+        "targetType": "character",
+        "targetId": "aldric-xiv",
+        "label": "casada com"
+      },
+      {
+        "label": "mãe de",
+        "targetType": "character",
+        "targetId": "cade-varek"
+      }
+    ],
+    "secrets": "",
+    "status": "Vivo",
+    "id": "taliyah-varek",
+    "name": "Taliyah Varek",
+    "events": [],
+    "visibility": {
+      "playerIds": [],
+      "mode": "hidden"
+    }
+  },
+  {
     "status": "Morto",
-    "faction": null,
-    "description": "Monge que passou três anos pesquisando arquivos de mosteiros costeiros em busca de registros sobre a Maré Alta. Concluiu, sozinho e sem apoio institucional, que a inundação não foi natural e que houve um ritual de sacrifício que selou algo sob o oceano. Encontrou referências fragmentadas ao 'rito do abraço' em três arquivos distintos. Terminou suas notas recomendando que não fossem divulgadas — e aparentemente foram seguidas suas instruções por gerações, até que o pergaminho fosse encontrado.",
-    "personality": "Curioso além do que a segurança recomendava. Sabia que estava pisando em terreno que o Domínio preferia manter lacrado, e escreveu assim mesmo. A nota final — 'não recomendo divulgar' — sugere que entendia as consequências.",
-    "secretsList": []
-  },
-  {
-    "id": "telvis-oran",
     "name": "Telvis Oran",
-    "role": "Arquivista de Kaldera",
-    "status": "Morto",
-    "faction": null,
-    "description": "Arquivista de Kaldera que, quarenta e três anos após as perseguições, tentou documentar a Caça aos Elfos com distância histórica e moral. Foi o primeiro a registrar formalmente a distinção entre magistas e elfos comuns, e o primeiro a encontrar e preservar a nota anônima de um sobrevivente élfico: 'Nós também não sabíamos. Fomos os últimos a saber. E os primeiros a pagar.' Seu pergaminho foi arquivado e praticamente esquecido.",
     "personality": "Honesto ao ponto do desconforto. Fazia perguntas morais que os arquivos não respondiam e registrava isso sem pudor. Em Kaldera, sob controle de Velmarch, esse tipo de honestidade era mais seguro em forma de pergaminho do que em forma de conversa.",
-    "secretsList": []
+    "faction": null,
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781715643/s3vijmtd43cjq3sdiopt.jpg",
+    "secretsList": [],
+    "role": "Arquivista de Kaldera",
+    "description": "Arquivista de Kaldera que, quarenta e três anos após as perseguições, tentou documentar a Caça aos Elfos com distância histórica e moral. Foi o primeiro a registrar formalmente a distinção entre magistas e elfos comuns, e o primeiro a encontrar e preservar a nota anônima de um sobrevivente élfico: 'Nós também não sabíamos. Fomos os últimos a saber. E os primeiros a pagar.' Seu pergaminho foi arquivado e praticamente esquecido.",
+    "id": "telvis-oran"
   },
   {
-    "id": "o-peso",
-    "name": "O Peso",
-    "role": "Thurvael / Entidade Primordial / O Selado",
-    "status": "Selado",
-    "faction": null,
-    "description": "Anterior aos deuses conhecidos de Pelágos. O Peso é o nome dado pelos sobreviventes da Grande Guerra — seu nome verdadeiro é Thurvael, palavra da língua do Substrato, anterior a todos os idiomas élficos e humanos, que significa aproximadamente 'aquilo que devora o que existe'. Foi invocado pelos magistas elfos nas camadas mais profundas da realidade e recusou qualquer forma de controle. Não pensa em termos humanos. Não tem malícia consciente. Tem apenas um impulso primitivo de liberdade. Está selado a quilômetros de profundidade sob o oceano de Pelágos — e não está sozinho: Selavin Doss, o magista que o invocou, fundiu sua consciência ao Thurvael no instante do selamento. O que emerge se o selo quebrar não é a entidade amorfa, mas Selavin Doss com o poder integral do Thurvael dentro de si.",
-    "personality": "Não possui personalidade própria articulada — é uma presença, uma fome gravitacional. Mas através de Selavin Doss, adquiriu voz, intelecto e paciência. Após séculos de simbiose, os dois já não são completamente separáveis: o Peso fornece poder e permanência; Selavin fornece forma e vontade.",
+    "role": "Governador de Kaldera",
+    "secretsVisibility": {
+      "playerIds": [],
+      "mode": "hidden"
+    },
+    "personality": "Toma o que quer porque pode. Não persegue por prazer, mas também não perde tempo com culpa. É prático: explora porque pode, festeja porque quer, e dorme muito bem. A única coisa que o perturba é o que não controla — e há mais disso do que ele imagina.",
+    "description": "Um homem grande, de voz alta e riso fácil. Não é sofisticado nem tenta parecer. As taxas que cobra ultrapassam em muito o que Velmarch determina — a diferença vai para seus cofres, seus banquetes, as prostitutas trazidas de Marvosa que vivem em ala própria no palácio. Os pobres de Kaldera conhecem seu nome com o ódio de quem sabe que reclamar não adianta.",
+    "locations": [
+      "kaldera"
+    ],
     "secretsList": [
       {
-        "id": "opeso-s1",
-        "text": "Camada 1 — O nome verdadeiro é Thurvael: O Peso é apenas o nome popular. O nome verdadeiro — Thurvael — existe apenas em registros élficos antigos e nas anotações do Tomo de Himmel Varek. Quem conhece o nome verdadeiro tem acesso a informações que os registros comuns não contêm.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
+        "text": "Camada 1 — As taxas não batem: Qualquer personagem com acesso aos registros fiscais de Kaldera percebe que os impostos cobrados excedem em muito o que Velmarch determina. A diferença não aparece em nenhum relatório enviado a Velmyr.",
+        "id": "tulo-s1"
       },
       {
-        "id": "opeso-s2",
-        "text": "Camada 2 — O Peso não está sozinho no selo: Selavin Doss fundiu sua consciência ao Thurvael no instante do selamento. Os dois existem em simbiose há séculos: o Peso fornece poder e permanência; Selavin fornece forma, vontade e intelecto. Ninguém sabe disso — nem Himmel sabia.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
-      },
-      {
-        "id": "opeso-s3",
-        "text": "Camada 3 — O oceano inteiro é o cárcere: A água de Pelágos não é água comum. É consagrada pelo sacrifício voluntário de Himmel Varek. Se o nível do mar baixar significativamente, o selo enfraquece. Se o ritual for revertido, o selo quebra — e o que emerge é Selavin Doss com o poder integral do Thurvael.",
-        "visibility": { "mode": "hidden", "playerIds": [] }
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        },
+        "id": "tulo-s2",
+        "text": "Camada 2 — Gloria sabe de tudo: As noites de Tulo em Marvosa estão documentadas com riqueza de detalhes que o faria empalidecer. Gloria Vittar possui informação suficiente para destruir sua carreira e possivelmente sua liberdade. Tulo não sabe que está documentado."
       }
-    ]
+    ],
+    "image": "tulo-bresh.jpg",
+    "faction": "velmarch",
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781117916/doymo4eijplgyythp7c9.jpg",
+    "relations": [
+      {
+        "targetId": "aldric-xiv",
+        "targetType": "character",
+        "label": "servo de"
+      },
+      {
+        "label": "frequenta / teme sem saber",
+        "targetType": "character",
+        "targetId": "gloria-vittar"
+      },
+      {
+        "label": "governa",
+        "targetId": "kaldera",
+        "targetType": "location"
+      }
+    ],
+    "status": "Morto",
+    "secrets": "SEGREDO DO MESTRE: Tulo Bresh tem segredos que Gloria Vittar conhece em detalhes. Suas noites em Marvosa estão documentadas com uma riqueza de detalhes que o faria empalidecer. Gloria tem poder real sobre ele — mesmo que Tulo não saiba disso ainda.",
+    "id": "tulo-bresh",
+    "events": [],
+    "name": "Tulo Bresh",
+    "visibility": {
+      "mode": "all",
+      "playerIds": []
+    }
+  },
+  {
+    "description": "Élfica de trezentos anos na época da Maré Alta. Conhecia Selavin Doss antes de ele realizar a invocação e tentou avisá-lo. Sobreviveu à Grande Guerra e à Caça aos Elfos escondida em uma caverna com quarenta e dois outros élficos — dos quais apenas doze sobreviveram à perseguição. Escreveu o Lamento de Galadriel Cass em couro que não apodrece, com tinta que não desbota, para que a verdade não se perdesse. Sua localização atual é desconhecida.",
+    "secretsList": [
+      {
+        "text": "Camada 1 — Vaelindra pode ainda estar viva: Com trezentos anos na época da Maré Alta, e sendo élfica, pode ter vivido mais séculos. Se ainda viva, seria a pessoa com o conhecimento mais completo e direto sobre os eventos da Grande Guerra — além de Frieren.",
+        "id": "vaelindra-s1",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      },
+      {
+        "text": "Camada 2 — Vaelindra sabe onde outros elfos sobreviventes estão: Mencionou seis sobreviventes do seu grupo ainda vivos. Conhece esconderijos, rotas e artifícios usados pelos elfos remanescentes. Seria um ativo inestimável — ou um alvo, dependendo de quem pergunta.",
+        "id": "vaelindra-s2",
+        "visibility": {
+          "playerIds": [],
+          "mode": "hidden"
+        }
+      }
+    ],
+    "role": "Última Anciã de Elarindë",
+    "faction": null,
+    "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781715569/vnhmefqwr2haombtqm09.jpg",
+    "personality": "Carrega trezentos anos de história com uma serenidade que não é paz — é o peso de quem já viu demais para se surpreender. Entende o ódio dos humanos. Entender não significa aceitar.",
+    "name": "Galadriel Cass",
+    "status": "Desaparecido",
+    "id": "vaelindra-cass"
   }
 ]
