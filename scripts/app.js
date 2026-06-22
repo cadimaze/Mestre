@@ -34,6 +34,42 @@ const STATE = {
   charFilters:     { name: '', faction: '', status: '', secretsOnly: false },
 };
 
+// ── D&D 5e CONSTANTS ─────────────────────────────────────────────────────────
+const DND_CLASSES = ['Artífice','Bárbaro','Bardo','Clérigo','Druida','Guerreiro','Monge','Paladino','Patrulheiro','Ladino','Feiticeiro','Bruxo','Mago'];
+
+const AB_KEYS = ['str','dex','con','int','wis','cha'];
+const AB_PT   = { str:'FOR', dex:'DES', con:'CON', int:'INT', wis:'SAB', cha:'CAR' };
+const AB_FULL = { str:'Força', dex:'Destreza', con:'Constituição', int:'Inteligência', wis:'Sabedoria', cha:'Carisma' };
+
+const CLASS_THEME = {
+  'Bárbaro':'warrior','Guerreiro':'warrior','Paladino':'warrior',
+  'Mago':'arcane','Feiticeiro':'arcane','Bruxo':'arcane','Artífice':'arcane',
+  'Clérigo':'divine','Monge':'divine',
+  'Druida':'nature','Patrulheiro':'nature',
+  'Bardo':'bard','Ladino':'rogue',
+};
+
+const DND_SKILLS = [
+  {id:'acrobatics',    name:'Acrobacia',       ability:'dex'},
+  {id:'animalHandling',name:'Ad. Animais',      ability:'wis'},
+  {id:'arcana',        name:'Arcanismo',        ability:'int'},
+  {id:'athletics',     name:'Atletismo',        ability:'str'},
+  {id:'deception',     name:'Enganação',        ability:'cha'},
+  {id:'history',       name:'História',         ability:'int'},
+  {id:'insight',       name:'Intuição',         ability:'wis'},
+  {id:'intimidation',  name:'Intimidação',      ability:'cha'},
+  {id:'investigation', name:'Investigação',     ability:'int'},
+  {id:'medicine',      name:'Medicina',         ability:'wis'},
+  {id:'nature',        name:'Natureza',         ability:'int'},
+  {id:'perception',    name:'Percepção',        ability:'wis'},
+  {id:'performance',   name:'Atuação',          ability:'cha'},
+  {id:'persuasion',    name:'Persuasão',        ability:'cha'},
+  {id:'religion',      name:'Religião',         ability:'int'},
+  {id:'sleightOfHand', name:'Prestidigitação',  ability:'dex'},
+  {id:'stealth',       name:'Furtividade',      ability:'dex'},
+  {id:'survival',      name:'Sobrevivência',    ability:'wis'},
+];
+
 // ── AUTH UI ───────────────────────────────────────────────────────────────────
 function showAuthOverlay()  { document.getElementById('auth-overlay').classList.add('visible'); }
 function hideAuthOverlay()  { document.getElementById('auth-overlay').classList.remove('visible'); }
@@ -269,6 +305,38 @@ async function sendRevealNotifications(targetUids, entityType, entityId, entityN
     });
   }
   await batch.commit();
+}
+
+// ── DICE ROLLER ───────────────────────────────────────────────────────────────
+function showDiceToast({ label, sides, roll, modifier, total }) {
+  let overlay = document.getElementById('dice-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'dice-overlay';
+    overlay.className = 'dice-overlay';
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+    document.body.appendChild(overlay);
+  }
+  const modStr = modifier > 0 ? `+${modifier}` : modifier < 0 ? `${modifier}` : '';
+  const isCrit   = roll === sides;
+  const isFumble = roll === 1 && sides === 20;
+  overlay.innerHTML = `
+    <div class="dice-toast${isCrit ? ' dice-crit' : ''}${isFumble ? ' dice-fumble' : ''}">
+      <button class="dice-close" onclick="document.getElementById('dice-overlay').classList.remove('open')">✕</button>
+      <div class="dice-label">${escHtml(label)}</div>
+      <div class="dice-die">d${sides}</div>
+      <div class="dice-value">${roll}</div>
+      ${modifier !== 0 ? `<div class="dice-equation">${roll} ${modStr}</div>` : ''}
+      <div class="dice-total-wrap">
+        <div class="dice-total">${total}</div>
+        <div class="dice-total-label">TOTAL</div>
+      </div>
+      ${isCrit   ? '<div class="dice-badge dice-badge-crit">⚡ CRÍTICO!</div>'       : ''}
+      ${isFumble ? '<div class="dice-badge dice-badge-fumble">💀 FALHA CRÍTICA</div>' : ''}
+    </div>`;
+  overlay.classList.add('open');
+  clearTimeout(overlay._timer);
+  overlay._timer = setTimeout(() => overlay.classList.remove('open'), 5000);
 }
 
 let _notifQueue  = [];
@@ -1820,9 +1888,25 @@ async function renderJogadores() {
 // ── MEU PERSONAGEM TAB ────────────────────────────────────────────────────────
 function renderMeuPersonagem() {
   const container = document.getElementById('meu-personagem-content');
-  const pc  = STATE.profile?.playerCharacter || {};
-  const myUid = STATE.user.uid;
+  const pc        = STATE.profile?.playerCharacter || {};
+  const sheet     = pc.sheet || {};
+  const myUid     = STATE.user.uid;
+  const heroTheme = CLASS_THEME[pc.charClass || ''] || '';
   const otherPlayers = STATE.players.filter(p => p.role === 'player' && p.uid !== myUid);
+
+  // ── Sheet helpers ──────────────────────────────────────────────────────────
+  const abScore  = k => (sheet.abilities || {})[k] ?? 10;
+  const abModNum = k => Math.floor((abScore(k) - 10) / 2);
+  const abModStr = k => { const m = abModNum(k); return (m >= 0 ? '+' : '') + m; };
+  const pb       = () => sheet.profBonus || 2;
+  const skillModStr = sk => {
+    const m = abModNum(sk.ability) + ((sheet.skills || {})[sk.id] ? pb() : 0);
+    return (m >= 0 ? '+' : '') + m;
+  };
+  const saveModStr = k => {
+    const m = abModNum(k) + ((sheet.savingThrows || {})[k] ? pb() : 0);
+    return (m >= 0 ? '+' : '') + m;
+  };
 
   // Mutable state — saved together on form submit
   let sheetVis   = pc.sheetVisibility ? { ...pc.sheetVisibility, playerIds: [...(pc.sheetVisibility.playerIds || [])] }
@@ -1869,7 +1953,7 @@ function renderMeuPersonagem() {
     </div>
     <form class="my-char-form" id="my-char-form">
 
-      <div class="pc-hero">
+      <div class="pc-hero${heroTheme ? ' pc-theme-'+heroTheme : ''}" id="pc-hero">
         <div class="pc-portrait-wrap">
           ${portraitHtml}
           <input type="file" id="pc-img-file" accept="image/*" style="display:none">
@@ -1886,12 +1970,90 @@ function renderMeuPersonagem() {
               <input class="my-char-input" name="race" value="${escHtml(pc.race||'')}" placeholder="Ex: Humano, Elfo...">
             </div>
             <div class="my-char-field"><label>Classe</label>
-              <input class="my-char-input" name="charClass" value="${escHtml(pc.charClass||'')}" placeholder="Ex: Guerreiro, Mago...">
+              <select class="my-char-input my-char-select" name="charClass" id="pc-class-select">
+                <option value="">Selecione a classe...</option>
+                ${DND_CLASSES.map(c => `<option value="${c}"${pc.charClass===c?' selected':''}>${c}</option>`).join('')}
+              </select>
             </div>
           </div>
           <div class="my-char-field"><label>Antecedente</label>
             <input class="my-char-input" name="background" value="${escHtml(pc.background||'')}" placeholder="Ex: Soldado, Sábio...">
           </div>
+        </div>
+      </div>
+
+      <!-- ── COMBATE ── -->
+      <div class="pc-section pc-sheet-section">
+        <div class="pc-section-title">⚔️ Combate</div>
+        <div class="pc-sheet-meta">
+          <div class="pc-meta-box"><label>Nível</label>
+            <input class="pc-sheet-input" name="sheet_level" type="number" min="1" max="20" value="${sheet.level ?? 1}">
+          </div>
+          <div class="pc-meta-box pc-meta-hp">
+            <label>Pontos de Vida</label>
+            <div class="pc-hp-row">
+              <input class="pc-sheet-input pc-hp-in" name="sheet_hp" type="number" min="0" value="${sheet.hp ?? 8}" title="PV Atual">
+              <span class="pc-hp-sep">/</span>
+              <input class="pc-sheet-input pc-hp-in" name="sheet_maxHp" type="number" min="1" value="${sheet.maxHp ?? 8}" title="PV Máximo">
+            </div>
+          </div>
+          <div class="pc-meta-box"><label>CA</label>
+            <input class="pc-sheet-input" name="sheet_ac" type="number" min="1" value="${sheet.ac ?? 10}">
+          </div>
+          <div class="pc-meta-box"><label>Iniciativa</label>
+            <input class="pc-sheet-input" name="sheet_initiative" type="number" value="${sheet.initiative ?? 0}">
+          </div>
+          <div class="pc-meta-box"><label>Deslocamento</label>
+            <input class="pc-sheet-input pc-speed-in" name="sheet_speed" value="${sheet.speed ?? '9 m'}">
+          </div>
+          <div class="pc-meta-box"><label>Bônus Prof.</label>
+            <input class="pc-sheet-input" name="sheet_profBonus" id="pc-prof-bonus" type="number" min="2" max="6" value="${sheet.profBonus ?? 2}">
+          </div>
+          <div class="pc-meta-box pc-meta-insp">
+            <label>Inspiração</label>
+            <input type="checkbox" class="pc-insp-chk" name="sheet_inspiration" ${sheet.inspiration ? 'checked' : ''}>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ATRIBUTOS ── -->
+      <div class="pc-section pc-sheet-section">
+        <div class="pc-section-title">🎲 Atributos — clique para rolar</div>
+        <div class="pc-abilities-grid">
+          ${AB_KEYS.map(k => `
+            <div class="pc-ability-box" data-ab="${k}" title="Rolar ${AB_FULL[k]}">
+              <div class="pc-ab-label">${AB_PT[k]}</div>
+              <div class="pc-ab-mod" id="pc-abmod-${k}">${abModStr(k)}</div>
+              <input class="pc-ab-score" name="sheet_ab_${k}" type="number" min="1" max="30" value="${abScore(k)}">
+              <div class="pc-ab-full">${AB_FULL[k]}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <!-- ── TESTES DE RESISTÊNCIA ── -->
+      <div class="pc-section pc-sheet-section">
+        <div class="pc-section-title">🛡️ Testes de Resistência</div>
+        <div class="pc-saves-grid">
+          ${AB_KEYS.map(k => `
+            <div class="pc-save-row" data-save="${k}" title="Rolar resistência ${AB_FULL[k]}">
+              <input type="checkbox" class="pc-prof-dot" name="sheet_save_${k}" ${(sheet.savingThrows||{})[k] ? 'checked' : ''}>
+              <span class="pc-save-val" id="pc-saveval-${k}">${saveModStr(k)}</span>
+              <span class="pc-save-name">${AB_PT[k]} — ${AB_FULL[k]}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <!-- ── PERÍCIAS ── -->
+      <div class="pc-section pc-sheet-section">
+        <div class="pc-section-title">📋 Perícias</div>
+        <div class="pc-skills-list">
+          ${DND_SKILLS.map(sk => `
+            <div class="pc-skill-row" data-skill="${sk.id}" data-ab="${sk.ability}" title="Rolar ${sk.name}">
+              <input type="checkbox" class="pc-prof-dot" name="sheet_skill_${sk.id}" ${(sheet.skills||{})[sk.id] ? 'checked' : ''}>
+              <span class="pc-skill-val" id="pc-skillval-${sk.id}">${skillModStr(sk)}</span>
+              <span class="pc-skill-name">${sk.name}</span>
+              <span class="pc-skill-ab">${AB_PT[sk.ability]}</span>
+            </div>`).join('')}
         </div>
       </div>
 
@@ -2042,6 +2204,80 @@ function renderMeuPersonagem() {
   wireVisButtons(container);
   wirePlayerChecks(container);
 
+  // ── Live modifier recalculation ───────────────────────────────────────────
+  function recalcMods() {
+    const profBonusVal = parseInt(document.getElementById('pc-prof-bonus')?.value) || 2;
+    AB_KEYS.forEach(k => {
+      const sc  = parseInt(container.querySelector(`[name="sheet_ab_${k}"]`)?.value) || 10;
+      const mod = Math.floor((sc - 10) / 2);
+      const el  = document.getElementById(`pc-abmod-${k}`);
+      if (el) el.textContent = (mod >= 0 ? '+' : '') + mod;
+      const savProf = container.querySelector(`[name="sheet_save_${k}"]`)?.checked;
+      const savVal  = mod + (savProf ? profBonusVal : 0);
+      const savEl   = document.getElementById(`pc-saveval-${k}`);
+      if (savEl) savEl.textContent = (savVal >= 0 ? '+' : '') + savVal;
+    });
+    DND_SKILLS.forEach(sk => {
+      const sc  = parseInt(container.querySelector(`[name="sheet_ab_${sk.ability}"]`)?.value) || 10;
+      const mod = Math.floor((sc - 10) / 2);
+      const skProf = container.querySelector(`[name="sheet_skill_${sk.id}"]`)?.checked;
+      const val = mod + (skProf ? profBonusVal : 0);
+      const el  = document.getElementById(`pc-skillval-${sk.id}`);
+      if (el) el.textContent = (val >= 0 ? '+' : '') + val;
+    });
+  }
+  container.querySelectorAll('.pc-ab-score, #pc-prof-bonus').forEach(inp =>
+    inp.addEventListener('input', recalcMods));
+  container.querySelectorAll('.pc-prof-dot').forEach(chk =>
+    chk.addEventListener('change', recalcMods));
+
+  // ── Dice rolling ─────────────────────────────────────────────────────────
+  container.querySelectorAll('.pc-ability-box').forEach(box => {
+    box.addEventListener('click', e => {
+      if (e.target.tagName === 'INPUT') return;
+      const k  = box.dataset.ab;
+      const sc = parseInt(container.querySelector(`[name="sheet_ab_${k}"]`)?.value) || 10;
+      const mod = Math.floor((sc - 10) / 2);
+      const roll = Math.floor(Math.random() * 20) + 1;
+      showDiceToast({ label: AB_FULL[k], sides: 20, roll, modifier: mod, total: roll + mod });
+    });
+  });
+
+  container.querySelectorAll('.pc-save-row').forEach(row => {
+    row.addEventListener('click', e => {
+      if (e.target.tagName === 'INPUT') return;
+      const k   = row.dataset.save;
+      const sc  = parseInt(container.querySelector(`[name="sheet_ab_${k}"]`)?.value) || 10;
+      const pbv = parseInt(document.getElementById('pc-prof-bonus')?.value) || 2;
+      const prof = row.querySelector('.pc-prof-dot')?.checked;
+      const mod  = Math.floor((sc - 10) / 2) + (prof ? pbv : 0);
+      const roll = Math.floor(Math.random() * 20) + 1;
+      showDiceToast({ label: `Resistência — ${AB_FULL[k]}`, sides: 20, roll, modifier: mod, total: roll + mod });
+    });
+  });
+
+  container.querySelectorAll('.pc-skill-row').forEach(row => {
+    row.addEventListener('click', e => {
+      if (e.target.tagName === 'INPUT') return;
+      const sk  = DND_SKILLS.find(s => s.id === row.dataset.skill);
+      const sc  = parseInt(container.querySelector(`[name="sheet_ab_${row.dataset.ab}"]`)?.value) || 10;
+      const pbv = parseInt(document.getElementById('pc-prof-bonus')?.value) || 2;
+      const prof = row.querySelector('.pc-prof-dot')?.checked;
+      const mod  = Math.floor((sc - 10) / 2) + (prof ? pbv : 0);
+      const roll = Math.floor(Math.random() * 20) + 1;
+      showDiceToast({ label: sk?.name || row.dataset.skill, sides: 20, roll, modifier: mod, total: roll + mod });
+    });
+  });
+
+  // ── Class theme live ──────────────────────────────────────────────────────
+  document.getElementById('pc-class-select')?.addEventListener('change', function() {
+    const theme = CLASS_THEME[this.value] || '';
+    const hero  = document.getElementById('pc-hero');
+    if (!hero) return;
+    ['warrior','arcane','divine','nature','bard','rogue'].forEach(t => hero.classList.remove('pc-theme-'+t));
+    if (theme) hero.classList.add('pc-theme-'+theme);
+  });
+
   // ── Add secret ────────────────────────────────────────────────────────────
   document.getElementById('pc-add-secret').addEventListener('click', () => {
     secretsList.push({ id: Date.now().toString(), text: '', visibility: { mode: 'hidden', playerIds: [] } });
@@ -2081,8 +2317,26 @@ function renderMeuPersonagem() {
     const btn = document.getElementById('pc-save-btn');
     btn.disabled = true; btn.textContent = 'Salvando...';
     const fd = new FormData(e.target);
-    const charData = { sheetVisibility: sheetVis, fieldVisibility: fieldVis, secretsList };
-    fd.forEach((v, k) => { charData[k] = v.trim(); });
+    // Collect sheet data
+    const abilityScores = {};
+    AB_KEYS.forEach(k => { abilityScores[k] = parseInt(fd.get(`sheet_ab_${k}`) || '10'); });
+    const savingThrows = {};
+    AB_KEYS.forEach(k => { savingThrows[k] = fd.get(`sheet_save_${k}`) === 'on'; });
+    const pcSkills = {};
+    DND_SKILLS.forEach(sk => { pcSkills[sk.id] = fd.get(`sheet_skill_${sk.id}`) === 'on'; });
+    const sheetData = {
+      level: parseInt(fd.get('sheet_level') || '1'),
+      hp: parseInt(fd.get('sheet_hp') || '8'),
+      maxHp: parseInt(fd.get('sheet_maxHp') || '8'),
+      ac: parseInt(fd.get('sheet_ac') || '10'),
+      initiative: parseInt(fd.get('sheet_initiative') || '0'),
+      speed: fd.get('sheet_speed') || '9 m',
+      profBonus: parseInt(fd.get('sheet_profBonus') || '2'),
+      inspiration: fd.get('sheet_inspiration') === 'on',
+      abilities: abilityScores, savingThrows, skills: pcSkills,
+    };
+    const charData = { sheetVisibility: sheetVis, fieldVisibility: fieldVis, secretsList, sheet: sheetData };
+    fd.forEach((v, k) => { if (!k.startsWith('sheet_') && typeof v === 'string') charData[k] = v.trim(); });
     if (pendingImageUrl) charData.imageUrl = pendingImageUrl;
     try {
       await updateDoc(doc(db, 'users', STATE.user.uid), { playerCharacter: charData });
@@ -2619,7 +2873,29 @@ function buildLocationModalContent(id) {
   const controlId   = controller ? l.controlledBy : null;
   const controlType = controller ? 'character' : (getFactionById(l.controlledBy) ? 'faction' : null);
 
-  const poiHtml    = (l.pointsOfInterest || []).map(p => `<li class="poi-item">${p}</li>`).join('');
+  const allPois = l.pointsOfInterest || [];
+  const discovered = l.discoveredPois || [];
+  let poiHtml = '';
+  if (allPois.length) {
+    if (STATE.isMaster) {
+      poiHtml = allPois.map((p, i) => {
+        const isRev = discovered.includes(i);
+        return `<li class="poi-item poi-master-item">
+          <span class="poi-text">${escHtml(p)}</span>
+          <button class="poi-reveal-btn${isRev ? ' poi-revealed' : ''}" type="button"
+            onclick="window.togglePoiReveal('${l.id}', ${i}, ${!isRev})">
+            ${isRev ? '✓ Revelado' : '🔒 Revelar'}
+          </button>
+        </li>`;
+      }).join('');
+    } else {
+      poiHtml = allPois.map((p, i) =>
+        discovered.includes(i)
+          ? `<li class="poi-item">${escHtml(p)}</li>`
+          : `<li class="poi-item poi-hidden">🔒 Ponto de interesse não descoberto</li>`
+      ).join('');
+    }
+  }
   const charItems  = (l.characters || []).map(cid => {
     const c = getCharById(cid);
     return c ? `<div class="modal-link-item" data-modal-id="${cid}" data-modal-type="character">${c.name}<span class="link-label-text">${c.role || ''}</span></div>` : '';
@@ -2648,6 +2924,33 @@ function buildLocationModalContent(id) {
     ${buildAnnotationsSection(id, 'location')}
   `;
 }
+
+// ── POI REVEAL ───────────────────────────────────────────────────────────────
+window.togglePoiReveal = async function(locationId, poiIndex, reveal) {
+  const loc = getLocationById(locationId);
+  if (!loc) return;
+  let disc = [...(loc.discoveredPois || [])];
+  if (reveal) { if (!disc.includes(poiIndex)) disc.push(poiIndex); }
+  else         { disc = disc.filter(i => i !== poiIndex); }
+  try {
+    await updateDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'locations', locationId), { discoveredPois: disc });
+    const locInState = STATE.data.locations.find(l => l.id === locationId);
+    if (locInState) locInState.discoveredPois = disc;
+    const mb = document.getElementById('modal-body');
+    if (mb) { mb.innerHTML = buildLocationModalContent(locationId); attachModalEvents(); }
+    if (reveal) {
+      const poiText = (loc.pointsOfInterest || [])[poiIndex] || '';
+      const players = STATE.players.filter(p => p.role === 'player');
+      await Promise.all(players.map(p =>
+        addDoc(collection(db, 'users', p.uid, 'notifications'), {
+          type: 'poi-reveal', entityType: 'location', entityId: locationId,
+          entityName: loc.name, description: poiText,
+          read: false, createdAt: serverTimestamp(),
+        })
+      ));
+    }
+  } catch (err) { console.error('POI toggle error:', err); }
+};
 
 // ── MODAL: EVENT ──────────────────────────────────────────────────────────────
 function buildEventModalContent(id) {

@@ -2434,3 +2434,200 @@ body::after {
   color: var(--text-muted);
   font-style: italic;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DICE ROLLER
+═══════════════════════════════════════════════════════════════════════════ */
+.dice-overlay {
+  position: fixed; inset: 0; z-index: 3000;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.6); backdrop-filter: blur(4px);
+  opacity: 0; pointer-events: none;
+  transition: opacity .2s;
+}
+.dice-overlay.open { opacity: 1; pointer-events: all; }
+
+.dice-toast {
+  position: relative;
+  background: linear-gradient(145deg, #0d1f35, #071525);
+  border: 1px solid var(--border-accent);
+  border-radius: 20px;
+  padding: 36px 48px 32px;
+  text-align: center;
+  min-width: 240px;
+  box-shadow: 0 0 60px rgba(90,138,176,.25), 0 8px 32px rgba(0,0,0,.6);
+  animation: dice-pop .25s cubic-bezier(.34,1.56,.64,1) both;
+}
+.dice-toast.dice-crit   { border-color: #cfac6e; box-shadow: 0 0 60px rgba(207,172,110,.4), 0 8px 32px rgba(0,0,0,.6); }
+.dice-toast.dice-fumble { border-color: #c05050; box-shadow: 0 0 60px rgba(192,80,80,.4), 0 8px 32px rgba(0,0,0,.6); }
+
+@keyframes dice-pop {
+  from { transform: scale(.7) rotate(-8deg); opacity:0; }
+  to   { transform: scale(1)  rotate(0deg);  opacity:1; }
+}
+.dice-close {
+  position: absolute; top: 12px; right: 14px;
+  background: transparent; border: none; color: var(--text-muted);
+  font-size: 16px; cursor: pointer; line-height: 1;
+}
+.dice-label { font-family: var(--font-title); font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+.dice-die   { font-size: 13px; color: var(--accent-blue-light); letter-spacing: 1px; margin-bottom: 4px; }
+.dice-value { font-size: 80px; font-family: var(--font-title); line-height: 1; color: var(--text-primary); text-shadow: 0 0 30px rgba(207,172,110,.4); }
+.dice-toast.dice-crit   .dice-value { color: #cfac6e; text-shadow: 0 0 40px rgba(207,172,110,.8); }
+.dice-toast.dice-fumble .dice-value { color: #c05050; text-shadow: 0 0 40px rgba(192,80,80,.8); }
+.dice-equation { font-size: 14px; color: var(--text-secondary); margin: 4px 0; }
+.dice-total-wrap { margin-top: 8px; border-top: 1px solid var(--border-accent); padding-top: 10px; }
+.dice-total { font-size: 36px; font-family: var(--font-title); color: var(--accent-gold); }
+.dice-total-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-top: 2px; }
+.dice-badge { font-size: 13px; font-family: var(--font-title); letter-spacing: 1px; margin-top: 12px; padding: 4px 14px; border-radius: 20px; display: inline-block; }
+.dice-badge-crit   { background: rgba(207,172,110,.15); color: #cfac6e; border: 1px solid rgba(207,172,110,.3); }
+.dice-badge-fumble { background: rgba(192,80,80,.15);   color: #c05050; border: 1px solid rgba(192,80,80,.3); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHARACTER SHEET — CLASS SELECT
+═══════════════════════════════════════════════════════════════════════════ */
+.my-char-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M0 0l6 7 6-7z' fill='%2387703f'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+}
+.my-char-select option { background: #0b1f33; color: var(--text-primary); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHARACTER SHEET — CLASS THEMES (animated hero background)
+═══════════════════════════════════════════════════════════════════════════ */
+.pc-hero { transition: background .6s ease; }
+
+.pc-theme-warrior { background: linear-gradient(135deg, #1a0a0a 0%, #2d1010 40%, #1a1008 100%) !important; animation: theme-warrior 8s ease-in-out infinite alternate; }
+.pc-theme-arcane  { background: linear-gradient(135deg, #0a0a2a 0%, #1a0a3d 40%, #0d1a35 100%) !important; animation: theme-arcane  8s ease-in-out infinite alternate; }
+.pc-theme-divine  { background: linear-gradient(135deg, #1a1500 0%, #2d2200 40%, #1a1a0a 100%) !important; animation: theme-divine  8s ease-in-out infinite alternate; }
+.pc-theme-nature  { background: linear-gradient(135deg, #061a06 0%, #0f2d10 40%, #0a1a12 100%) !important; animation: theme-nature  8s ease-in-out infinite alternate; }
+.pc-theme-bard    { background: linear-gradient(135deg, #0a1520 0%, #1a0a2a 40%, #0a1a1a 100%) !important; animation: theme-bard    8s ease-in-out infinite alternate; }
+.pc-theme-rogue   { background: linear-gradient(135deg, #0a0a0a 0%, #181820 40%, #0a1018 100%) !important; animation: theme-rogue   8s ease-in-out infinite alternate; }
+
+@keyframes theme-warrior { 0%{background-position:0% 50%} 100%{background-position:100% 50%} }
+@keyframes theme-arcane  { 0%{box-shadow:inset 0 0 80px rgba(120,60,200,.15)} 100%{box-shadow:inset 0 0 80px rgba(80,120,255,.2)} }
+@keyframes theme-divine  { 0%{box-shadow:inset 0 0 80px rgba(207,172,110,.1)} 100%{box-shadow:inset 0 0 80px rgba(255,230,120,.18)} }
+@keyframes theme-nature  { 0%{box-shadow:inset 0 0 80px rgba(60,160,80,.1)}  100%{box-shadow:inset 0 0 80px rgba(80,200,100,.15)} }
+@keyframes theme-bard    { 0%{box-shadow:inset 0 0 80px rgba(80,160,160,.1)} 100%{box-shadow:inset 0 0 80px rgba(160,80,180,.15)} }
+@keyframes theme-rogue   { 0%{box-shadow:inset 0 0 80px rgba(60,80,120,.1)}  100%{box-shadow:inset 0 0 80px rgba(80,80,80,.12)} }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHARACTER SHEET — COMBAT META
+═══════════════════════════════════════════════════════════════════════════ */
+.pc-sheet-section { background: rgba(255,255,255,.018); border-radius: var(--radius); border: 1px solid var(--border); margin-bottom: 12px !important; }
+
+.pc-sheet-meta {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px;
+}
+.pc-meta-box {
+  background: var(--bg-raised); border: 1px solid var(--border-accent);
+  border-radius: 10px; padding: 8px 12px; display: flex; flex-direction: column;
+  align-items: center; min-width: 72px; flex: 1;
+}
+.pc-meta-box label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 4px; white-space: nowrap; }
+.pc-sheet-input {
+  background: transparent; border: none; outline: none;
+  color: var(--text-primary); font-family: var(--font-title); font-size: 20px;
+  text-align: center; width: 100%; max-width: 70px;
+}
+.pc-sheet-input:focus { color: var(--accent-gold); }
+.pc-speed-in { font-size: 14px !important; max-width: 50px !important; }
+.pc-hp-row { display: flex; align-items: center; gap: 4px; }
+.pc-hp-in { max-width: 40px !important; font-size: 18px !important; }
+.pc-hp-sep { color: var(--text-muted); font-size: 16px; }
+.pc-meta-insp { min-width: 60px !important; }
+.pc-insp-chk { width: 20px; height: 20px; accent-color: var(--accent-gold); cursor: pointer; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHARACTER SHEET — ABILITY SCORES
+═══════════════════════════════════════════════════════════════════════════ */
+.pc-abilities-grid {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-top: 12px;
+}
+@media (max-width: 540px) { .pc-abilities-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.pc-ability-box {
+  background: var(--bg-raised); border: 1px solid var(--border-accent);
+  border-radius: 12px; padding: 10px 6px 8px; text-align: center;
+  cursor: pointer; transition: transform .15s, border-color .2s, box-shadow .2s;
+  user-select: none; position: relative; overflow: hidden;
+}
+.pc-ability-box:hover { border-color: var(--accent-gold-dim); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(207,172,110,.15); }
+.pc-ability-box:hover::after { content: '🎲'; position: absolute; top: 4px; right: 6px; font-size: 11px; opacity: .7; }
+.pc-ab-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 2px; }
+.pc-ab-mod   { font-size: 24px; font-family: var(--font-title); color: var(--accent-gold); line-height: 1.1; }
+.pc-ab-score { background: transparent; border: none; border-top: 1px solid var(--border); outline: none; color: var(--text-secondary); font-size: 13px; text-align: center; width: 100%; padding: 4px 0 0; margin-top: 4px; cursor: text; }
+.pc-ab-score:focus { color: var(--text-primary); }
+.pc-ab-full  { font-size: 9px; color: var(--text-muted); margin-top: 2px; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHARACTER SHEET — SAVING THROWS & SKILLS
+═══════════════════════════════════════════════════════════════════════════ */
+.pc-saves-grid, .pc-skills-list { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; }
+
+.pc-save-row, .pc-skill-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 5px 8px; border-radius: 6px; cursor: pointer;
+  transition: background .15s;
+}
+.pc-save-row:hover, .pc-skill-row:hover { background: rgba(207,172,110,.07); }
+
+.pc-prof-dot {
+  width: 14px; height: 14px; flex-shrink: 0;
+  accent-color: var(--accent-gold); cursor: pointer;
+}
+.pc-save-val, .pc-skill-val {
+  font-family: var(--font-title); font-size: 14px; color: var(--accent-gold);
+  min-width: 32px; text-align: center; flex-shrink: 0;
+}
+.pc-save-name, .pc-skill-name { font-size: 13px; color: var(--text-secondary); flex: 1; }
+.pc-skill-ab { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LOCATION — POI DISCOVERY
+═══════════════════════════════════════════════════════════════════════════ */
+.poi-master-item {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 12px; padding: 8px 10px; border-radius: 8px;
+  background: rgba(255,255,255,.025); margin-bottom: 6px;
+}
+.poi-text { font-size: 14px; color: var(--text-secondary); flex: 1; line-height: 1.5; }
+.poi-reveal-btn {
+  background: rgba(90,138,176,.15); border: 1px solid var(--accent-blue);
+  color: var(--accent-blue-light); border-radius: 8px; padding: 4px 10px;
+  font-size: 11px; cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  transition: all .15s; font-family: var(--font-title);
+}
+.poi-reveal-btn.poi-revealed {
+  background: rgba(154,186,138,.15); border-color: var(--accent-green); color: var(--accent-green);
+}
+.poi-reveal-btn:hover { opacity: .8; }
+.poi-hidden {
+  color: var(--text-muted); font-style: italic; font-size: 13px;
+  padding: 4px 0; display: flex; align-items: center; gap: 6px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VISUAL IMPROVEMENTS — Global polish
+═══════════════════════════════════════════════════════════════════════════ */
+/* Card hover glow */
+.char-card:hover, .location-card:hover {
+  box-shadow: 0 8px 32px rgba(90,138,176,.12), 0 2px 8px rgba(0,0,0,.4);
+}
+/* Modal header gradient */
+.modal-location-hero {
+  background: linear-gradient(180deg, rgba(9,28,50,.8) 0%, transparent 100%);
+}
+/* Better section titles */
+.pc-section-title { letter-spacing: .5px; }
+/* Improved location poi list */
+.poi-list { padding-left: 0; list-style: none; }
+.poi-item { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,.04); }
+.poi-item:last-child { border-bottom: none; }
+/* Subtle page background depth */
+body { background-image: radial-gradient(ellipse at 50% 0%, rgba(20,50,90,.35) 0%, transparent 70%); }
