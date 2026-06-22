@@ -2884,3 +2884,124 @@ body { background-image: radial-gradient(ellipse at 50% 0%, rgba(20,50,90,.35) 0
 /* Save / skill rows — more padding */
 .pc-save-row, .pc-skill-row { padding: 6px 10px !important; gap: 12px !important; border-radius: 8px !important; }
 .pc-save-name, .pc-skill-name { font-size: 13px !important; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHARACTER SHEET — VIEW MODE (cs-*)
+═══════════════════════════════════════════════════════════════════════════ */
+/* Top bar with toggle button */
+.cs-top-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border);
+}
+.cs-edit-toggle-btn {
+  background: rgba(207,172,110,.1); border: 1px solid rgba(207,172,110,.25);
+  color: var(--accent-gold-dim); border-radius: 24px; padding: 7px 18px;
+  font-family: var(--font-title); font-size: 13px; cursor: pointer; letter-spacing: .5px;
+  transition: background .2s, border-color .2s, color .2s;
+}
+.cs-edit-toggle-btn:hover { background: rgba(207,172,110,.2); color: var(--accent-gold); border-color: rgba(207,172,110,.5); }
+
+/* Hero — portrait + identity */
+.cs-hero {
+  display: flex; align-items: center; gap: 20px;
+  padding: 20px 22px; border-radius: var(--radius);
+  background: var(--bg-raised); border: 1px solid var(--border);
+  margin-bottom: 14px; position: relative; overflow: hidden;
+}
+.cs-hero::before { content:''; position:absolute; inset:0; opacity:.06; pointer-events:none; }
+.cs-vport-wrap { flex-shrink: 0; }
+.cs-portrait {
+  width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
+  border: 2px solid var(--border-accent); cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+.cs-portrait-zoom:hover { transform: scale(1.04); box-shadow: 0 0 20px rgba(207,172,110,.2); }
+.cs-portrait-ph {
+  width: 90px; height: 90px; border-radius: 50%;
+  background: var(--bg-elevated); border: 2px solid var(--border-accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-title); font-size: 36px; color: var(--text-muted);
+}
+.cs-identity { flex: 1; }
+.cs-char-name { font-family: var(--font-title); font-size: 26px; color: var(--text-primary); letter-spacing: .5px; line-height: 1.1; }
+.cs-char-meta { font-size: 13px; color: var(--text-muted); margin: 4px 0 8px; }
+.cs-level-pill {
+  display: inline-block; background: rgba(207,172,110,.12); border: 1px solid rgba(207,172,110,.25);
+  color: var(--accent-gold-dim); border-radius: 20px; padding: 3px 12px;
+  font-size: 12px; font-family: var(--font-title); letter-spacing: .5px;
+}
+
+/* Combat strip */
+.cs-combat-strip {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;
+}
+.cs-combat-box {
+  background: var(--bg-raised); border: 1px solid var(--border-accent);
+  border-radius: 12px; padding: 10px 14px; display: flex; flex-direction: column;
+  align-items: center; flex: 1; min-width: 72px;
+}
+.cs-combat-val { font-family: var(--font-title); font-size: 22px; color: var(--text-primary); line-height: 1; }
+.cs-combat-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-top: 4px; }
+.cs-hp-bar { width: 100%; height: 4px; background: rgba(255,255,255,.08); border-radius: 2px; margin: 5px 0 2px; overflow: hidden; }
+.cs-hp-fill { height: 100%; border-radius: 2px; transition: width .5s ease; }
+.cs-hp-fill.cs-hp-ok   { background: var(--accent-green); }
+.cs-hp-fill.cs-hp-warn { background: #d4a84b; }
+.cs-hp-fill.cs-hp-low  { background: #c05050; }
+
+/* Three-column sheet grid */
+.cs-sheet-grid {
+  display: grid; grid-template-columns: auto 1fr 1fr; gap: 12px; margin-bottom: 14px;
+}
+@media (max-width: 700px) { .cs-sheet-grid { grid-template-columns: 1fr; } }
+
+.cs-sh-title { font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-muted); margin-bottom: 10px; }
+
+/* Abilities */
+.cs-ab-section { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; }
+.cs-ab-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+@media (min-width: 500px) { .cs-ab-grid { grid-template-columns: repeat(6,1fr); } }
+.cs-ab-box {
+  background: var(--bg-elevated); border: 1px solid var(--border-accent);
+  border-radius: 12px; padding: 10px 4px 8px; text-align: center;
+  cursor: pointer; user-select: none;
+  transition: transform .15s, border-color .2s, box-shadow .2s;
+}
+.cs-ab-box:hover { border-color: var(--accent-gold-dim); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(207,172,110,.14); }
+.cs-ab-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+.cs-ab-mod   { font-size: 24px; font-family: var(--font-title); color: var(--accent-gold); line-height: 1.15; margin: 2px 0; }
+.cs-ab-score { font-size: 12px; color: var(--text-secondary); }
+
+/* Saves */
+.cs-sv-section { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; }
+.cs-sv-row {
+  display: flex; align-items: center; gap: 8px; padding: 4px 6px;
+  border-radius: 6px; cursor: pointer; transition: background .15s;
+}
+.cs-sv-row:hover { background: rgba(207,172,110,.06); }
+.cs-sv-row.cs-prof-on .cs-sv-name { color: var(--text-primary); font-weight: 600; }
+.cs-sv-val  { font-family: var(--font-title); font-size: 13px; min-width: 28px; text-align: center; color: var(--accent-gold); flex-shrink: 0; }
+.cs-sv-name { font-size: 12px; color: var(--text-secondary); flex: 1; }
+
+/* Skills */
+.cs-sk-section { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; overflow-y: auto; max-height: 340px; }
+.cs-sk-row {
+  display: flex; align-items: center; gap: 8px; padding: 3px 6px;
+  border-radius: 6px; cursor: pointer; transition: background .15s;
+}
+.cs-sk-row:hover { background: rgba(207,172,110,.06); }
+.cs-sk-row.cs-prof-on .cs-sk-name { color: var(--text-primary); font-weight: 600; }
+.cs-sk-val  { font-family: var(--font-title); font-size: 13px; min-width: 26px; text-align: center; color: var(--accent-gold); flex-shrink: 0; }
+.cs-sk-name { font-size: 12px; color: var(--text-secondary); flex: 1; }
+.cs-sk-ab   { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+
+/* Prof dot */
+.cs-prof-dot {
+  width: 10px; height: 10px; flex-shrink: 0; border-radius: 50%;
+  border: 1px solid var(--text-muted); background: transparent;
+  display: inline-block;
+}
+.cs-dot-on { background: var(--accent-gold); border-color: var(--accent-gold); }
+
+/* Text blocks */
+.cs-text-block { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px; }
+.cs-text-body  { font-size: 14px; color: var(--text-secondary); line-height: 1.65; margin: 0; white-space: pre-wrap; }

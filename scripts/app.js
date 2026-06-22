@@ -2009,15 +2009,79 @@ function renderMeuPersonagem() {
     ? `<img class="pc-portrait-img pc-portrait-zoomable" id="pc-portrait-img" src="${pendingImageUrl}" alt="" title="Clique para ampliar">`
     : `<div class="pc-portrait-placeholder" id="pc-portrait-img">${(pc.name||'?').charAt(0)}</div>`;
 
-  // ── Render shell ─────────────────────────────────────────────────────────
+  // ── View mode HTML ────────────────────────────────────────────────────────
+  const hpPct   = sheet.maxHp ? Math.max(0,Math.min(100,Math.round(((sheet.hp||0)/sheet.maxHp)*100))) : 0;
+  const hpClass = hpPct >= 50 ? 'cs-hp-ok' : hpPct >= 25 ? 'cs-hp-warn' : 'cs-hp-low';
+  const viewHtml = `
+    <div id="cs-view">
+      <div class="cs-hero${heroTheme ? ' pc-theme-'+heroTheme : ''}" id="pc-hero">
+        <div class="cs-vport-wrap">
+          ${pendingImageUrl
+            ? `<img class="cs-portrait cs-portrait-zoom" id="cs-portrait-view" src="${pendingImageUrl}" alt="">`
+            : `<div class="cs-portrait-ph">${escHtml((pc.name||'?').charAt(0).toUpperCase())}</div>`}
+        </div>
+        <div class="cs-identity">
+          <div class="cs-char-name">${escHtml(pc.name || 'Sem nome')}</div>
+          <div class="cs-char-meta">${[pc.race, pc.charClass, pc.background].filter(Boolean).map(escHtml).join(' · ')}</div>
+          <div class="cs-level-pill">Nível ${sheet.level ?? 1}${sheet.inspiration ? ' &nbsp;✨' : ''}</div>
+        </div>
+      </div>
+      <div class="cs-combat-strip">
+        <div class="cs-combat-box cs-hp-box">
+          <div class="cs-combat-val">${sheet.hp ?? '—'}/${sheet.maxHp ?? '—'}</div>
+          ${sheet.maxHp ? `<div class="cs-hp-bar"><div class="cs-hp-fill ${hpClass}" style="width:${hpPct}%"></div></div>` : ''}
+          <div class="cs-combat-label">Pontos de Vida</div>
+        </div>
+        <div class="cs-combat-box"><div class="cs-combat-val">${sheet.ac ?? '—'}</div><div class="cs-combat-label">CA</div></div>
+        <div class="cs-combat-box"><div class="cs-combat-val">${(sheet.initiative||0) >= 0 ? '+'+(sheet.initiative||0) : (sheet.initiative||0)}</div><div class="cs-combat-label">Iniciativa</div></div>
+        <div class="cs-combat-box"><div class="cs-combat-val">${escHtml(sheet.speed || '9 m')}</div><div class="cs-combat-label">Deslocamento</div></div>
+        <div class="cs-combat-box"><div class="cs-combat-val">+${pb()}</div><div class="cs-combat-label">Proficiência</div></div>
+      </div>
+      <div class="cs-sheet-grid">
+        <div class="cs-ab-section">
+          <div class="cs-sh-title">🎲 Atributos — clique para rolar</div>
+          <div class="cs-ab-grid">
+            ${AB_KEYS.map(k => `<div class="cs-ab-box" data-ab="${k}" title="Rolar ${AB_FULL[k]}">
+              <div class="cs-ab-label">${AB_PT[k]}</div>
+              <div class="cs-ab-mod">${abModStr(k)}</div>
+              <div class="cs-ab-score">${abScore(k)}</div>
+            </div>`).join('')}
+          </div>
+        </div>
+        <div class="cs-sv-section">
+          <div class="cs-sh-title">🛡️ Resistências</div>
+          ${AB_KEYS.map(k => { const p2=(sheet.savingThrows||{})[k]; return `<div class="cs-sv-row${p2?' cs-prof-on':''}" data-save="${k}">
+            <span class="cs-prof-dot${p2?' cs-dot-on':''}"></span>
+            <span class="cs-sv-val">${saveModStr(k)}</span>
+            <span class="cs-sv-name">${AB_PT[k]} — ${AB_FULL[k]}</span>
+          </div>`; }).join('')}
+        </div>
+        <div class="cs-sk-section">
+          <div class="cs-sh-title">📋 Perícias</div>
+          ${DND_SKILLS.map(sk => { const p2=(sheet.skills||{})[sk.id]; return `<div class="cs-sk-row${p2?' cs-prof-on':''}" data-skill="${sk.id}" data-ab="${sk.ability}">
+            <span class="cs-prof-dot${p2?' cs-dot-on':''}"></span>
+            <span class="cs-sk-val">${skillModStr(sk)}</span>
+            <span class="cs-sk-name">${sk.name}</span>
+            <span class="cs-sk-ab">${AB_PT[sk.ability]}</span>
+          </div>`; }).join('')}
+        </div>
+      </div>
+      ${pc.appearance ? `<div class="cs-text-block"><div class="cs-sh-title">Aparência</div><p class="cs-text-body">${escHtml(pc.appearance)}</p></div>` : ''}
+      ${pc.personality ? `<div class="cs-text-block"><div class="cs-sh-title">Personalidade &amp; Motivações</div><p class="cs-text-body">${escHtml(pc.personality)}</p></div>` : ''}
+      ${pc.history ? `<div class="cs-text-block"><div class="cs-sh-title">História</div><p class="cs-text-body">${escHtml(pc.history)}</p></div>` : ''}
+    </div>`;
+
+  // ── Render shell ──────────────────────────────────────────────────────────
   container.innerHTML = `<div class="my-char-container">
-    <div class="my-char-header">
+    <div class="cs-top-bar">
       <div class="my-char-title">Meu Personagem</div>
-      <div class="my-char-subtitle">Preencha sua ficha e controle o que cada jogador pode ver</div>
+      <button type="button" class="cs-edit-toggle-btn" id="cs-edit-toggle">✏ Editar Ficha</button>
     </div>
+    ${viewHtml}
+    <div id="cs-edit-wrap" style="display:none">
     <form class="my-char-form" id="my-char-form">
 
-      <div class="pc-hero${heroTheme ? ' pc-theme-'+heroTheme : ''}" id="pc-hero">
+      <div class="pc-hero${heroTheme ? ' pc-theme-'+heroTheme : ''}" id="pc-hero-edit">
         <div class="pc-portrait-wrap">
           ${portraitHtml}
           <input type="file" id="pc-img-file" accept="image/*" style="display:none">
@@ -2179,6 +2243,7 @@ function renderMeuPersonagem() {
       </div>
 
     </form>
+    </div><!-- /cs-edit-wrap -->
     <div id="other-players-chars"></div>
   </div>`;
 
@@ -2427,8 +2492,69 @@ function renderMeuPersonagem() {
       STATE.profile.playerCharacter = charData;
       const msg = document.getElementById('my-char-saved-msg');
       msg.textContent = '✓ Ficha salva!';
-      setTimeout(() => { msg.textContent = ''; }, 3000);
+      setTimeout(() => renderMeuPersonagem(), 1500);
     } finally { btn.disabled = false; btn.textContent = 'Salvar Ficha'; }
+  });
+
+  // ── View/Edit toggle ──────────────────────────────────────────────────────
+  document.getElementById('cs-edit-toggle').addEventListener('click', () => {
+    const view = document.getElementById('cs-view');
+    const edit = document.getElementById('cs-edit-wrap');
+    const btn  = document.getElementById('cs-edit-toggle');
+    const isEditing = edit.style.display !== 'none';
+    view.style.display  = isEditing ? '' : 'none';
+    edit.style.display  = isEditing ? 'none' : '';
+    btn.textContent = isEditing ? '✏ Editar Ficha' : '✕ Cancelar';
+  });
+
+  // ── View mode portrait zoom ───────────────────────────────────────────────
+  document.getElementById('cs-portrait-view')?.addEventListener('click', () => openLightbox(pendingImageUrl));
+
+  // ── View mode dice rolling ────────────────────────────────────────────────
+  container.querySelectorAll('.cs-ab-box').forEach(box => {
+    box.addEventListener('click', () => {
+      const k   = box.dataset.ab;
+      const mod = abModNum(k);
+      const roll  = Math.floor(Math.random() * 20) + 1;
+      const total = roll + mod;
+      showDiceToast({ label: AB_FULL[k], sides: 20, roll, modifier: mod, total, details: [
+        { label: 'Rolagem do dado', value: roll },
+        { label: `Modificador de ${AB_FULL[k]}`, value: abModStr(k) },
+        { label: 'Total', value: total },
+      ]});
+    });
+  });
+  container.querySelectorAll('.cs-sv-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const k    = row.dataset.save;
+      const prof = (sheet.savingThrows||{})[k];
+      const base = abModNum(k);
+      const mod  = base + (prof ? pb() : 0);
+      const roll  = Math.floor(Math.random() * 20) + 1;
+      const total = roll + mod;
+      showDiceToast({ label: `Resistência — ${AB_FULL[k]}`, sides: 20, roll, modifier: mod, total, details: [
+        { label: 'Rolagem do dado', value: roll },
+        { label: `Mod. de ${AB_FULL[k]}`, value: (base >= 0 ? '+' : '') + base },
+        ...(prof ? [{ label: 'Bônus de Proficiência', value: '+' + pb() }] : []),
+        { label: 'Total', value: total },
+      ]});
+    });
+  });
+  container.querySelectorAll('.cs-sk-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const sk   = DND_SKILLS.find(s => s.id === row.dataset.skill);
+      const prof = (sheet.skills||{})[sk?.id];
+      const base = abModNum(row.dataset.ab);
+      const mod  = base + (prof ? pb() : 0);
+      const roll  = Math.floor(Math.random() * 20) + 1;
+      const total = roll + mod;
+      showDiceToast({ label: sk?.name || row.dataset.skill, sides: 20, roll, modifier: mod, total, details: [
+        { label: 'Rolagem do dado', value: roll },
+        { label: `Mod. de ${AB_FULL[row.dataset.ab]||row.dataset.ab}`, value: (base >= 0 ? '+' : '') + base },
+        ...(prof ? [{ label: 'Bônus de Proficiência', value: '+' + pb() }] : []),
+        { label: 'Total', value: total },
+      ]});
+    });
   });
 
   // ── Load other players (async, non-blocking) ──────────────────────────────
