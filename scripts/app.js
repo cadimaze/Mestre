@@ -2742,6 +2742,26 @@ function openModal(id, type, pushToStack = true) {
   overlay.classList.add('open');
   panel.classList.add('open');
 
+  // Refresh player data from Firestore so master always sees the latest sheet
+  if (type === 'player' && STATE.isMaster) {
+    getDoc(doc(db, 'users', id)).then(snap => {
+      if (!snap.exists()) return;
+      const fresh = { uid: id, ...snap.data() };
+      const idx = STATE.players.findIndex(p => p.uid === id);
+      if (idx !== -1) STATE.players[idx] = fresh; else STATE.players.push(fresh);
+      if (STATE.modal.current?.id === id && STATE.modal.current?.type === 'player') {
+        const refreshed = buildModalContent(id, type);
+        if (refreshed) {
+          document.getElementById('modal-body').innerHTML = refreshed;
+          attachModalEvents();
+          attachVisibilityEvents();
+          attachAnnotationEvents();
+          attachPlayerSecretVisEvents(id);
+        }
+      }
+    }).catch(() => {});
+  }
+
   // Wire up edit button (ficha de jogador: só o mestre edita por aqui)
   const editBtn = document.getElementById('modal-edit-btn');
   if (editBtn) {
