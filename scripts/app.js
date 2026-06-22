@@ -1173,6 +1173,43 @@ async function syncCampaignContent() {
   }
 }
 
+// ── EXPORT FIRESTORE → JSON ───────────────────────────────────────────────────
+function _downloadJson(data, filename) {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a = Object.assign(document.createElement('a'), { href: url, download: filename });
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 500);
+}
+
+async function exportToJson() {
+  const btn = document.getElementById('export-json-btn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Exportando...'; }
+  try {
+    // Small delay between downloads so browser doesn't block them
+    const dl = async (data, name) => { _downloadJson(data, name); await new Promise(r => setTimeout(r, 350)); };
+
+    await dl(STATE.data.characters, 'characters.json');
+    await dl(STATE.data.locations,  'locations.json');
+    await dl(STATE.data.events,     'events.json');
+    await dl(STATE.data.factions,   'factions.json');
+    await dl(STATE.data.documents,  'documents.json');
+
+    // NPCs: convert foundryJsonStr back to foundryJson object
+    const npcsExport = STATE.data.npcs.map(n => {
+      const { foundryJsonStr, ...rest } = n;
+      if (foundryJsonStr) { try { return { ...rest, foundryJson: JSON.parse(foundryJsonStr) }; } catch { return rest; } }
+      return rest;
+    });
+    await dl(npcsExport, 'npcs.json');
+
+    if (btn) { btn.textContent = '✓ Exportado!'; setTimeout(() => { btn.textContent = '⬇ Exportar JSON'; btn.disabled = false; }, 3000); }
+  } catch (err) {
+    alert('Erro ao exportar: ' + err.message);
+    if (btn) { btn.textContent = '⬇ Exportar JSON'; btn.disabled = false; }
+  }
+}
+
 // ── ADD NEW BUTTONS ───────────────────────────────────────────────────────────
 function ensureAddBtn(sectionId, type, label) {
   if (!STATE.isMaster) return;
@@ -3265,10 +3302,9 @@ function buildPlayerModalContent(uid) {
     : `<div class="modal-char-avatar"><div class="modal-char-avatar-placeholder">${escHtml(name.charAt(0).toUpperCase())}</div></div>`;
 
   const sheet  = pc.sheet || {};
-  const hasSh  = !!(sheet.abilities || sheet.level);
   const pb     = sheet.profBonus || 2;
 
-  const masterSheetHtml = (STATE.isMaster && hasSh) ? (() => {
+  const masterSheetHtml = STATE.isMaster ? (() => {
     const abGrid = AB_KEYS.map(k => {
       const sc  = (sheet.abilities || {})[k] ?? 10;
       const mod = Math.floor((sc - 10) / 2);
@@ -4978,6 +5014,10 @@ async function init() {
   // Sync campaign data (master only)
   const syncBtn = document.getElementById('sync-campaign-btn');
   if (syncBtn) syncBtn.addEventListener('click', syncCampaignContent);
+
+  // Export Firestore → JSON (master only)
+  const exportBtn = document.getElementById('export-json-btn');
+  if (exportBtn) exportBtn.addEventListener('click', exportToJson);
 
   // Secrets toggle (master only)
   const secretsBtn = document.getElementById('secrets-float-btn');
