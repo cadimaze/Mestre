@@ -508,7 +508,7 @@ Soren é inocente. É perigoso. São a mesma coisa. Se os jogadores descobrirem,
 #### TULO BRESH
 
 **Papel:** Governador de Kaldera
-**Status:** Vivo
+**Status:** Morto
 **Raça:** Humano
 **Localização:** Palácio do Governador, Kaldera
 
