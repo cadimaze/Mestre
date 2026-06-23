@@ -453,7 +453,7 @@ O que vaza por Soren não é o impulso cego do Thurvael. É Selavin Doss, usando
 
 #### SOREN MAEL
 
-**Papel:** Cartógrafo errante / Instrumento inconsciente de Selavin Doss
+**Papel:** Cartógrafo errante
 **Status:** Vivo
 **Raça:** Humano
 **Idade:** Pouco mais de trinta anos
@@ -473,12 +473,7 @@ Caloroso, presente, genuinamente curioso sobre as pessoas que encontra. Faz perg
 
 Acredita em cada palavra que diz. Quando conta sobre o tomo, está relatando algo que descobriu de forma legítima — porque descobriu mesmo. Um feitiço de *Detect Thoughts* vai encontrar preocupação genuína com os jogadores. *Zone of Truth* vai confirmar cada palavra. Não há nada para detectar — porque ele não está mentindo.
 
-**Sinais sutis a plantar:**
-
-- Não mergulha mais. Diz que teve uma experiência ruim — não lembra qual
-- Perto de água profunda e parada, fica quieto por alguns segundos. Volta a si normalmente
-- Escreve cartas para a família com frequência obsessiva
-- Às vezes completa uma frase e franze o cenho levemente — como se tivesse saído diferente do que planejava dizer
+> **[PISTAS DO MESTRE]** Comportamentos sutis a plantar nas interações: não mergulha mais (diz que teve uma experiência ruim — não lembra qual); perto de água profunda e parada, fica quieto por alguns segundos antes de voltar ao normal; escreve cartas para a família com frequência obsessiva; às vezes completa uma frase e franze o cenho levemente, como se tivesse saído diferente do que planejava dizer.
 
 ##### Segredos
 

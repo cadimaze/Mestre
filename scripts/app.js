@@ -387,17 +387,33 @@ function showDiceToast({ label, sides, roll, modifier, total, details }) {
   }, 1350);
 }
 
-window.masterRoll = function(playerName, label, score, profBonus, isProficient) {
+// profStateToMod: 0=none, 1=half, 2=prof, 3=expert. Accepts boolean for legacy data.
+function profStateToMod(state, pb) {
+  const s = typeof state === 'boolean' ? (state ? 2 : 0) : (Number(state) || 0);
+  if (s === 1) return Math.floor(pb / 2);
+  if (s === 2) return pb;
+  if (s === 3) return pb * 2;
+  return 0;
+}
+
+// profStateNorm: normalise saved value to 0-3 integer
+function profStateNorm(state) {
+  if (typeof state === 'boolean') return state ? 2 : 0;
+  const n = Number(state);
+  return (n >= 0 && n <= 3) ? n : 0;
+}
+
+window.masterRoll = function(playerName, label, score, profBonusAdd) {
   const baseMod = Math.floor((score - 10) / 2);
-  const mod     = baseMod + (isProficient ? profBonus : 0);
+  const mod     = baseMod + (profBonusAdd || 0);
   const roll    = Math.floor(Math.random() * 20) + 1;
   const total   = roll + mod;
   showDiceToast({
     label: `${playerName} — ${label}`, sides: 20, roll, modifier: mod, total,
     details: [
       { label: 'Rolagem', value: roll },
-      { label: 'Modificador', value: (baseMod >= 0 ? '+' : '') + baseMod },
-      ...(isProficient ? [{ label: 'Bônus de Proficiência', value: '+' + profBonus }] : []),
+      { label: 'Modificador de Atributo', value: (baseMod >= 0 ? '+' : '') + baseMod },
+      ...(profBonusAdd ? [{ label: 'Bônus de Proficiência', value: '+' + profBonusAdd }] : []),
       { label: 'Total', value: total },
     ]
   });
@@ -2001,11 +2017,11 @@ function renderMeuPersonagem() {
   const abModStr = k => { const m = abModNum(k); return (m >= 0 ? '+' : '') + m; };
   const pb       = () => sheet.profBonus || 2;
   const skillModStr = sk => {
-    const m = abModNum(sk.ability) + ((sheet.skills || {})[sk.id] ? pb() : 0);
+    const m = abModNum(sk.ability) + profStateToMod((sheet.skills || {})[sk.id], pb());
     return (m >= 0 ? '+' : '') + m;
   };
   const saveModStr = k => {
-    const m = abModNum(k) + ((sheet.savingThrows || {})[k] ? pb() : 0);
+    const m = abModNum(k) + profStateToMod((sheet.savingThrows || {})[k], pb());
     return (m >= 0 ? '+' : '') + m;
   };
 
@@ -2087,16 +2103,16 @@ function renderMeuPersonagem() {
         </div>
         <div class="cs-sv-section">
           <div class="cs-sh-title">🛡️ Resistências</div>
-          ${AB_KEYS.map(k => { const p2=(sheet.savingThrows||{})[k]; return `<div class="cs-sv-row${p2?' cs-prof-on':''}" data-save="${k}">
-            <span class="cs-prof-dot${p2?' cs-dot-on':''}"></span>
+          ${AB_KEYS.map(k => { const p2=profStateNorm((sheet.savingThrows||{})[k]); return `<div class="cs-sv-row${p2>0?' cs-prof-on':''}" data-save="${k}">
+            <span class="cs-prof-dot cs-prof-state-${p2}"></span>
             <span class="cs-sv-val">${saveModStr(k)}</span>
             <span class="cs-sv-name">${AB_PT[k]} — ${AB_FULL[k]}</span>
           </div>`; }).join('')}
         </div>
         <div class="cs-sk-section">
           <div class="cs-sh-title">📋 Perícias</div>
-          ${DND_SKILLS.map(sk => { const p2=(sheet.skills||{})[sk.id]; return `<div class="cs-sk-row${p2?' cs-prof-on':''}" data-skill="${sk.id}" data-ab="${sk.ability}">
-            <span class="cs-prof-dot${p2?' cs-dot-on':''}"></span>
+          ${DND_SKILLS.map(sk => { const p2=profStateNorm((sheet.skills||{})[sk.id]); return `<div class="cs-sk-row${p2>0?' cs-prof-on':''}" data-skill="${sk.id}" data-ab="${sk.ability}">
+            <span class="cs-prof-dot cs-prof-state-${p2}"></span>
             <span class="cs-sk-val">${skillModStr(sk)}</span>
             <span class="cs-sk-name">${sk.name}</span>
             <span class="cs-sk-ab">${AB_PT[sk.ability]}</span>
@@ -2201,7 +2217,7 @@ function renderMeuPersonagem() {
         <div class="pc-saves-grid">
           ${AB_KEYS.map(k => `
             <div class="pc-save-row" data-save="${k}" title="Rolar resistência ${AB_FULL[k]}">
-              <input type="checkbox" class="pc-prof-dot" name="sheet_save_${k}" ${(sheet.savingThrows||{})[k] ? 'checked' : ''}>
+              <button type="button" class="pc-prof-btn" data-name="sheet_save_${k}" data-prof="${profStateNorm((sheet.savingThrows||{})[k])}" title="Clique para mudar proficiência"></button>
               <span class="pc-save-val" id="pc-saveval-${k}">${saveModStr(k)}</span>
               <span class="pc-save-name">${AB_PT[k]} — ${AB_FULL[k]}</span>
             </div>`).join('')}
@@ -2214,7 +2230,7 @@ function renderMeuPersonagem() {
         <div class="pc-skills-list">
           ${DND_SKILLS.map(sk => `
             <div class="pc-skill-row" data-skill="${sk.id}" data-ab="${sk.ability}" title="Rolar ${sk.name}">
-              <input type="checkbox" class="pc-prof-dot" name="sheet_skill_${sk.id}" ${(sheet.skills||{})[sk.id] ? 'checked' : ''}>
+              <button type="button" class="pc-prof-btn" data-name="sheet_skill_${sk.id}" data-prof="${profStateNorm((sheet.skills||{})[sk.id])}" title="Clique para mudar proficiência"></button>
               <span class="pc-skill-val" id="pc-skillval-${sk.id}">${skillModStr(sk)}</span>
               <span class="pc-skill-name">${sk.name}</span>
               <span class="pc-skill-ab">${AB_PT[sk.ability]}</span>
@@ -2378,24 +2394,28 @@ function renderMeuPersonagem() {
       const mod = Math.floor((sc - 10) / 2);
       const el  = document.getElementById(`pc-abmod-${k}`);
       if (el) el.textContent = (mod >= 0 ? '+' : '') + mod;
-      const savProf = container.querySelector(`[name="sheet_save_${k}"]`)?.checked;
-      const savVal  = mod + (savProf ? profBonusVal : 0);
+      const btnState = parseInt(container.querySelector(`.pc-prof-btn[data-name="sheet_save_${k}"]`)?.dataset.prof || '0');
+      const savVal  = mod + profStateToMod(btnState, profBonusVal);
       const savEl   = document.getElementById(`pc-saveval-${k}`);
       if (savEl) savEl.textContent = (savVal >= 0 ? '+' : '') + savVal;
     });
     DND_SKILLS.forEach(sk => {
       const sc  = parseInt(container.querySelector(`[name="sheet_ab_${sk.ability}"]`)?.value) || 10;
       const mod = Math.floor((sc - 10) / 2);
-      const skProf = container.querySelector(`[name="sheet_skill_${sk.id}"]`)?.checked;
-      const val = mod + (skProf ? profBonusVal : 0);
+      const btnState = parseInt(container.querySelector(`.pc-prof-btn[data-name="sheet_skill_${sk.id}"]`)?.dataset.prof || '0');
+      const val = mod + profStateToMod(btnState, profBonusVal);
       const el  = document.getElementById(`pc-skillval-${sk.id}`);
       if (el) el.textContent = (val >= 0 ? '+' : '') + val;
     });
   }
   container.querySelectorAll('.pc-ab-score, #pc-prof-bonus').forEach(inp =>
     inp.addEventListener('input', recalcMods));
-  container.querySelectorAll('.pc-prof-dot').forEach(chk =>
-    chk.addEventListener('change', recalcMods));
+  container.querySelectorAll('.pc-prof-btn').forEach(btn =>
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      btn.dataset.prof = String((parseInt(btn.dataset.prof || '0') + 1) % 4);
+      recalcMods();
+    }));
 
   // ── Dice rolling ─────────────────────────────────────────────────────────
   container.querySelectorAll('.pc-ability-box').forEach(box => {
@@ -2416,19 +2436,20 @@ function renderMeuPersonagem() {
 
   container.querySelectorAll('.pc-save-row').forEach(row => {
     row.addEventListener('click', e => {
-      if (e.target.tagName === 'INPUT') return;
+      if (e.target.classList.contains('pc-prof-btn')) return;
       const k      = row.dataset.save;
       const sc     = parseInt(container.querySelector(`[name="sheet_ab_${k}"]`)?.value) || 10;
       const pbv    = parseInt(document.getElementById('pc-prof-bonus')?.value) || 2;
-      const prof   = row.querySelector('.pc-prof-dot')?.checked;
+      const btnState = parseInt(row.querySelector('.pc-prof-btn')?.dataset.prof || '0');
       const base   = Math.floor((sc - 10) / 2);
-      const mod    = base + (prof ? pbv : 0);
+      const pba    = profStateToMod(btnState, pbv);
+      const mod    = base + pba;
       const roll   = Math.floor(Math.random() * 20) + 1;
       const total  = roll + mod;
       showDiceToast({ label: `Resistência — ${AB_FULL[k]}`, sides: 20, roll, modifier: mod, total, details: [
         { label: 'Rolagem do dado', value: roll },
         { label: `Mod. de ${AB_FULL[k]}`, value: (base >= 0 ? '+' : '') + base },
-        ...(prof ? [{ label: 'Bônus de Proficiência', value: '+' + pbv }] : []),
+        ...(pba ? [{ label: 'Bônus de Proficiência', value: '+' + pba }] : []),
         { label: 'Total', value: total },
       ]});
     });
@@ -2436,19 +2457,20 @@ function renderMeuPersonagem() {
 
   container.querySelectorAll('.pc-skill-row').forEach(row => {
     row.addEventListener('click', e => {
-      if (e.target.tagName === 'INPUT') return;
+      if (e.target.classList.contains('pc-prof-btn')) return;
       const sk   = DND_SKILLS.find(s => s.id === row.dataset.skill);
       const sc   = parseInt(container.querySelector(`[name="sheet_ab_${row.dataset.ab}"]`)?.value) || 10;
       const pbv  = parseInt(document.getElementById('pc-prof-bonus')?.value) || 2;
-      const prof = row.querySelector('.pc-prof-dot')?.checked;
+      const btnState = parseInt(row.querySelector('.pc-prof-btn')?.dataset.prof || '0');
       const base = Math.floor((sc - 10) / 2);
-      const mod  = base + (prof ? pbv : 0);
+      const pba  = profStateToMod(btnState, pbv);
+      const mod  = base + pba;
       const roll = Math.floor(Math.random() * 20) + 1;
       const total = roll + mod;
       showDiceToast({ label: sk?.name || row.dataset.skill, sides: 20, roll, modifier: mod, total, details: [
         { label: 'Rolagem do dado', value: roll },
         { label: `Mod. de ${AB_FULL[row.dataset.ab] || row.dataset.ab}`, value: (base >= 0 ? '+' : '') + base },
-        ...(prof ? [{ label: 'Bônus de Proficiência', value: '+' + pbv }] : []),
+        ...(pba ? [{ label: 'Bônus de Proficiência', value: '+' + pba }] : []),
         { label: 'Total', value: total },
       ]});
     });
@@ -2507,9 +2529,15 @@ function renderMeuPersonagem() {
     const abilityScores = {};
     AB_KEYS.forEach(k => { abilityScores[k] = parseInt(fd.get(`sheet_ab_${k}`) || '10'); });
     const savingThrows = {};
-    AB_KEYS.forEach(k => { savingThrows[k] = fd.get(`sheet_save_${k}`) === 'on'; });
+    AB_KEYS.forEach(k => {
+      const btn = container.querySelector(`.pc-prof-btn[data-name="sheet_save_${k}"]`);
+      savingThrows[k] = parseInt(btn?.dataset.prof || '0');
+    });
     const pcSkills = {};
-    DND_SKILLS.forEach(sk => { pcSkills[sk.id] = fd.get(`sheet_skill_${sk.id}`) === 'on'; });
+    DND_SKILLS.forEach(sk => {
+      const btn = container.querySelector(`.pc-prof-btn[data-name="sheet_skill_${sk.id}"]`);
+      pcSkills[sk.id] = parseInt(btn?.dataset.prof || '0');
+    });
     const sheetData = {
       level: parseInt(fd.get('sheet_level') || '1'),
       hp: parseInt(fd.get('sheet_hp') || '8'),
@@ -2566,13 +2594,14 @@ function renderMeuPersonagem() {
       const k    = row.dataset.save;
       const prof = (sheet.savingThrows||{})[k];
       const base = abModNum(k);
-      const mod  = base + (prof ? pb() : 0);
+      const pba  = profStateToMod(prof, pb());
+      const mod  = base + pba;
       const roll  = Math.floor(Math.random() * 20) + 1;
       const total = roll + mod;
       showDiceToast({ label: `Resistência — ${AB_FULL[k]}`, sides: 20, roll, modifier: mod, total, details: [
         { label: 'Rolagem do dado', value: roll },
         { label: `Mod. de ${AB_FULL[k]}`, value: (base >= 0 ? '+' : '') + base },
-        ...(prof ? [{ label: 'Bônus de Proficiência', value: '+' + pb() }] : []),
+        ...(pba ? [{ label: 'Bônus de Proficiência', value: '+' + pba }] : []),
         { label: 'Total', value: total },
       ]});
     });
@@ -2582,13 +2611,14 @@ function renderMeuPersonagem() {
       const sk   = DND_SKILLS.find(s => s.id === row.dataset.skill);
       const prof = (sheet.skills||{})[sk?.id];
       const base = abModNum(row.dataset.ab);
-      const mod  = base + (prof ? pb() : 0);
+      const pba  = profStateToMod(prof, pb());
+      const mod  = base + pba;
       const roll  = Math.floor(Math.random() * 20) + 1;
       const total = roll + mod;
       showDiceToast({ label: sk?.name || row.dataset.skill, sides: 20, roll, modifier: mod, total, details: [
         { label: 'Rolagem do dado', value: roll },
         { label: `Mod. de ${AB_FULL[row.dataset.ab]||row.dataset.ab}`, value: (base >= 0 ? '+' : '') + base },
-        ...(prof ? [{ label: 'Bônus de Proficiência', value: '+' + pb() }] : []),
+        ...(pba ? [{ label: 'Bônus de Proficiência', value: '+' + pba }] : []),
         { label: 'Total', value: total },
       ]});
     });
@@ -3308,7 +3338,7 @@ function buildPlayerModalContent(uid) {
     const abGrid = AB_KEYS.map(k => {
       const sc  = (sheet.abilities || {})[k] ?? 10;
       const mod = Math.floor((sc - 10) / 2);
-      return `<div class="pms-ab" onclick="window.masterRoll('${escHtml(name)}','${AB_FULL[k]}',${sc},${pb},false)" title="Rolar ${AB_FULL[k]}">
+      return `<div class="pms-ab" onclick="window.masterRoll('${escHtml(name)}','${AB_FULL[k]}',${sc},0)" title="Rolar ${AB_FULL[k]}">
         <span class="pms-ab-label">${AB_PT[k]}</span>
         <span class="pms-ab-mod">${mod >= 0 ? '+'+mod : mod}</span>
         <span class="pms-ab-score">${sc}</span>
@@ -3318,10 +3348,12 @@ function buildPlayerModalContent(uid) {
     const savesHtml = AB_KEYS.map(k => {
       const sc   = (sheet.abilities || {})[k] ?? 10;
       const prof = (sheet.savingThrows || {})[k];
+      const pn   = profStateNorm(prof);
       const base = Math.floor((sc - 10) / 2);
-      const mod  = base + (prof ? pb : 0);
-      return `<div class="pms-save-row" onclick="window.masterRoll('${escHtml(name)}','Resistência ${AB_PT[k]}',${sc},${pb},${!!prof})" title="Rolar">
-        <span class="pms-prof-dot${prof ? ' pms-prof-on' : ''}"></span>
+      const pba  = profStateToMod(prof, pb);
+      const mod  = base + pba;
+      return `<div class="pms-save-row" onclick="window.masterRoll('${escHtml(name)}','Resistência ${AB_PT[k]}',${sc},${pba})" title="Rolar">
+        <span class="pms-prof-dot pms-prof-state-${pn}"></span>
         <span class="pms-save-val">${mod >= 0 ? '+'+mod : mod}</span>
         <span class="pms-save-name">${AB_PT[k]} — ${AB_FULL[k]}</span>
       </div>`;
@@ -3330,10 +3362,12 @@ function buildPlayerModalContent(uid) {
     const skillsHtml = DND_SKILLS.map(sk => {
       const sc   = (sheet.abilities || {})[sk.ability] ?? 10;
       const prof = (sheet.skills || {})[sk.id];
+      const pn   = profStateNorm(prof);
       const base = Math.floor((sc - 10) / 2);
-      const mod  = base + (prof ? pb : 0);
-      return `<div class="pms-skill-row" onclick="window.masterRoll('${escHtml(name)}','${sk.name}',${sc},${pb},${!!prof})" title="Rolar">
-        <span class="pms-prof-dot${prof ? ' pms-prof-on' : ''}"></span>
+      const pba  = profStateToMod(prof, pb);
+      const mod  = base + pba;
+      return `<div class="pms-skill-row" onclick="window.masterRoll('${escHtml(name)}','${sk.name}',${sc},${pba})" title="Rolar">
+        <span class="pms-prof-dot pms-prof-state-${pn}"></span>
         <span class="pms-skill-val">${mod >= 0 ? '+'+mod : mod}</span>
         <span class="pms-skill-name">${sk.name}</span>
         <span class="pms-skill-ab">${AB_PT[sk.ability]}</span>

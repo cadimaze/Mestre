@@ -2675,10 +2675,22 @@ body.pc-theme-rogue::before {
 }
 .pc-save-row:hover, .pc-skill-row:hover { background: rgba(207,172,110,.07); }
 
-.pc-prof-dot {
-  width: 14px; height: 14px; flex-shrink: 0;
-  accent-color: var(--accent-gold); cursor: pointer;
+.pc-prof-btn {
+  width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%;
+  border: 2px solid var(--text-muted); background: transparent;
+  cursor: pointer; padding: 0; position: relative; transition: border-color .15s, background .15s, box-shadow .15s;
 }
+.pc-prof-btn[data-prof="1"] {
+  background: linear-gradient(90deg, var(--accent-gold) 50%, transparent 50%);
+  border-color: var(--accent-gold);
+}
+.pc-prof-btn[data-prof="2"] { background: var(--accent-gold); border-color: var(--accent-gold); }
+.pc-prof-btn[data-prof="3"] { background: var(--accent-gold); border-color: var(--accent-gold); box-shadow: 0 0 0 2px rgba(207,172,110,.35); }
+.pc-prof-btn[data-prof="3"]::after {
+  content: '★'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  font-size: 9px; color: var(--bg-deep); line-height: 1; pointer-events: none;
+}
+.pc-prof-btn:hover { border-color: var(--accent-gold); }
 .pc-save-val, .pc-skill-val {
   font-family: var(--font-title); font-size: 14px; color: var(--accent-gold);
   min-width: 32px; text-align: center; flex-shrink: 0;
@@ -2841,9 +2853,14 @@ body { background-image: radial-gradient(ellipse at 50% 0%, rgba(20,50,90,.35) 0
 .pms-prof-dot {
   width: 10px; height: 10px; flex-shrink: 0; border-radius: 50%;
   border: 1px solid var(--text-muted); background: transparent;
-  transition: background .15s, border-color .15s;
+  transition: background .15s, border-color .15s; position: relative; display: inline-block;
 }
-.pms-prof-dot.pms-prof-on { background: var(--accent-gold); border-color: var(--accent-gold); }
+.pms-prof-dot.pms-prof-state-1 {
+  background: linear-gradient(90deg, var(--accent-gold) 50%, transparent 50%);
+  border-color: var(--accent-gold);
+}
+.pms-prof-dot.pms-prof-state-2 { background: var(--accent-gold); border-color: var(--accent-gold); }
+.pms-prof-dot.pms-prof-state-3 { background: var(--accent-gold); border-color: var(--accent-gold); box-shadow: 0 0 0 2px rgba(207,172,110,.35); }
 
 .pms-save-val, .pms-skill-val {
   font-family: var(--font-title); font-size: 13px; color: var(--accent-gold);
@@ -2994,13 +3011,18 @@ body { background-image: radial-gradient(ellipse at 50% 0%, rgba(20,50,90,.35) 0
 .cs-sk-name { font-size: 12px; color: var(--text-secondary); flex: 1; }
 .cs-sk-ab   { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
 
-/* Prof dot */
+/* Prof dot — 4 states */
 .cs-prof-dot {
   width: 10px; height: 10px; flex-shrink: 0; border-radius: 50%;
   border: 1px solid var(--text-muted); background: transparent;
-  display: inline-block;
+  display: inline-block; position: relative;
 }
-.cs-dot-on { background: var(--accent-gold); border-color: var(--accent-gold); }
+.cs-prof-state-1 {
+  background: linear-gradient(90deg, var(--accent-gold) 50%, transparent 50%);
+  border-color: var(--accent-gold);
+}
+.cs-prof-state-2 { background: var(--accent-gold); border-color: var(--accent-gold); }
+.cs-prof-state-3 { background: var(--accent-gold); border-color: var(--accent-gold); box-shadow: 0 0 0 2px rgba(207,172,110,.35); }
 
 /* Text blocks */
 .cs-text-block { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px; }

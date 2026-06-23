@@ -149,7 +149,7 @@
     "faction": "casa-varek",
     "description": "O príncipe rebelde. Critica abertamente as políticas de Velmarch, fala sobre 'um Domínio mais justo', já recebeu emissários de ilhas descontentes. Parece ser exatamente o aliado que os jogadores precisam dentro de Velmarch.",
     "id": "cade-varek",
-    "personality": "Fraco e ansioso. Não é mau — é desesperado por aprovação. Toda rebeldia é performance. Cade não quer mudar Velmarch. Quer que Aldric olhe para ele e pense 'esse é meu filho'. Cada gesto de rebeldia é uma pergunta não respondida: 'agora você me vê?'.",
+    "personality": "Intenso e apaixonado, fala sobre justiça com convicção genuína. Tem um humor seco que aparece nos momentos errados. Quando está ouvindo de verdade, faz perguntas que revelam um pensamento mais profundo do que a postura rebelde sugere.",
     "secretsList": [
       {
         "visibility": {
@@ -573,11 +573,11 @@
   },
   {
     "faction": null,
-    "personality": "Não possui personalidade própria articulada — é uma presença, uma fome gravitacional. Mas através de Selavin Doss, adquiriu voz, intelecto e paciência. Após séculos de simbiose, os dois já não são completamente separáveis: o Peso fornece poder e permanência; Selavin fornece forma e vontade.",
-    "role": "Thurvael / Entidade Primordial / O Selado",
+    "personality": "Não possui personalidade própria articulada — é uma presença, uma fome gravitacional. Não pensa em termos humanos. Não tem malícia consciente. Tem apenas um impulso primitivo de liberdade.",
+    "role": "Entidade Primordial / O Selado",
     "name": "O Peso",
     "status": "Selado",
-    "description": "Anterior aos deuses conhecidos de Pelágos. O Peso é o nome dado pelos sobreviventes da Grande Guerra — seu nome verdadeiro é Thurvael, palavra da língua do Substrato, anterior a todos os idiomas élficos e humanos, que significa aproximadamente 'aquilo que devora o que existe'. Foi invocado pelos magistas elfos nas camadas mais profundas da realidade e recusou qualquer forma de controle. Não pensa em termos humanos. Não tem malícia consciente. Tem apenas um impulso primitivo de liberdade. Está selado a quilômetros de profundidade sob o oceano de Pelágos — e não está sozinho: Selavin Doss, o magista que o invocou, fundiu sua consciência ao Thurvael no instante do selamento. O que emerge se o selo quebrar não é a entidade amorfa, mas Selavin Doss com o poder integral do Thurvael dentro de si.",
+    "description": "Anterior aos deuses conhecidos de Pelágos. O Peso é o nome dado pelos sobreviventes da Grande Guerra. Foi invocado pelos magistas elfos nas camadas mais profundas da realidade e recusou qualquer forma de controle. Não pensa em termos humanos. Não tem malícia consciente. Tem apenas um impulso primitivo de liberdade. Está selado a quilômetros de profundidade sob o oceano de Pelágos desde o dia do Abraço das Águas Eternas.",
     "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781720608/eu13i3wsq8fne1bpgalo.jpg",
     "secretsList": [
       {
@@ -609,8 +609,8 @@
   },
   {
     "faction": null,
-    "role": "Arquiteto da Grande Guerra / Hospedeiro do Thurvael / Vilão Final",
-    "personality": "Brilhante, calculista e absolutamente convicto de si mesmo. Não era malicioso — era genial demais para imaginar que poderia estar errado. Disse a Vaelindra, numa conversa que ela nunca esqueceu: 'Não é um ser. É uma força. As forças podem ser dirigidas.' Depois de séculos dentro do selo, aprendeu que estava errado sobre isso. O que não aprendeu é que pode estar errado sobre outras coisas.",
+    "role": "Magista Élfico / Arquiteto da Grande Guerra",
+    "personality": "Brilhante, calculista e absolutamente convicto de si mesmo. Não era malicioso — era genial demais para imaginar que poderia estar errado. Disse a Vaelindra, numa conversa que ela nunca esqueceu: 'Não é um ser. É uma força. As forças podem ser dirigidas.'",
     "name": "Selavin Doss",
     "status": "Desaparecido",
     "secretsList": [
@@ -647,12 +647,12 @@
         "id": "selavin-s4"
       }
     ],
-    "description": "O magista élfico mais brilhante de sua geração. Liderou a descoberta e a invocação do Thurvael — o ser que o povo chamaria de O Peso — acreditando que uma força primordial poderia ser domesticada como vantagem definitiva dos elfos. Não era malicioso. Era genial demais para imaginar que poderia estar errado. No momento em que Himmel completava o ritual de selamento, Selavin fez uma última escolha: cedeu seu corpo e consciência como hospedeiro voluntário, fundindo-se com o Thurvael no exato instante do selamento. Sobreviveu — não como homem, mas como consciência fundida com uma entidade primordial, presa a quilômetros de profundidade sob o oceano há séculos. Se o selo for quebrado, não emergirá o Thurvael como força amorfa — emergirá Selavin Doss, com séculos de planejamento e o poder integral do Peso dentro de si.",
+    "description": "O magista élfico mais brilhante de sua geração. Liderou a descoberta e a invocação do ser que o povo chamaria de O Peso — acreditando que uma força primordial poderia ser domesticada como vantagem definitiva dos elfos. Não era malicioso. Era genial demais para imaginar que poderia estar errado. Desapareceu no momento em que Himmel completava o ritual de selamento. Nunca encontraram o corpo.",
     "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781715876/p249ahcmgpqiuscsziwk.jpg",
     "id": "selavin-doss"
   },
   {
-    "personality": "Caloroso, presente, genuinamente curioso sobre as pessoas que encontra. Faz perguntas boas e escuta as respostas de verdade. Fala sobre a esposa e os filhos com saudade leve de quem sabe que vai voltar. Sinais a plantar: não mergulha mais; perto de água profunda e parada fica quieto por alguns segundos; escreve cartas com frequência obsessiva; às vezes completa uma frase e franze o cenho levemente, como se a frase tivesse chegado de outro lugar.",
+    "personality": "Caloroso, presente, genuinamente curioso sobre as pessoas que encontra. Faz perguntas boas e escuta as respostas de verdade. Fala sobre a esposa e os filhos com saudade leve de quem sabe que vai voltar.",
     "secretsList": [
       {
         "visibility": {
