@@ -422,31 +422,71 @@ window.masterRoll = function(playerName, label, score, profBonusAdd) {
 let _notifQueue  = [];
 let _notifActive = false;
 
+function getEntityRevealImage(entityType, entityId) {
+  const lists = {
+    character: STATE.data.characters,
+    location:  STATE.data.locations,
+    event:     STATE.data.events,
+    faction:   STATE.data.factions,
+    document:  STATE.data.documents,
+    item:      STATE.data.items,
+  };
+  const entity = (lists[entityType] || []).find(e => e.id === entityId);
+  if (!entity) return null;
+  if (entity.imageUrl) return entity.imageUrl;
+  if (entity.image)    return `assets/images/characters/${entity.image}`;
+  return null;
+}
+
 function showRevealToast(notif) {
   return new Promise(resolve => {
     const isSecret = notif.type === 'secret';
-    const overlay  = document.createElement('div');
+    const isPoi    = notif.type === 'poi-reveal';
+
+    const typeLabels = {
+      character: 'Personagem Revelado', location: 'Local Descoberto',
+      event: 'Evento Desbloqueado',    faction: 'Facção Revelada',
+      document: 'Documento Encontrado', item: 'Item Descoberto',
+    };
+    const typeIcons = {
+      character: '⚔️', location: '🗺️', event: '📜',
+      faction: '⚜️',   document: '📄', item: '🗝️',
+    };
+
+    const eyebrow  = isSecret ? 'Segredo Revelado'
+                   : isPoi    ? 'Ponto de Interesse Descoberto'
+                   : (typeLabels[notif.entityType] || 'Revelado');
+    const icon     = isSecret ? '🔒' : (typeIcons[notif.entityType] || '✨');
+    const imageUrl = getEntityRevealImage(notif.entityType, notif.entityId);
+    const viewLabel = isSecret ? 'Ver Ficha' : 'Ver Agora';
+    const desc = notif.description
+      ? escHtml(notif.description)
+      : isSecret
+        ? `O Mestre revelou um segredo sobre <strong>${escHtml(notif.entityName)}</strong>.`
+        : `O Mestre liberou acesso a este conteúdo. Explore agora.`;
+
+    const overlay = document.createElement('div');
     overlay.className = 'reveal-toast-overlay';
 
-    const icon     = isSecret ? '🔒' : { character: '⚔️', location: '🗺️', event: '📜', faction: '⚜️' }[notif.entityType] || '✨';
-    const eyebrow  = isSecret ? 'Segredo Revelado' : 'Novo Acesso';
-    const titleTxt = isSecret ? 'Agora você sabe de um segredo importante!' : `Agora você pode ver`;
-    const entityLabel = { character: 'este personagem', location: 'este local', event: 'este evento', faction: 'esta facção' }[notif.entityType] || 'este conteúdo';
-
     overlay.innerHTML = `
-      <div class="reveal-toast${isSecret?' toast-secret':''}">
-        <div class="reveal-toast-icon">${icon}</div>
-        <div class="reveal-toast-eyebrow">${eyebrow}</div>
-        <div class="reveal-toast-title">${titleTxt}</div>
-        <div class="reveal-toast-name">${escHtml(notif.entityName)}</div>
-        <div class="reveal-toast-desc">${
-          isSecret
-            ? `O mestre revelou um segredo sobre <strong>${escHtml(notif.entityName)}</strong>. Clique para ver a ficha completa.`
-            : `O mestre liberou o acesso a informações sobre ${escHtml(notif.entityName)}. Explore ${entityLabel} agora.`
-        }</div>
-        <div>
-          <button class="reveal-toast-btn" id="rt-view">${isSecret ? 'Ver ficha' : 'Ver agora'}</button>
-          <button class="reveal-toast-btn-secondary" id="rt-close">Fechar</button>
+      <div class="reveal-toast${isSecret ? ' rt-secret' : ''}">
+        <button class="rt-x" id="rt-x" aria-label="Fechar">✕</button>
+        <div class="rt-img-wrap${imageUrl ? '' : ' rt-no-img'}">
+          ${imageUrl
+            ? `<img class="rt-img" src="${escHtml(imageUrl)}" alt="${escHtml(notif.entityName)}">`
+            : `<div class="rt-img-placeholder"><span class="rt-ph-icon">${icon}</span></div>`
+          }
+          <div class="rt-img-overlay">
+            <div class="rt-eyebrow">${eyebrow}</div>
+            <div class="rt-name">${escHtml(notif.entityName)}</div>
+          </div>
+        </div>
+        <div class="rt-body">
+          <p class="rt-desc">${desc}</p>
+          <div class="rt-actions">
+            <button class="rt-btn-primary" id="rt-view">${viewLabel}</button>
+            <button class="rt-btn-ghost" id="rt-close">Fechar</button>
+          </div>
         </div>
       </div>`;
 
@@ -455,14 +495,16 @@ function showRevealToast(notif) {
 
     async function dismiss() {
       overlay.classList.remove('visible');
-      setTimeout(() => overlay.remove(), 450);
+      setTimeout(() => overlay.remove(), 500);
       if (notif.id) {
         try { await updateDoc(doc(db, 'users', STATE.user.uid, 'notifications', notif.id), { read: true }); } catch {}
       }
       resolve();
     }
 
+    overlay.querySelector('#rt-x').addEventListener('click', dismiss);
     overlay.querySelector('#rt-close').addEventListener('click', dismiss);
+    overlay.addEventListener('click', e => { if (e.target === overlay) dismiss(); });
     const viewBtn = overlay.querySelector('#rt-view');
     if (viewBtn) {
       viewBtn.addEventListener('click', async () => {
