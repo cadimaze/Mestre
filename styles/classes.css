@@ -1,0 +1,543 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   MARES E MARÉS — Classes D&D
+   Temas visuais únicos por classe: backgrounds, fontes, animações, relevo
+═══════════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@400;600&family=Metamorphous&family=IM+Fell+English:ital@0;1&family=Almendra:ital,wght@0,400;1,400&family=Pirata+One&display=swap');
+
+/* ─── Acento padrão global para cards de classe ─── */
+.jogador-card { --class-color: #cfac6e; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   GUERREIRO — Crimson / Steel
+   Espadas cruzadas, escudo pentagonal, força bruta
+══════════════════════════════════════════════════════════════════════════ */
+[data-char-class="guerreiro"] { --class-accent: #c94040; }
+
+[data-char-class="guerreiro"] .modal-char-hero {
+  background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 320'><line x1='0' y1='0' x2='800' y2='320' stroke='%23c94040' stroke-width='2' stroke-opacity='.13'/><line x1='800' y1='0' x2='0' y2='320' stroke='%23c94040' stroke-width='2' stroke-opacity='.13'/><path d='M700 20 L775 65 L775 170 Q775 235 700 258 Q625 235 625 170 L625 65 Z' fill='none' stroke='%23c94040' stroke-width='1.4' stroke-opacity='.2'/><line x1='697' y1='48' x2='697' y2='245' stroke='%23c94040' stroke-width='1' stroke-opacity='.16'/><line x1='635' y1='148' x2='762' y2='148' stroke='%23c94040' stroke-width='1' stroke-opacity='.16'/><circle cx='697' cy='148' r='28' fill='none' stroke='%23c94040' stroke-width='.7' stroke-opacity='.12'/></svg>") right center / 800px 100% no-repeat,
+    radial-gradient(ellipse 55% 100% at 0% 50%, rgba(24,4,8,.95) 0%, rgba(12,4,8,.7) 60%, transparent 100%),
+    linear-gradient(120deg, #1a0305 0%, #0c0a14 60%, #200408 100%);
+}
+
+[data-char-class="guerreiro"] .modal-char-name {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 27px;
+  font-weight: 700;
+  color: #e87070;
+  letter-spacing: 1.5px;
+  text-shadow:
+    0 1px 0 rgba(255,120,120,.15),
+    0 -1px 0 rgba(0,0,0,.9),
+    0 2px 4px rgba(0,0,0,.8),
+    0 0 30px rgba(201,64,64,.45),
+    0 0 60px rgba(201,64,64,.2);
+}
+[data-char-class="guerreiro"] .modal-char-avatar {
+  border-color: rgba(201,64,64,.5);
+  box-shadow: 0 0 0 4px rgba(201,64,64,.1), 0 0 0 8px rgba(201,64,64,.05), 0 8px 28px rgba(0,0,0,.7);
+}
+[data-char-class="guerreiro"].modal-panel.open { animation: modalEnterSlam .4s cubic-bezier(.16,1,.3,1); }
+@keyframes modalEnterSlam {
+  0%   { transform: translate(-50%, -44%) scale(1.04); opacity: 0; }
+  55%  { transform: translate(-50%, -51%) scale(.99); opacity: 1; }
+  78%  { transform: translate(-50%, -49.5%) scale(1.005); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+.jogador-card[data-char-class="guerreiro"] { --class-color: #c94040; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MAGO — Arcane Violet / Deep Indigo
+   Astrolábio, órbitas celestes, constelação náutica
+══════════════════════════════════════════════════════════════════════════ */
+[data-char-class="mago"] { --class-accent: #9b59b6; }
+
+[data-char-class="mago"] .modal-char-hero {
+  background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 320'><circle cx='660' cy='160' r='220' fill='none' stroke='%239b59b6' stroke-width='1' stroke-opacity='.14'/><circle cx='660' cy='160' r='155' fill='none' stroke='%239b59b6' stroke-width='1' stroke-opacity='.1'/><circle cx='660' cy='160' r='90' fill='none' stroke='%239b59b6' stroke-width='1.2' stroke-opacity='.13'/><ellipse cx='660' cy='160' rx='270' ry='75' fill='none' stroke='%239b59b6' stroke-width='.8' stroke-opacity='.1' transform='rotate(-18 660 160)'/><ellipse cx='660' cy='160' rx='190' ry='52' fill='none' stroke='%239b59b6' stroke-width='.7' stroke-opacity='.08' transform='rotate(22 660 160)'/><circle cx='300' cy='70' r='3.5' fill='%23c39bd3' fill-opacity='.4'/><circle cx='440' cy='40' r='2' fill='%23c39bd3' fill-opacity='.5'/><circle cx='520' cy='240' r='3' fill='%23c39bd3' fill-opacity='.3'/><circle cx='180' cy='210' r='2' fill='%23c39bd3' fill-opacity='.45'/><circle cx='620' cy='30' r='2.5' fill='%23c39bd3' fill-opacity='.35'/><circle cx='370' cy='290' r='2' fill='%23c39bd3' fill-opacity='.3'/></svg>") right center / 800px 100% no-repeat,
+    radial-gradient(ellipse 55% 100% at 0% 50%, rgba(8,3,20,.95) 0%, rgba(8,3,18,.7) 60%, transparent 100%),
+    linear-gradient(130deg, #0d0520 0%, #070318 60%, #100825 100%);
+}
+
+[data-char-class="mago"] .modal-char-name {
+  font-family: 'Metamorphous', Georgia, serif;
+  font-size: 25px;
+  color: #c39bd3;
+  letter-spacing: 2px;
+  text-shadow:
+    0 1px 0 rgba(195,155,211,.2),
+    0 -1px 0 rgba(0,0,0,.9),
+    0 0 20px rgba(155,89,182,.6),
+    0 0 50px rgba(155,89,182,.3),
+    0 0 90px rgba(155,89,182,.15);
+}
+[data-char-class="mago"] .modal-char-avatar {
+  border-color: rgba(155,89,182,.5);
+  box-shadow: 0 0 0 4px rgba(155,89,182,.1), 0 0 0 8px rgba(155,89,182,.05), 0 8px 28px rgba(0,0,0,.7);
+}
+[data-char-class="mago"].modal-panel.open { animation: modalEnterMaterialize .5s cubic-bezier(.16,1,.3,1); }
+@keyframes modalEnterMaterialize {
+  0%   { transform: translate(-50%, -50%) scale(.88); opacity: 0; filter: brightness(2) blur(4px); }
+  40%  { filter: brightness(1.2) blur(1px); }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; filter: brightness(1) blur(0); }
+}
+.jogador-card[data-char-class="mago"] { --class-color: #9b59b6; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LADINO — Shadow Teal / Near-Black
+   Compassos, sombras, silhueta discreta
+══════════════════════════════════════════════════════════════════════════ */
+[data-char-class="ladino"] { --class-accent: #1abc9c; }
+
+[data-char-class="ladino"] .modal-char-hero {
+  background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 320'><line x1='0' y1='320' x2='800' y2='0' stroke='%231abc9c' stroke-width='1' stroke-opacity='.1'/><line x1='0' y1='240' x2='800' y2='80' stroke='%231abc9c' stroke-width='.6' stroke-opacity='.07'/><line x1='0' y1='160' x2='800' y2='160' stroke='%231abc9c' stroke-width='.5' stroke-opacity='.05'/><circle cx='700' cy='160' r='55' fill='none' stroke='%231abc9c' stroke-width='.9' stroke-opacity='.14'/><circle cx='700' cy='160' r='88' fill='none' stroke='%231abc9c' stroke-width='.5' stroke-opacity='.08'/><polygon points='700,100 712,148 700,145 688,148' fill='%231abc9c' fill-opacity='.2'/><polygon points='700,220 712,172 700,175 688,172' fill='%231abc9c' fill-opacity='.14'/><polygon points='640,160 688,148 685,160 688,172' fill='%231abc9c' fill-opacity='.14'/><polygon points='760,160 712,148 715,160 712,172' fill='%231abc9c' fill-opacity='.12'/><circle cx='700' cy='160' r='6' fill='%231abc9c' fill-opacity='.25'/></svg>") right center / 800px 100% no-repeat,
+    radial-gradient(ellipse 55% 100% at 0% 50%, rgba(2,8,10,.97) 0%, rgba(2,6,8,.75) 60%, transparent 100%),
+    linear-gradient(130deg, #020a0d 0%, #030b10 60%, #020d0c 100%);
+}
+
+[data-char-class="ladino"] .modal-char-name {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 23px;
+  color: #4ee3c8;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow:
+    0 1px 0 rgba(78,227,200,.15),
+    0 -1px 0 rgba(0,0,0,.95),
+    0 0 16px rgba(26,188,156,.5),
+    0 0 40px rgba(26,188,156,.2);
+}
+[data-char-class="ladino"] .modal-char-avatar {
+  border-color: rgba(26,188,156,.45);
+  border-radius: 4px;
+  box-shadow: 0 0 0 3px rgba(26,188,156,.08), 0 8px 28px rgba(0,0,0,.8);
+}
+[data-char-class="ladino"].modal-panel.open { animation: modalEnterShadow .28s cubic-bezier(.22,1,.36,1); }
+@keyframes modalEnterShadow {
+  0%   { transform: translate(-62%, -50%) scale(.97); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+.jogador-card[data-char-class="ladino"] { --class-color: #1abc9c; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   PALADINO — Holy Gold / Deep Navy
+   Luz divina, raios de farol, escudo sagrado
+══════════════════════════════════════════════════════════════════════════ */
+[data-char-class="paladino"] { --class-accent: #f0c040; }
+
+[data-char-class="paladino"] .modal-char-hero {
+  background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 320'><line x1='400' y1='-80' x2='180' y2='400' stroke='%23f0c040' stroke-width='1' stroke-opacity='.09'/><line x1='400' y1='-80' x2='620' y2='400' stroke='%23f0c040' stroke-width='1' stroke-opacity='.09'/><line x1='400' y1='-80' x2='-50' y2='340' stroke='%23f0c040' stroke-width='.7' stroke-opacity='.06'/><line x1='400' y1='-80' x2='850' y2='340' stroke='%23f0c040' stroke-width='.7' stroke-opacity='.06'/><line x1='400' y1='-80' x2='400' y2='400' stroke='%23f0c040' stroke-width='1.2' stroke-opacity='.1'/><line x1='400' y1='-80' x2='60' y2='280' stroke='%23f0c040' stroke-width='.5' stroke-opacity='.05'/><line x1='400' y1='-80' x2='740' y2='280' stroke='%23f0c040' stroke-width='.5' stroke-opacity='.05'/><circle cx='400' cy='-80' r='160' fill='none' stroke='%23f0c040' stroke-width='1' stroke-opacity='.1'/><circle cx='400' cy='-80' r='280' fill='none' stroke='%23f0c040' stroke-width='.6' stroke-opacity='.06'/></svg>") center top / 100% auto no-repeat,
+    radial-gradient(ellipse 55% 100% at 0% 50%, rgba(18,10,2,.97) 0%, rgba(10,8,4,.75) 60%, transparent 100%),
+    linear-gradient(155deg, #180e03 0%, #0a0810 60%, #14100a 100%);
+}
+
+[data-char-class="paladino"] .modal-char-name {
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: 26px;
+  color: #f5d87a;
+  letter-spacing: 1px;
+  text-shadow:
+    0 1px 0 rgba(255,240,180,.3),
+    0 -2px 0 rgba(80,50,0,.8),
+    0 2px 6px rgba(0,0,0,.7),
+    0 0 25px rgba(240,192,64,.55),
+    0 0 60px rgba(240,192,64,.25);
+}
+[data-char-class="paladino"] .modal-char-avatar {
+  border-color: rgba(240,192,64,.55);
+  box-shadow: 0 0 0 4px rgba(240,192,64,.12), 0 0 0 8px rgba(240,192,64,.05), 0 8px 28px rgba(0,0,0,.6), 0 0 30px rgba(240,192,64,.15);
+}
+[data-char-class="paladino"].modal-panel.open { animation: modalEnterDescend .6s cubic-bezier(.16,1,.3,1); }
+@keyframes modalEnterDescend {
+  0%   { transform: translate(-50%, -38%) scale(.97); opacity: 0; }
+  60%  { opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+.jogador-card[data-char-class="paladino"] { --class-color: #f0c040; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   CLÉRIGO — Divine Silver / Deep Navy
+   Âncora divina, luz celestial
+══════════════════════════════════════════════════════════════════════════ */
+[data-char-class="clerigo"] { --class-accent: #a0b8d8; }
+
+[data-char-class="clerigo"] .modal-char-hero {
+  background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 320'><path d='M660 40 A22 22 0 0 1 682 62 L682 220 M638 180 Q616 250 590 265 M682 180 Q704 250 730 265 M648 62 L672 62' fill='none' stroke='%23a0b8d8' stroke-width='2' stroke-opacity='.16' stroke-linecap='round'/><circle cx='660' cy='42' r='22' fill='none' stroke='%23a0b8d8' stroke-width='1.6' stroke-opacity='.14'/><line x1='638' y1='130' x2='682' y2='130' stroke='%23a0b8d8' stroke-width='1.4' stroke-opacity='.12'/><line x1='300' y1='0' x2='600' y2='320' stroke='%23a0b8d8' stroke-width='.5' stroke-opacity='.05'/><line x1='450' y1='0' x2='450' y2='320' stroke='%23a0b8d8' stroke-width='.7' stroke-opacity='.06'/><line x1='550' y1='0' x2='350' y2='320' stroke='%23a0b8d8' stroke-width='.4' stroke-opacity='.04'/></svg>") right center / 800px 100% no-repeat,
+    radial-gradient(ellipse 55% 100% at 0% 50%, rgba(2,8,18,.97) 0%, rgba(2,6,14,.75) 60%, transparent 100%),
+    linear-gradient(130deg, #030a16 0%, #020810 60%, #040c18 100%);
+}
+
+[data-char-class="clerigo"] .modal-char-name {
+  font-family: 'IM Fell English', Georgia, serif;
+  font-style: italic;
+  font-size: 25px;
+  color: #d0e4f8;
+  letter-spacing: .8px;
+  text-shadow:
+    0 1px 0 rgba(220,240,255,.25),
+    0 -1px 0 rgba(0,0,0,.9),
+    0 0 20px rgba(160,184,216,.5),
+    0 0 50px rgba(160,184,216,.2);
+}
+[data-char-class="clerigo"] .modal-char-avatar {
+  border-color: rgba(160,184,216,.45);
+  box-shadow: 0 0 0 4px rgba(160,184,216,.08), 0 8px 28px rgba(0,0,0,.7);
+}
+[data-char-class="clerigo"].modal-panel.open { animation: modalEnterIlluminate .55s ease-out; }
+@keyframes modalEnterIlluminate {
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: 0; filter: brightness(3); }
+  30%  { filter: brightness(1.4); }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; filter: brightness(1); }
+}
+.jogador-card[data-char-class="clerigo"] { --class-color: #a0b8d8; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BÁRBARO — Rage Red / Blood Orange
+   Linhas caóticas, tempestade, energia selvagem
+══════════════════════════════════════════════════════════════════════════ */
+[data-char-class="barbaro"] { --class-accent: #e74c3c; }
+
+[data-char-class="barbaro"] .modal-char-hero {
+  background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 320'><polyline points='0,160 70,80 130,210 200,55 270,190 360,40 440,230 510,65 590,200 650,45 730,180 800,100' fill='none' stroke='%23e74c3c' stroke-width='1.8' stroke-opacity='.18'/><polyline points='0,220 55,130 115,250 195,95 275,235 380,75 465,265 545,115 625,245 700,95 800,155' fill='none' stroke='%23e74c3c' stroke-width='.9' stroke-opacity='.1'/><circle cx='130' cy='210' r='4' fill='%23e74c3c' fill-opacity='.22'/><circle cx='360' cy='40' r='3' fill='%23e74c3c' fill-opacity='.28'/><circle cx='590' cy='200' r='3.5' fill='%23e74c3c' fill-opacity='.22'/><circle cx='730' cy='180' r='2.5' fill='%23e74c3c' fill-opacity='.2'/></svg>") right center / 800px 100% no-repeat,
+    radial-gradient(ellipse 55% 100% at 0% 50%, rgba(22,2,2,.97) 0%, rgba(12,2,2,.75) 60%, transparent 100%),
+    linear-gradient(130deg, #160202 0%, #0a0208 60%, #180304 100%);
+}
+
+[data-char-class="barbaro"] .modal-char-name {
+  font-family: 'Grenze Gotisch', Georgia, serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: #f27460;
+  letter-spacing: 1px;
+  text-shadow:
+    0 2px 0 rgba(0,0,0,.95),
+    0 -1px 0 rgba(255,80,60,.1),
+    0 3px 8px rgba(0,0,0,.9),
+    0 0 22px rgba(231,76,60,.55),
+    0 0 55px rgba(231,76,60,.25);
+}
+[data-char-class="barbaro"] .modal-char-avatar {
+  border-color: rgba(231,76,60,.5);
+  border-radius: 6px;
+  box-shadow: 0 0 0 3px rgba(231,76,60,.1), 0 8px 28px rgba(0,0,0,.8), 0 0 24px rgba(231,76,60,.15);
+}
+[data-char-class="barbaro"].modal-panel.open { animation: modalEnterCrash .45s cubic-bezier(.22,1,.36,1); }
+@keyframes modalEnterCrash {
+  0%   { transform: translate(-50%, -42%) scale(1.07); opacity: .7; }
+  25%  { transform: translate(-50%, -51%) scale(.97); opacity: 1; }
+  50%  { transform: translate(-51.5%, -50%) scale(1.015); }
+  70%  { transform: translate(-49%, -50.5%) scale(.997); }
+  85%  { transform: translate(-50.5%, -49.8%) scale(1.003); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+.jogador-card[data-char-class="barbaro"] { --class-color: #e74c3c; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BARDO — Amber / Warm Rose
+   Onda senoidal, música, performance
+══════════════════════════════════════════════════════════════════════════ */
+[data-char-class="bardo"] { --class-accent: #e67e22; }
+
+[data-char-class="bardo"] .modal-char-hero {
+  background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 320'><path d='M0,160 C50,80 150,240 200,160 C250,80 350,240 400,160 C450,80 550,240 600,160 C650,80 750,240 800,160' fill='none' stroke='%23e67e22' stroke-width='2' stroke-opacity='.2'/><path d='M0,200 C50,130 150,270 200,200 C250,130 350,270 400,200 C450,130 550,270 600,200 C650,130 750,270 800,200' fill='none' stroke='%23e67e22' stroke-width='.9' stroke-opacity='.1'/><circle cx='200' cy='160' r='5' fill='%23e67e22' fill-opacity='.3'/><circle cx='400' cy='160' r='5' fill='%23e67e22' fill-opacity='.3'/><circle cx='600' cy='160' r='5' fill='%23e67e22' fill-opacity='.3'/><circle cx='100' cy='240' r='3' fill='%23e67e22' fill-opacity='.2'/><circle cx='300' cy='80' r='3' fill='%23e67e22' fill-opacity='.2'/><circle cx='500' cy='240' r='3' fill='%23e67e22' fill-opacity='.2'/><circle cx='700' cy='80' r='3' fill='%23e67e22' fill-opacity='.2'/></svg>") right center / 800px 100% no-repeat,
+    radial-gradient(ellipse 55% 100% at 0% 50%, rgba(18,8,2,.97) 0%, rgba(10,6,2,.75) 60%, transparent 100%),
+    linear-gradient(130deg, #160a02 0%, #0a0608 60%, #180c02 100%);
+}
+
+[data-char-class="bardo"] .modal-char-name {
+  font-family: 'Almendra', Georgia, serif;
+  font-size: 26px;
+  font-style: italic;
+  color: #f0b060;
+  letter-spacing: 1.2px;
+  text-shadow:
+    0 1px 0 rgba(255,190,100,.2),
+    0 -1px 0 rgba(0,0,0,.9),
+    0 0 22px rgba(230,126,34,.5),
+    0 0 50px rgba(230,126,34,.22);
+}
+[data-char-class="bardo"] .modal-char-avatar {
+  border-color: rgba(230,126,34,.5);
+  border-radius: 50% 12px 50% 12px;
+  box-shadow: 0 0 0 4px rgba(230,126,34,.1), 0 8px 28px rgba(0,0,0,.7);
+}
+[data-char-class="bardo"].modal-panel.open { animation: modalEnterSwirl .5s cubic-bezier(.16,1,.3,1); }
+@keyframes modalEnterSwirl {
+  0%   { transform: translate(-50%, -50%) scale(.9) rotate(-3deg); opacity: 0; }
+  60%  { transform: translate(-50%, -50%) scale(1.01) rotate(.5deg); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+}
+.jogador-card[data-char-class="bardo"] { --class-color: #e67e22; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   DRUIDA — Forest Green / Earth
+   Espiral náutica, veias de folha, raízes antigas
+══════════════════════════════════════════════════════════════════════════ */
+[data-char-class="druida"] { --class-accent: #27ae60; }
+
+[data-char-class="druida"] .modal-char-hero {
+  background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 320'><path d='M680,160 C680,110 720,72 756,90 C792,108 798,158 768,188 C738,218 688,218 668,188 C640,158 652,112 680,100 C708,88 724,108 716,128 C708,148 688,148 688,138' fill='none' stroke='%2327ae60' stroke-width='1.5' stroke-opacity='.22'/><circle cx='680' cy='160' r='100' fill='none' stroke='%2327ae60' stroke-width='.7' stroke-opacity='.08'/><circle cx='680' cy='160' r='148' fill='none' stroke='%2327ae60' stroke-width='.5' stroke-opacity='.06'/><line x1='560' y1='40' x2='480' y2='280' stroke='%2327ae60' stroke-width='.7' stroke-opacity='.08'/><line x1='620' y1='20' x2='520' y2='300' stroke='%2327ae60' stroke-width='.5' stroke-opacity='.06'/><line x1='480' y1='60' x2='440' y2='260' stroke='%2327ae60' stroke-width='.4' stroke-opacity='.05'/></svg>") right center / 800px 100% no-repeat,
+    radial-gradient(ellipse 55% 100% at 0% 50%, rgba(2,10,4,.97) 0%, rgba(2,8,4,.75) 60%, transparent 100%),
+    linear-gradient(130deg, #030e05 0%, #020908 60%, #031004 100%);
+}
+
+[data-char-class="druida"] .modal-char-name {
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: 25px;
+  color: #6ecf8a;
+  letter-spacing: .8px;
+  text-shadow:
+    0 1px 0 rgba(100,220,130,.15),
+    0 -1px 0 rgba(0,0,0,.9),
+    0 0 20px rgba(39,174,96,.5),
+    0 0 45px rgba(39,174,96,.22);
+}
+[data-char-class="druida"] .modal-char-avatar {
+  border-color: rgba(39,174,96,.5);
+  border-radius: 12px 50% 12px 50%;
+  box-shadow: 0 0 0 4px rgba(39,174,96,.1), 0 8px 28px rgba(0,0,0,.7);
+}
+[data-char-class="druida"].modal-panel.open { animation: modalEnterGrow .6s cubic-bezier(.16,1,.3,1); }
+@keyframes modalEnterGrow {
+  0%   { transform: translate(-50%, -40%) scale(.94); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+.jogador-card[data-char-class="druida"] { --class-color: #27ae60; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   FEITICEIRO — Storm Blue / Electric
+   Constelação náutica, relâmpago, caos mágico
+══════════════════════════════════════════════════════════════════════════ */
+[data-char-class="feiticeiro"] { --class-accent: #3498db; }
+
+[data-char-class="feiticeiro"] .modal-char-hero {
+  background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 320'><line x1='100' y1='80' x2='260' y2='125' stroke='%233498db' stroke-width='.9' stroke-opacity='.18'/><line x1='260' y1='125' x2='390' y2='55' stroke='%233498db' stroke-width='.9' stroke-opacity='.18'/><line x1='390' y1='55' x2='530' y2='145' stroke='%233498db' stroke-width='.9' stroke-opacity='.18'/><line x1='530' y1='145' x2='670' y2='75' stroke='%233498db' stroke-width='.9' stroke-opacity='.18'/><line x1='670' y1='75' x2='760' y2='200' stroke='%233498db' stroke-width='.9' stroke-opacity='.18'/><circle cx='100' cy='80' r='4' fill='%233498db' fill-opacity='.45'/><circle cx='260' cy='125' r='2.5' fill='%233498db' fill-opacity='.4'/><circle cx='390' cy='55' r='5' fill='%233498db' fill-opacity='.5'/><circle cx='530' cy='145' r='2.5' fill='%233498db' fill-opacity='.4'/><circle cx='670' cy='75' r='4' fill='%233498db' fill-opacity='.45'/><circle cx='760' cy='200' r='3' fill='%233498db' fill-opacity='.4'/><polyline points='720,10 698,95 728,82 705,185' fill='none' stroke='%233498db' stroke-width='1.5' stroke-opacity='.2'/></svg>") right center / 800px 100% no-repeat,
+    radial-gradient(ellipse 55% 100% at 0% 50%, rgba(1,6,18,.97) 0%, rgba(1,4,12,.75) 60%, transparent 100%),
+    linear-gradient(130deg, #010816 0%, #010510 60%, #020a18 100%);
+}
+
+[data-char-class="feiticeiro"] .modal-char-name {
+  font-family: 'Metamorphous', Georgia, serif;
+  font-size: 25px;
+  color: #72bde8;
+  letter-spacing: 1.5px;
+  text-shadow:
+    0 1px 0 rgba(180,220,255,.2),
+    0 -1px 0 rgba(0,0,0,.9),
+    0 0 16px rgba(52,152,219,.65),
+    0 0 40px rgba(52,152,219,.3),
+    0 0 80px rgba(52,152,219,.15);
+}
+[data-char-class="feiticeiro"] .modal-char-avatar {
+  border-color: rgba(52,152,219,.5);
+  box-shadow: 0 0 0 4px rgba(52,152,219,.1), 0 0 0 8px rgba(52,152,219,.05), 0 8px 28px rgba(0,0,0,.7), 0 0 20px rgba(52,152,219,.15);
+}
+[data-char-class="feiticeiro"].modal-panel.open { animation: modalEnterBolt .35s cubic-bezier(.22,1,.36,1); }
+@keyframes modalEnterBolt {
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: 0; filter: brightness(4); }
+  15%  { opacity: 1; filter: brightness(1.6); transform: translate(-50%, -50%) scale(1.02); }
+  40%  { filter: brightness(1); transform: translate(-50%, -50%) scale(.99); }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; filter: brightness(1); }
+}
+.jogador-card[data-char-class="feiticeiro"] { --class-color: #3498db; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BRUXO — Eldritch Purple / Void Black
+   Tentáculas, olho eldritch, vazio absoluto
+══════════════════════════════════════════════════════════════════════════ */
+[data-char-class="bruxo"] { --class-accent: #8e44ad; }
+
+[data-char-class="bruxo"] .modal-char-hero {
+  background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 320'><circle cx='660' cy='160' r='72' fill='none' stroke='%238e44ad' stroke-width='1.2' stroke-opacity='.2'/><path d='M628,160 Q660,135 692,160' fill='none' stroke='%238e44ad' stroke-width='1.2' stroke-opacity='.25'/><path d='M628,160 Q660,185 692,160' fill='none' stroke='%238e44ad' stroke-width='1.2' stroke-opacity='.25'/><ellipse cx='660' cy='160' rx='14' ry='22' fill='%238e44ad' fill-opacity='.15'/><circle cx='660' cy='160' r='6' fill='%238e44ad' fill-opacity='.3'/><path d='M80,320 C130,220 180,110 280,155 C380,200 330,55 430,80' fill='none' stroke='%238e44ad' stroke-width='1.3' stroke-opacity='.13'/><path d='M30,300 C90,190 150,85 240,125 C330,165 305,38 400,58' fill='none' stroke='%238e44ad' stroke-width='.9' stroke-opacity='.09'/><path d='M140,320 C190,215 250,115 360,155 C470,195 440,60 540,82' fill='none' stroke='%238e44ad' stroke-width='1.1' stroke-opacity='.11'/><circle cx='280' cy='155' r='3' fill='%238e44ad' fill-opacity='.2'/><circle cx='430' cy='80' r='2.5' fill='%238e44ad' fill-opacity='.2'/></svg>") right center / 800px 100% no-repeat,
+    radial-gradient(ellipse 55% 100% at 0% 50%, rgba(4,0,10,.98) 0%, rgba(3,0,8,.8) 60%, transparent 100%),
+    linear-gradient(130deg, #060018 0%, #040010 60%, #080018 100%);
+}
+
+[data-char-class="bruxo"] .modal-char-name {
+  font-family: 'Grenze Gotisch', Georgia, serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: #c084e0;
+  letter-spacing: 1.5px;
+  text-shadow:
+    0 1px 0 rgba(200,120,240,.15),
+    0 -1px 0 rgba(0,0,0,.95),
+    0 0 18px rgba(142,68,173,.6),
+    0 0 45px rgba(142,68,173,.3),
+    0 0 90px rgba(142,68,173,.15);
+}
+[data-char-class="bruxo"] .modal-char-avatar {
+  border-color: rgba(142,68,173,.5);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(142,68,173,.12), 0 0 0 8px rgba(142,68,173,.05), 0 8px 28px rgba(0,0,0,.85), 0 0 30px rgba(142,68,173,.18);
+}
+[data-char-class="bruxo"].modal-panel.open { animation: modalEnterEmerge .6s ease-out; }
+@keyframes modalEnterEmerge {
+  0%   { transform: translate(-50%, -50%) scale(1.03); opacity: 0; filter: brightness(.2) saturate(2); }
+  50%  { filter: brightness(.7) saturate(1.4); opacity: .6; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; filter: brightness(1) saturate(1); }
+}
+.jogador-card[data-char-class="bruxo"] { --class-color: #8e44ad; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MONGE — Ki Ember / Warm Sand
+   Ondas concêntricas, fluxo preciso
+══════════════════════════════════════════════════════════════════════════ */
+[data-char-class="monge"] { --class-accent: #e8a020; }
+
+[data-char-class="monge"] .modal-char-hero {
+  background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 320'><circle cx='680' cy='160' r='42' fill='none' stroke='%23e8a020' stroke-width='1.2' stroke-opacity='.22'/><circle cx='680' cy='160' r='82' fill='none' stroke='%23e8a020' stroke-width='.9' stroke-opacity='.15'/><circle cx='680' cy='160' r='126' fill='none' stroke='%23e8a020' stroke-width='.7' stroke-opacity='.1'/><circle cx='680' cy='160' r='172' fill='none' stroke='%23e8a020' stroke-width='.5' stroke-opacity='.07'/><circle cx='680' cy='160' r='220' fill='none' stroke='%23e8a020' stroke-width='.4' stroke-opacity='.05'/><path d='M0,160 C120,100 220,220 360,160 C500,100 580,200 700,160' fill='none' stroke='%23e8a020' stroke-width='1' stroke-opacity='.12'/></svg>") right center / 800px 100% no-repeat,
+    radial-gradient(ellipse 55% 100% at 0% 50%, rgba(16,8,2,.97) 0%, rgba(10,6,2,.75) 60%, transparent 100%),
+    linear-gradient(130deg, #120802 0%, #080605 60%, #140a02 100%);
+}
+
+[data-char-class="monge"] .modal-char-name {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #f0b840;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow:
+    0 1px 0 rgba(255,210,80,.18),
+    0 -1px 0 rgba(0,0,0,.9),
+    0 0 18px rgba(232,160,32,.5),
+    0 0 45px rgba(232,160,32,.2);
+}
+[data-char-class="monge"] .modal-char-avatar {
+  border-color: rgba(232,160,32,.45);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(232,160,32,.1), 0 8px 28px rgba(0,0,0,.7);
+}
+[data-char-class="monge"].modal-panel.open { animation: modalEnterPrecise .25s cubic-bezier(.22,1,.36,1); }
+@keyframes modalEnterPrecise {
+  0%   { transform: translate(-40%, -50%) scale(.97); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+.jogador-card[data-char-class="monge"] { --class-color: #e8a020; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   PATRULHEIRO / RANGER — Hunter Green
+   Rosa dos ventos, anéis de árvore
+══════════════════════════════════════════════════════════════════════════ */
+[data-char-class="patrulheiro"],
+[data-char-class="ranger"] { --class-accent: #2ecc71; }
+
+[data-char-class="patrulheiro"] .modal-char-hero,
+[data-char-class="ranger"] .modal-char-hero {
+  background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 320'><line x1='680' y1='50' x2='680' y2='270' stroke='%232ecc71' stroke-width='1.2' stroke-opacity='.18'/><line x1='560' y1='160' x2='800' y2='160' stroke='%232ecc71' stroke-width='1.2' stroke-opacity='.18'/><line x1='600' y1='80' x2='760' y2='240' stroke='%232ecc71' stroke-width='.8' stroke-opacity='.12'/><line x1='760' y1='80' x2='600' y2='240' stroke='%232ecc71' stroke-width='.8' stroke-opacity='.12'/><polygon points='680,55 672,140 680,134 688,140' fill='%232ecc71' fill-opacity='.2'/><polygon points='680,265 672,180 680,186 688,180' fill='%232ecc71' fill-opacity='.14'/><circle cx='680' cy='160' r='58' fill='none' stroke='%232ecc71' stroke-width='1' stroke-opacity='.13'/><circle cx='680' cy='160' r='94' fill='none' stroke='%232ecc71' stroke-width='.6' stroke-opacity='.08'/><circle cx='680' cy='160' r='130' fill='none' stroke='%232ecc71' stroke-width='.4' stroke-opacity='.05'/><circle cx='680' cy='160' r='8' fill='%232ecc71' fill-opacity='.2'/></svg>") right center / 800px 100% no-repeat,
+    radial-gradient(ellipse 55% 100% at 0% 50%, rgba(1,8,3,.97) 0%, rgba(1,6,3,.75) 60%, transparent 100%),
+    linear-gradient(130deg, #010e04 0%, #020806 60%, #021004 100%);
+}
+
+[data-char-class="patrulheiro"] .modal-char-name,
+[data-char-class="ranger"] .modal-char-name {
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: 25px;
+  color: #70e090;
+  letter-spacing: .8px;
+  text-shadow:
+    0 1px 0 rgba(100,230,140,.15),
+    0 -1px 0 rgba(0,0,0,.9),
+    0 0 20px rgba(46,204,113,.5),
+    0 0 45px rgba(46,204,113,.22);
+}
+[data-char-class="patrulheiro"] .modal-char-avatar,
+[data-char-class="ranger"] .modal-char-avatar {
+  border-color: rgba(46,204,113,.45);
+  box-shadow: 0 0 0 4px rgba(46,204,113,.1), 0 8px 28px rgba(0,0,0,.7);
+}
+[data-char-class="patrulheiro"].modal-panel.open,
+[data-char-class="ranger"].modal-panel.open { animation: modalEnterTracker .38s cubic-bezier(.22,1,.36,1); }
+@keyframes modalEnterTracker {
+  0%   { transform: translate(-44%, -50%) scale(.98); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+.jogador-card[data-char-class="patrulheiro"],
+.jogador-card[data-char-class="ranger"] { --class-color: #2ecc71; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   GLOW DE CLASSE — Jogador cards com borda no acento da classe
+══════════════════════════════════════════════════════════════════════════ */
+.jogador-card:hover {
+  border-color: color-mix(in srgb, var(--class-color) 50%, transparent);
+  box-shadow:
+    0 22px 60px rgba(0,0,0,.75),
+    0 0 0 1px color-mix(in srgb, var(--class-color) 35%, transparent),
+    0 0 30px color-mix(in srgb, var(--class-color) 12%, transparent);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   CAMPAIGN HERO — Pirata One para o título
+══════════════════════════════════════════════════════════════════════════ */
+.campaign-hero h2 {
+  font-family: 'Pirata One', 'Cinzel Decorative', Georgia, serif;
+  font-size: clamp(34px, 5.5vw, 58px);
+  letter-spacing: 6px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ANIMAÇÕES GLOBAIS APRIMORADAS
+══════════════════════════════════════════════════════════════════════════ */
+
+/* Entrada suave dos cards */
+.characters-grid .character-card,
+.locations-grid .location-card,
+.factions-grid .faction-card,
+.npcs-grid .npc-card {
+  animation: cardFadeUp .4s var(--ease-out) both;
+}
+.characters-grid .character-card:nth-child(2),
+.locations-grid .location-card:nth-child(2),
+.factions-grid .faction-card:nth-child(2),
+.npcs-grid .npc-card:nth-child(2) { animation-delay: .04s; }
+.characters-grid .character-card:nth-child(3),
+.locations-grid .location-card:nth-child(3),
+.factions-grid .faction-card:nth-child(3),
+.npcs-grid .npc-card:nth-child(3) { animation-delay: .08s; }
+.characters-grid .character-card:nth-child(4),
+.locations-grid .location-card:nth-child(4),
+.factions-grid .faction-card:nth-child(4),
+.npcs-grid .npc-card:nth-child(4) { animation-delay: .12s; }
+.characters-grid .character-card:nth-child(n+5),
+.locations-grid .location-card:nth-child(n+5),
+.factions-grid .faction-card:nth-child(n+5),
+.npcs-grid .npc-card:nth-child(n+5) { animation-delay: .16s; }
+
+@keyframes cardFadeUp {
+  from { opacity: 0; transform: translateY(14px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Efeito shimmer em elementos com gradiente de texto */
+@keyframes shimmerText {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+/* Pulsação suave nos badges de facção */
+.faction-badge {
+  transition: box-shadow .3s ease, transform .2s ease;
+}
+.faction-badge:hover {
+  transform: scale(1.05);
+}
+
+/* Melhoria geral das transições de hover em cards */
+.character-card,
+.location-card,
+.faction-card,
+.event-card {
+  transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s ease, border-color .3s ease !important;
+}

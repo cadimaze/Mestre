@@ -2008,31 +2008,39 @@ async function renderJogadores() {
     return;
   }
 
-  grid.innerHTML = players.map(p => {
-    const pc = p.playerCharacter;
-    const initial = (p.displayName || '?').charAt(0).toUpperCase();
-    return `<div class="jogador-card" data-uid="${p.uid}" title="Abrir ficha">
-      <div style="display:flex;align-items:center;gap:14px;">
-        <div class="jogador-avatar">${initial}</div>
-        <div style="flex:1;min-width:0;">
-          <div class="jogador-name">${escHtml(p.displayName || '—')}</div>
-          <div class="jogador-email">${escHtml(p.email || '')}</div>
+  grid.innerHTML = players.map((p, i) => {
+    const pc       = p.playerCharacter;
+    const initial  = (p.displayName || '?').charAt(0).toUpperCase();
+    const imgUrl   = pc?.imageUrl || '';
+    const charName = pc?.name || '';
+    const details  = [pc?.race, pc?.charClass, pc?.background].filter(Boolean).map(escHtml).join(' · ');
+    const rawCls   = (pc?.charClass || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, '');
+    const delayMs  = i * 70;
+
+    const portraitInner = imgUrl
+      ? `<img class="jogador-portrait-img" src="${escHtml(imgUrl)}" alt="${escHtml(charName)}" loading="lazy">`
+      : `<div class="jogador-portrait-placeholder">${escHtml(initial)}</div>`;
+
+    return `<div class="jogador-card" data-uid="${p.uid}"${rawCls ? ` data-char-class="${rawCls}"` : ''} title="Abrir ficha" style="animation:cardFadeUp .5s var(--ease-out) ${delayMs}ms both">
+      <div class="jogador-portrait-wrap">
+        ${portraitInner}
+        <div class="jogador-portrait-overlay">
+          ${charName ? `<div class="jogador-char-name-over">${escHtml(charName)}</div>` : ''}
         </div>
-        <button class="jogador-edit-btn" data-uid="${p.uid}" title="Editar ficha deste jogador">✏ Editar ficha</button>
+        <div class="jogador-portrait-border"></div>
       </div>
-      ${pc && pc.name
-        ? `<div class="jogador-char-info">
-            <div class="jogador-char-name">${escHtml(pc.name)}</div>
-            <div>${[pc.race, pc.charClass, pc.background].filter(Boolean).map(escHtml).join(' · ')}</div>
-           </div>`
-        : `<div class="jogador-char-info" style="color:#3a4a5a;font-style:italic;">Ficha ainda não preenchida — clique em Editar para preenchê-la pelo Mestre.</div>`
-      }
+      <div class="jogador-card-footer">
+        <div class="jogador-player-name">${escHtml(p.displayName || '—')}</div>
+        <div class="jogador-player-email">${escHtml(p.email || '')}</div>
+        ${details
+          ? `<div class="jogador-char-details">${details}</div>`
+          : `<div class="jogador-nochar-notice">Ficha ainda não preenchida</div>`}
+        <button class="jogador-edit-btn" data-uid="${p.uid}">✏ Editar ficha</button>
+      </div>
     </div>`;
   }).join('');
 
-  // Card abre a ficha; botão abre direto em modo de edição
   grid.querySelectorAll('.jogador-card').forEach(card => {
-    card.style.cursor = 'pointer';
     card.addEventListener('click', () => openModal(card.dataset.uid, 'player'));
   });
   grid.querySelectorAll('.jogador-edit-btn').forEach(btn => {
@@ -2974,6 +2982,16 @@ function openModal(id, type, pushToStack = true) {
   if (!content) return;
 
   document.getElementById('modal-body').innerHTML = content;
+
+  // Per-class visual theme: set data-char-class on the panel for CSS targeting
+  panel.removeAttribute('data-char-class');
+  if (type === 'player') {
+    const _p = STATE.players.find(x => x.uid === id);
+    const _rawClass = _p?.playerCharacter?.charClass || '';
+    const _cls = _rawClass.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, '');
+    if (_cls) panel.setAttribute('data-char-class', _cls);
+  }
+
   overlay.classList.add('open');
   panel.classList.add('open');
 
@@ -3017,7 +3035,9 @@ function openModal(id, type, pushToStack = true) {
 
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
-  document.getElementById('modal-panel').classList.remove('open');
+  const _panel = document.getElementById('modal-panel');
+  _panel.classList.remove('open');
+  _panel.removeAttribute('data-char-class');
   STATE.modal.stack   = [];
   STATE.modal.current = null;
 }

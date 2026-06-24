@@ -1392,37 +1392,55 @@ body::after {
    MODAL PANEL
 ═══════════════════════════════════════════════════════════════════════════ */
 .modal-overlay {
-  display: none;
   position: fixed; inset: 0;
-  background: rgba(3,11,21,.6);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  background: rgba(3,11,21,.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   z-index: 150;
+  visibility: hidden; opacity: 0;
+  transition: opacity .35s ease, visibility 0s .35s;
 }
-.modal-overlay.open { display: block; animation: fadeIn .25s; }
+.modal-overlay.open { visibility: visible; opacity: 1; transition: opacity .35s ease, visibility 0s 0s; }
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+/* ── Centered dialog modal ── */
 .modal-panel {
   position: fixed;
-  right: 0; top: 0; bottom: 0;
-  width: 60%;
-  max-width: 960px;
-  background: linear-gradient(to bottom, var(--bg-secondary), #06121f);
-  border-left: 1px solid rgba(207,172,110,.15);
-  box-shadow: -16px 0 70px rgba(0,0,0,.75);
+  left: 50%; top: 50%;
+  width: min(920px, 94vw);
+  max-height: 90vh;
+  background: linear-gradient(165deg, #081826 0%, #050f1c 100%);
+  border: 1px solid rgba(207,172,110,.22);
+  border-top: 1px solid rgba(207,172,110,.32);
+  border-radius: 20px;
+  box-shadow:
+    0 60px 130px rgba(0,0,0,.92),
+    0 0 0 1px rgba(207,172,110,.06),
+    inset 0 1px 0 rgba(255,255,255,.05);
   z-index: 151;
-  display: none; flex-direction: column;
+  display: flex; flex-direction: column;
   overflow: hidden;
-  transform: translateX(100%);
-  transition: transform .35s var(--ease-out);
+  visibility: hidden; opacity: 0; pointer-events: none;
+  transform: translate(-50%, -52%) scale(.96);
+  transition: transform .4s var(--ease-out), opacity .3s ease, visibility 0s .3s;
 }
-.modal-panel.open { display: flex; transform: translateX(0); }
+.modal-panel.open {
+  visibility: visible; opacity: 1; pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform .4s var(--ease-out), opacity .3s ease, visibility 0s 0s;
+  animation: modalEnterDefault .4s var(--ease-out);
+}
+
+@keyframes modalEnterDefault {
+  from { transform: translate(-50%, -56%) scale(.94); opacity: 0; }
+  to   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
 
 .modal-header {
-  padding: 14px 18px;
-  border-bottom: 1px solid rgba(255,255,255,.05);
-  background: linear-gradient(to right, rgba(207,172,110,.05), transparent);
+  padding: 16px 20px 14px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  background: linear-gradient(to right, rgba(207,172,110,.07), transparent);
   display: flex; align-items: center; gap: 10px;
   flex-shrink: 0;
 }
@@ -1473,12 +1491,12 @@ body::after {
 }
 
 .modal-char-avatar {
-  width: 96px; height: 96px;
-  border-radius: 12px;
+  width: 120px; height: 120px;
+  border-radius: 14px;
   overflow: hidden;
-  border: 2px solid rgba(207,172,110,.25);
+  border: 2px solid rgba(207,172,110,.3);
   flex-shrink: 0;
-  box-shadow: 0 6px 22px rgba(0,0,0,.55), 0 0 0 4px rgba(207,172,110,.05);
+  box-shadow: 0 8px 28px rgba(0,0,0,.65), 0 0 0 5px rgba(207,172,110,.06);
 }
 .modal-char-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .modal-char-avatar-placeholder {
@@ -1700,7 +1718,6 @@ body::after {
    RESPONSIVO
 ═══════════════════════════════════════════════════════════════════════════ */
 @media (max-width: 1024px) {
-  .modal-panel { width: 64%; }
   .summary-cards { grid-template-columns: repeat(2, 1fr); }
   .location-featured-inner { grid-template-columns: 1fr; }
   .location-featured-desc { border-left: none; padding-left: 0; border-top: 1px solid rgba(207,172,110,.12); padding-top: 18px; }
@@ -2006,10 +2023,14 @@ body::after {
   }
   .rd-row { grid-template-columns: 1fr; }
 
-  .modal-panel { width: 100%; max-width: none; }
+  .modal-panel {
+    width: 97vw;
+    max-height: 93vh;
+    border-radius: 16px 16px 12px 12px;
+  }
   .modal-body { padding-bottom: env(safe-area-inset-bottom); }
   .modal-char-hero { padding: 18px 16px 16px; gap: 14px; }
-  .modal-char-avatar { width: 76px; height: 76px; }
+  .modal-char-avatar { width: 88px; height: 88px; border-radius: 10px; }
   .modal-location-hero { padding: 18px 16px 16px; }
   .modal-section { padding: 16px; }
   .modal-relation-tag { flex-wrap: wrap; row-gap: 2px; }
@@ -2089,6 +2110,168 @@ body::after {
   .roteiro-doc-item  { flex-direction: column; gap: 4px; }
   .roteiro-doc-nome  { min-width: unset; }
   .roteiro-table th:last-child, .roteiro-table td:last-child { display: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   JOGADORES TAB — Portrait cards
+═══════════════════════════════════════════════════════════════════════════ */
+.jogadores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 22px;
+  padding: 8px 0 40px;
+}
+
+.jogador-card {
+  background: linear-gradient(170deg, var(--bg-card) 0%, rgba(7,19,34,.96) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .3s var(--ease-out), border-color .3s, box-shadow .3s;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.jogador-card:hover {
+  transform: translateY(-6px);
+  border-color: color-mix(in srgb, var(--class-color, var(--accent-gold)) 45%, transparent);
+  box-shadow: 0 18px 52px rgba(0,0,0,.75), 0 0 0 1px color-mix(in srgb, var(--class-color, var(--accent-gold)) 22%, transparent);
+}
+
+.jogador-portrait-wrap {
+  width: 100%;
+  height: 230px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #081b30 0%, #122943 100%);
+  flex-shrink: 0;
+}
+
+.jogador-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform .55s var(--ease-out), filter .35s;
+  filter: saturate(.88) brightness(.95);
+}
+
+.jogador-card:hover .jogador-portrait-img {
+  transform: scale(1.06);
+  filter: saturate(1.08) brightness(1.02);
+}
+
+.jogador-portrait-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 84px;
+  color: rgba(207,172,110,.14);
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 20%, rgba(90,138,176,.07), transparent 70%),
+    linear-gradient(135deg, #081b30 0%, #10243c 50%, #081b30 100%);
+  text-shadow: 0 0 40px rgba(207,172,110,.12);
+  user-select: none;
+}
+
+.jogador-portrait-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 70px 14px 12px;
+  background: linear-gradient(to top, rgba(4,12,22,.97) 0%, rgba(4,12,22,.55) 55%, transparent 100%);
+}
+
+.jogador-portrait-border {
+  position: absolute;
+  inset: 0;
+  border: 2px solid color-mix(in srgb, var(--class-color, var(--accent-gold)) 28%, transparent);
+  pointer-events: none;
+  transition: border-color .3s;
+}
+.jogador-card:hover .jogador-portrait-border {
+  border-color: color-mix(in srgb, var(--class-color, var(--accent-gold)) 55%, transparent);
+}
+
+.jogador-char-name-over {
+  font-family: var(--font-title);
+  font-size: 15px;
+  color: var(--accent-gold-light);
+  letter-spacing: .4px;
+  text-shadow: 0 1px 5px rgba(0,0,0,.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.jogador-card-footer {
+  padding: 12px 15px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  border-top: 1px solid rgba(255,255,255,.04);
+}
+
+.jogador-player-name {
+  font-family: var(--font-title);
+  font-size: 12.5px;
+  color: var(--text-soft);
+  letter-spacing: .3px;
+}
+
+.jogador-player-email {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+}
+
+.jogador-char-details {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-family: var(--font-flavor);
+  font-style: italic;
+  margin-top: 4px;
+  line-height: 1.45;
+}
+
+.jogador-nochar-notice {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  font-style: italic;
+  font-family: var(--font-flavor);
+  margin-top: 4px;
+}
+
+.jogador-edit-btn {
+  margin-top: 10px;
+  background: rgba(207,172,110,.06);
+  border: 1px solid rgba(207,172,110,.2);
+  border-radius: 8px;
+  color: var(--accent-gold);
+  padding: 7px 12px;
+  font-family: var(--font-title);
+  font-size: 9.5px;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+  width: 100%;
+}
+.jogador-edit-btn:hover {
+  background: rgba(207,172,110,.13);
+  border-color: rgba(207,172,110,.45);
+}
+
+@media (max-width: 768px) {
+  .jogadores-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .jogador-portrait-wrap { height: 175px; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
