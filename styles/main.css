@@ -468,6 +468,128 @@ body::after {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   CARD DE CURIOSIDADES (rotativo)
+═══════════════════════════════════════════════════════════════════════════ */
+.curiosity-card {
+  position: relative;
+  margin: 26px 0 30px;
+  padding: 24px 30px 22px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  border-top: 1px solid rgba(207,172,110,.28);
+  background:
+    radial-gradient(ellipse 70% 130% at 92% 0%, rgba(90,138,176,.10), transparent 60%),
+    radial-gradient(ellipse 60% 130% at 4% 100%, rgba(207,172,110,.06), transparent 62%),
+    linear-gradient(150deg, var(--bg-card) 0%, rgba(7,19,34,.94) 100%);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color .3s, box-shadow .3s, transform .3s var(--ease-out);
+}
+.curiosity-card:hover {
+  border-color: var(--border-gold);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* faixa de luz superior */
+.curiosity-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 12%; right: 12%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(207,172,110,.5), transparent);
+}
+
+.curiosity-deco {
+  position: absolute;
+  right: -10px; bottom: -22px;
+  font-size: 130px;
+  line-height: 1;
+  color: rgba(207,172,110,.04);
+  pointer-events: none;
+  transform: rotate(-8deg);
+  transition: transform .5s var(--ease-out), color .3s;
+}
+.curiosity-card:hover .curiosity-deco { transform: rotate(-4deg) scale(1.05); color: rgba(207,172,110,.06); }
+
+.curiosity-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.curiosity-eyebrow {
+  font-family: var(--font-title);
+  font-size: 9px;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.curiosity-label {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  color: var(--accent-gold);
+  text-shadow: 0 0 18px rgba(207,172,110,.25);
+}
+.curiosity-label::before { content: '— '; color: var(--accent-gold-dim); }
+
+.curiosity-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  min-height: 58px;
+  position: relative;
+  z-index: 1;
+  transition: opacity .5s ease, transform .5s var(--ease-out);
+}
+.curiosity-body.is-swapping { opacity: 0; transform: translateY(8px); }
+
+.curiosity-icon {
+  font-size: 30px;
+  line-height: 1.2;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.5));
+}
+.curiosity-text {
+  font-family: var(--font-flavor);
+  font-style: italic;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.curiosity-dots {
+  display: flex;
+  gap: 6px;
+  margin-top: 16px;
+  position: relative;
+  z-index: 1;
+}
+.curiosity-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(207,172,110,.2);
+  transition: all .3s var(--ease-out);
+}
+.curiosity-dot.active {
+  background: var(--accent-gold);
+  box-shadow: 0 0 8px rgba(207,172,110,.6);
+  width: 18px;
+  border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+  .curiosity-card { margin: 18px 0 20px; padding: 18px 18px 16px; }
+  .curiosity-text { font-size: 14px; }
+  .curiosity-icon { font-size: 24px; }
+  .curiosity-deco { font-size: 96px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    DASHBOARD
 ═══════════════════════════════════════════════════════════════════════════ */
 .dashboard-grid {

@@ -32,6 +32,10 @@ const STATE = {
   graphFilters:    { character: true, location: true, event: true, faction: true, player: true },
   graphShowLabels: true,
   charFilters:     { name: '', faction: '', status: '', secretsOnly: false },
+
+  curiosities:     [],
+  curiosityIdx:    0,
+  curiosityTimer:  null,
 };
 
 // ── D&D 5e CONSTANTS ─────────────────────────────────────────────────────────
@@ -1119,6 +1123,83 @@ function renderPainel() {
   relList.querySelectorAll('.recent-relation').forEach(el => {
     el.addEventListener('click', () => openModal(el.dataset.id, el.dataset.type));
   });
+}
+
+// ── CARD DE CURIOSIDADES (rotativo, sem spoilers) ──────────────────────────────
+async function setupCuriosities() {
+  const card = document.getElementById('curiosity-card');
+  if (!card) return;
+
+  // Carrega uma única vez por sessão
+  if (!STATE.curiosities.length) {
+    try {
+      const list = await fetch('curiosities.json').then(r => r.json());
+      STATE.curiosities = Array.isArray(list) ? list.filter(c => c && c.text) : [];
+    } catch (err) {
+      console.error('[curiosities]', err);
+      STATE.curiosities = [];
+    }
+  }
+
+  if (!STATE.curiosities.length) { card.style.display = 'none'; return; }
+  card.style.display = '';
+
+  // Começa num ponto pseudo-aleatório para não repetir sempre a mesma abertura
+  STATE.curiosityIdx = Math.floor((Date.now() / 1000) % STATE.curiosities.length);
+
+  // Dots de progresso
+  const dots = document.getElementById('curiosity-dots');
+  if (dots) {
+    dots.innerHTML = STATE.curiosities.map((_, i) => `<span class="curiosity-dot" data-i="${i}"></span>`).join('');
+    dots.querySelectorAll('.curiosity-dot').forEach(d => {
+      d.addEventListener('click', e => { e.stopPropagation(); showCuriosity(parseInt(d.dataset.i), true); });
+    });
+  }
+
+  // Clique no card avança; passar o mouse pausa a rotação
+  card.onclick = () => showCuriosity(STATE.curiosityIdx + 1, true);
+  card.onmouseenter = stopCuriosityRotation;
+  card.onmouseleave = startCuriosityRotation;
+
+  showCuriosity(STATE.curiosityIdx, false);
+  startCuriosityRotation();
+}
+
+function showCuriosity(idx, animate) {
+  const list = STATE.curiosities;
+  if (!list.length) return;
+  const n = ((idx % list.length) + list.length) % list.length;
+  STATE.curiosityIdx = n;
+  const cur = list[n];
+
+  const body = document.getElementById('curiosity-body');
+  const iconEl = document.getElementById('curiosity-icon');
+  const textEl = document.getElementById('curiosity-text');
+  if (!body || !textEl) return;
+
+  const paint = () => {
+    if (iconEl) iconEl.textContent = cur.icon || '⚓';
+    textEl.textContent = cur.text;
+    document.querySelectorAll('#curiosity-dots .curiosity-dot')
+      .forEach((d, i) => d.classList.toggle('active', i === n));
+  };
+
+  if (animate) {
+    body.classList.add('is-swapping');
+    setTimeout(() => { paint(); body.classList.remove('is-swapping'); }, 280);
+  } else {
+    paint();
+  }
+}
+
+function startCuriosityRotation() {
+  stopCuriosityRotation();
+  if (STATE.curiosities.length < 2) return;
+  STATE.curiosityTimer = setInterval(() => showCuriosity(STATE.curiosityIdx + 1, true), 9000);
+}
+
+function stopCuriosityRotation() {
+  if (STATE.curiosityTimer) { clearInterval(STATE.curiosityTimer); STATE.curiosityTimer = null; }
 }
 
 function getEntityName(id, type) {
@@ -5064,6 +5145,7 @@ async function onUserLoggedIn(user) {
   await setupFirestoreListeners();
 
   renderPainel();
+  setupCuriosities();
   renderCharacters();
   renderLocations();
   renderEvents();
@@ -5080,6 +5162,7 @@ async function onUserLoggedIn(user) {
 }
 
 function onUserLoggedOut() {
+  stopCuriosityRotation();
   STATE.user    = null;
   STATE.profile = null;
   STATE.isMaster = false;
