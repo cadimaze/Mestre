@@ -483,13 +483,7 @@ body::after {
     linear-gradient(150deg, var(--bg-card) 0%, rgba(7,19,34,.94) 100%);
   box-shadow: var(--shadow-card);
   overflow: hidden;
-  cursor: pointer;
-  transition: border-color .3s, box-shadow .3s, transform .3s var(--ease-out);
-}
-.curiosity-card:hover {
-  border-color: var(--border-gold);
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-2px);
+  transition: none;
 }
 
 /* faixa de luz superior */

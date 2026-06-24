@@ -1147,19 +1147,11 @@ async function setupCuriosities() {
   // Começa num ponto pseudo-aleatório para não repetir sempre a mesma abertura
   STATE.curiosityIdx = Math.floor((Date.now() / 1000) % STATE.curiosities.length);
 
-  // Dots de progresso
+  // Dots de progresso (apenas indicadores visuais — sem interação)
   const dots = document.getElementById('curiosity-dots');
   if (dots) {
     dots.innerHTML = STATE.curiosities.map((_, i) => `<span class="curiosity-dot" data-i="${i}"></span>`).join('');
-    dots.querySelectorAll('.curiosity-dot').forEach(d => {
-      d.addEventListener('click', e => { e.stopPropagation(); showCuriosity(parseInt(d.dataset.i), true); });
-    });
   }
-
-  // Clique no card avança; passar o mouse pausa a rotação
-  card.onclick = () => showCuriosity(STATE.curiosityIdx + 1, true);
-  card.onmouseenter = stopCuriosityRotation;
-  card.onmouseleave = startCuriosityRotation;
 
   showCuriosity(STATE.curiosityIdx, false);
   startCuriosityRotation();
@@ -1195,7 +1187,7 @@ function showCuriosity(idx, animate) {
 function startCuriosityRotation() {
   stopCuriosityRotation();
   if (STATE.curiosities.length < 2) return;
-  STATE.curiosityTimer = setInterval(() => showCuriosity(STATE.curiosityIdx + 1, true), 9000);
+  STATE.curiosityTimer = setInterval(() => showCuriosity(STATE.curiosityIdx + 1, true), 15000);
 }
 
 function stopCuriosityRotation() {
