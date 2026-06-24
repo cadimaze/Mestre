@@ -1147,12 +1147,6 @@ async function setupCuriosities() {
   // Começa num ponto pseudo-aleatório para não repetir sempre a mesma abertura
   STATE.curiosityIdx = Math.floor((Date.now() / 1000) % STATE.curiosities.length);
 
-  // Dots de progresso (apenas indicadores visuais — sem interação)
-  const dots = document.getElementById('curiosity-dots');
-  if (dots) {
-    dots.innerHTML = STATE.curiosities.map((_, i) => `<span class="curiosity-dot" data-i="${i}"></span>`).join('');
-  }
-
   showCuriosity(STATE.curiosityIdx, false);
   startCuriosityRotation();
 }
@@ -1172,8 +1166,6 @@ function showCuriosity(idx, animate) {
   const paint = () => {
     if (iconEl) iconEl.textContent = cur.icon || '⚓';
     textEl.textContent = cur.text;
-    document.querySelectorAll('#curiosity-dots .curiosity-dot')
-      .forEach((d, i) => d.classList.toggle('active', i === n));
   };
 
   if (animate) {

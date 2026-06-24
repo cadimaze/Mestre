@@ -556,26 +556,6 @@ body::after {
   color: var(--text-secondary);
 }
 
-.curiosity-dots {
-  display: flex;
-  gap: 6px;
-  margin-top: 16px;
-  position: relative;
-  z-index: 1;
-}
-.curiosity-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: rgba(207,172,110,.2);
-  transition: all .3s var(--ease-out);
-}
-.curiosity-dot.active {
-  background: var(--accent-gold);
-  box-shadow: 0 0 8px rgba(207,172,110,.6);
-  width: 18px;
-  border-radius: 3px;
-}
-
 @media (max-width: 768px) {
   .curiosity-card { margin: 18px 0 20px; padding: 18px 18px 16px; }
   .curiosity-text { font-size: 14px; }
