@@ -1759,3 +1759,71 @@ body.is-master .vis-card-badge { display: block; }
   .vis-controls .vis-btn { padding: 9px 12px; }
   .annotation-submit-btn { padding: 10px 18px; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LOADING SPLASH — cobre tela enquanto Firebase verifica o token
+═══════════════════════════════════════════════════════════════════════════ */
+.loading-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='28'%3E%3Cpath d='M0 14c13-10 27-10 40 0s27 10 40 0 27-10 40 0 27 10 40 0' fill='none' stroke='%235e94be' stroke-opacity='.055'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(94,148,190,.09) 0%, transparent 65%),
+    #04101d;
+  opacity: 1;
+  transition: opacity .45s ease;
+  pointer-events: all;
+}
+.loading-splash.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash-anchor {
+  font-size: 62px;
+  line-height: 1;
+  filter: drop-shadow(0 0 22px rgba(207,172,110,.35));
+  animation: splashFloat 2.4s ease-in-out infinite;
+}
+@keyframes splashFloat {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%       { transform: translateY(-11px) rotate(2deg); }
+}
+
+.splash-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', Georgia, serif;
+  font-size: 20px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  background: linear-gradient(110deg, #f4e4b8 0%, #cfac6e 45%, #8e7240 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 16px rgba(207,172,110,.2));
+}
+
+.splash-bar {
+  width: 110px;
+  height: 2px;
+  background: rgba(207,172,110,.12);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.splash-bar-fill {
+  height: 100%;
+  width: 38%;
+  background: linear-gradient(90deg, transparent, #cfac6e, transparent);
+  border-radius: 2px;
+  animation: splashScan 1.6s ease-in-out infinite;
+}
+@keyframes splashScan {
+  from { transform: translateX(-200%); }
+  to   { transform: translateX(420%); }
+}

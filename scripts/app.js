@@ -77,6 +77,13 @@ const DND_SKILLS = [
 // ── AUTH UI ───────────────────────────────────────────────────────────────────
 function showAuthOverlay()  { document.getElementById('auth-overlay').classList.add('visible'); }
 function hideAuthOverlay()  { document.getElementById('auth-overlay').classList.remove('visible'); }
+
+function hideSplash() {
+  const splash = document.getElementById('loading-splash');
+  if (!splash) return;
+  splash.classList.add('hidden');
+  setTimeout(() => { if (splash.parentNode) splash.parentNode.removeChild(splash); }, 500);
+}
 function showAuthError(msg) { document.getElementById('auth-error').textContent = msg; }
 function clearAuthError()   { document.getElementById('auth-error').textContent = ''; }
 
@@ -5158,7 +5165,6 @@ function onUserLoggedOut() {
 
 async function init() {
   setupAuthUI();
-  showAuthOverlay();
 
   // Tab navigation
   document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -5190,6 +5196,7 @@ async function init() {
 
   // Firebase auth state listener
   onAuthStateChanged(auth, user => {
+    hideSplash();
     if (user) onUserLoggedIn(user);
     else      onUserLoggedOut();
   });
