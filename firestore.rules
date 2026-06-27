@@ -82,6 +82,12 @@ service cloud.firestore {
         allow read, write: if isMaster();
       }
 
+      // Navio do grupo — todos os autenticados leem; só o mestre edita
+      match /ship/{id} {
+        allow read:  if isAuth();
+        allow write: if isMaster();
+      }
+
       // Anotações — todos autenticados podem ler e criar as próprias
       match /annotations/{id} {
         allow read:   if isAuth();

@@ -24,7 +24,7 @@ const STATE = {
   isMaster:       false,
   players:        [],
   unsubscribers:  [],
-  data: { characters: [], locations: [], events: [], factions: [], relations: [], annotations: [], documents: [], items: [], npcs: [] },
+  data: { characters: [], locations: [], events: [], factions: [], relations: [], annotations: [], documents: [], items: [], npcs: [], ship: null },
 
   activeTab:       'painel',
   secretsVisible:  localStorage.getItem('secretsVisible') !== 'false',
@@ -73,6 +73,17 @@ const DND_SKILLS = [
   {id:'stealth',       name:'Furtividade',      ability:'dex'},
   {id:'survival',      name:'Sobrevivência',    ability:'wis'},
 ];
+
+// ── DADOS DE NAVEGAÇÃO (sistema exclusivo da mesa) ──────────────────────────────
+// Cada dado é um d20 + modificador editável manualmente. Cada um tem uma
+// animação de rolagem única conforme a função (variant).
+const NAV_DICE = [
+  { id:'combat',   name:'Combate Naval',      icon:'⚔️', variant:'combat',   color:'#c94040', hint:'Canhões, abordagens e fúria de batalha' },
+  { id:'piloting', name:'Pilotagem do Navio', icon:'🧭', variant:'piloting', color:'#5a8ab0', hint:'Manobras, rumo e leitura das marés' },
+  { id:'tuning',   name:'Ajustes do Barco',   icon:'⚙️', variant:'tuning',   color:'#cfac6e', hint:'Calibragem de velas, leme e cordame' },
+  { id:'repair',   name:'Conserto do Navio',  icon:'🛠️', variant:'repair',   color:'#4aa3a3', hint:'Reparos de casco e remendos no mar' },
+];
+const NAV_BY_ID = Object.fromEntries(NAV_DICE.map(d => [d.id, d]));
 
 // ── AUTH UI ───────────────────────────────────────────────────────────────────
 function showAuthOverlay()  { document.getElementById('auth-overlay').classList.add('visible'); }
@@ -296,6 +307,13 @@ async function setupFirestoreListeners() {
     }, err => console.error('[npcs]', err));
     STATE.unsubscribers.push(unsub);
   }
+
+  // Navio do grupo — visível a todos os autenticados, editável só pelo mestre
+  const unsubShip = onSnapshot(doc(db, 'campaigns', CAMPAIGN_ID, 'ship', 'main'), snap => {
+    STATE.data.ship = snap.exists() ? { id: snap.id, ...snap.data() } : null;
+    if (STATE.activeTab === 'navio') renderNavio();
+  }, err => console.error('[ship]', err));
+  STATE.unsubscribers.push(unsubShip);
 }
 
 // ── VISIBILITY ────────────────────────────────────────────────────────────────
@@ -327,7 +345,7 @@ async function sendRevealNotifications(targetUids, entityType, entityId, entityN
 }
 
 // ── DICE ROLLER ───────────────────────────────────────────────────────────────
-function showDiceToast({ label, sides, roll, modifier, total, details }) {
+function showDiceToast({ label, sides, roll, modifier, total, details, variant, icon }) {
   let overlay = document.getElementById('dice-overlay');
   if (!overlay) {
     overlay = document.createElement('div');
@@ -340,9 +358,13 @@ function showDiceToast({ label, sides, roll, modifier, total, details }) {
   clearTimeout(overlay._closeTimer);
   clearInterval(overlay._rollInterval);
 
+  const vClass = variant ? ` dice-variant-${variant}` : '';
+  const iconHtml = icon ? `<div class="dice-toast-icon">${icon}</div>` : '';
+
   // ── Phase 1: suspense animation ────────────────────────────────────────────
   overlay.innerHTML = `
-    <div class="dice-toast dice-rolling-phase">
+    <div class="dice-toast dice-rolling-phase${vClass}">
+      ${iconHtml}
       <div class="dice-label">${escHtml(label)}</div>
       <div class="dice-die">d${sides}</div>
       <div class="dice-anim-num" id="dice-anim-num">?</div>
@@ -371,7 +393,8 @@ function showDiceToast({ label, sides, roll, modifier, total, details }) {
     ).join('');
 
     overlay.innerHTML = `
-      <div class="dice-toast dice-reveal-phase${isCrit ? ' dice-crit' : ''}${isFumble ? ' dice-fumble' : ''}">
+      <div class="dice-toast dice-reveal-phase${vClass}${isCrit ? ' dice-crit' : ''}${isFumble ? ' dice-fumble' : ''}">
+        ${iconHtml}
         <button class="dice-close" onclick="document.getElementById('dice-overlay').classList.remove('open')">✕</button>
         <div class="dice-label">${escHtml(label)}</div>
         <div class="dice-die">d${sides}</div>
@@ -414,21 +437,26 @@ function profStateNorm(state) {
   return (n >= 0 && n <= 3) ? n : 0;
 }
 
-window.masterRoll = function(playerName, label, score, profBonusAdd) {
-  const baseMod = Math.floor((score - 10) / 2);
-  const mod     = baseMod + (profBonusAdd || 0);
-  const roll    = Math.floor(Math.random() * 20) + 1;
-  const total   = roll + mod;
+// Rola um dado de navegação: d20 + modificador fixo, com animação por variante.
+// prefix opcional (ex.: nome do jogador, para a visão do mestre).
+function rollNavDie(dieId, modifier, prefix = '') {
+  const die = NAV_BY_ID[dieId];
+  if (!die) return;
+  const mod   = Number(modifier) || 0;
+  const roll  = Math.floor(Math.random() * 20) + 1;
+  const total = roll + mod;
   showDiceToast({
-    label: `${playerName} — ${label}`, sides: 20, roll, modifier: mod, total,
+    label: prefix ? `${prefix} — ${die.name}` : die.name,
+    sides: 20, roll, modifier: mod, total,
+    variant: die.variant, icon: die.icon,
     details: [
-      { label: 'Rolagem', value: roll },
-      { label: 'Modificador de Atributo', value: (baseMod >= 0 ? '+' : '') + baseMod },
-      ...(profBonusAdd ? [{ label: 'Bônus de Proficiência', value: '+' + profBonusAdd }] : []),
+      { label: 'Rolagem (d20)', value: roll },
+      { label: 'Modificador', value: (mod >= 0 ? '+' : '') + mod },
       { label: 'Total', value: total },
     ]
   });
-};
+}
+window.rollNavDie = rollNavDie;
 
 let _notifQueue  = [];
 let _notifActive = false;
@@ -1073,6 +1101,7 @@ function switchTab(tab) {
   if (tab === 'meu-personagem') renderMeuPersonagem();
   if (tab === 'roteiro')        renderRoteiro();
   if (tab === 'npcs')           renderNpcs();
+  if (tab === 'navio')          renderNavio();
 }
 
 // ── SECRETS TOGGLE ────────────────────────────────────────────────────────────
@@ -1897,6 +1926,112 @@ window.copyWotcText = async function(npcId, btn) {
   }
 };
 
+// ── NAVIO DO GRUPO ──────────────────────────────────────────────────────────
+function renderNavio() {
+  const container = document.getElementById('navio-content');
+  if (!container) return;
+  const ship = STATE.data.ship;
+  const isMaster = STATE.isMaster;
+
+  if (!ship || !ship.name) {
+    container.innerHTML = isMaster
+      ? `<div class="navio-empty">
+           <div class="navio-empty-icon">⛵</div>
+           <p>Nenhum navio cadastrado ainda.</p>
+           <button class="navio-edit-btn" id="navio-create-btn">＋ Adicionar Navio do Grupo</button>
+         </div>`
+      : `<div class="empty-state"><div class="empty-icon">⛵</div><p>O navio do grupo ainda não foi cadastrado.</p></div>`;
+    document.getElementById('navio-create-btn')?.addEventListener('click', () => renderNavioForm({}));
+    return;
+  }
+
+  const hp = Number(ship.hp) || 0, maxHp = Number(ship.maxHp) || 0;
+  const hpPct = maxHp ? Math.max(0, Math.min(100, Math.round(hp / maxHp * 100))) : 0;
+  const hpClass = hpPct >= 50 ? 'navio-hp-ok' : hpPct >= 25 ? 'navio-hp-warn' : 'navio-hp-low';
+
+  container.innerHTML = `
+    <div class="navio-card">
+      ${ship.imageUrl
+        ? `<div class="navio-img-wrap"><img class="navio-img" src="${escHtml(ship.imageUrl)}" alt="${escHtml(ship.name)}" onerror="this.parentElement.classList.add('navio-img-ph');this.remove()"></div>`
+        : `<div class="navio-img-wrap navio-img-ph">⛵</div>`}
+      <div class="navio-body">
+        <div class="navio-head">
+          <h2 class="navio-name">${escHtml(ship.name)}</h2>
+          ${isMaster ? `<button class="navio-edit-btn" id="navio-edit-btn">✏ Editar</button>` : ''}
+        </div>
+        ${ship.description ? `<p class="navio-desc">${escHtml(ship.description)}</p>` : ''}
+        <div class="navio-stats">
+          <div class="navio-stat navio-stat-hp">
+            <div class="navio-stat-label">⚓ Pontos de Vida</div>
+            <div class="navio-stat-val">${hp} <span class="navio-stat-max">/ ${maxHp}</span></div>
+            ${maxHp ? `<div class="navio-hp-bar"><div class="navio-hp-fill ${hpClass}" style="width:${hpPct}%"></div></div>` : ''}
+          </div>
+          <div class="navio-stat navio-stat-speed">
+            <div class="navio-stat-label">💨 Rapidez</div>
+            <div class="navio-stat-val">${Number(ship.speed) || 0}</div>
+          </div>
+          <div class="navio-stat navio-stat-res">
+            <div class="navio-stat-label">🛡️ Resistência</div>
+            <div class="navio-stat-val">${Number(ship.resistance) || 0}</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  container.querySelector('.navio-img')?.addEventListener('click', () => { if (ship.imageUrl) openLightbox(ship.imageUrl); });
+  document.getElementById('navio-edit-btn')?.addEventListener('click', () => renderNavioForm(ship));
+}
+
+function renderNavioForm(ship) {
+  const container = document.getElementById('navio-content');
+  if (!container) return;
+  container.innerHTML = `
+    <form class="navio-form" id="navio-form">
+      <div class="navio-form-title">${ship.name ? '✏ Editar Navio' : '＋ Adicionar Navio'}</div>
+      <div class="navio-field"><label>Nome do Navio</label>
+        <input class="edit-input" name="name" value="${escHtml(ship.name || '')}" placeholder="Ex: A Brisa Vermilha" required></div>
+      <div class="navio-field"><label>Imagem (URL)</label>
+        <input class="edit-input" name="imageUrl" value="${escHtml(ship.imageUrl || '')}" placeholder="https://..."></div>
+      <div class="navio-field"><label>Descrição</label>
+        <textarea class="edit-input" name="description" rows="3" placeholder="História, tipo, detalhes do navio...">${escHtml(ship.description || '')}</textarea></div>
+      <div class="navio-form-row">
+        <div class="navio-field"><label>PV Atual</label><input class="edit-input" type="number" name="hp" value="${Number(ship.hp) || 0}"></div>
+        <div class="navio-field"><label>PV Máximo</label><input class="edit-input" type="number" name="maxHp" value="${Number(ship.maxHp) || 0}"></div>
+        <div class="navio-field"><label>💨 Rapidez</label><input class="edit-input" type="number" name="speed" value="${Number(ship.speed) || 0}"></div>
+        <div class="navio-field"><label>🛡️ Resistência</label><input class="edit-input" type="number" name="resistance" value="${Number(ship.resistance) || 0}"></div>
+      </div>
+      <div class="navio-form-actions">
+        <button type="submit" class="navio-save-btn">Salvar Navio</button>
+        <button type="button" class="navio-cancel-btn" id="navio-cancel-btn">Cancelar</button>
+      </div>
+    </form>`;
+
+  document.getElementById('navio-cancel-btn').addEventListener('click', renderNavio);
+  document.getElementById('navio-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const data = {
+      name:        String(fd.get('name') || '').trim(),
+      imageUrl:    String(fd.get('imageUrl') || '').trim(),
+      description: String(fd.get('description') || '').trim(),
+      hp:          parseInt(fd.get('hp') || '0') || 0,
+      maxHp:       parseInt(fd.get('maxHp') || '0') || 0,
+      speed:       parseInt(fd.get('speed') || '0') || 0,
+      resistance:  parseInt(fd.get('resistance') || '0') || 0,
+    };
+    const btn = e.target.querySelector('.navio-save-btn');
+    btn.disabled = true; btn.textContent = 'Salvando...';
+    try {
+      await setDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'ship', 'main'), data, { merge: true });
+      STATE.data.ship = { ...(STATE.data.ship || {}), ...data };
+      renderNavio();
+    } catch (err) {
+      console.error('[ship save]', err);
+      btn.disabled = false; btn.textContent = '✘ Erro — tentar de novo';
+    }
+  });
+}
+
 function renderNpcs() {
   const grid = document.getElementById('npcs-grid');
   if (!grid) return;
@@ -2133,19 +2268,10 @@ function renderMeuPersonagem() {
   const heroTheme = CLASS_THEME[pc.charClass || ''] || '';
   const otherPlayers = STATE.players.filter(p => p.role === 'player' && p.uid !== myUid);
 
-  // ── Sheet helpers ──────────────────────────────────────────────────────────
-  const abScore  = k => (sheet.abilities || {})[k] ?? 10;
-  const abModNum = k => Math.floor((abScore(k) - 10) / 2);
-  const abModStr = k => { const m = abModNum(k); return (m >= 0 ? '+' : '') + m; };
-  const pb       = () => sheet.profBonus || 2;
-  const skillModStr = sk => {
-    const m = abModNum(sk.ability) + profStateToMod((sheet.skills || {})[sk.id], pb());
-    return (m >= 0 ? '+' : '') + m;
-  };
-  const saveModStr = k => {
-    const m = abModNum(k) + profStateToMod((sheet.savingThrows || {})[k], pb());
-    return (m >= 0 ? '+' : '') + m;
-  };
+  // ── Dados de navegação ──────────────────────────────────────────────────────
+  const nav       = pc.navigation || {};
+  const navMod    = id => Number(nav[id]) || 0;
+  const navModStr = id => { const m = navMod(id); return (m >= 0 ? '+' : '') + m; };
 
   // Mutable state — saved together on form submit
   let sheetVis   = pc.sheetVisibility ? { ...pc.sheetVisibility, playerIds: [...(pc.sheetVisibility.playerIds || [])] }
@@ -2185,8 +2311,6 @@ function renderMeuPersonagem() {
     : `<div class="pc-portrait-placeholder" id="pc-portrait-img">${(pc.name||'?').charAt(0)}</div>`;
 
   // ── View mode HTML ────────────────────────────────────────────────────────
-  const hpPct   = sheet.maxHp ? Math.max(0,Math.min(100,Math.round(((sheet.hp||0)/sheet.maxHp)*100))) : 0;
-  const hpClass = hpPct >= 50 ? 'cs-hp-ok' : hpPct >= 25 ? 'cs-hp-warn' : 'cs-hp-low';
   const viewHtml = `
     <div id="cs-view">
       <div class="cs-hero${heroTheme ? ' pc-theme-'+heroTheme : ''}" id="pc-hero">
@@ -2198,47 +2322,18 @@ function renderMeuPersonagem() {
         <div class="cs-identity">
           <div class="cs-char-name">${escHtml(pc.name || 'Sem nome')}</div>
           <div class="cs-char-meta">${[pc.race, pc.charClass, pc.background].filter(Boolean).map(escHtml).join(' · ')}</div>
-          <div class="cs-level-pill">Nível ${sheet.level ?? 1}${sheet.inspiration ? ' &nbsp;✨' : ''}</div>
         </div>
       </div>
-      <div class="cs-combat-strip">
-        <div class="cs-combat-box cs-hp-box">
-          <div class="cs-combat-val">${sheet.hp ?? '—'}/${sheet.maxHp ?? '—'}</div>
-          ${sheet.maxHp ? `<div class="cs-hp-bar"><div class="cs-hp-fill ${hpClass}" style="width:${hpPct}%"></div></div>` : ''}
-          <div class="cs-combat-label">Pontos de Vida</div>
-        </div>
-        <div class="cs-combat-box"><div class="cs-combat-val">${sheet.ac ?? '—'}</div><div class="cs-combat-label">CA</div></div>
-        <div class="cs-combat-box"><div class="cs-combat-val">${(sheet.initiative||0) >= 0 ? '+'+(sheet.initiative||0) : (sheet.initiative||0)}</div><div class="cs-combat-label">Iniciativa</div></div>
-        <div class="cs-combat-box"><div class="cs-combat-val">${escHtml(sheet.speed || '9 m')}</div><div class="cs-combat-label">Deslocamento</div></div>
-        <div class="cs-combat-box"><div class="cs-combat-val">+${pb()}</div><div class="cs-combat-label">Proficiência</div></div>
-      </div>
-      <div class="cs-sheet-grid">
-        <div class="cs-ab-section">
-          <div class="cs-sh-title">🎲 Atributos — clique para rolar</div>
-          <div class="cs-ab-grid">
-            ${AB_KEYS.map(k => `<div class="cs-ab-box" data-ab="${k}" title="Rolar ${AB_FULL[k]}">
-              <div class="cs-ab-label">${AB_PT[k]}</div>
-              <div class="cs-ab-mod">${abModStr(k)}</div>
-              <div class="cs-ab-score">${abScore(k)}</div>
-            </div>`).join('')}
-          </div>
-        </div>
-        <div class="cs-sv-section">
-          <div class="cs-sh-title">🛡️ Resistências</div>
-          ${AB_KEYS.map(k => { const p2=profStateNorm((sheet.savingThrows||{})[k]); return `<div class="cs-sv-row${p2>0?' cs-prof-on':''}" data-save="${k}">
-            <span class="cs-prof-dot cs-prof-state-${p2}"></span>
-            <span class="cs-sv-val">${saveModStr(k)}</span>
-            <span class="cs-sv-name">${AB_PT[k]} — ${AB_FULL[k]}</span>
-          </div>`; }).join('')}
-        </div>
-        <div class="cs-sk-section">
-          <div class="cs-sh-title">📋 Perícias</div>
-          ${DND_SKILLS.map(sk => { const p2=profStateNorm((sheet.skills||{})[sk.id]); return `<div class="cs-sk-row${p2>0?' cs-prof-on':''}" data-skill="${sk.id}" data-ab="${sk.ability}">
-            <span class="cs-prof-dot cs-prof-state-${p2}"></span>
-            <span class="cs-sk-val">${skillModStr(sk)}</span>
-            <span class="cs-sk-name">${sk.name}</span>
-            <span class="cs-sk-ab">${AB_PT[sk.ability]}</span>
-          </div>`; }).join('')}
+      <div class="cs-nav-section">
+        <div class="cs-sh-title">🎲 Dados de Navegação — clique para rolar (d20 + modificador)</div>
+        <div class="cs-nav-grid">
+          ${NAV_DICE.map(d => `<div class="cs-nav-card nav-variant-${d.variant}" data-nav="${d.id}" title="Rolar ${d.name} — d20 ${navModStr(d.id)}">
+            <div class="cs-nav-icon">${d.icon}</div>
+            <div class="cs-nav-name">${d.name}</div>
+            <div class="cs-nav-mod">${navModStr(d.id)}</div>
+            <div class="cs-nav-hint">${d.hint}</div>
+            <div class="cs-nav-roll-tag">d20 ${navModStr(d.id)} ⟶ rolar</div>
+          </div>`).join('')}
         </div>
       </div>
       ${pc.appearance ? `<div class="cs-text-block"><div class="cs-sh-title">Aparência</div><p class="cs-text-body">${escHtml(pc.appearance)}</p></div>` : ''}
@@ -2285,77 +2380,17 @@ function renderMeuPersonagem() {
         </div>
       </div>
 
-      <!-- ── COMBATE ── -->
+      <!-- ── DADOS DE NAVEGAÇÃO ── -->
       <div class="pc-section pc-sheet-section">
-        <div class="pc-section-title">⚔️ Combate</div>
-        <div class="pc-sheet-meta">
-          <div class="pc-meta-box"><label>Nível</label>
-            <input class="pc-sheet-input" name="sheet_level" type="number" min="1" max="20" value="${sheet.level ?? 1}">
-          </div>
-          <div class="pc-meta-box pc-meta-hp">
-            <label>Pontos de Vida</label>
-            <div class="pc-hp-row">
-              <input class="pc-sheet-input pc-hp-in" name="sheet_hp" type="number" min="0" value="${sheet.hp ?? 8}" title="PV Atual">
-              <span class="pc-hp-sep">/</span>
-              <input class="pc-sheet-input pc-hp-in" name="sheet_maxHp" type="number" min="1" value="${sheet.maxHp ?? 8}" title="PV Máximo">
-            </div>
-          </div>
-          <div class="pc-meta-box"><label>CA</label>
-            <input class="pc-sheet-input" name="sheet_ac" type="number" min="1" value="${sheet.ac ?? 10}">
-          </div>
-          <div class="pc-meta-box"><label>Iniciativa</label>
-            <input class="pc-sheet-input" name="sheet_initiative" type="number" value="${sheet.initiative ?? 0}">
-          </div>
-          <div class="pc-meta-box"><label>Deslocamento</label>
-            <input class="pc-sheet-input pc-speed-in" name="sheet_speed" value="${sheet.speed ?? '9 m'}">
-          </div>
-          <div class="pc-meta-box"><label>Bônus Prof.</label>
-            <input class="pc-sheet-input" name="sheet_profBonus" id="pc-prof-bonus" type="number" min="2" max="6" value="${sheet.profBonus ?? 2}">
-          </div>
-          <div class="pc-meta-box pc-meta-insp">
-            <label>Inspiração</label>
-            <input type="checkbox" class="pc-insp-chk" name="sheet_inspiration" ${sheet.inspiration ? 'checked' : ''}>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── ATRIBUTOS ── -->
-      <div class="pc-section pc-sheet-section">
-        <div class="pc-section-title">🎲 Atributos — clique para rolar</div>
-        <div class="pc-abilities-grid">
-          ${AB_KEYS.map(k => `
-            <div class="pc-ability-box" data-ab="${k}" title="Rolar ${AB_FULL[k]}">
-              <div class="pc-ab-label">${AB_PT[k]}</div>
-              <div class="pc-ab-mod" id="pc-abmod-${k}">${abModStr(k)}</div>
-              <input class="pc-ab-score" name="sheet_ab_${k}" type="number" min="1" max="30" value="${abScore(k)}">
-              <div class="pc-ab-full">${AB_FULL[k]}</div>
-            </div>`).join('')}
-        </div>
-      </div>
-
-      <!-- ── TESTES DE RESISTÊNCIA ── -->
-      <div class="pc-section pc-sheet-section">
-        <div class="pc-section-title">🛡️ Testes de Resistência</div>
-        <div class="pc-saves-grid">
-          ${AB_KEYS.map(k => `
-            <div class="pc-save-row" data-save="${k}" title="Rolar resistência ${AB_FULL[k]}">
-              <button type="button" class="pc-prof-btn" data-name="sheet_save_${k}" data-prof="${profStateNorm((sheet.savingThrows||{})[k])}" title="Clique para mudar proficiência"></button>
-              <span class="pc-save-val" id="pc-saveval-${k}">${saveModStr(k)}</span>
-              <span class="pc-save-name">${AB_PT[k]} — ${AB_FULL[k]}</span>
-            </div>`).join('')}
-        </div>
-      </div>
-
-      <!-- ── PERÍCIAS ── -->
-      <div class="pc-section pc-sheet-section">
-        <div class="pc-section-title">📋 Perícias</div>
-        <div class="pc-skills-list">
-          ${DND_SKILLS.map(sk => `
-            <div class="pc-skill-row" data-skill="${sk.id}" data-ab="${sk.ability}" title="Rolar ${sk.name}">
-              <button type="button" class="pc-prof-btn" data-name="sheet_skill_${sk.id}" data-prof="${profStateNorm((sheet.skills||{})[sk.id])}" title="Clique para mudar proficiência"></button>
-              <span class="pc-skill-val" id="pc-skillval-${sk.id}">${skillModStr(sk)}</span>
-              <span class="pc-skill-name">${sk.name}</span>
-              <span class="pc-skill-ab">${AB_PT[sk.ability]}</span>
+        <div class="pc-section-title">🎲 Dados de Navegação — defina os modificadores (d20 + valor)</div>
+        <div class="pc-nav-edit-grid">
+          ${NAV_DICE.map(d => `
+            <div class="pc-nav-edit-box nav-variant-${d.variant}">
+              <div class="pc-nav-edit-icon">${d.icon}</div>
+              <div class="pc-nav-edit-name">${d.name}</div>
+              <div class="pc-nav-edit-hint">${d.hint}</div>
+              <label class="pc-nav-edit-label">Modificador</label>
+              <input class="pc-sheet-input pc-nav-input" name="nav_${d.id}" type="number" value="${navMod(d.id)}">
             </div>`).join('')}
         </div>
       </div>
@@ -2508,96 +2543,6 @@ function renderMeuPersonagem() {
   wireVisButtons(container);
   wirePlayerChecks(container);
 
-  // ── Live modifier recalculation ───────────────────────────────────────────
-  function recalcMods() {
-    const profBonusVal = parseInt(document.getElementById('pc-prof-bonus')?.value) || 2;
-    AB_KEYS.forEach(k => {
-      const sc  = parseInt(container.querySelector(`[name="sheet_ab_${k}"]`)?.value) || 10;
-      const mod = Math.floor((sc - 10) / 2);
-      const el  = document.getElementById(`pc-abmod-${k}`);
-      if (el) el.textContent = (mod >= 0 ? '+' : '') + mod;
-      const btnState = parseInt(container.querySelector(`.pc-prof-btn[data-name="sheet_save_${k}"]`)?.dataset.prof || '0');
-      const savVal  = mod + profStateToMod(btnState, profBonusVal);
-      const savEl   = document.getElementById(`pc-saveval-${k}`);
-      if (savEl) savEl.textContent = (savVal >= 0 ? '+' : '') + savVal;
-    });
-    DND_SKILLS.forEach(sk => {
-      const sc  = parseInt(container.querySelector(`[name="sheet_ab_${sk.ability}"]`)?.value) || 10;
-      const mod = Math.floor((sc - 10) / 2);
-      const btnState = parseInt(container.querySelector(`.pc-prof-btn[data-name="sheet_skill_${sk.id}"]`)?.dataset.prof || '0');
-      const val = mod + profStateToMod(btnState, profBonusVal);
-      const el  = document.getElementById(`pc-skillval-${sk.id}`);
-      if (el) el.textContent = (val >= 0 ? '+' : '') + val;
-    });
-  }
-  container.querySelectorAll('.pc-ab-score, #pc-prof-bonus').forEach(inp =>
-    inp.addEventListener('input', recalcMods));
-  container.querySelectorAll('.pc-prof-btn').forEach(btn =>
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      btn.dataset.prof = String((parseInt(btn.dataset.prof || '0') + 1) % 4);
-      recalcMods();
-    }));
-
-  // ── Dice rolling ─────────────────────────────────────────────────────────
-  container.querySelectorAll('.pc-ability-box').forEach(box => {
-    box.addEventListener('click', e => {
-      if (e.target.tagName === 'INPUT') return;
-      const k   = box.dataset.ab;
-      const sc  = parseInt(container.querySelector(`[name="sheet_ab_${k}"]`)?.value) || 10;
-      const mod = Math.floor((sc - 10) / 2);
-      const roll = Math.floor(Math.random() * 20) + 1;
-      const total = roll + mod;
-      showDiceToast({ label: AB_FULL[k], sides: 20, roll, modifier: mod, total, details: [
-        { label: 'Rolagem do dado', value: roll },
-        { label: `Modificador de ${AB_FULL[k]}`, value: (mod >= 0 ? '+' : '') + mod },
-        { label: 'Total', value: total },
-      ]});
-    });
-  });
-
-  container.querySelectorAll('.pc-save-row').forEach(row => {
-    row.addEventListener('click', e => {
-      if (e.target.classList.contains('pc-prof-btn')) return;
-      const k      = row.dataset.save;
-      const sc     = parseInt(container.querySelector(`[name="sheet_ab_${k}"]`)?.value) || 10;
-      const pbv    = parseInt(document.getElementById('pc-prof-bonus')?.value) || 2;
-      const btnState = parseInt(row.querySelector('.pc-prof-btn')?.dataset.prof || '0');
-      const base   = Math.floor((sc - 10) / 2);
-      const pba    = profStateToMod(btnState, pbv);
-      const mod    = base + pba;
-      const roll   = Math.floor(Math.random() * 20) + 1;
-      const total  = roll + mod;
-      showDiceToast({ label: `Resistência — ${AB_FULL[k]}`, sides: 20, roll, modifier: mod, total, details: [
-        { label: 'Rolagem do dado', value: roll },
-        { label: `Mod. de ${AB_FULL[k]}`, value: (base >= 0 ? '+' : '') + base },
-        ...(pba ? [{ label: 'Bônus de Proficiência', value: '+' + pba }] : []),
-        { label: 'Total', value: total },
-      ]});
-    });
-  });
-
-  container.querySelectorAll('.pc-skill-row').forEach(row => {
-    row.addEventListener('click', e => {
-      if (e.target.classList.contains('pc-prof-btn')) return;
-      const sk   = DND_SKILLS.find(s => s.id === row.dataset.skill);
-      const sc   = parseInt(container.querySelector(`[name="sheet_ab_${row.dataset.ab}"]`)?.value) || 10;
-      const pbv  = parseInt(document.getElementById('pc-prof-bonus')?.value) || 2;
-      const btnState = parseInt(row.querySelector('.pc-prof-btn')?.dataset.prof || '0');
-      const base = Math.floor((sc - 10) / 2);
-      const pba  = profStateToMod(btnState, pbv);
-      const mod  = base + pba;
-      const roll = Math.floor(Math.random() * 20) + 1;
-      const total = roll + mod;
-      showDiceToast({ label: sk?.name || row.dataset.skill, sides: 20, roll, modifier: mod, total, details: [
-        { label: 'Rolagem do dado', value: roll },
-        { label: `Mod. de ${AB_FULL[row.dataset.ab] || row.dataset.ab}`, value: (base >= 0 ? '+' : '') + base },
-        ...(pba ? [{ label: 'Bônus de Proficiência', value: '+' + pba }] : []),
-        { label: 'Total', value: total },
-      ]});
-    });
-  });
-
   // ── Class theme live ──────────────────────────────────────────────────────
   document.getElementById('pc-class-select')?.addEventListener('change', function() {
     applyCharTheme(this.value);
@@ -2647,32 +2592,13 @@ function renderMeuPersonagem() {
     const btn = document.getElementById('pc-save-btn');
     btn.disabled = true; btn.textContent = 'Salvando...';
     const fd = new FormData(e.target);
-    // Collect sheet data
-    const abilityScores = {};
-    AB_KEYS.forEach(k => { abilityScores[k] = parseInt(fd.get(`sheet_ab_${k}`) || '10'); });
-    const savingThrows = {};
-    AB_KEYS.forEach(k => {
-      const btn = container.querySelector(`.pc-prof-btn[data-name="sheet_save_${k}"]`);
-      savingThrows[k] = parseInt(btn?.dataset.prof || '0');
-    });
-    const pcSkills = {};
-    DND_SKILLS.forEach(sk => {
-      const btn = container.querySelector(`.pc-prof-btn[data-name="sheet_skill_${sk.id}"]`);
-      pcSkills[sk.id] = parseInt(btn?.dataset.prof || '0');
-    });
-    const sheetData = {
-      level: parseInt(fd.get('sheet_level') || '1'),
-      hp: parseInt(fd.get('sheet_hp') || '8'),
-      maxHp: parseInt(fd.get('sheet_maxHp') || '8'),
-      ac: parseInt(fd.get('sheet_ac') || '10'),
-      initiative: parseInt(fd.get('sheet_initiative') || '0'),
-      speed: fd.get('sheet_speed') || '9 m',
-      profBonus: parseInt(fd.get('sheet_profBonus') || '2'),
-      inspiration: fd.get('sheet_inspiration') === 'on',
-      abilities: abilityScores, savingThrows, skills: pcSkills,
-    };
-    const charData = { sheetVisibility: sheetVis, fieldVisibility: fieldVis, secretsList, sheet: sheetData };
-    fd.forEach((v, k) => { if (!k.startsWith('sheet_') && typeof v === 'string') charData[k] = v.trim(); });
+    // Modificadores dos dados de navegação
+    const navigation = {};
+    NAV_DICE.forEach(d => { navigation[d.id] = parseInt(fd.get(`nav_${d.id}`) || '0') || 0; });
+    const charData = { sheetVisibility: sheetVis, fieldVisibility: fieldVis, secretsList, navigation };
+    // Preserva notas do mestre (não editáveis aqui)
+    if (pc.notes) charData.notes = pc.notes;
+    fd.forEach((v, k) => { if (!k.startsWith('nav_') && typeof v === 'string') charData[k] = v.trim(); });
     if (pendingImageUrl) charData.imageUrl = pendingImageUrl;
     try {
       await updateDoc(doc(db, 'users', STATE.user.uid), { playerCharacter: charData });
@@ -2697,53 +2623,9 @@ function renderMeuPersonagem() {
   // ── View mode portrait zoom ───────────────────────────────────────────────
   document.getElementById('cs-portrait-view')?.addEventListener('click', () => openLightbox(pendingImageUrl));
 
-  // ── View mode dice rolling ────────────────────────────────────────────────
-  container.querySelectorAll('.cs-ab-box').forEach(box => {
-    box.addEventListener('click', () => {
-      const k   = box.dataset.ab;
-      const mod = abModNum(k);
-      const roll  = Math.floor(Math.random() * 20) + 1;
-      const total = roll + mod;
-      showDiceToast({ label: AB_FULL[k], sides: 20, roll, modifier: mod, total, details: [
-        { label: 'Rolagem do dado', value: roll },
-        { label: `Modificador de ${AB_FULL[k]}`, value: abModStr(k) },
-        { label: 'Total', value: total },
-      ]});
-    });
-  });
-  container.querySelectorAll('.cs-sv-row').forEach(row => {
-    row.addEventListener('click', () => {
-      const k    = row.dataset.save;
-      const prof = (sheet.savingThrows||{})[k];
-      const base = abModNum(k);
-      const pba  = profStateToMod(prof, pb());
-      const mod  = base + pba;
-      const roll  = Math.floor(Math.random() * 20) + 1;
-      const total = roll + mod;
-      showDiceToast({ label: `Resistência — ${AB_FULL[k]}`, sides: 20, roll, modifier: mod, total, details: [
-        { label: 'Rolagem do dado', value: roll },
-        { label: `Mod. de ${AB_FULL[k]}`, value: (base >= 0 ? '+' : '') + base },
-        ...(pba ? [{ label: 'Bônus de Proficiência', value: '+' + pba }] : []),
-        { label: 'Total', value: total },
-      ]});
-    });
-  });
-  container.querySelectorAll('.cs-sk-row').forEach(row => {
-    row.addEventListener('click', () => {
-      const sk   = DND_SKILLS.find(s => s.id === row.dataset.skill);
-      const prof = (sheet.skills||{})[sk?.id];
-      const base = abModNum(row.dataset.ab);
-      const pba  = profStateToMod(prof, pb());
-      const mod  = base + pba;
-      const roll  = Math.floor(Math.random() * 20) + 1;
-      const total = roll + mod;
-      showDiceToast({ label: sk?.name || row.dataset.skill, sides: 20, roll, modifier: mod, total, details: [
-        { label: 'Rolagem do dado', value: roll },
-        { label: `Mod. de ${AB_FULL[row.dataset.ab]||row.dataset.ab}`, value: (base >= 0 ? '+' : '') + base },
-        ...(pba ? [{ label: 'Bônus de Proficiência', value: '+' + pba }] : []),
-        { label: 'Total', value: total },
-      ]});
-    });
+  // ── View mode: rolar dados de navegação ───────────────────────────────────
+  container.querySelectorAll('.cs-nav-card').forEach(card => {
+    card.addEventListener('click', () => rollNavDie(card.dataset.nav, navMod(card.dataset.nav)));
   });
 
   // ── Load other players (async, non-blocking) ──────────────────────────────
@@ -3465,76 +3347,26 @@ function buildPlayerModalContent(uid) {
        </div>`
     : `<div class="modal-char-avatar"><div class="modal-char-avatar-placeholder">${escHtml(name.charAt(0).toUpperCase())}</div></div>`;
 
-  const sheet  = pc.sheet || {};
-  const pb     = sheet.profBonus || 2;
+  const nav = pc.navigation || {};
 
-  const masterSheetHtml = STATE.isMaster ? (() => {
-    const abGrid = AB_KEYS.map(k => {
-      const sc  = (sheet.abilities || {})[k] ?? 10;
-      const mod = Math.floor((sc - 10) / 2);
-      return `<div class="pms-ab" onclick="window.masterRoll('${escHtml(name)}','${AB_FULL[k]}',${sc},0)" title="Rolar ${AB_FULL[k]}">
-        <span class="pms-ab-label">${AB_PT[k]}</span>
-        <span class="pms-ab-mod">${mod >= 0 ? '+'+mod : mod}</span>
-        <span class="pms-ab-score">${sc}</span>
-      </div>`;
-    }).join('');
-
-    const savesHtml = AB_KEYS.map(k => {
-      const sc   = (sheet.abilities || {})[k] ?? 10;
-      const prof = (sheet.savingThrows || {})[k];
-      const pn   = profStateNorm(prof);
-      const base = Math.floor((sc - 10) / 2);
-      const pba  = profStateToMod(prof, pb);
-      const mod  = base + pba;
-      return `<div class="pms-save-row" onclick="window.masterRoll('${escHtml(name)}','Resistência ${AB_PT[k]}',${sc},${pba})" title="Rolar">
-        <span class="pms-prof-dot pms-prof-state-${pn}"></span>
-        <span class="pms-save-val">${mod >= 0 ? '+'+mod : mod}</span>
-        <span class="pms-save-name">${AB_PT[k]} — ${AB_FULL[k]}</span>
-      </div>`;
-    }).join('');
-
-    const skillsHtml = DND_SKILLS.map(sk => {
-      const sc   = (sheet.abilities || {})[sk.ability] ?? 10;
-      const prof = (sheet.skills || {})[sk.id];
-      const pn   = profStateNorm(prof);
-      const base = Math.floor((sc - 10) / 2);
-      const pba  = profStateToMod(prof, pb);
-      const mod  = base + pba;
-      return `<div class="pms-skill-row" onclick="window.masterRoll('${escHtml(name)}','${sk.name}',${sc},${pba})" title="Rolar">
-        <span class="pms-prof-dot pms-prof-state-${pn}"></span>
-        <span class="pms-skill-val">${mod >= 0 ? '+'+mod : mod}</span>
-        <span class="pms-skill-name">${sk.name}</span>
-        <span class="pms-skill-ab">${AB_PT[sk.ability]}</span>
-      </div>`;
-    }).join('');
-
-    return `
+  // Dados de navegação — visíveis ao mestre e ao próprio jogador; clicáveis para rolar
+  const canRollNav = STATE.isMaster || uid === STATE.user.uid;
+  const navSheetHtml = canRollNav ? `
       <div class="modal-section pms-section">
-        <div class="modal-section-title">⚔️ Ficha — Combate</div>
-        <div class="pms-meta">
-          ${sheet.level   ? `<div class="pms-stat"><label>Nível</label><span>${sheet.level}</span></div>` : ''}
-          ${sheet.maxHp   ? `<div class="pms-stat"><label>PV</label><span>${sheet.hp ?? '?'}/${sheet.maxHp}</span></div>` : ''}
-          ${sheet.ac      ? `<div class="pms-stat"><label>CA</label><span>${sheet.ac}</span></div>` : ''}
-          ${sheet.initiative != null ? `<div class="pms-stat"><label>Iniciativa</label><span>${sheet.initiative >= 0 ? '+'+sheet.initiative : sheet.initiative}</span></div>` : ''}
-          <div class="pms-stat"><label>Prof.</label><span>+${pb}</span></div>
-          ${sheet.speed   ? `<div class="pms-stat"><label>Deslocamento</label><span>${sheet.speed}</span></div>` : ''}
+        <div class="modal-section-title">🎲 Dados de Navegação — clique para rolar</div>
+        <div class="pms-nav-grid">
+          ${NAV_DICE.map(d => {
+            const m = Number(nav[d.id]) || 0;
+            const ms = (m >= 0 ? '+' : '') + m;
+            return `<div class="pms-nav-card nav-variant-${d.variant}" onclick="window.rollNavDie('${d.id}',${m},'${escHtml(name)}')" title="Rolar ${d.name} — d20 ${ms}">
+              <span class="pms-nav-icon">${d.icon}</span>
+              <span class="pms-nav-name">${d.name}</span>
+              <span class="pms-nav-mod">${ms}</span>
+              <span class="pms-nav-tag">d20</span>
+            </div>`;
+          }).join('')}
         </div>
-      </div>
-      <div class="modal-section pms-section">
-        <div class="modal-section-title">🎲 Atributos — clique para rolar</div>
-        <div class="pms-abilities">${abGrid}</div>
-      </div>
-      <div class="modal-section pms-section pms-two-cols">
-        <div>
-          <div class="modal-section-title">🛡️ Resistências</div>
-          <div class="pms-saves">${savesHtml}</div>
-        </div>
-        <div>
-          <div class="modal-section-title">📋 Perícias</div>
-          <div class="pms-skills">${skillsHtml}</div>
-        </div>
-      </div>`;
-  })() : '';
+      </div>` : '';
 
   return `
     <div class="modal-char-hero">
@@ -3545,7 +3377,7 @@ function buildPlayerModalContent(uid) {
         <div class="badges"><span class="badge player-badge">⚔ Jogador: ${escHtml(p.displayName || '')}</span></div>
       </div>
     </div>
-    ${masterSheetHtml}
+    ${navSheetHtml}
     ${pc.appearance && (STATE.isMaster || isFieldVisible(pc, 'appearance', STATE.user.uid)) ? `<div class="modal-section"><div class="modal-section-title">Aparência</div><div class="modal-section-text">${escHtml(pc.appearance)}</div></div>` : ''}
     ${pc.personality && (STATE.isMaster || isFieldVisible(pc, 'personality', STATE.user.uid)) ? `<div class="modal-section"><div class="modal-section-title">Personalidade &amp; Motivações</div><div class="modal-section-text">${escHtml(pc.personality)}</div></div>` : ''}
     ${pc.history && (STATE.isMaster || isFieldVisible(pc, 'history', STATE.user.uid)) ? `<div class="modal-section"><div class="modal-section-title">História</div><div class="modal-section-text">${escHtml(pc.history)}</div></div>` : ''}
@@ -4525,6 +4357,14 @@ function buildPlayerEditFields(p = {}) {
     ${editField('História do Personagem', editTextarea('pcHistory', pc.history, 'De onde veio, o que viveu, o que o moldou...', 4))}
     ${editField('Notas (visíveis a todos)', editTextarea('pcNotes', pc.notes, 'Anotações públicas da jornada...', 3))}
 
+    <div class="edit-form-section-title">🎲 Dados de Navegação (modificadores)</div>
+    <div class="pev-nav-grid">
+      ${NAV_DICE.map(d => `<div class="pev-nav-box">
+        <label>${d.icon} ${d.name}</label>
+        <input class="edit-input" type="number" name="nav_${d.id}" value="${Number((pc.navigation||{})[d.id]) || 0}">
+      </div>`).join('')}
+    </div>
+
     <div class="edit-form-section-title">Visibilidade da Ficha</div>
     <div class="pc-vis-row" id="pev-sheet-vis-btns">
       ${visBtn('hidden','🔒 Só o jogador')}${visBtn('specific','👁 Específicos')}${visBtn('all','🌐 Todos')}
@@ -4821,6 +4661,8 @@ function attachEditFormEvents(id, type) {
         const fd  = new FormData(form);
         const get = k => String(fd.get(k) || '').trim();
         const player = getPlayerByUid(id) || {};
+        const navigation = {};
+        NAV_DICE.forEach(d => { navigation[d.id] = parseInt(fd.get(`nav_${d.id}`) || '0') || 0; });
         const merged = {
           ...(player.playerCharacter || {}),
           name:           get('pcName'),
@@ -4831,6 +4673,7 @@ function attachEditFormEvents(id, type) {
           personality:    get('pcPersonality'),
           history:        get('pcHistory'),
           notes:          get('pcNotes'),
+          navigation,
           secretsList:    charSecretsList,
           sheetVisibility: form._pevSheetVis || (player.playerCharacter?.sheetVisibility || { mode: 'all', playerIds: [] }),
         };
