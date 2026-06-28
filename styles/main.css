@@ -3649,3 +3649,101 @@ body { background-image: radial-gradient(ellipse at 50% 0%, rgba(20,50,90,.35) 0
 }
 .navio-img-upload-btn:hover { background: rgba(207,172,110,.16); border-color: var(--accent-gold); }
 .navio-img-uploading { font-size: 12px; color: var(--text-muted); font-style: italic; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   NAVIO — visibilidade e tripulação
+═══════════════════════════════════════════════════════════════════════════ */
+.navio-head-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.navio-vis-badge {
+  font-family: var(--font-title); font-size: 10px; letter-spacing: .8px;
+  padding: 4px 10px; border-radius: 14px; white-space: nowrap;
+}
+.navio-vis-all      { background: rgba(122,154,106,.14); color: #8fbf7a; border: 1px solid rgba(122,154,106,.3); }
+.navio-vis-specific { background: rgba(90,138,176,.14);  color: #84bce4; border: 1px solid rgba(90,138,176,.3); }
+.navio-vis-hidden   { background: rgba(192,80,80,.14);   color: #e08a8a; border: 1px solid rgba(192,80,80,.3); }
+
+.navio-crew-section { margin-top: 26px; }
+.navio-crew-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 12px;
+}
+.navio-crew-card {
+  display: flex; align-items: center; gap: 12px;
+  background: linear-gradient(160deg, var(--bg-card), rgba(7,19,34,.94));
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent-gold-dim);
+  border-radius: var(--radius);
+  padding: 12px 14px; cursor: pointer;
+  transition: transform .2s var(--ease-out), border-color .2s, box-shadow .2s;
+  box-shadow: var(--shadow-card);
+}
+.navio-crew-card:hover {
+  transform: translateY(-3px);
+  border-left-color: var(--accent-gold);
+  box-shadow: var(--shadow-hover);
+}
+.navio-crew-avatar {
+  width: 46px; height: 46px; border-radius: 10px; flex-shrink: 0;
+  overflow: hidden; background: linear-gradient(135deg, #081b30, #122943);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 20px; color: rgba(207,172,110,.45);
+  border: 1px solid var(--border-accent);
+}
+.navio-crew-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.navio-crew-info { min-width: 0; }
+.navio-crew-name {
+  font-family: var(--font-title); font-size: 13.5px; color: var(--text-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.navio-crew-role {
+  font-family: var(--font-flavor); font-style: italic; font-size: 12px;
+  color: var(--accent-gold); margin-top: 1px;
+}
+.navio-crew-empty { font-family: var(--font-flavor); font-style: italic; color: var(--text-muted); font-size: 13px; }
+
+/* Form: visibilidade */
+.navio-vis-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.navio-vis-btn {
+  background: rgba(255,255,255,.03); border: 1px solid var(--border-accent);
+  color: var(--text-secondary); border-radius: 8px; padding: 8px 14px;
+  font-family: var(--font-title); font-size: 12px; cursor: pointer;
+  transition: all .15s;
+}
+.navio-vis-btn:hover { border-color: var(--accent-gold-dim); color: var(--text-primary); }
+.navio-vis-btn.active { border-color: var(--accent-gold); color: var(--accent-gold); background: rgba(207,172,110,.08); }
+.navio-vis-players { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.navio-hidden { display: none; }
+.navio-check { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); cursor: pointer; }
+
+/* Form: tripulação */
+.navio-crew-add { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.navio-crew-add #crew-add-select { flex: 2; min-width: 180px; }
+.navio-crew-add #crew-add-role { flex: 1; min-width: 140px; }
+.navio-crew-add-btn {
+  background: rgba(207,172,110,.1); border: 1px solid rgba(207,172,110,.35);
+  color: var(--accent-gold); border-radius: 8px; padding: 9px 16px;
+  font-family: var(--font-title); font-size: 12px; cursor: pointer; white-space: nowrap;
+  transition: background .15s, border-color .15s;
+}
+.navio-crew-add-btn:hover { background: rgba(207,172,110,.2); border-color: var(--accent-gold); }
+.navio-crew-editor { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.navio-crew-edit-row {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(0,0,0,.2); border: 1px solid var(--border);
+  border-radius: 9px; padding: 8px 12px;
+}
+.navio-crew-edit-name { font-family: var(--font-title); font-size: 13px; color: var(--text-primary); flex: 1; min-width: 0; }
+.navio-crew-role-input { max-width: 180px; }
+.navio-crew-del {
+  background: rgba(192,80,80,.1); border: 1px solid rgba(192,80,80,.3); color: #e08a8a;
+  width: 30px; height: 30px; border-radius: 7px; cursor: pointer; flex-shrink: 0;
+  transition: background .15s;
+}
+.navio-crew-del:hover { background: rgba(192,80,80,.25); }
+
+@media (max-width: 768px) {
+  .navio-crew-grid { grid-template-columns: 1fr 1fr; }
+  .navio-crew-add #crew-add-select,
+  .navio-crew-add #crew-add-role { flex: 1 1 100%; }
+}

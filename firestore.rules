@@ -82,9 +82,15 @@ service cloud.firestore {
         allow read, write: if isMaster();
       }
 
-      // Navio do grupo — todos os autenticados leem; só o mestre edita
+      // Navio do grupo — visibilidade controlada pelo mestre; só o mestre edita.
+      // Sem o campo visibility (legado) → liberado para todos os autenticados.
       match /ship/{id} {
-        allow read:  if isAuth();
+        allow read: if isMaster()
+          || (isAuth() && (
+               !('visibility' in resource.data)
+               || resource.data.visibility.mode == 'all'
+               || request.auth.uid in resource.data.visibility.playerIds
+             ));
         allow write: if isMaster();
       }
 
