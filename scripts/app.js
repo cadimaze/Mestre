@@ -2021,13 +2021,32 @@ function renderNavio() {
 function renderNavioForm(ship) {
   const container = document.getElementById('navio-content');
   if (!container) return;
+  let pendingFile = null;
+
+  const previewHtml = ship.imageUrl
+    ? `<img src="${escHtml(ship.imageUrl)}" alt="">`
+    : `<span class="navio-img-preview-ph">⛵ Sem imagem</span>`;
+
   container.innerHTML = `
     <form class="navio-form" id="navio-form">
       <div class="navio-form-title">${ship.name ? '✏ Editar Navio' : '＋ Adicionar Navio'}</div>
       <div class="navio-field"><label>Nome do Navio</label>
         <input class="edit-input" name="name" value="${escHtml(ship.name || '')}" placeholder="Ex: A Brisa Vermilha" required></div>
-      <div class="navio-field"><label>Imagem (URL)</label>
-        <input class="edit-input" name="imageUrl" value="${escHtml(ship.imageUrl || '')}" placeholder="https://..."></div>
+
+      <div class="navio-field">
+        <label>Imagem do Navio</label>
+        <div class="navio-img-edit">
+          <div class="navio-img-preview" id="navio-img-preview">${previewHtml}</div>
+          <div class="navio-img-edit-actions">
+            <label class="navio-img-upload-btn">📷 Enviar do computador
+              <input type="file" id="navio-img-file" accept="image/*" style="display:none">
+            </label>
+            <div class="navio-img-uploading" id="navio-img-uploading" style="display:none">Enviando imagem...</div>
+            <input class="edit-input" name="imageUrl" id="navio-img-url" value="${escHtml(ship.imageUrl || '')}" placeholder="ou cole uma URL https://...">
+          </div>
+        </div>
+      </div>
+
       <div class="navio-field"><label>Descrição</label>
         <textarea class="edit-input" name="description" rows="3" placeholder="História, tipo, detalhes do navio...">${escHtml(ship.description || '')}</textarea></div>
       <div class="navio-form-row">
@@ -2042,27 +2061,55 @@ function renderNavioForm(ship) {
       </div>
     </form>`;
 
+  const preview = document.getElementById('navio-img-preview');
+  const urlInput = document.getElementById('navio-img-url');
+
+  // Arquivo do PC → pré-visualização imediata
+  document.getElementById('navio-img-file').addEventListener('change', function() {
+    const file = this.files[0];
+    if (!file) return;
+    pendingFile = file;
+    const reader = new FileReader();
+    reader.onload = ev => { preview.innerHTML = `<img src="${ev.target.result}" alt="">`; };
+    reader.readAsDataURL(file);
+  });
+
+  // URL → pré-visualização
+  urlInput.addEventListener('input', () => {
+    if (pendingFile) return; // arquivo tem prioridade
+    const url = urlInput.value.trim();
+    preview.innerHTML = url ? `<img src="${escHtml(url)}" alt="" onerror="this.outerHTML='<span class=\\'navio-img-preview-ph\\'>URL inválida</span>'">` : `<span class="navio-img-preview-ph">⛵ Sem imagem</span>`;
+  });
+
   document.getElementById('navio-cancel-btn').addEventListener('click', renderNavio);
   document.getElementById('navio-form').addEventListener('submit', async e => {
     e.preventDefault();
     const fd = new FormData(e.target);
-    const data = {
-      name:        String(fd.get('name') || '').trim(),
-      imageUrl:    String(fd.get('imageUrl') || '').trim(),
-      description: String(fd.get('description') || '').trim(),
-      hp:          parseInt(fd.get('hp') || '0') || 0,
-      maxHp:       parseInt(fd.get('maxHp') || '0') || 0,
-      speed:       parseInt(fd.get('speed') || '0') || 0,
-      resistance:  parseInt(fd.get('resistance') || '0') || 0,
-    };
     const btn = e.target.querySelector('.navio-save-btn');
     btn.disabled = true; btn.textContent = 'Salvando...';
+
+    let imageUrl = String(fd.get('imageUrl') || '').trim();
     try {
+      if (pendingFile) {
+        document.getElementById('navio-img-uploading').style.display = 'block';
+        imageUrl = await uploadToCloudinary(pendingFile);
+        document.getElementById('navio-img-uploading').style.display = 'none';
+      }
+      const data = {
+        name:        String(fd.get('name') || '').trim(),
+        imageUrl,
+        description: String(fd.get('description') || '').trim(),
+        hp:          parseInt(fd.get('hp') || '0') || 0,
+        maxHp:       parseInt(fd.get('maxHp') || '0') || 0,
+        speed:       parseInt(fd.get('speed') || '0') || 0,
+        resistance:  parseInt(fd.get('resistance') || '0') || 0,
+      };
       await setDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'ship', 'main'), data, { merge: true });
       STATE.data.ship = { ...(STATE.data.ship || {}), ...data };
       renderNavio();
     } catch (err) {
       console.error('[ship save]', err);
+      document.getElementById('navio-img-uploading').style.display = 'none';
       btn.disabled = false; btn.textContent = '✘ Erro — tentar de novo';
     }
   });
@@ -2302,6 +2349,7 @@ function renderMeuPersonagem() {
   const sheet     = pc.sheet || {};
   const myUid     = STATE.user.uid;
   const heroTheme = CLASS_THEME[pc.charClass || ''] || '';
+  const classKey  = (pc.charClass || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, '');
   const otherPlayers = STATE.players.filter(p => p.role === 'player' && p.uid !== myUid);
 
   // ── Dados de navegação ──────────────────────────────────────────────────────
@@ -2382,7 +2430,7 @@ function renderMeuPersonagem() {
     </div>`;
 
   // ── Render shell ──────────────────────────────────────────────────────────
-  container.innerHTML = `<div class="my-char-container">
+  container.innerHTML = `<div class="my-char-container"${classKey ? ` data-char-class="${classKey}"` : ''} id="my-char-container">
     <div class="cs-top-bar">
       <div class="my-char-title">Meu Personagem</div>
       <button type="button" class="cs-edit-toggle-btn" id="cs-edit-toggle">✏ Editar Ficha</button>
@@ -2586,11 +2634,18 @@ function renderMeuPersonagem() {
   // ── Class theme live ──────────────────────────────────────────────────────
   document.getElementById('pc-class-select')?.addEventListener('change', function() {
     applyCharTheme(this.value);
-    const hero = document.getElementById('pc-hero');
-    if (!hero) return;
-    ['warrior','arcane','divine','nature','bard','rogue'].forEach(t => hero.classList.remove('pc-theme-'+t));
+    // Personalização visual da ficha por classe (acento, fontes, etc.)
+    const key = (this.value || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, '');
+    const cont = document.getElementById('my-char-container');
+    if (cont) { if (key) cont.setAttribute('data-char-class', key); else cont.removeAttribute('data-char-class'); }
+    const heroEdit = document.getElementById('pc-hero-edit');
+    const heroView = document.getElementById('pc-hero');
     const theme = CLASS_THEME[this.value] || '';
-    if (theme) hero.classList.add('pc-theme-'+theme);
+    [heroEdit, heroView].forEach(hero => {
+      if (!hero) return;
+      ['warrior','arcane','divine','nature','bard','rogue'].forEach(t => hero.classList.remove('pc-theme-'+t));
+      if (theme) hero.classList.add('pc-theme-'+theme);
+    });
   });
 
   // ── Add secret ────────────────────────────────────────────────────────────
@@ -3257,7 +3312,7 @@ function buildLocationModalContent(id) {
 
   return `
     ${buildVisibilitySection(l, 'locations')}
-    ${l.imageUrl ? `<div class="modal-location-img-wrap"><img class="modal-location-img" src="${l.imageUrl}" alt="${l.name}" onerror="this.parentElement.remove()"></div>` : ''}
+    ${l.imageUrl ? `<div class="modal-location-img-wrap"><img class="modal-location-img" src="${l.imageUrl}" alt="${l.name}" data-lightbox="${escHtml(l.imageUrl)}" title="Clique para ampliar" onerror="this.parentElement.remove()"></div>` : ''}
     <div class="modal-location-hero">
       <div class="modal-location-name">${l.name}</div>
       <div class="modal-location-subtitle">${l.subtitle || ''}</div>

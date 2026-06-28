@@ -3629,3 +3629,23 @@ body { background-image: radial-gradient(ellipse at 50% 0%, rgba(20,50,90,.35) 0
 .dice-pair-sep { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); font-family: var(--font-title); }
 .dice-pair-advantage    .dice-pair-die.kept { color: #7fd99a; border-color: #7fd99a; box-shadow: 0 0 18px rgba(127,217,154,.4); background: rgba(127,217,154,.08); }
 .dice-pair-disadvantage .dice-pair-die.kept { color: #e08a8a; border-color: #e08a8a; box-shadow: 0 0 18px rgba(224,138,138,.4); background: rgba(224,138,138,.08); }
+
+/* ── Upload de imagem no formulário do navio ── */
+.navio-img-edit { display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap; }
+.navio-img-preview {
+  width: 170px; height: 115px; border-radius: 10px; overflow: hidden;
+  background: #060f1a; border: 1px solid var(--border-accent);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.navio-img-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.navio-img-preview-ph { font-size: 12px; color: var(--text-muted); text-align: center; padding: 8px; }
+.navio-img-edit-actions { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 8px; }
+.navio-img-upload-btn {
+  display: inline-block; cursor: pointer; text-align: center;
+  background: rgba(207,172,110,.08); border: 1px solid rgba(207,172,110,.3);
+  color: var(--accent-gold); border-radius: 9px; padding: 9px 14px;
+  font-family: var(--font-title); font-size: 12px; letter-spacing: .5px;
+  transition: background .15s, border-color .15s;
+}
+.navio-img-upload-btn:hover { background: rgba(207,172,110,.16); border-color: var(--accent-gold); }
+.navio-img-uploading { font-size: 12px; color: var(--text-muted); font-style: italic; }

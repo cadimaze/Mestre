@@ -541,3 +541,26 @@
 .event-card {
   transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s ease, border-color .3s ease !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FICHA "MEU PERSONAGEM" — personalizada por classe (usa --class-accent)
+═══════════════════════════════════════════════════════════════════════════ */
+.my-char-container[data-char-class] .cs-char-name {
+  color: var(--class-accent, var(--accent-gold));
+  text-shadow: 0 0 26px color-mix(in srgb, var(--class-accent, var(--accent-gold)) 40%, transparent);
+}
+.my-char-container[data-char-class] .cs-hero {
+  border-color: color-mix(in srgb, var(--class-accent, var(--accent-gold)) 35%, transparent);
+}
+.my-char-container[data-char-class] .cs-vport-wrap {
+  border-color: color-mix(in srgb, var(--class-accent, var(--accent-gold)) 50%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--class-accent, var(--accent-gold)) 12%, transparent);
+}
+.my-char-container[data-char-class] .cs-sh-title {
+  color: color-mix(in srgb, var(--class-accent, var(--accent-gold)) 82%, white 10%);
+}
+.my-char-container[data-char-class] .cs-level-pill,
+.my-char-container[data-char-class] .cs-edit-toggle-btn {
+  border-color: color-mix(in srgb, var(--class-accent, var(--accent-gold)) 45%, transparent);
+  color: var(--class-accent, var(--accent-gold));
+}
