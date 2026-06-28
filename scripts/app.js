@@ -3601,6 +3601,7 @@ function buildFactionModalContent(id) {
 
   return `
     ${buildVisibilitySection(f, 'factions')}
+    ${f.imageUrl ? `<div class="modal-location-img-wrap"><img class="modal-location-img" src="${escHtml(f.imageUrl)}" alt="${escHtml(f.name)}" data-lightbox="${escHtml(f.imageUrl)}" title="Clique para ampliar" onerror="this.parentElement.remove()"></div>` : ''}
     <div class="modal-location-hero" style="border-left:3px solid ${f.color};">
       <div style="display:flex;gap:12px;align-items:center;">
         <span style="font-size:36px;">${f.symbol || '◆'}</span>
@@ -4606,6 +4607,10 @@ function buildEventEditFields(e = {}) {
 
 function buildFactionEditFields(f = {}) {
   const memberIds = f.members || [];
+  const imgSrc = f.imageUrl || '';
+  const imgPreview = imgSrc
+    ? `<img class="edit-img-preview" id="img-preview" src="${imgSrc}" alt="">`
+    : `<div class="edit-img-placeholder" id="img-preview">Sem imagem</div>`;
   return `
     <div class="edit-form-section-title">Dados Básicos</div>
     <div class="edit-row">
@@ -4618,6 +4623,20 @@ function buildFactionEditFields(f = {}) {
         <input class="edit-color-picker" type="color" name="colorPicker" value="${f.color || '#5a8ab0'}">
         <input class="edit-input" name="color" value="${f.color || '#5a8ab0'}" placeholder="#5a8ab0" style="flex:1">
       </div>`)}
+    </div>
+
+    <div class="edit-form-section-title">Imagem / Estandarte</div>
+    <div class="edit-field">
+      <label class="edit-label">Imagem da facção</label>
+      <div class="edit-img-wrap">
+        ${imgPreview}
+        <div class="edit-img-controls">
+          <input class="edit-file-input" type="file" id="img-file" accept="image/*">
+          <label class="edit-file-label" for="img-file">📁 Escolher do PC</label>
+          <div class="edit-img-separator">ou</div>
+          ${editField('Cole uma URL de imagem', editInput('imageUrl', f.imageUrl || '', 'https://i.imgur.com/...'))}
+        </div>
+      </div>
     </div>
 
     <div class="edit-form-section-title">Descrição</div>
@@ -5026,9 +5045,9 @@ function attachEditFormEvents(id, type) {
       // Inject secrets list — managed outside FormData for all entity types
       if (SECRETS_EDITOR_TYPES.includes(type) && type !== 'player') data.secretsList = charSecretsList;
 
-      // Upload de arquivo para Cloudinary (personagens, locais, documentos e itens)
+      // Upload de arquivo para Cloudinary (personagens, locais, facções, documentos e itens)
       const fileInput = document.getElementById('img-file');
-      if ((type === 'character' || type === 'location' || type === 'document' || type === 'item') && fileInput?.files[0]) {
+      if ((type === 'character' || type === 'location' || type === 'faction' || type === 'document' || type === 'item') && fileInput?.files[0]) {
         saveBtn.textContent = 'Enviando imagem...';
         data.imageUrl = await uploadToCloudinary(fileInput.files[0]);
       }
@@ -5170,6 +5189,8 @@ function buildDataFromForm(fd, type) {
     data.description = get('description').trim();
     // secretsList is injected from attachEditFormEvents
     data.members     = fd.getAll('members');
+    const facUrlVal = get('imageUrl').trim();
+    if (facUrlVal) data.imageUrl = facUrlVal;
   }
 
   if (type === 'document') {
