@@ -33,9 +33,11 @@ const STATE = {
   graphShowLabels: true,
   charFilters:     { name: '', faction: '', status: '', secretsOnly: false },
 
-  curiosities:     [],
-  curiosityIdx:    0,
-  curiosityTimer:  null,
+  curiosities:       [],   // lista ATIVA (o que aparece no card)
+  curiositiesPool:   [],   // pool completo (curiosities.json)
+  curiositiesConfig: null, // seleção do mestre { enabledTexts: [...] } | null
+  curiosityIdx:      0,
+  curiosityTimer:    null,
 };
 
 // ── D&D 5e CONSTANTS ─────────────────────────────────────────────────────────
@@ -324,6 +326,14 @@ async function setupFirestoreListeners() {
     if (STATE.activeTab === 'relacoes') renderGraph();
   });
   STATE.unsubscribers.push(unsubShip);
+
+  // Curadoria de curiosidades — mestre seleciona; todos leem.
+  const unsubCur = onSnapshot(doc(db, 'campaigns', CAMPAIGN_ID, 'curiosities', 'config'), snap => {
+    STATE.curiositiesConfig = snap.exists() ? snap.data() : null;
+    setupCuriosities();
+    if (STATE.activeTab === 'curiosidades') renderCuriosidadesAdmin();
+  }, err => console.error('[curiosities config]', err));
+  STATE.unsubscribers.push(unsubCur);
 }
 
 // ── VISIBILITY ────────────────────────────────────────────────────────────────
@@ -1148,6 +1158,7 @@ function switchTab(tab) {
   if (tab === 'roteiro')        renderRoteiro();
   if (tab === 'npcs')           renderNpcs();
   if (tab === 'navio')          renderNavio();
+  if (tab === 'curiosidades')   renderCuriosidadesAdmin();
 }
 
 // ── SECRETS TOGGLE ────────────────────────────────────────────────────────────
@@ -1207,23 +1218,39 @@ function renderPainel() {
   });
 }
 
-// ── CARD DE CURIOSIDADES (rotativo, sem spoilers) ──────────────────────────────
+// ── CARD DE CURIOSIDADES (rotativo, curado pelo Mestre) ────────────────────────
+// Carrega o pool completo de curiosities.json uma única vez por sessão.
+async function loadCuriositiesPool() {
+  if (STATE.curiositiesPool.length) return STATE.curiositiesPool;
+  try {
+    const list = await fetch('curiosities.json').then(r => r.json());
+    STATE.curiositiesPool = Array.isArray(list) ? list.filter(c => c && c.text) : [];
+  } catch (err) {
+    console.error('[curiosities]', err);
+    STATE.curiositiesPool = [];
+  }
+  return STATE.curiositiesPool;
+}
+
+// Lista ativa = pool filtrado pela seleção do mestre. Sem seleção → todas.
+function computeActiveCuriosities() {
+  const pool = STATE.curiositiesPool || [];
+  const cfg  = STATE.curiositiesConfig;
+  if (cfg && Array.isArray(cfg.enabledTexts)) {
+    const set = new Set(cfg.enabledTexts);
+    return pool.filter(c => set.has(c.text));
+  }
+  return pool;
+}
+
 async function setupCuriosities() {
   const card = document.getElementById('curiosity-card');
   if (!card) return;
 
-  // Carrega uma única vez por sessão
-  if (!STATE.curiosities.length) {
-    try {
-      const list = await fetch('curiosities.json').then(r => r.json());
-      STATE.curiosities = Array.isArray(list) ? list.filter(c => c && c.text) : [];
-    } catch (err) {
-      console.error('[curiosities]', err);
-      STATE.curiosities = [];
-    }
-  }
+  await loadCuriositiesPool();
+  STATE.curiosities = computeActiveCuriosities();
 
-  if (!STATE.curiosities.length) { card.style.display = 'none'; return; }
+  if (!STATE.curiosities.length) { stopCuriosityRotation(); card.style.display = 'none'; return; }
   card.style.display = '';
 
   // Começa num ponto pseudo-aleatório para não repetir sempre a mesma abertura
@@ -1266,6 +1293,85 @@ function startCuriosityRotation() {
 
 function stopCuriosityRotation() {
   if (STATE.curiosityTimer) { clearInterval(STATE.curiosityTimer); STATE.curiosityTimer = null; }
+}
+
+// ── ADMIN DE CURIOSIDADES (somente Mestre) ─────────────────────────────────────
+async function renderCuriosidadesAdmin() {
+  if (!STATE.isMaster) return;
+  const container = document.getElementById('curiosidades-admin');
+  if (!container) return;
+
+  await loadCuriositiesPool();
+  const pool = STATE.curiositiesPool;
+  if (!pool.length) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">🪶</div><p>Nenhuma curiosidade no acervo (curiosities.json).</p></div>`;
+    return;
+  }
+
+  // Estado atual de seleção: se há config, usa enabledTexts; senão, todas marcadas.
+  const cfg = STATE.curiositiesConfig;
+  const enabledSet = (cfg && Array.isArray(cfg.enabledTexts)) ? new Set(cfg.enabledTexts) : null;
+  const isOn = c => enabledSet ? enabledSet.has(c.text) : true;
+  const activeCount = pool.filter(isOn).length;
+
+  container.innerHTML = `
+    <div class="cur-admin-head">
+      <p class="cur-admin-desc">Marque quais curiosidades aparecem para os jogadores no painel inicial. As desmarcadas ficam ocultas.</p>
+      <div class="cur-admin-toolbar">
+        <span class="cur-admin-count"><strong id="cur-count">${activeCount}</strong> de ${pool.length} ativas</span>
+        <button type="button" class="cur-admin-btn" id="cur-all">Marcar todas</button>
+        <button type="button" class="cur-admin-btn" id="cur-none">Desmarcar todas</button>
+        <button type="button" class="cur-admin-save" id="cur-save">Salvar seleção</button>
+      </div>
+    </div>
+    <div class="cur-admin-list" id="cur-admin-list">
+      ${pool.map((c, i) => `
+        <label class="cur-admin-item${isOn(c) ? ' on' : ''}" data-i="${i}">
+          <input type="checkbox" class="cur-admin-check" data-i="${i}" ${isOn(c) ? 'checked' : ''}>
+          <span class="cur-admin-icon">${c.icon || '⚓'}</span>
+          <span class="cur-admin-text">${escHtml(c.text)}</span>
+        </label>`).join('')}
+    </div>
+    <div class="cur-admin-saved" id="cur-saved"></div>`;
+
+  const listEl  = document.getElementById('cur-admin-list');
+  const countEl = document.getElementById('cur-count');
+  const updateCount = () => {
+    const n = listEl.querySelectorAll('.cur-admin-check:checked').length;
+    countEl.textContent = n;
+  };
+
+  listEl.querySelectorAll('.cur-admin-check').forEach(chk => {
+    chk.addEventListener('change', () => {
+      chk.closest('.cur-admin-item').classList.toggle('on', chk.checked);
+      updateCount();
+    });
+  });
+  document.getElementById('cur-all').addEventListener('click', () => {
+    listEl.querySelectorAll('.cur-admin-check').forEach(chk => { chk.checked = true; chk.closest('.cur-admin-item').classList.add('on'); });
+    updateCount();
+  });
+  document.getElementById('cur-none').addEventListener('click', () => {
+    listEl.querySelectorAll('.cur-admin-check').forEach(chk => { chk.checked = false; chk.closest('.cur-admin-item').classList.remove('on'); });
+    updateCount();
+  });
+
+  document.getElementById('cur-save').addEventListener('click', async function() {
+    const enabledTexts = [...listEl.querySelectorAll('.cur-admin-check:checked')]
+      .map(chk => pool[+chk.dataset.i]?.text).filter(Boolean);
+    this.disabled = true; this.textContent = 'Salvando...';
+    try {
+      await setDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'curiosities', 'config'), { enabledTexts }, { merge: true });
+      const msg = document.getElementById('cur-saved');
+      msg.textContent = '✓ Seleção salva! Os jogadores já veem a versão atualizada.';
+      setTimeout(() => { msg.textContent = ''; }, 4000);
+    } catch (err) {
+      console.error('[curiosities save]', err);
+      document.getElementById('cur-saved').textContent = '✘ Erro ao salvar. Tente novamente.';
+    } finally {
+      this.disabled = false; this.textContent = 'Salvar seleção';
+    }
+  });
 }
 
 function getEntityName(id, type) {

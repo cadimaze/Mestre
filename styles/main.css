@@ -3758,3 +3758,46 @@ body { background-image: radial-gradient(ellipse at 50% 0%, rgba(20,50,90,.35) 0
   .navio-crew-add #crew-add-select,
   .navio-crew-add #crew-add-role { flex: 1 1 100%; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ADMIN DE CURIOSIDADES (aba do mestre)
+═══════════════════════════════════════════════════════════════════════════ */
+.cur-admin-head { margin-bottom: 18px; }
+.cur-admin-desc { font-family: var(--font-flavor); font-style: italic; color: var(--text-secondary); font-size: 14px; margin-bottom: 14px; }
+.cur-admin-toolbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.cur-admin-count { font-family: var(--font-title); font-size: 12px; color: var(--text-muted); margin-right: auto; }
+.cur-admin-count strong { color: var(--accent-gold); font-size: 15px; }
+.cur-admin-btn {
+  background: rgba(255,255,255,.03); border: 1px solid var(--border-accent);
+  color: var(--text-secondary); border-radius: 8px; padding: 8px 14px;
+  font-family: var(--font-title); font-size: 11px; letter-spacing: .5px; cursor: pointer;
+  transition: all .15s;
+}
+.cur-admin-btn:hover { border-color: var(--accent-gold-dim); color: var(--text-primary); }
+.cur-admin-save {
+  background: linear-gradient(135deg, rgba(207,172,110,.2), rgba(207,172,110,.1));
+  border: 1px solid rgba(207,172,110,.4); color: var(--accent-gold);
+  border-radius: 8px; padding: 8px 18px;
+  font-family: var(--font-title); font-size: 12px; letter-spacing: .5px; cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.cur-admin-save:hover { background: linear-gradient(135deg, rgba(207,172,110,.3), rgba(207,172,110,.18)); border-color: var(--accent-gold); }
+.cur-admin-save:disabled { opacity: .6; cursor: not-allowed; }
+
+.cur-admin-list { display: flex; flex-direction: column; gap: 8px; }
+.cur-admin-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: linear-gradient(160deg, var(--bg-card), rgba(7,19,34,.94));
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--border-accent);
+  border-radius: 10px; padding: 12px 16px; cursor: pointer;
+  transition: border-color .18s, background .18s, opacity .18s;
+  opacity: .5;
+}
+.cur-admin-item.on { opacity: 1; border-left-color: var(--accent-gold); }
+.cur-admin-item:hover { background: var(--bg-card-hover); }
+.cur-admin-check { margin-top: 3px; width: 17px; height: 17px; flex-shrink: 0; cursor: pointer; accent-color: var(--accent-gold); }
+.cur-admin-icon { font-size: 20px; line-height: 1.3; flex-shrink: 0; }
+.cur-admin-text { font-family: var(--font-flavor); font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
+.cur-admin-item.on .cur-admin-text { color: var(--text-primary); }
+.cur-admin-saved { margin-top: 14px; font-family: var(--font-title); font-size: 13px; color: var(--accent-green); min-height: 18px; }

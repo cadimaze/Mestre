@@ -82,6 +82,12 @@ service cloud.firestore {
         allow read, write: if isMaster();
       }
 
+      // Curadoria de curiosidades do painel — todos leem; só o mestre edita
+      match /curiosities/{id} {
+        allow read:  if isAuth();
+        allow write: if isMaster();
+      }
+
       // Navio do grupo — visibilidade controlada pelo mestre; só o mestre edita.
       // Sem o campo visibility (legado) → liberado para todos os autenticados.
       match /ship/{id} {
