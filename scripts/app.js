@@ -4168,6 +4168,13 @@ function editInput(name, value = '', placeholder = '') {
   return `<input class="edit-input" name="${name}" value="${escHtml(value)}" placeholder="${placeholder}">`;
 }
 
+function editSelect(name, value = '', options = [], placeholder = 'Selecione...') {
+  const opts = [`<option value="">${placeholder}</option>`]
+    .concat(options.map(o => `<option value="${escHtml(o)}"${o === value ? ' selected' : ''}>${escHtml(o)}</option>`))
+    .join('');
+  return `<select class="edit-input edit-select" name="${name}">${opts}</select>`;
+}
+
 function editTextarea(name, value = '', placeholder = '', rows = 3) {
   return `<textarea class="edit-textarea" name="${name}" placeholder="${placeholder}" rows="${rows}">${escHtml(value)}</textarea>`;
 }
@@ -4445,7 +4452,7 @@ function buildPlayerEditFields(p = {}) {
       ${editField('Raça', editInput('pcRace', pc.race, 'Ex: Humano, Elfo...'))}
     </div>
     <div class="edit-row">
-      ${editField('Classe', editInput('pcClass', pc.charClass, 'Ex: Guerreiro, Mago...'))}
+      ${editField('Classe', editSelect('pcClass', pc.charClass, DND_CLASSES, 'Selecione a classe...'))}
       ${editField('Antecedente', editInput('pcBackground', pc.background, 'Ex: Soldado, Sábio...'))}
     </div>
     ${editField('Aparência', editTextarea('pcAppearance', pc.appearance, 'Como o personagem parece...', 3))}
