@@ -1588,6 +1588,7 @@ function renderFactions() {
     }).join('');
     return `<div class="faction-card" data-id="${f.id}" style="position:relative;">
       <div class="faction-card-accent" style="background:linear-gradient(to right,${f.color},${f.color}66,transparent)"></div>
+      ${f.imageUrl ? `<img class="faction-card-img" src="${escHtml(f.imageUrl)}" alt="${escHtml(f.name)}" onerror="this.remove()">` : ''}
       <div class="faction-card-body">
         <div class="faction-header">
           <div class="faction-symbol-wrap" style="background:${f.color}18;border:1px solid ${f.color}33;">
