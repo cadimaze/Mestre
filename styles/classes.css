@@ -468,6 +468,44 @@
 .jogador-card[data-char-class="ranger"] { --class-color: #2ecc71; }
 
 /* ══════════════════════════════════════════════════════════════════════════
+   ARTÍFICE — Bronze-Blueprint / Engenharia arcana
+   Engrenagens, esquemáticos, invenção
+══════════════════════════════════════════════════════════════════════════ */
+[data-char-class="artifice"] { --class-accent: #4aa6b8; }
+
+[data-char-class="artifice"] .modal-char-hero {
+  background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 320'><g fill='none' stroke='%234aa6b8' stroke-opacity='.18'><circle cx='680' cy='150' r='62' stroke-width='1.4'/><circle cx='680' cy='150' r='42' stroke-width='1'/><circle cx='680' cy='150' r='10' stroke-width='1.2'/><g stroke-width='2.4'><line x1='680' y1='78' x2='680' y2='96'/><line x1='680' y1='204' x2='680' y2='222'/><line x1='608' y1='150' x2='626' y2='150'/><line x1='734' y1='150' x2='752' y2='150'/><line x1='629' y1='99' x2='642' y2='112'/><line x1='718' y1='188' x2='731' y2='201'/><line x1='629' y1='201' x2='642' y2='188'/><line x1='718' y1='112' x2='731' y2='99'/></g><circle cx='560' cy='235' r='30' stroke-width='1'/><circle cx='560' cy='235' r='6' stroke-width='1'/><line x1='560' y1='205' x2='560' y2='195'/><line x1='560' y1='265' x2='560' y2='275'/></g><g stroke='%234aa6b8' stroke-opacity='.1' stroke-width='.7'><line x1='40' y1='40' x2='240' y2='40'/><line x1='40' y1='40' x2='40' y2='150'/><line x1='40' y1='95' x2='200' y2='95'/><circle cx='200' cy='95' r='5' fill='%234aa6b8' fill-opacity='.25'/></g></svg>") right center / 800px 100% no-repeat,
+    radial-gradient(ellipse 55% 100% at 0% 50%, rgba(2,14,16,.96) 0%, rgba(2,10,12,.72) 60%, transparent 100%),
+    linear-gradient(130deg, #04161a 0%, #02100f 60%, #051a1d 100%);
+}
+
+[data-char-class="artifice"] .modal-char-name {
+  font-family: 'Metamorphous', Georgia, serif;
+  font-size: 25px;
+  color: #79cdd9;
+  letter-spacing: 1.5px;
+  text-shadow:
+    0 1px 0 rgba(160,230,240,.2),
+    0 -1px 0 rgba(0,0,0,.9),
+    0 0 16px rgba(74,166,184,.6),
+    0 0 40px rgba(74,166,184,.3),
+    0 0 80px rgba(74,166,184,.15);
+}
+[data-char-class="artifice"] .modal-char-avatar {
+  border-color: rgba(74,166,184,.5);
+  box-shadow: 0 0 0 4px rgba(74,166,184,.1), 0 0 0 8px rgba(74,166,184,.05), 0 8px 28px rgba(0,0,0,.7), 0 0 20px rgba(74,166,184,.15);
+}
+[data-char-class="artifice"].modal-panel.open { animation: modalEnterAssemble .42s cubic-bezier(.22,1,.36,1); }
+@keyframes modalEnterAssemble {
+  0%   { transform: translate(-50%, -50%) scale(.9) rotate(-3deg); opacity: 0; filter: brightness(1.4); }
+  55%  { transform: translate(-50%, -50%) scale(1.015) rotate(1deg); opacity: 1; filter: brightness(1.1); }
+  78%  { transform: translate(-50%, -50%) scale(.995) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; filter: brightness(1); }
+}
+.jogador-card[data-char-class="artifice"] { --class-color: #4aa6b8; }
+
+/* ══════════════════════════════════════════════════════════════════════════
    GLOW DE CLASSE — Jogador cards com borda no acento da classe
 ══════════════════════════════════════════════════════════════════════════ */
 .jogador-card:hover {
