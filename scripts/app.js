@@ -80,7 +80,7 @@ const DND_SKILLS = [
 const NAV_DICE = [
   { id:'combat',   name:'Combate Naval',      icon:'⚔️', variant:'combat',   color:'#c94040', hint:'Canhões, abordagens e fúria de batalha' },
   { id:'piloting', name:'Pilotagem do Navio', icon:'🧭', variant:'piloting', color:'#5a8ab0', hint:'Manobras, rumo e leitura das marés' },
-  { id:'tuning',   name:'Ajustes do Barco',   icon:'⚙️', variant:'tuning',   color:'#cfac6e', hint:'Calibragem de velas, leme e cordame' },
+  { id:'tuning',   name:'Ações do Navio',     icon:'⚙️', variant:'tuning',   color:'#cfac6e', hint:'Manobras e ações especiais da tripulação' },
   { id:'repair',   name:'Conserto do Navio',  icon:'🛠️', variant:'repair',   color:'#4aa3a3', hint:'Reparos de casco e remendos no mar' },
 ];
 const NAV_BY_ID = Object.fromEntries(NAV_DICE.map(d => [d.id, d]));
@@ -345,7 +345,7 @@ async function sendRevealNotifications(targetUids, entityType, entityId, entityN
 }
 
 // ── DICE ROLLER ───────────────────────────────────────────────────────────────
-function showDiceToast({ label, sides, roll, modifier, total, details, variant, icon }) {
+function showDiceToast({ label, sides, roll, modifier, total, details, variant, icon, rollPair }) {
   let overlay = document.getElementById('dice-overlay');
   if (!overlay) {
     overlay = document.createElement('div');
@@ -398,6 +398,11 @@ function showDiceToast({ label, sides, roll, modifier, total, details, variant, 
         <button class="dice-close" onclick="document.getElementById('dice-overlay').classList.remove('open')">✕</button>
         <div class="dice-label">${escHtml(label)}</div>
         <div class="dice-die">d${sides}</div>
+        ${rollPair ? `<div class="dice-pair dice-pair-${rollPair.mode}">
+          <span class="dice-pair-die${rollPair.a === rollPair.kept ? ' kept' : ' dropped'}">${rollPair.a}</span>
+          <span class="dice-pair-sep">${rollPair.mode === 'advantage' ? '⬆ maior' : '⬇ menor'}</span>
+          <span class="dice-pair-die${rollPair.b === rollPair.kept ? ' kept' : ' dropped'}">${rollPair.b}</span>
+        </div>` : ''}
         <div class="dice-value">${roll}</div>
         ${modifier !== 0 ? `<div class="dice-equation">${roll} ${modStr}</div>` : ''}
         <div class="dice-total-wrap">
@@ -439,24 +444,55 @@ function profStateNorm(state) {
 
 // Rola um dado de navegação: d20 + modificador fixo, com animação por variante.
 // prefix opcional (ex.: nome do jogador, para a visão do mestre).
-function rollNavDie(dieId, modifier, prefix = '') {
+// mode: 'normal' | 'advantage' (dois dados, pega o maior) | 'disadvantage' (menor).
+function rollNavDie(dieId, modifier, prefix = '', mode = 'normal') {
   const die = NAV_BY_ID[dieId];
   if (!die) return;
-  const mod   = Number(modifier) || 0;
-  const roll  = Math.floor(Math.random() * 20) + 1;
+  const mod = Number(modifier) || 0;
+  const d20 = () => Math.floor(Math.random() * 20) + 1;
+
+  let roll, rollPair = null, modeLabel = '';
+  if (mode === 'advantage' || mode === 'disadvantage') {
+    const a = d20(), b = d20();
+    roll = mode === 'advantage' ? Math.max(a, b) : Math.min(a, b);
+    modeLabel = mode === 'advantage' ? 'Vantagem' : 'Desvantagem';
+    rollPair = { a, b, kept: roll, mode };
+  } else {
+    roll = d20();
+  }
   const total = roll + mod;
+  const label = (prefix ? `${prefix} — ` : '') + die.name + (modeLabel ? ` · ${modeLabel}` : '');
+
   showDiceToast({
-    label: prefix ? `${prefix} — ${die.name}` : die.name,
-    sides: 20, roll, modifier: mod, total,
-    variant: die.variant, icon: die.icon,
+    label, sides: 20, roll, modifier: mod, total,
+    variant: die.variant, icon: die.icon, rollPair,
     details: [
-      { label: 'Rolagem (d20)', value: roll },
+      rollPair
+        ? { label: `Dados (${modeLabel})`, value: `${rollPair.a} e ${rollPair.b} → fica ${rollPair.kept}` }
+        : { label: 'Rolagem (d20)', value: roll },
       { label: 'Modificador', value: (mod >= 0 ? '+' : '') + mod },
       { label: 'Total', value: total },
     ]
   });
 }
 window.rollNavDie = rollNavDie;
+
+// Delegação global: qualquer botão [data-nav-roll] rola o dado de navegação.
+// Funciona em qualquer lugar (ficha do jogador, modal do mestre) sem re-wiring.
+function setupNavRollDelegation() {
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-nav-roll]');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    rollNavDie(
+      btn.dataset.navRoll,
+      Number(btn.dataset.navMod) || 0,
+      btn.dataset.navPrefix || '',
+      btn.dataset.navMode || 'normal'
+    );
+  });
+}
 
 let _notifQueue  = [];
 let _notifActive = false;
@@ -2325,14 +2361,18 @@ function renderMeuPersonagem() {
         </div>
       </div>
       <div class="cs-nav-section">
-        <div class="cs-sh-title">🎲 Dados de Navegação — clique para rolar (d20 + modificador)</div>
+        <div class="cs-sh-title">🎲 Dados de Navegação — d20 + modificador (⬆ vantagem · ⬇ desvantagem)</div>
         <div class="cs-nav-grid">
-          ${NAV_DICE.map(d => `<div class="cs-nav-card nav-variant-${d.variant}" data-nav="${d.id}" title="Rolar ${d.name} — d20 ${navModStr(d.id)}">
+          ${NAV_DICE.map(d => `<div class="cs-nav-card nav-variant-${d.variant}">
             <div class="cs-nav-icon">${d.icon}</div>
             <div class="cs-nav-name">${d.name}</div>
             <div class="cs-nav-mod">${navModStr(d.id)}</div>
             <div class="cs-nav-hint">${d.hint}</div>
-            <div class="cs-nav-roll-tag">d20 ${navModStr(d.id)} ⟶ rolar</div>
+            <div class="cs-nav-actions">
+              <button type="button" class="cs-nav-btn cs-nav-btn-main" data-nav-roll="${d.id}" data-nav-mod="${navMod(d.id)}" data-nav-mode="normal">🎲 d20 ${navModStr(d.id)}</button>
+              <button type="button" class="cs-nav-btn cs-nav-btn-adv" data-nav-roll="${d.id}" data-nav-mod="${navMod(d.id)}" data-nav-mode="advantage" title="Vantagem — 2d20, pega o maior">⬆</button>
+              <button type="button" class="cs-nav-btn cs-nav-btn-dis" data-nav-roll="${d.id}" data-nav-mod="${navMod(d.id)}" data-nav-mode="disadvantage" title="Desvantagem — 2d20, pega o menor">⬇</button>
+            </div>
           </div>`).join('')}
         </div>
       </div>
@@ -2623,10 +2663,7 @@ function renderMeuPersonagem() {
   // ── View mode portrait zoom ───────────────────────────────────────────────
   document.getElementById('cs-portrait-view')?.addEventListener('click', () => openLightbox(pendingImageUrl));
 
-  // ── View mode: rolar dados de navegação ───────────────────────────────────
-  container.querySelectorAll('.cs-nav-card').forEach(card => {
-    card.addEventListener('click', () => rollNavDie(card.dataset.nav, navMod(card.dataset.nav)));
-  });
+  // Rolagem dos dados de navegação é tratada por delegação global (setupNavRollDelegation)
 
   // ── Load other players (async, non-blocking) ──────────────────────────────
   buildAllPlayersCharHtml().then(html => {
@@ -3353,16 +3390,20 @@ function buildPlayerModalContent(uid) {
   const canRollNav = STATE.isMaster || uid === STATE.user.uid;
   const navSheetHtml = canRollNav ? `
       <div class="modal-section pms-section">
-        <div class="modal-section-title">🎲 Dados de Navegação — clique para rolar</div>
+        <div class="modal-section-title">🎲 Dados de Navegação — d20 (⬆ vantagem · ⬇ desvantagem)</div>
         <div class="pms-nav-grid">
           ${NAV_DICE.map(d => {
             const m = Number(nav[d.id]) || 0;
             const ms = (m >= 0 ? '+' : '') + m;
-            return `<div class="pms-nav-card nav-variant-${d.variant}" onclick="window.rollNavDie('${d.id}',${m},'${escHtml(name)}')" title="Rolar ${d.name} — d20 ${ms}">
+            return `<div class="pms-nav-card nav-variant-${d.variant}">
               <span class="pms-nav-icon">${d.icon}</span>
               <span class="pms-nav-name">${d.name}</span>
               <span class="pms-nav-mod">${ms}</span>
-              <span class="pms-nav-tag">d20</span>
+              <div class="pms-nav-actions">
+                <button type="button" class="cs-nav-btn cs-nav-btn-main" data-nav-roll="${d.id}" data-nav-mod="${m}" data-nav-prefix="${escHtml(name)}" data-nav-mode="normal" title="Rolar d20 ${ms}">🎲 d20</button>
+                <button type="button" class="cs-nav-btn cs-nav-btn-adv" data-nav-roll="${d.id}" data-nav-mod="${m}" data-nav-prefix="${escHtml(name)}" data-nav-mode="advantage" title="Vantagem — 2d20, pega o maior">⬆</button>
+                <button type="button" class="cs-nav-btn cs-nav-btn-dis" data-nav-roll="${d.id}" data-nav-mod="${m}" data-nav-prefix="${escHtml(name)}" data-nav-mode="disadvantage" title="Desvantagem — 2d20, pega o menor">⬇</button>
+              </div>
             </div>`;
           }).join('')}
         </div>
@@ -5036,6 +5077,7 @@ async function init() {
   if (secretsBtn) secretsBtn.addEventListener('click', toggleSecrets);
 
   setupSearch();
+  setupNavRollDelegation();
 
   // Firebase auth state listener
   onAuthStateChanged(auth, user => {

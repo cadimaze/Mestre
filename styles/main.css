@@ -3583,3 +3583,49 @@ body { background-image: radial-gradient(ellipse at 50% 0%, rgba(20,50,90,.35) 0
   .navio-form-row { grid-template-columns: repeat(2, 1fr); }
   .pev-nav-grid { grid-template-columns: 1fr; }
 }
+
+/* ── Botões de rolagem: normal / vantagem / desvantagem ── */
+.cs-nav-actions { display: flex; gap: 6px; margin-top: 12px; }
+.cs-nav-btn {
+  font-family: var(--font-title);
+  border: 1px solid color-mix(in srgb, var(--nav-c, var(--accent-gold)) 35%, transparent);
+  background: color-mix(in srgb, var(--nav-c, var(--accent-gold)) 8%, transparent);
+  color: color-mix(in srgb, var(--nav-c, var(--accent-gold)) 85%, white 8%);
+  border-radius: 9px; cursor: pointer;
+  padding: 8px 10px; font-size: 11px; letter-spacing: .5px; line-height: 1;
+  transition: background .15s, border-color .15s, transform .1s;
+}
+.cs-nav-btn-main { flex: 1; }
+.cs-nav-btn-adv, .cs-nav-btn-dis { width: 40px; font-size: 15px; padding: 8px 0; flex-shrink: 0; }
+.cs-nav-btn:hover {
+  background: color-mix(in srgb, var(--nav-c, var(--accent-gold)) 22%, transparent);
+  border-color: var(--nav-c, var(--accent-gold));
+  transform: translateY(-1px);
+}
+.cs-nav-btn:active { transform: translateY(0) scale(.97); }
+.cs-nav-btn-adv { color: #7fd99a; border-color: rgba(127,217,154,.4); background: rgba(127,217,154,.08); }
+.cs-nav-btn-adv:hover { background: rgba(127,217,154,.22); border-color: #7fd99a; }
+.cs-nav-btn-dis { color: #e08a8a; border-color: rgba(224,138,138,.4); background: rgba(224,138,138,.08); }
+.cs-nav-btn-dis:hover { background: rgba(224,138,138,.22); border-color: #e08a8a; }
+
+.pms-nav-actions { display: flex; gap: 5px; margin-top: 8px; width: 100%; }
+.pms-nav-actions .cs-nav-btn-main { font-size: 10px; padding: 6px 4px; }
+.pms-nav-actions .cs-nav-btn-adv,
+.pms-nav-actions .cs-nav-btn-dis { width: 30px; padding: 6px 0; font-size: 13px; }
+
+/* ── Par de dados (vantagem/desvantagem) no toast ── */
+.dice-pair { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 8px 0 2px; }
+.dice-pair-die {
+  font-family: var(--font-title); font-size: 26px;
+  width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 10px; border: 1px solid var(--border-accent);
+}
+.dice-pair-die.kept {
+  color: var(--accent-gold); border-color: var(--accent-gold);
+  box-shadow: 0 0 18px rgba(207,172,110,.4); background: rgba(207,172,110,.08);
+}
+.dice-pair-die.dropped { color: var(--text-muted); opacity: .5; text-decoration: line-through; }
+.dice-pair-sep { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); font-family: var(--font-title); }
+.dice-pair-advantage    .dice-pair-die.kept { color: #7fd99a; border-color: #7fd99a; box-shadow: 0 0 18px rgba(127,217,154,.4); background: rgba(127,217,154,.08); }
+.dice-pair-disadvantage .dice-pair-die.kept { color: #e08a8a; border-color: #e08a8a; box-shadow: 0 0 18px rgba(224,138,138,.4); background: rgba(224,138,138,.08); }
