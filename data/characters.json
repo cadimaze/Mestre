@@ -867,5 +867,45 @@
       }
     ],
     "id": "vaelindra-cass"
+  },
+  {
+    "id": "thorne-mare",
+    "name": "Thorne Maré",
+    "role": "Mestre carpinteiro naval de Aethon",
+    "status": "Vivo",
+    "faction": "",
+    "imageUrl": "",
+    "description": "O melhor carpinteiro naval de Aethon — e, segundo muitos, das sete ilhas ao redor. Trabalha nos estaleiros da Costa Norte desde antes de saber ler mapas, com mãos que conhecem a madeira melhor do que conhecem palavras. Os barcos que saem de suas mãos parecem querer flutuar: absorvem tempestades que destroçariam outro casco e resistem ao sal com uma obstinação que alguns marinheiros juram ser magia. Não é magia — é uma vida inteira de ofício passado em silêncio, de pai para filho.\n\nHoje os estaleiros produzem para A Corrente, em cotas que ninguém negociou e ninguém pode recusar. Thorne ainda é o melhor, e por isso A Corrente nunca o tirou de lá. Trabalha. Fala o necessário. E não comenta sobre o rapaz que sumiu num de seus barcos há oito anos.\n\nÉ pai de Cid. O casco da Brisa Vermilha — o barco que o filho roubou ao fugir — saiu das mãos de Thorne; a vela vermelha bordada era da mãe. Oito anos de consertos tornaram o barco outra coisa. A alma, não.",
+    "personality": "Calado, preciso, econômico em tudo — em palavras, em gestos, em afeto demonstrado. Não fala mais do que o necessário, e quase nunca fala de si. Não é frieza: é um homem que aprendeu que algumas dores se carregam melhor sem nome. Respeita quem trabalha bem e desconfia de quem fala demais. Quando o assunto chega perto de Cid, ele muda de assunto com a naturalidade de quem já fez isso mil vezes.",
+    "secretsList": [
+      {
+        "id": "thorne-s1",
+        "text": "Camada 1 — Ele não fala de Cid de propósito: Thorne não esqueceu o filho. Cala-se sobre ele porque não quer que a pergunta seja feita — qualquer pergunta. Quem insistir vai encontrar uma parede educada e intransponível. Quem ganhar sua confiança, com tempo e trabalho, pode encontrar um homem que ainda guarda as ferramentas do filho exatamente onde ele as deixou.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      },
+      {
+        "id": "thorne-s2",
+        "text": "Camada 2 — Liris foi levada: dois meses depois da fuga de Cid, A Corrente registrou a esposa de Thorne, Liris Maré, como 'voluntariamente realocada' para as oficinas do Ancoradouro de Latão, onde suas habilidades de tecedora de velas seriam 'mais bem aproveitadas' na produção de velas militares. Ela está lá até hoje, costurando velas de Velmarch. Thorne não tentou ir atrás. Ou não pôde. Os padrões de vela de Liris ainda decoram janelas de outras casas de Aethon.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      },
+      {
+        "id": "thorne-s3",
+        "text": "Camada 3 — O nome de Cid ainda está nos arquivos: 'Cid Maré, navegador de Aethon' consta nos registros portuários do Domínio como 'desertado de recrutamento obrigatório'. A recompensa é pequena demais para que alguém vá atrás — mas os registros d'A Corrente não somem por esquecimento. Qualquer oficial que conecte 'Cid' a 'Aethon' pode confirmar tudo nos arquivos em poucas horas. Thorne sabe que o nome do filho continua ali, esperando.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      }
+    ],
+    "visibility": {
+      "mode": "all",
+      "playerIds": []
+    }
   }
 ]
