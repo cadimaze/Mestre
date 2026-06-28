@@ -1632,6 +1632,14 @@ function renderRoteiro() {
       <div class="roteiro-nota">📌 O mestre sabe: a ajuda de Cade é real, mas calculada. Ele reporta ao pai (indiretamente) o que os jogadores fazem. A traição, quando vier, não será maldade — será desespero de aprovação. Por enquanto, ele é o aliado improvável demais para ser verdade. Aparições sugeridas: Kaldera → portos de passagem → Marvosa → Kesvar/Ondra → Velmyr (onde facilita o acesso ao palácio, antecedendo a traição).</div>
     </div>`;
 
+  const mareNegraBox = `
+    <div class="roteiro-recorrente">
+      <div class="roteiro-recorrente-titulo">🏴‍☠️ Ameaça Recorrente — A Maré Negra e Gangplank</div>
+      <p>A frota mais temida de Pelágos cruza as rotas dos jogadores muito antes de eles entenderem com quem estão lidando. Dez a doze navios sob comando de Gangplank, controlando rotas com precisão territorial. Em portos, ninguém diz o nome em voz alta.</p>
+      <div class="roteiro-nota">📌 Os momentos, em ordem: <strong>(1) Primeiro vislumbre</strong> — em mar aberto, velas negras no horizonte cortam a rota do grupo. Não é ataque, é cobrança: aquelas águas têm dono. Quem paga, navega; quem foge, vira história. Os jogadores ainda não sabem que é a Maré Negra. <strong>(2) Gangplank</strong> — lá na frente, navegando fundo demais sem se apresentar, o grupo é levado à presença do próprio Gangplank, a bordo do <em>Dead Pool</em>. Ele não grita. Avalia. Não ajuda por simpatia — só pelo que os jogadores valem para ele agora. Quem reconhece a hierarquia e se apresenta direito, ele ouve. Quem não, vira destroço.</div>
+      <div class="roteiro-nota">📌 O mestre sabe: a Maré Negra executa serviços secretos para Aldric XIV — relação puramente financeira, sem lealdade. Isso pode (ou não) colocar Gangplank no caminho dos jogadores perto de Velmyr.</div>
+    </div>`;
+
   const arcos = [
     {
       id: 'arco1', num: '1', titulo: 'Kaldera: O Início', ilha: 'Kaldera',
@@ -1679,6 +1687,11 @@ function renderRoteiro() {
         {
           titulo: 'A Primeira Decisão',
           texto: 'Ganchos: Aethon (equipamento, história de Cid), Kesvar ("se os documentos existem fora de Velmyr, é lá — e há algo guardado lá que ninguém consegue chegar"), Mosteiro ("há registros antigos, mas algo impede quem tenta chegar"), Ondra (rumores de uma anciã que sabe coisas que não cabem numa vida só), Marvosa (quando descobrirem que estão sendo culpados pela morte de Tulo).'
+        },
+        {
+          titulo: 'Sombras no Horizonte — A Maré Negra',
+          texto: 'No mar aberto, velas negras cortam a rota do grupo. Um navio destaca-se da frota e se aproxima — não para abordar, mas para cobrar. A mensagem é simples: estas águas têm dono, e nenhuma rota é usada sem permissão. Quem paga, passa. Quem não paga, vira aviso para os próximos.',
+          nota: 'Primeira aparição da Maré Negra (a frota de Gangplank). Os jogadores ainda não sabem o nome. É um momento de tensão e leitura de hierarquia, não necessariamente combate — fugir, pagar o "pedágio" ou negociar são todas opções válidas. Como reagirem aqui ecoa quando encontrarem Gangplank em pessoa.'
         }
       ],
       documentos: []
@@ -1802,6 +1815,23 @@ function renderRoteiro() {
       documentos: []
     },
     {
+      id: 'arco7b', num: '7B', titulo: 'Os Mares de Gangplank', ilha: 'Mar Aberto — território da Maré Negra',
+      objetivo: 'O encontro com Gangplank em pessoa, a bordo do Dead Pool — rota quase inevitável a caminho de Velmyr.',
+      cenas: [
+        {
+          titulo: 'O Dead Pool',
+          texto: 'A caminho de Velmyr, a rota cruza o território da Maré Negra. Desta vez não é um navio qualquer da frota — é o Dead Pool, negro como fundo de oceano, com velas que parecem absorver a luz ao redor. Capitães experientes, diante dele, não ordenam combate nem fuga. Ordenam silêncio.',
+          nota: 'Se os jogadores já tiveram o primeiro vislumbre da Maré Negra (Arco 2), este momento cobra o que ficou em aberto. A forma como trataram a frota antes define a recepção agora.'
+        },
+        {
+          titulo: 'Gangplank',
+          texto: 'Alto, largo, construído como se a natureza o tivesse planejado para o convés de um navio grande. Não grita — não precisa. As regras dos seus mares são simples: nenhum navio passa sem sua ciência, nenhuma rota sem sua permissão. Ele avalia os jogadores pelo que valem agora: problema a eliminar ou utilidade a manter. Se reconhecerem a hierarquia e se apresentarem adequadamente, ele ouve — e pode até abrir passagem, se houver neles algo que sirva aos seus interesses.',
+          nota: 'O mestre sabe: Gangplank trabalha para Aldric XIV por dinheiro, sem lealdade nem ideologia. Perto de Velmyr, isso pode transformá-lo em obstáculo pago pelo rei — ou em carta fora do baralho, se os jogadores tiverem algo a oferecer. "O inimigo do meu inimigo" não existe para ele. Existe apenas: o que você vale para mim agora.'
+        }
+      ],
+      documentos: []
+    },
+    {
       id: 'arco8', num: '8', titulo: 'Velmyr: O Coração do Império', ilha: 'Velmyr',
       objetivo: 'A verdade completa. O Tomo de Himmel Varek. Cade Varek os leva para dentro do palácio.',
       cenas: [
@@ -1877,6 +1907,7 @@ function renderRoteiro() {
       </div>
 
       ${cadeBox}
+      ${mareNegraBox}
 
       <div class="roteiro-arcos">
         ${arcos.map(a => `
