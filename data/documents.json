@@ -236,5 +236,24 @@
       "mode": "all",
       "playerIds": []
     }
+  },
+  {
+    "id": "carta-thorne-cid",
+    "name": "Carta de Thorne para Cid",
+    "docType": "carta",
+    "period": "Recente — oito anos após a partida de Cid",
+    "author": "Thorne Maré",
+    "description": "Uma carta de papel áspero, dobrada e desdobrada tantas vezes que as marcas já são parte do texto. Escrita pela mão calejada de um carpinteiro que fala pouco — e que, no papel, finalmente diz tudo o que nunca conseguiu dizer em voz alta.",
+    "content": "Cid,\n\nNão sei se esta carta vai te encontrar. Mando assim mesmo, como quem joga uma garrafa no mar — porque ficar calado mais um dia já não cabe dentro de mim.\n\nEu te amo, filho. Sei que nunca fui homem de dizer isso, que sempre deixei a madeira falar por mim. Mas é verdade, e eu choro por ti todos os dias. Toda manhã ponho a mão na bancada onde tu aprendeste a calibrar um casco e a casa fica grande demais, silenciosa demais. Tua mãe se foi, e tu te foste, e eu fiquei aqui com o cheiro de verniz e o barulho do mar — e nenhuma voz além da minha.\n\nMe sinto só, Cid. Não vou te mentir, nunca te menti. Mas não te escrevo para te prender com a minha solidão. Te escrevo para que saibas: eu sei dos teus feitos. As notícias chegam até em Aethon, de boca em boca, de porto em porto. Cada vez que falam de ti, eu fico quieto no meu canto e deixo o orgulho me encher por dentro até doer. Esse é o meu filho, eu penso. Esse sempre foi o meu filho.\n\nTenho um último sonho, e é simples como tudo que eu sou: ver tu e tua mãe uma vez mais, os três sob o mesmo teto, nem que seja por uma única noite. Não peço perdão por teres partido — fizeste o que tinhas de fazer, e eu faria igual. Só peço, ao mar e a quem mais escutar, que me deixem esse último encontro antes que minhas mãos não sirvam para mais nada.\n\nA Brisa Vermilha era boa. O casco era meu, a vela era de tua mãe, mas a alma sempre foi tua. Cuida bem dela. E cuida bem de ti.\n\nTeu pai, que te espera,\nThorne",
+    "rarity": "incomum",
+    "secretsList": [],
+    "contentVisibility": {
+      "mode": "all",
+      "playerIds": []
+    },
+    "visibility": {
+      "mode": "all",
+      "playerIds": []
+    }
   }
 ]
