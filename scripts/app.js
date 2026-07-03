@@ -24,7 +24,7 @@ const STATE = {
   isMaster:       false,
   players:        [],
   unsubscribers:  [],
-  data: { characters: [], locations: [], events: [], factions: [], relations: [], annotations: [], documents: [], items: [], npcs: [], ship: null },
+  data: { characters: [], locations: [], events: [], factions: [], relations: [], annotations: [], documents: [], items: [], npcs: [], ships: [], ship: null },
 
   activeTab:       'painel',
   secretsVisible:  localStorage.getItem('secretsVisible') !== 'false',
@@ -290,7 +290,8 @@ function rerenderSection(collName) {
     case 'relations':  renderPainel(); if (STATE.activeTab === 'relacoes') renderGraph(); break;
     case 'documents':  renderAcervo(); break;
     case 'items':      renderAcervo(); break;
-    case 'npcs':       if (STATE.activeTab === 'npcs') renderNpcs(); break;
+    case 'ships':      if (STATE.activeTab === 'navio') renderNavio();
+                       if (STATE.activeTab === 'relacoes') renderGraph(); break;
   }
 }
 
@@ -304,23 +305,16 @@ async function setupFirestoreListeners() {
   subscribeToCollection('items');
   subscribeToAnnotations();
 
-  if (STATE.isMaster) {
-    const npcRef = collection(db, 'campaigns', CAMPAIGN_ID, 'npcs');
-    const unsub = onSnapshot(npcRef, snap => {
-      STATE.data.npcs = snap.docs.map(d => ({ ...d.data(), id: d.id }));
-      rerenderSection('npcs');
-    }, err => console.error('[npcs]', err));
-    STATE.unsubscribers.push(unsub);
-  }
+  // Acervo de navios — coleção com visibilidade (aliados, inimigos, neutros)
+  subscribeToCollection('ships');
 
-  // Navio do grupo — leitura conforme a visibilidade, edição só do mestre.
-  // Se o jogador perder o acesso (regra nega), o snapshot dá erro → limpamos.
+  // Navio legado (doc único antigo) — preservado; migra para a coleção ao ser editado.
   const unsubShip = onSnapshot(doc(db, 'campaigns', CAMPAIGN_ID, 'ship', 'main'), snap => {
     STATE.data.ship = snap.exists() ? { id: snap.id, ...snap.data() } : null;
     if (STATE.activeTab === 'navio') renderNavio();
     if (STATE.activeTab === 'relacoes') renderGraph();
   }, err => {
-    console.error('[ship]', err);
+    console.error('[ship legacy]', err);
     STATE.data.ship = null;
     if (STATE.activeTab === 'navio') renderNavio();
     if (STATE.activeTab === 'relacoes') renderGraph();
@@ -1156,7 +1150,6 @@ function switchTab(tab) {
   if (tab === 'jogadores')      renderJogadores();
   if (tab === 'meu-personagem') renderMeuPersonagem();
   if (tab === 'roteiro')        renderRoteiro();
-  if (tab === 'npcs')           renderNpcs();
   if (tab === 'navio')          renderNavio();
   if (tab === 'curiosidades')   renderCuriosidadesAdmin();
 }
@@ -2131,33 +2124,48 @@ function shipVisibleToMe(ship) {
   return false; // hidden
 }
 
-function renderNavio() {
-  const container = document.getElementById('navio-content');
-  if (!container) return;
-  const ship = STATE.data.ship;
-  const isMaster = STATE.isMaster;
+// Tipos de navio (facção/allegiance) — aliado, neutro, inimigo
+const SHIP_ALLEGIANCE = {
+  aliado:  { label: 'Aliado',  icon: '⚓',  color: '#4a9a5a' },
+  neutro:  { label: 'Neutro',  icon: '⛵',  color: '#5a8ab0' },
+  inimigo: { label: 'Inimigo', icon: '☠️', color: '#c0504e' },
+};
 
-  if (!ship || !ship.name) {
-    container.innerHTML = isMaster
-      ? `<div class="navio-empty">
-           <div class="navio-empty-icon">⛵</div>
-           <p>Nenhum navio cadastrado ainda.</p>
-           <button class="navio-edit-btn" id="navio-create-btn">＋ Adicionar Navio do Grupo</button>
-         </div>`
-      : `<div class="empty-state"><div class="empty-icon">⛵</div><p>O navio do grupo ainda não foi cadastrado.</p></div>`;
-    document.getElementById('navio-create-btn')?.addEventListener('click', () => renderNavioForm({}));
-    return;
+// Lista combinada: navio legado (grupo) + coleção de navios. Filtra por visibilidade.
+function allShips() {
+  const list = [];
+  const legacy = STATE.data.ship;
+  if (legacy && legacy.name && (STATE.isMaster || shipVisibleToMe(legacy))) {
+    list.push({ ...legacy, id: '__main__', _legacy: true, allegiance: legacy.allegiance || 'aliado' });
   }
+  (STATE.data.ships || []).forEach(s => {
+    if (STATE.isMaster || shipVisibleToMe(s)) list.push({ ...s, allegiance: s.allegiance || 'neutro' });
+  });
+  return list;
+}
 
-  // Gate de visibilidade para jogadores
-  if (!isMaster && !shipVisibleToMe(ship)) {
-    container.innerHTML = `<div class="empty-state"><div class="empty-icon">🔒</div><p>O navio do grupo ainda não está disponível para você.</p></div>`;
-    return;
+// Localiza um navio a partir do id de nó do grafo ('ship:<id>')
+function shipByNodeId(nodeId) {
+  const sid = nodeId && nodeId.startsWith('ship:') ? nodeId.slice(5) : nodeId;
+  return allShips().find(s => s.id === sid);
+}
+
+async function deleteShip(ship) {
+  if (!ship || !confirm(`Excluir o navio "${ship.name}" permanentemente? Esta ação não pode ser desfeita.`)) return;
+  try {
+    if (ship._legacy) await deleteDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'ship', 'main'));
+    else              await deleteDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'ships', ship.id));
+  } catch (err) {
+    console.error('[ship delete]', err);
+    alert('Erro ao excluir o navio. Tente novamente.');
   }
+}
 
+function shipCardHtml(ship, isMaster) {
   const hp = Number(ship.hp) || 0, maxHp = Number(ship.maxHp) || 0;
   const hpPct = maxHp ? Math.max(0, Math.min(100, Math.round(hp / maxHp * 100))) : 0;
   const hpClass = hpPct >= 50 ? 'navio-hp-ok' : hpPct >= 25 ? 'navio-hp-warn' : 'navio-hp-low';
+  const al = SHIP_ALLEGIANCE[ship.allegiance] || SHIP_ALLEGIANCE.neutro;
 
   const visMode = ship.visibility?.mode || 'all';
   const visBadge = isMaster
@@ -2181,19 +2189,23 @@ function renderNavio() {
           </div>`;
         }).join('')}
        </div>`
-    : `<p class="navio-crew-empty">${isMaster ? 'Nenhum tripulante. Clique em Editar para adicionar.' : 'Tripulação não informada.'}</p>`;
+    : `<p class="navio-crew-empty">${isMaster ? 'Sem tripulação. Edite o navio para adicionar.' : 'Tripulação não informada.'}</p>`;
 
-  container.innerHTML = `
-    <div class="navio-card">
+  return `
+    <div class="navio-card navio-ally-${ship.allegiance || 'neutro'}" data-ship-id="${escHtml(ship.id)}" style="--ally-color:${al.color}">
       ${ship.imageUrl
-        ? `<div class="navio-img-wrap"><img class="navio-img" src="${escHtml(ship.imageUrl)}" alt="${escHtml(ship.name)}" onerror="this.parentElement.classList.add('navio-img-ph');this.remove()"></div>`
-        : `<div class="navio-img-wrap navio-img-ph">⛵</div>`}
+        ? `<div class="navio-img-wrap"><img class="navio-img" src="${escHtml(ship.imageUrl)}" data-full="${escHtml(ship.imageUrl)}" alt="${escHtml(ship.name)}" onerror="this.parentElement.classList.add('navio-img-ph');this.remove()"></div>`
+        : `<div class="navio-img-wrap navio-img-ph">${al.icon}</div>`}
       <div class="navio-body">
         <div class="navio-head">
-          <h2 class="navio-name">${escHtml(ship.name)}</h2>
+          <div>
+            <h2 class="navio-name">${escHtml(ship.name)}</h2>
+            <span class="navio-ally-badge" style="--ally-color:${al.color}">${al.icon} ${al.label}</span>
+          </div>
           <div class="navio-head-right">
             ${visBadge}
-            ${isMaster ? `<button class="navio-edit-btn" id="navio-edit-btn">✏ Editar</button>` : ''}
+            ${isMaster ? `<button class="navio-edit-btn navio-ship-edit" data-ship-id="${escHtml(ship.id)}">✏ Editar</button>` : ''}
+            ${isMaster ? `<button class="navio-ship-del" data-ship-id="${escHtml(ship.id)}" title="Excluir navio">🗑</button>` : ''}
           </div>
         </div>
         ${ship.description ? `<p class="navio-desc">${escHtml(ship.description)}</p>` : ''}
@@ -2212,18 +2224,49 @@ function renderNavio() {
             <div class="navio-stat-val">${Number(ship.resistance) || 0}</div>
           </div>
         </div>
+        <div class="navio-crew-block">
+          <div class="navio-crew-heading">⚓ Tripulação</div>
+          ${crewHtml}
+        </div>
       </div>
-    </div>
-    <div class="navio-crew-section">
-      <div class="section-heading" style="margin:8px 0 14px;">⚓ Tripulação</div>
-      ${crewHtml}
     </div>`;
+}
 
-  container.querySelector('.navio-img')?.addEventListener('click', () => { if (ship.imageUrl) openLightbox(ship.imageUrl); });
-  document.getElementById('navio-edit-btn')?.addEventListener('click', () => renderNavioForm(ship));
-  container.querySelectorAll('.navio-crew-card').forEach(card => {
-    card.addEventListener('click', () => openModal(card.dataset.crewId, card.dataset.crewType));
-  });
+function renderNavio() {
+  const container = document.getElementById('navio-content');
+  if (!container) return;
+  const isMaster = STATE.isMaster;
+  const ships = allShips();
+
+  const addBtn = isMaster
+    ? `<div class="navio-toolbar"><button class="navio-add-btn" id="navio-add-btn">＋ Adicionar Navio</button></div>`
+    : '';
+
+  if (!ships.length) {
+    container.innerHTML = addBtn + (isMaster
+      ? `<div class="navio-empty"><div class="navio-empty-icon">⛵</div><p>Nenhum navio no acervo ainda. Adicione o navio do grupo, aliados ou inimigos.</p></div>`
+      : `<div class="empty-state"><div class="empty-icon">⛵</div><p>Nenhum navio disponível para você ainda.</p></div>`);
+    document.getElementById('navio-add-btn')?.addEventListener('click', () => renderNavioForm({}));
+    return;
+  }
+
+  container.innerHTML = addBtn + `<div class="navio-list">${ships.map(s => shipCardHtml(s, isMaster)).join('')}</div>`;
+
+  document.getElementById('navio-add-btn')?.addEventListener('click', () => renderNavioForm({}));
+  container.querySelectorAll('.navio-img[data-full]').forEach(img =>
+    img.addEventListener('click', () => openLightbox(img.dataset.full)));
+  container.querySelectorAll('.navio-crew-card').forEach(card =>
+    card.addEventListener('click', () => openModal(card.dataset.crewId, card.dataset.crewType)));
+  container.querySelectorAll('.navio-ship-edit').forEach(btn =>
+    btn.addEventListener('click', () => {
+      const s = allShips().find(x => x.id === btn.dataset.shipId);
+      if (s) renderNavioForm(s);
+    }));
+  container.querySelectorAll('.navio-ship-del').forEach(btn =>
+    btn.addEventListener('click', () => {
+      const s = allShips().find(x => x.id === btn.dataset.shipId);
+      if (s) deleteShip(s);
+    }));
 }
 
 function renderNavioForm(ship) {
@@ -2245,8 +2288,15 @@ function renderNavioForm(ship) {
   container.innerHTML = `
     <form class="navio-form" id="navio-form">
       <div class="navio-form-title">${ship.name ? '✏ Editar Navio' : '＋ Adicionar Navio'}</div>
-      <div class="navio-field"><label>Nome do Navio</label>
-        <input class="edit-input" name="name" value="${escHtml(ship.name || '')}" placeholder="Ex: A Brisa Vermilha" required></div>
+      <div class="navio-form-row">
+        <div class="navio-field" style="flex:2"><label>Nome do Navio</label>
+          <input class="edit-input" name="name" value="${escHtml(ship.name || '')}" placeholder="Ex: A Brisa Vermilha" required></div>
+        <div class="navio-field" style="flex:1"><label>Tipo de Navio</label>
+          <select class="edit-input" name="allegiance">
+            ${Object.entries(SHIP_ALLEGIANCE).map(([k, v]) => `<option value="${k}"${(ship.allegiance || 'aliado') === k ? ' selected' : ''}>${v.icon} ${v.label}</option>`).join('')}
+          </select>
+        </div>
+      </div>
 
       <div class="navio-field">
         <label>Imagem do Navio</label>
@@ -2397,6 +2447,7 @@ function renderNavioForm(ship) {
       }
       const data = {
         name:        String(fd.get('name') || '').trim(),
+        allegiance:  fd.get('allegiance') || 'aliado',
         imageUrl,
         description: String(fd.get('description') || '').trim(),
         hp:          parseInt(fd.get('hp') || '0') || 0,
@@ -2406,9 +2457,16 @@ function renderNavioForm(ship) {
         crew:        crew.filter(m => m.id).map(m => ({ type: m.type, id: m.id, role: (m.role || '').trim() })),
         visibility:  { mode: shipVis.mode, playerIds: shipVis.mode === 'specific' ? shipVis.playerIds : [] },
       };
-      await setDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'ship', 'main'), data, { merge: true });
-      STATE.data.ship = { ...(STATE.data.ship || {}), ...data };
-      if (STATE.activeTab === 'relacoes') renderGraph();
+      const shipsCol = collection(db, 'campaigns', CAMPAIGN_ID, 'ships');
+      if (ship._legacy) {
+        // Migra o navio legado para a coleção e remove o doc antigo
+        await addDoc(shipsCol, data);
+        await deleteDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'ship', 'main'));
+      } else if (ship.id) {
+        await setDoc(doc(shipsCol, ship.id), data, { merge: true });
+      } else {
+        await addDoc(shipsCol, data);
+      }
       renderNavio();
     } catch (err) {
       console.error('[ship save]', err);
@@ -3856,7 +3914,7 @@ function nodeImgSrc(d) {
     return c ? charImgSrc(c) : null;
   }
   if (d.type === 'player') return getPlayerByUid(d.id)?.playerCharacter?.imageUrl || null;
-  if (d.type === 'ship')   return STATE.data.ship?.imageUrl || null;
+  if (d.type === 'ship')   return shipByNodeId(d.id)?.imageUrl || null;
   const item = getItemById(d.id, d.type);
   return item?.imageUrl || null;
 }
@@ -3886,8 +3944,10 @@ function graphTooltipSub(d) {
     return [pc.race, pc.charClass].filter(Boolean).join(' · ') || 'Personagem de jogador';
   }
   if (d.type === 'ship') {
-    const n = (STATE.data.ship?.crew || []).length;
-    return `Navio do grupo · ${n} ${n === 1 ? 'tripulante' : 'tripulantes'}`;
+    const s = shipByNodeId(d.id);
+    const n = (s?.crew || []).length;
+    const al = SHIP_ALLEGIANCE[s?.allegiance] || SHIP_ALLEGIANCE.neutro;
+    return `Navio (${al.label}) · ${n} ${n === 1 ? 'tripulante' : 'tripulantes'}`;
   }
   const item = getItemById(d.id, d.type);
   if (!item) return '';
@@ -3951,24 +4011,17 @@ function renderGraph() {
   if (faction)   STATE.data.factions.forEach(f => addNode(f.id, 'faction', f.name));
   if (player)    listPlayerChars().forEach(p => addNode(p.uid, 'player', playerCharName(p)));
 
-  // Navio + tripulação: o navio vira um nó e cada tripulante é uma aresta
-  // rotulada pela função. Respeita a visibilidade do navio para o jogador.
-  const shipForGraph = STATE.data.ship;
+  // Navios + tripulação: cada navio vira um nó e cada tripulante é uma aresta
+  // rotulada pela função. Respeita a visibilidade de cada navio.
   const crewLinks = [];
-  if (shipForGraph && shipForGraph.name && (STATE.isMaster || shipVisibleToMe(shipForGraph))
-      && Array.isArray(shipForGraph.crew) && shipForGraph.crew.length) {
-    addNode('__ship__', 'ship', shipForGraph.name);
-    shipForGraph.crew.forEach(m => {
-      if (m && nodeMap[m.id]) {
-        crewLinks.push({ rel: null, source: '__ship__', target: m.id, label: m.role || 'tripulação', type: 'neutral', secret: false, _crew: true });
-      }
-    });
-    if (!crewLinks.length) {
-      delete nodeMap['__ship__'];
-      const idx = nodes.findIndex(n => n.id === '__ship__');
-      if (idx >= 0) nodes.splice(idx, 1);
-    }
-  }
+  allShips().forEach(s => {
+    if (!Array.isArray(s.crew) || !s.crew.length) return;
+    const present = s.crew.filter(m => m && nodeMap[m.id]);
+    if (!present.length) return;
+    const nodeId = 'ship:' + s.id;
+    addNode(nodeId, 'ship', s.name);
+    present.forEach(m => crewLinks.push({ rel: null, source: nodeId, target: m.id, label: m.role || 'tripulação', type: 'neutral', secret: false, _crew: true }));
+  });
 
   const links = STATE.data.relations
     .filter(r => nodeMap[r.sourceId] && nodeMap[r.targetId])
@@ -3978,7 +4031,11 @@ function renderGraph() {
   links.forEach(l => { if (nodeMap[l.source]) nodeMap[l.source].degree++; if (nodeMap[l.target]) nodeMap[l.target].degree++; });
 
   const NODE_COLOR = { character: '#cfac6e', location: '#5a8ab0', event: '#7a9a6a', faction: '#9a5a5a', player: '#4aa3a3', ship: '#cfac6e' };
-  const getNodeColor = d => d.type === 'faction' ? (getFactionById(d.id)?.color || NODE_COLOR.faction) : (NODE_COLOR[d.type] || '#9a5a5a');
+  const getNodeColor = d => {
+    if (d.type === 'faction') return getFactionById(d.id)?.color || NODE_COLOR.faction;
+    if (d.type === 'ship')    return (SHIP_ALLEGIANCE[shipByNodeId(d.id)?.allegiance] || SHIP_ALLEGIANCE.neutro).color;
+    return NODE_COLOR[d.type] || '#9a5a5a';
+  };
   const radiusOf = d => Math.min(34, Math.max(17, 13 + d.degree * 2));
 
   graphSimulation = d3.forceSimulation(nodes)

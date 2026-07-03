@@ -3801,3 +3801,43 @@ body { background-image: radial-gradient(ellipse at 50% 0%, rgba(20,50,90,.35) 0
 .cur-admin-text { font-family: var(--font-flavor); font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
 .cur-admin-item.on .cur-admin-text { color: var(--text-primary); }
 .cur-admin-saved { margin-top: 14px; font-family: var(--font-title); font-size: 13px; color: var(--accent-green); min-height: 18px; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ACERVO DE NAVIOS (múltiplos navios: aliados, neutros, inimigos)
+═══════════════════════════════════════════════════════════════════════════ */
+.navio-toolbar { display: flex; justify-content: flex-end; margin-bottom: 16px; }
+.navio-add-btn {
+  background: linear-gradient(135deg, rgba(207,172,110,.2), rgba(207,172,110,.1));
+  border: 1px solid rgba(207,172,110,.4); color: var(--accent-gold);
+  border-radius: 9px; padding: 10px 20px;
+  font-family: var(--font-title); font-size: 13px; letter-spacing: .5px; cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.navio-add-btn:hover { background: linear-gradient(135deg, rgba(207,172,110,.3), rgba(207,172,110,.18)); border-color: var(--accent-gold); }
+
+.navio-list { display: flex; flex-direction: column; gap: 22px; }
+
+/* Acento por tipo de navio */
+.navio-card { border-top: 3px solid var(--ally-color, var(--accent-gold-dim)); }
+
+.navio-ally-badge {
+  display: inline-block; margin-top: 4px;
+  font-family: var(--font-title); font-size: 10px; letter-spacing: .8px;
+  padding: 3px 10px; border-radius: 12px;
+  color: var(--ally-color); border: 1px solid var(--ally-color);
+  background: color-mix(in srgb, var(--ally-color) 12%, transparent);
+}
+
+.navio-ship-del {
+  background: rgba(192,80,80,.1); border: 1px solid rgba(192,80,80,.3); color: #e08a8a;
+  width: 34px; height: 34px; border-radius: 8px; cursor: pointer; flex-shrink: 0;
+  font-size: 14px; transition: background .15s;
+}
+.navio-ship-del:hover { background: rgba(192,80,80,.25); }
+
+/* Tripulação dentro do card de navio */
+.navio-crew-block { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.05); }
+.navio-crew-heading {
+  font-family: var(--font-title); font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: 12px;
+}
