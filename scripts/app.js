@@ -24,7 +24,7 @@ const STATE = {
   isMaster:       false,
   players:        [],
   unsubscribers:  [],
-  data: { characters: [], locations: [], events: [], factions: [], relations: [], annotations: [], documents: [], items: [], npcs: [], ships: [], ship: null },
+  data: { characters: [], locations: [], events: [], factions: [], relations: [], annotations: [], documents: [], items: [], ships: [], ship: null },
 
   activeTab:       'painel',
   secretsVisible:  localStorage.getItem('secretsVisible') !== 'false',
@@ -272,6 +272,8 @@ function subscribeToAnnotations() {
   });
   STATE.unsubscribers.push(unsub);
 }
+
+const HIDDEN_VIS = { mode: 'hidden', playerIds: [] };
 
 function isItemVisible(item) {
   const v = item.visibility;
@@ -1372,24 +1374,55 @@ function getEntityName(id, type) {
     const p = getPlayerByUid(id);
     return p ? playerCharName(p) : id;
   }
-  if (type === 'npc') return STATE.data.npcs.find(n => n.id === id)?.name || id;
   const fn = { character: getCharById, location: getLocationById, event: getEventById, faction: getFactionById, document: getDocumentById, item: getItemByIdFn }[type];
   return fn?.(id)?.name || id;
 }
 
-// ── SYNC CAMPAIGN CONTENT ─────────────────────────────────────────────────────
+// ── LEITURA DOS JSONs DE /data ──────────────────────────────────────
+// Os arquivos de /data carregam os segredos do Mestre em texto puro, entao
+// firebase.json os mantem fora do deploy. No site publicado o rewrite "**"
+// devolve o index.html para esses caminhos, e o JSON.parse falha no "<".
+// Seed e sincronizacao portanto so funcionam rodando o repositorio local.
+const DATA_LOCAL_ONLY_MSG =
+  'Os arquivos de /data nao sao publicados no site — eles contem os segredos '
+  + 'do Mestre em texto puro e ficam fora do deploy de proposito.\n\n'
+  + 'Para sincronizar, rode o repositorio localmente:\n\n'
+  + '    npx serve .\n\n'
+  + 'e abra http://localhost:3000 para executar esta acao.';
+
+function isLocalHost() {
+  return ['localhost', '127.0.0.1', '[::1]', ''].includes(location.hostname);
+}
+
+async function fetchCampaignJson(path) {
+  let res;
+  try {
+    res = await fetch(path);
+  } catch {
+    throw new Error(DATA_LOCAL_ONLY_MSG);
+  }
+  if (!res.ok) throw new Error(DATA_LOCAL_ONLY_MSG);
+  const text = await res.text();
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error(DATA_LOCAL_ONLY_MSG);
+  }
+}
+
+// ── SYNC CAMPAIGN CONTENT ─────────────────────────────────────────────
 async function syncCampaignContent() {
   const btn = document.getElementById('sync-campaign-btn');
   if (btn) { btn.disabled = true; btn.textContent = 'Sincronizando...'; }
 
   try {
-    const [chars, locs, evts, facts, docs, npcs] = await Promise.all([
-      fetch('data/characters.json').then(r => r.json()),
-      fetch('data/locations.json').then(r => r.json()),
-      fetch('data/events.json').then(r => r.json()),
-      fetch('data/factions.json').then(r => r.json()),
-      fetch('data/documents.json').then(r => r.json()),
-      fetch('npcs.json').then(r => r.json()),
+    const [chars, locs, evts, facts, docs, itms] = await Promise.all([
+      fetchCampaignJson('data/characters.json'),
+      fetchCampaignJson('data/locations.json'),
+      fetchCampaignJson('data/events.json'),
+      fetchCampaignJson('data/factions.json'),
+      fetchCampaignJson('data/documents.json'),
+      fetchCampaignJson('data/items.json'),
     ]);
 
     // Preserve existing secret visibility when syncing secretsList
@@ -1458,14 +1491,24 @@ async function syncCampaignContent() {
         secretsList: mergeSecretsList(d.secretsList, existing),
       };
       if (d.imageUrl) update.imageUrl = d.imageUrl;
+      // Visibilidade so e semeada na primeira vez: o que o Mestre ajustou
+      // pela UI tem precedencia sobre o JSON.
+      if (!existing?.visibility)        update.visibility        = d.visibility        || { ...HIDDEN_VIS };
+      if (!existing?.contentVisibility) update.contentVisibility = d.contentVisibility || { ...HIDDEN_VIS };
       batch.set(ref, update, { merge: true });
     });
 
-    npcs.forEach(n => {
-      const ref = doc(db, base, 'npcs', n.id);
-      const { foundryJson, ...rest } = n;
-      const npcData = { ...rest, foundryJsonStr: foundryJson ? JSON.stringify(foundryJson) : '' };
-      batch.set(ref, npcData, { merge: true });
+    itms.forEach(i => {
+      const ref      = doc(db, base, 'items', i.id);
+      const existing = STATE.data.items.find(x => x.id === i.id);
+      const update   = {
+        name: i.name, itemType: i.itemType || '', rarity: i.rarity || '',
+        description: i.description || '',
+        secretsList: mergeSecretsList(i.secretsList, existing),
+      };
+      if (i.imageUrl) update.imageUrl = i.imageUrl;
+      if (!existing?.visibility) update.visibility = i.visibility || { ...HIDDEN_VIS };
+      batch.set(ref, update, { merge: true });
     });
 
     await batch.commit();
@@ -1498,14 +1541,7 @@ async function exportToJson() {
     await dl(STATE.data.events,     'events.json');
     await dl(STATE.data.factions,   'factions.json');
     await dl(STATE.data.documents,  'documents.json');
-
-    // NPCs: convert foundryJsonStr back to foundryJson object
-    const npcsExport = STATE.data.npcs.map(n => {
-      const { foundryJsonStr, ...rest } = n;
-      if (foundryJsonStr) { try { return { ...rest, foundryJson: JSON.parse(foundryJsonStr) }; } catch { return rest; } }
-      return rest;
-    });
-    await dl(npcsExport, 'npcs.json');
+    await dl(STATE.data.items,      'items.json');
 
     if (btn) { btn.textContent = '✓ Exportado!'; setTimeout(() => { btn.textContent = '⬇ Exportar JSON'; btn.disabled = false; }, 3000); }
   } catch (err) {
@@ -2047,62 +2083,6 @@ function renderRoteiro() {
     </div>`;
 }
 
-// ── NPCs TAB (master only) ────────────────────────────────────────────────────
-function abilityMod(score) {
-  const m = Math.floor((score - 10) / 2);
-  return (m >= 0 ? '+' : '') + m;
-}
-
-function buildWotcText(npc) {
-  const ab    = npc.abilities || {};
-  const abPt  = { str: 'FOR', dex: 'DES', con: 'CON', int: 'INT', wis: 'SAB', cha: 'CAR' };
-  const keys  = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
-  const scores = keys.map(k => ab[k] ?? 10);
-  const mods   = scores.map(s => abilityMod(s));
-
-  const headerRow = keys.map(k => abPt[k].padEnd(7)).join('');
-  const scoreRow  = scores.map((s, i) => `${s}(${mods[i]})`.padEnd(7)).join('');
-
-  const saves  = (npc.saves  || []).map(s => `${s.name} ${s.value}`).join(', ');
-  const skills = (npc.skills || []).map(s => `${s.name} ${s.value}`).join(', ');
-
-  const traits  = (npc.traits  || []).map(t => `${t.name}. ${t.description}`).join('\n');
-  const actions = (npc.actions || []).map(a =>
-    `${a.name}. ${a.type}: ${a.attack} para acertar, alcance ${a.reach}. Acerto: ${a.hit}.`
-  ).join('\n');
-
-  return [
-    npc.name.toUpperCase(),
-    `${npc.type || ''}, ${npc.alignment || ''}`,
-    '',
-    `Classe de Armadura ${npc.ac} (${npc.acType})`,
-    `Pontos de Vida ${npc.hp} (${npc.hpFormula})`,
-    `Deslocamento ${npc.speed}`,
-    '',
-    headerRow,
-    scoreRow,
-    '',
-    ...(saves  ? [`Salvaguardas ${saves}`]  : []),
-    ...(skills ? [`Perícias ${skills}`]     : []),
-    `Idiomas ${npc.languages || '—'}`,
-    `Nível de Desafio ${npc.cr} (${npc.xp} XP)`,
-    ...(traits  ? ['', 'TRAÇOS',  traits]  : []),
-    ...(actions ? ['', 'AÇÕES',   actions] : []),
-    ...(npc.notes ? ['', '---', npc.notes] : []),
-  ].join('\n');
-}
-
-window.copyWotcText = async function(npcId, btn) {
-  const npc = STATE.data.npcs.find(n => n.id === npcId);
-  if (!npc) return;
-  try {
-    await navigator.clipboard.writeText(buildWotcText(npc));
-    if (btn) { const orig = btn.textContent; btn.textContent = '✓ Copiado!'; setTimeout(() => { btn.textContent = orig; }, 2000); }
-  } catch {
-    if (btn) { btn.textContent = '✗ Erro'; setTimeout(() => { btn.textContent = '📄 WotC'; }, 2000); }
-  }
-};
-
 // ── NAVIO DO GRUPO ──────────────────────────────────────────────────────────
 // Resolve nome e imagem de um tripulante (jogador ou personagem)
 function crewMemberInfo(m) {
@@ -2474,178 +2454,6 @@ function renderNavioForm(ship) {
       btn.disabled = false; btn.textContent = '✘ Erro — tentar de novo';
     }
   });
-}
-
-function renderNpcs() {
-  const grid = document.getElementById('npcs-grid');
-  if (!grid) return;
-
-  if (!STATE.data.npcs.length) {
-    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">⚔️</div><p>Nenhum NPC cadastrado.</p></div>`;
-    return;
-  }
-
-  grid.innerHTML = STATE.data.npcs.map(npc => {
-    const fc = npc.faction ? factionColor(npc.faction) : '#5a8ab0';
-    return `<div class="npc-card" data-id="${npc.id}" style="--faction-color:${fc}">
-      <div class="npc-card-header">
-        <div class="npc-card-name">${npc.name}</div>
-        <div class="npc-card-role">${npc.role || ''}</div>
-      </div>
-      <div class="npc-card-stats">
-        <div class="npc-stat"><span class="npc-stat-label">CR</span><span class="npc-stat-value">${npc.cr}</span></div>
-        <div class="npc-stat"><span class="npc-stat-label">CA</span><span class="npc-stat-value">${npc.ac}</span></div>
-        <div class="npc-stat"><span class="npc-stat-label">PV</span><span class="npc-stat-value">${npc.hp}</span></div>
-        <div class="npc-stat"><span class="npc-stat-label">XP</span><span class="npc-stat-value">${npc.xp}</span></div>
-      </div>
-      <div class="npc-card-footer">
-        <span class="npc-card-faction">${npc.faction ? (getFactionById(npc.faction)?.name || npc.faction) : '—'}</span>
-        <button class="npc-wotc-btn" onclick="event.stopPropagation(); copyWotcText('${npc.id}', this)" title="Copiar bloco de estatísticas (WotC)">📄 WotC</button>
-      </div>
-    </div>`;
-  }).join('');
-
-  grid.querySelectorAll('.npc-card').forEach(card => {
-    card.addEventListener('click', () => openNpcModal(card.dataset.id));
-  });
-}
-
-function openNpcModal(npcId) {
-  const npc = STATE.data.npcs.find(n => n.id === npcId);
-  if (!npc) return;
-
-  STATE.modal.current = { id: npcId, type: 'npc' };
-  STATE.modal.stack   = [];
-
-  document.getElementById('modal-body').innerHTML = buildNpcModalContent(npc);
-  document.getElementById('modal-overlay').classList.add('open');
-  document.getElementById('modal-panel').classList.add('open');
-
-  const editBtn = document.getElementById('modal-edit-btn');
-  if (editBtn) editBtn.style.visibility = 'hidden';
-
-  document.getElementById('modal-breadcrumb').innerHTML =
-    `<span class="bc-item current">${escHtml(npc.name)}</span>`;
-  document.getElementById('modal-back-btn').disabled = true;
-
-  document.getElementById('npc-wotc-modal-btn')?.addEventListener('click', function() {
-    copyWotcText(npcId, this);
-    const orig = this.textContent;
-    this.textContent = orig; // copyWotcText já atualiza o btn
-  });
-
-  document.getElementById('npc-export-json')?.addEventListener('click', function() {
-    const raw = npc.foundryJsonStr || '';
-    if (!raw) { alert('JSON não disponível — sincronize os dados novamente.'); return; }
-    const pretty = JSON.stringify(JSON.parse(raw), null, 2);
-    const blob = new Blob([pretty], { type: 'application/json' });
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement('a');
-    a.href     = url;
-    a.download = `${npc.id}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  });
-
-  document.getElementById('npc-toggle-json')?.addEventListener('click', function() {
-    const block = document.getElementById('npc-json-block');
-    const visible = block?.style.display !== 'none';
-    if (block) block.style.display = visible ? 'none' : 'block';
-    this.textContent = visible ? '▶ Ver JSON (FoundryVTT)' : '▼ Ocultar JSON';
-  });
-}
-
-function buildNpcModalContent(npc) {
-  const ab     = npc.abilities || {};
-  const abKeys = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
-  const abPt   = { str: 'FOR', dex: 'DES', con: 'CON', int: 'INT', wis: 'SAB', cha: 'CAR' };
-
-  const abHtml = abKeys.map(k => {
-    const score = ab[k] ?? 10;
-    return `<div class="sb-ability">
-      <div class="sb-ability-name">${abPt[k]}</div>
-      <div class="sb-ability-score">${score}</div>
-      <div class="sb-ability-mod">${abilityMod(score)}</div>
-    </div>`;
-  }).join('');
-
-  const savesHtml  = (npc.saves  || []).map(s => `${s.name} ${s.value}`).join(', ');
-  const skillsHtml = (npc.skills || []).map(s => `${s.name} ${s.value}`).join(', ');
-
-  const traitsHtml = (npc.traits || []).map(t =>
-    `<div class="sb-trait"><span class="sb-trait-name">${escHtml(t.name)}.</span> ${escHtml(t.description)}</div>`
-  ).join('');
-
-  const actionsHtml = (npc.actions || []).map(a =>
-    `<div class="sb-action">
-      <span class="sb-action-name">${escHtml(a.name)}.</span>
-      <span> <em>${escHtml(a.type)}:</em> Acerto ${escHtml(a.attack)}, ${escHtml(a.reach)}. <em>Acerto:</em> ${escHtml(a.hit)}.</span>
-    </div>`
-  ).join('');
-
-  const fc = npc.faction ? factionColor(npc.faction) : '#5a8ab0';
-  const factionBadge = npc.faction
-    ? `<span class="faction-badge" style="background:${fc}22;color:${fc};border:1px solid ${fc}44;border-radius:10px;padding:2px 7px;font-size:10px;text-transform:uppercase;letter-spacing:.5px;">${escHtml(getFactionById(npc.faction)?.name || npc.faction)}</span>`
-    : '';
-
-  const hasJson = !!npc.foundryJsonStr;
-
-  return `
-    <div class="npc-modal-header">
-      <div class="npc-modal-name">${escHtml(npc.name)}</div>
-      <div class="npc-modal-type">${escHtml(npc.type || '')} — ${escHtml(npc.alignment || '')}</div>
-      <div class="npc-modal-meta">
-        <span class="npc-cr-badge">CR ${escHtml(npc.cr)} (${npc.xp} XP)</span>
-        ${factionBadge}
-      </div>
-    </div>
-
-    <div class="stat-block">
-      <div class="sb-divider"></div>
-      <div class="sb-row"><span class="sb-label">Classe de Armadura</span> ${npc.ac} (${escHtml(npc.acType)})</div>
-      <div class="sb-row"><span class="sb-label">Pontos de Vida</span> ${npc.hp} (${escHtml(npc.hpFormula)})</div>
-      <div class="sb-row"><span class="sb-label">Deslocamento</span> ${escHtml(npc.speed)}</div>
-      <div class="sb-divider"></div>
-      <div class="sb-abilities">${abHtml}</div>
-      <div class="sb-divider"></div>
-      ${savesHtml  ? `<div class="sb-row"><span class="sb-label">JTs de Resistência</span> ${savesHtml}</div>` : ''}
-      ${skillsHtml ? `<div class="sb-row"><span class="sb-label">Perícias</span> ${skillsHtml}</div>` : ''}
-      <div class="sb-row"><span class="sb-label">Idiomas</span> ${escHtml(npc.languages || '—')}</div>
-      <div class="sb-row"><span class="sb-label">Nível de Desafio</span> ${escHtml(npc.cr)} (${npc.xp} XP)</div>
-      <div class="sb-divider"></div>
-      ${traitsHtml}
-      ${actionsHtml ? `<div class="sb-section-title">Ações</div>${actionsHtml}` : ''}
-    </div>
-
-    ${npc.notes ? `<div class="modal-section"><div class="modal-section-title">📌 Notas de Encontro</div><div class="modal-section-text">${escHtml(npc.notes)}</div></div>` : ''}
-
-    <div class="modal-section npc-wotc-modal-section">
-      <button class="npc-copy-btn" id="npc-wotc-modal-btn">📄 Copiar bloco WotC</button>
-    </div>
-
-    <div class="modal-section npc-foundry-section">
-      <button class="npc-json-toggle-btn" id="npc-toggle-json">▶ Importar no FoundryVTT</button>
-      <div id="npc-json-block" style="display:none">
-        <div class="npc-foundry-guide">
-          <div class="npc-foundry-guide-title">Como importar este NPC no FoundryVTT</div>
-          <ol class="npc-foundry-steps">
-            <li><strong>Exporte o arquivo JSON</strong> clicando no botão abaixo.</li>
-            <li>No FoundryVTT, abra a aba <strong>Atores</strong> (ícone de pessoa na barra lateral).</li>
-            <li>Clique em <strong>Criar Ator</strong>, defina o nome e o tipo como <em>NPC</em>.</li>
-            <li>Com o ator criado, clique no ícone <strong>⋮</strong> (três pontos) ao lado do nome na lista.</li>
-            <li>Selecione <strong>Importar Dados</strong> e escolha o arquivo <em>${npc.id}.json</em> baixado.</li>
-            <li>O ator será preenchido automaticamente com atributos, ações e traços.</li>
-          </ol>
-          <div class="npc-foundry-note">💡 Itens como armas precisam ser arrastados do Compêndio para o ator após a importação para ficarem vinculados ao sistema de rolagem.</div>
-        </div>
-        <div class="npc-json-actions">
-          ${hasJson
-            ? `<button class="npc-copy-btn" id="npc-export-json">⬇ Exportar JSON</button>`
-            : `<span class="npc-json-unavailable">JSON não disponível — sincronize os dados novamente.</span>`}
-        </div>
-      </div>
-    </div>
-  `;
 }
 
 // ── JOGADORES TAB ─────────────────────────────────────────────────────────────
@@ -3170,10 +2978,13 @@ function renderAcervo() {
   const items = STATE.data.items || [];
   const myUid = STATE.user?.uid;
 
+  // Sem visibilidade definida o item fica oculto — mesmo default de
+  // isItemVisible(), para que um documento novo nunca vaze por omissao.
   function docVisible(d) {
     if (STATE.isMaster) return true;
     const v = d.visibility;
-    if (!v || v.mode === 'all') return true;
+    if (!v) return false;
+    if (v.mode === 'all') return true;
     if (v.mode === 'specific') return (v.playerIds || []).includes(myUid);
     return false;
   }
@@ -5390,12 +5201,14 @@ async function seedCampaign() {
   statusEl.textContent = 'Carregando dados...';
 
   try {
-    const [characters, locations, events, factions, relations] = await Promise.all([
-      fetch('data/characters.json').then(r => r.json()),
-      fetch('data/locations.json').then(r => r.json()),
-      fetch('data/events.json').then(r => r.json()),
-      fetch('data/factions.json').then(r => r.json()),
-      fetch('data/relations.json').then(r => r.json()),
+    const [characters, locations, events, factions, relations, documents, items] = await Promise.all([
+      fetchCampaignJson('data/characters.json'),
+      fetchCampaignJson('data/locations.json'),
+      fetchCampaignJson('data/events.json'),
+      fetchCampaignJson('data/factions.json'),
+      fetchCampaignJson('data/relations.json'),
+      fetchCampaignJson('data/documents.json'),
+      fetchCampaignJson('data/items.json'),
     ]);
 
     statusEl.textContent = 'Criando campanha no banco de dados...';
@@ -5410,13 +5223,15 @@ async function seedCampaign() {
       createdAt: serverTimestamp(),
     });
 
-    const addItems = (coll, items) => items.forEach((item, idx) => {
-      const docRef = item.id
-        ? doc(db, 'campaigns', CAMPAIGN_ID, coll, item.id)
+    const addItems = (coll, entries) => entries.forEach(entry => {
+      const docRef = entry.id
+        ? doc(db, 'campaigns', CAMPAIGN_ID, coll, entry.id)
         : doc(collection(db, 'campaigns', CAMPAIGN_ID, coll));
       batch.set(docRef, {
-        ...item,
-        visibility:        { ...defaultVis },
+        ...entry,
+        // O JSON pode declarar a propria visibilidade (documentos e itens);
+        // o resto nasce oculto e o Mestre revela quando quiser.
+        visibility:        entry.visibility || { ...defaultVis },
         secretsVisibility: { ...defaultVis },
       });
     });
@@ -5426,6 +5241,8 @@ async function seedCampaign() {
     addItems('events',     events);
     addItems('factions',   factions);
     addItems('relations',  relations);
+    addItems('documents',  documents);
+    addItems('items',      items);
 
     await batch.commit();
     statusEl.textContent = '✓ Campanha inicializada com sucesso!';
@@ -5532,9 +5349,16 @@ async function init() {
   const rdOverlay = document.getElementById('relation-dialog-overlay');
   if (rdOverlay) rdOverlay.addEventListener('click', e => { if (e.target === rdOverlay) closeRelationDialog(); });
 
-  // Sync campaign data (master only)
+  // Sync campaign data (master only) — depende dos JSONs de /data, que nao
+  // sao publicados; fora do localhost o botao nao tem o que ler.
   const syncBtn = document.getElementById('sync-campaign-btn');
-  if (syncBtn) syncBtn.addEventListener('click', syncCampaignContent);
+  if (syncBtn) {
+    if (isLocalHost()) {
+      syncBtn.addEventListener('click', syncCampaignContent);
+    } else {
+      syncBtn.hidden = true;
+    }
+  }
 
   // Export Firestore → JSON (master only)
   const exportBtn = document.getElementById('export-json-btn');

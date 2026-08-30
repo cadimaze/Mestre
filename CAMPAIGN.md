@@ -968,6 +968,8 @@ A produção oficial registrada nos relatórios de Velmarch não bate com a quan
 **🔒 Camada 2** — *O Arquivo Confiscado tem um inventário incompleto*
 Quando A Corrente catalogou as invenções da ilha, um conjunto de fórmulas não foi encontrado — especificamente, as pesquisas mais avançadas sobre química de pólvora de uma família de gnomos. Os supervisores registraram "material destruído antes da adesão". Não foi destruído. Foi escondido, ou levado, ou ambos. Velmarch ainda procura, discretamente.
 
+> **Documento:** *Caderno de Proporções — As Fórmulas do Chapéu Largo* (no acervo). É o próprio material dado como destruído, escrito em três mãos ao longo de três gerações. As proporções estão em "passos de bancada", uma medida da casa cuja tabela de conversão foi arrancada antes do confisco — o caderno sozinho é uma chave sem fechadura. Na contracapa há uma coluna a lápis, recente, que bate com a discrepância da Camada 1.
+
 **🔒 Camada 3** — *A Estátua sabe quem é*
 A estátua do fundador sem nome é de um gnomo real — o avô do personagem que fugiu da ilha. Seu chapéu largo é um detalhe específico demais para ser coincidência. Alguém a construiu depois da "absorção", à noite, sem que A Corrente percebesse a tempo de impedir. Os mais velhos da ilha sabem de quem é a estátua. Não dizem.
 
@@ -1348,7 +1350,9 @@ VELMYR ── [sede de] ALDRIC XIV ── [guarda tomo de] HIMMEL VAREK
 
 ## 10. DOCUMENTOS HISTÓRICOS
 
-*Nove documentos encontráveis ao longo da campanha. Organizados em três séries de três volumes: A Grande Guerra, O Abraço das Águas Eternas e A Caça aos Elfos. Cada série escala do senso comum para a verdade completa.*
+*Nove documentos encontráveis ao longo da campanha, organizados em três séries de três volumes: A Grande Guerra, O Abraço das Águas Eternas e A Caça aos Elfos. Cada série escala do senso comum para a verdade completa.*
+
+*O acervo do site (`data/documents.json`) reúne estes nove mais o Tomo de Himmel e os documentos avulsos ligados a ganchos pessoais — Dossiê de Tulo Bresh, Esboço de Rota até Velmyr, Carta de Thorne para Cid e o Caderno de Proporções do Ancoradouro de Latão. Ver o apêndice de documentos do `ROTEIRO.md`.*
 
 ---
 

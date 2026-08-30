@@ -132,7 +132,16 @@ Ilha metalúrgica, independente de Velmarch. Ferreiros, mercadores de metal, est
 - Reparação do barco, equipamento melhor
 - Rumores sobre os fugitivos de Kaldera já circulam nos portos
 - Se Cid é jogador: Aethon é a ilha natal — o pai Thorne ainda trabalha nos estaleiros; a mãe Liris foi levada para o Ancoradouro de Latão
-- Possível NPC relevante para a história de outro jogador
+- Se o personagem gnomo é jogador: o Ancoradouro é a ilha natal — a estátua sem nome na praça é do avô dele, e o caderno de fórmulas da família continua escondido
+
+---
+
+### 📄 Documentos disponíveis no Arco 3A
+
+| Documento | Como encontrar |
+|---|---|
+| *Carta de Thorne para Cid* | Entregue pelo pai em Aethon, ou encontrada na bancada da oficina |
+| *Caderno de Proporções — As Fórmulas do Chapéu Largo* | Ancoradouro de Latão — escondido na "bancada pequena" da oficina antiga, nos Becos dos Inventores. As folhas finais (a tabela de conversão) foram arrancadas e são recompensa separada |
 
 ---
 
@@ -330,6 +339,8 @@ Os jogadores sabem tudo: a Maré Alta foi intencional, o oceano é um cárcere, 
 
 ## APÊNDICE — MAPA DE DOCUMENTOS
 
+### As três séries históricas
+
 | Documento | Vol. | Arco |
 |---|---|---|
 | A Guerra que Partiu o Mundo | I | Arco 1 — Kaldera |
@@ -343,11 +354,22 @@ Os jogadores sabem tudo: a Maré Alta foi intencional, o oceano é um cárcere, 
 | Lamento de Galadriel Cass | III | Arco 5 — Marvosa ou Arco 4 — Ondra |
 | Tomo de Himmel Varek | Lendário | Arco 8 — Velmyr |
 
+### Documentos avulsos
+
+| Documento | Arco | Observação |
+|---|---|---|
+| Dossiê de Tulo Bresh — O Artefato de Velmyr | Arco 1 — Kaldera | Nos papéis do governador; é o que põe o tomo no radar do grupo |
+| Esboço de Rota até Velmyr | Arco 2 — Mar Aberto | Da mão de Soren; a rota "tecnicamente válida" que Selavin calculou |
+| Carta de Thorne para Cid | Arco 3A — Aethon | Gancho pessoal de Cid; entregue pelo pai ou encontrada na oficina |
+| Caderno de Proporções — As Fórmulas do Chapéu Largo | Arco 3A — Ancoradouro de Latão | Gancho pessoal do personagem gnomo; é o "material destruído antes da adesão" que Velmarch nunca achou |
+
+> **Fonte de verdade:** `data/documents.json` (14 documentos). Este apêndice é um resumo — ao criar um documento novo, criar lá primeiro.
+
 ---
 
 ## APÊNDICE — ITENS
 
-> A ser preenchido quando os itens forem criados.
+> A ser preenchido quando os itens forem criados. `data/items.json` já está ligado ao seed e à sincronização — basta escrever os itens lá (mesmo formato dos documentos: `id`, `name`, `itemType`, `rarity`, `description`, `secretsList`, `visibility`) que eles aparecem no Acervo.
 
 | Item | Onde encontrar | Arco |
 |---|---|---|

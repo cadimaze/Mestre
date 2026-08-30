@@ -255,5 +255,61 @@
       "mode": "all",
       "playerIds": []
     }
+  },
+  {
+    "id": "caderno-proporcoes-latao",
+    "name": "Caderno de Proporções — As Fórmulas do Chapéu Largo",
+    "docType": "anotação",
+    "period": "Da república dos artesãos até a semana da 'adesão' — três gerações de uma mesma bancada",
+    "author": "Três gerações de uma família de artesãos do Ancoradouro de Latão — assinado apenas com a marca do chapéu de aba larga",
+    "description": "O caderno de bancada que A Corrente catalogou como 'material destruído antes da adesão' e nunca encontrou. Reúne gerações de pesquisa em química de pólvora do Ancoradouro de Latão — a queima fria, a carga que empurra, e o registro honesto de cada erro. As folhas finais, com a tabela de conversão que dá sentido às medidas, foram arrancadas antes do confisco.",
+    "content": "[Caderno de capa de couro cru, sem nome. Na lombada, gravada a fogo, a silhueta de um chapéu de aba larga. As primeiras folhas estão gastas de manuseio; as últimas foram arrancadas.]\n\n— PRIMEIRA MÃO — letra miúda, regular, tinta preta já parda —\n\nProporção não é receita. É conversa. Quem decora o número faz pólvora que serve; quem entende por que o número é aquele faz pólvora que obedece.\n\nAnoto aqui o que a Grande Forja não anota. A Forja registra o que deu certo — e o que deu certo é a parte menos interessante do ofício. Eu quero guardar o que quase deu, o que deu demais, o que deu errado de um jeito que ensinou.\n\nAviso a quem vier: todas as medidas deste caderno estão em passos de bancada, não em onças de mercado. Quem não souber quanto vale um passo de bancada nesta casa vai ler números certos e fabricar coisa nenhuma. Isso não é desconfiança. É bom senso: fórmula sem medida é história; história não explode.\n\nDa queima fria — Terceira tentativa. O ponto não é fazer arder mais. É fazer arder sem anunciar. A fumaça amarela é o que denuncia a oficina a três colinas de distância. Trabalhar a proporção até que a fumaça saia clara e o cheiro morra antes de sair do beco.\n\nDa carga que empurra — Nona tentativa. Uma carga que não estoura: empurra. Serve para lançar cabo de amarração por cima de um mastro sem estilhaçar a madeira. Serve para outras coisas também. Anotar assim mesmo. Quem inventa não escolhe o uso; escolhe a honestidade de escrever o que descobriu.\n\n— SEGUNDA MÃO — traço mais largo, pressa, tinta azul —\n\nMeu pai dizia que se guarda o erro. Guardo. Mas guardo também a hora: metade do que ele chamou de erro só era cedo demais.\n\nA queima fria funciona. Custa três vezes mais caro e leva quatro dias a mais de secagem, e por isso a Forja nunca vai querer. Ótimo. O que a Forja não quer, a Forja não confisca.\n\nCorrigido o passo de bancada para a régua nova. As folhas antigas continuam válidas — a conversão está na última folha. Não copiar a última folha. Nunca. Quem precisar dela que venha à casa e pergunte.\n\n— TERCEIRA MÃO — letra apressada, lápis, entradas curtas —\n\nChegaram com papéis. Ninguém desembainhou nada. Falaram em proteção de rota como quem fala do tempo.\n\nTrês semanas para a adesão. Três dias para o confisco. Escrevo isto para que fique claro para quem vier: não perdemos uma guerra. Perdemos uma reunião.\n\nLevaram tudo da bancada grande. Catalogaram folha por folha, com um escrivão que não sabia o que estava lendo e um supervisor que sabia. Chamam o prédio de Arquivo. Nós chamamos de outra coisa.\n\nNão perguntaram pela bancada pequena. Não ocorreu a eles que a bancada pequena fosse bancada.\n\nRegistraram no inventário deles: material destruído antes da adesão. Assinei embaixo. Foi a única mentira que contei na vida com a mão firme.\n\nÚltima entrada desta mão — Arranquei as folhas do fim. Estão onde tu sabes, se és da casa. Se não és da casa e chegaste até aqui, então a casa acabou, e este caderno na tua mão é uma chave sem fechadura: números certos, medida perdida.\n\nNão tenho pena de ti. Tenho pena do meu avô, que ensinou este ofício em praça aberta porque acreditava que fórmula guardada apodrece. Ele estava certo. Só não estava certo para este século.\n\nPuseram uma estátua dele na praça e fingem que não sabem de quem é. Nós sabemos. Não dizemos.\n\n[Na contracapa, a lápis — traço recente, letra que não é nenhuma das três: uma coluna de números riscados e refeitos, somas de matéria-prima que não fecham com nada escrito neste caderno. A última linha foi apagada e reescrita por cima três vezes.]",
+    "rarity": "raro",
+    "secretsList": [
+      {
+        "id": "caderno-latao-s1",
+        "title": "É metade de um documento — e a metade inútil",
+        "content": "Todas as proporções do caderno estão em 'passos de bancada', uma medida particular da família que só existe na tabela de conversão das folhas finais — arrancadas antes do confisco. Sem elas, quem tiver o caderno tem fórmulas exatas e nenhuma forma de executá-las. É por isso que o documento sobreviveu: quem o escondeu sabia que ele sozinho não entrega nada. As folhas que faltam estão 'onde tu sabes, se és da casa' — a critério do Mestre: com o personagem gnomo, com sua família, na oficina antiga dos Becos dos Inventores, ou dentro da própria estátua.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      },
+      {
+        "id": "caderno-latao-s2",
+        "title": "Velmarch ainda procura por isto (Camada 2 do Ancoradouro)",
+        "content": "Este é exatamente o conjunto de fórmulas que os supervisores registraram como destruído no Arquivo Confiscado. O registro é falso e alguém em Velmarch desconfia disso: a busca continua, discreta, sem mandado e sem alarde. Carregar o caderno abertamente pelo Latão é um risco real — reconhecer a marca do chapéu na lombada não exige perícia, só idade suficiente para lembrar. Um oficial d'A Corrente que veja a capa entende o que está vendo.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      },
+      {
+        "id": "caderno-latao-s3",
+        "title": "A mão recente na contracapa (Camada 1 do Ancoradouro)",
+        "content": "A coluna a lápis na contracapa não é de nenhuma das três mãos do caderno e é recente. São somas de matéria-prima — e batem exatamente com a diferença entre o consumo da Grande Forja e a produção declarada nos relatórios de Velmarch. Alguém nos Becos dos Inventores continua fabricando a partir destas fórmulas, fora dos registros, e teve o caderno em mãos depois de escondido. Isso significa que alguém vivo conhece o passo de bancada — e que os jogadores não são os únicos atrás das folhas que faltam.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      },
+      {
+        "id": "caderno-latao-s4",
+        "title": "Confirma a identidade da estátua (Camada 3 do Ancoradouro)",
+        "content": "A entrada final da terceira mão diz, sem rodeios, que a Estátua do Fundador Sem Nome é do avô de quem escreve — e que a ilha inteira sabe e se cala. Para um personagem gnomo do Latão, o caderno é prova documental da própria linhagem. Para qualquer outro, é a peça que liga a estátua da praça ao inventário incompleto do Arquivo Confiscado: a mesma família, o mesmo silêncio, a mesma coisa que Velmarch nunca achou.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      }
+    ],
+    "contentVisibility": {
+      "mode": "hidden",
+      "playerIds": []
+    },
+    "visibility": {
+      "mode": "hidden",
+      "playerIds": []
+    }
   }
 ]

@@ -532,26 +532,21 @@
 /* Entrada suave dos cards */
 .characters-grid .character-card,
 .locations-grid .location-card,
-.factions-grid .faction-card,
-.npcs-grid .npc-card {
+.factions-grid .faction-card {
   animation: cardFadeUp .4s var(--ease-out) both;
 }
 .characters-grid .character-card:nth-child(2),
 .locations-grid .location-card:nth-child(2),
-.factions-grid .faction-card:nth-child(2),
-.npcs-grid .npc-card:nth-child(2) { animation-delay: .04s; }
+.factions-grid .faction-card:nth-child(2) { animation-delay: .04s; }
 .characters-grid .character-card:nth-child(3),
 .locations-grid .location-card:nth-child(3),
-.factions-grid .faction-card:nth-child(3),
-.npcs-grid .npc-card:nth-child(3) { animation-delay: .08s; }
+.factions-grid .faction-card:nth-child(3) { animation-delay: .08s; }
 .characters-grid .character-card:nth-child(4),
 .locations-grid .location-card:nth-child(4),
-.factions-grid .faction-card:nth-child(4),
-.npcs-grid .npc-card:nth-child(4) { animation-delay: .12s; }
+.factions-grid .faction-card:nth-child(4) { animation-delay: .12s; }
 .characters-grid .character-card:nth-child(n+5),
 .locations-grid .location-card:nth-child(n+5),
-.factions-grid .faction-card:nth-child(n+5),
-.npcs-grid .npc-card:nth-child(n+5) { animation-delay: .16s; }
+.factions-grid .faction-card:nth-child(n+5) { animation-delay: .16s; }
 
 @keyframes cardFadeUp {
   from { opacity: 0; transform: translateY(14px) scale(.98); }

@@ -78,10 +78,6 @@ service cloud.firestore {
         allow read: if isAuth() && isVisible();
       }
 
-      match /npcs/{id} {
-        allow read, write: if isMaster();
-      }
-
       // Curadoria de curiosidades do painel — todos leem; só o mestre edita
       match /curiosities/{id} {
         allow read:  if isAuth();
