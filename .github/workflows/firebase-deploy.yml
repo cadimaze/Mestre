@@ -34,13 +34,16 @@ jobs:
 
       # As regras vivem no repositorio (firebase.json aponta para elas), mas ate
       # aqui nunca eram publicadas: o deploy so cobria hosting. Roda depois do
-      # hosting para que uma falha de permissao nas rules nao derrube o site.
-      - name: Deploy Firestore and Storage rules
+      # hosting para que uma falha aqui nao derrube o site.
+      #
+      # So firestore: o app nao usa Firebase Storage (as imagens vao para o
+      # Cloudinary), o bucket nunca foi provisionado e "--only storage" falha.
+      - name: Deploy Firestore rules
         run: |
           set -euo pipefail
           export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/firebase-sa.json"
           npx -y firebase-tools@13 deploy \
-            --only firestore:rules,storage \
+            --only firestore:rules \
             --project mestreapp-4e3e1 \
             --non-interactive \
             --force
