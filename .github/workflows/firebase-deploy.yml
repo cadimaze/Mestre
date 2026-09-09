@@ -15,15 +15,32 @@ jobs:
         with:
           node-version: 20
 
-      - name: Deploy to Firebase Hosting
+      - name: Write service account credentials
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         run: |
           set -euo pipefail
           printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/firebase-sa.json"
+
+      - name: Deploy to Firebase Hosting
+        run: |
+          set -euo pipefail
           export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/firebase-sa.json"
           npx -y firebase-tools@13 deploy \
             --only hosting \
+            --project mestreapp-4e3e1 \
+            --non-interactive \
+            --force
+
+      # As regras vivem no repositorio (firebase.json aponta para elas), mas ate
+      # aqui nunca eram publicadas: o deploy so cobria hosting. Roda depois do
+      # hosting para que uma falha de permissao nas rules nao derrube o site.
+      - name: Deploy Firestore and Storage rules
+        run: |
+          set -euo pipefail
+          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/firebase-sa.json"
+          npx -y firebase-tools@13 deploy \
+            --only firestore:rules,storage \
             --project mestreapp-4e3e1 \
             --non-interactive \
             --force
