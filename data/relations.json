@@ -708,5 +708,105 @@
     "type": "personal",
     "secret": true,
     "description": "Frieren Talion escreveu as Palavras de Frieren — carta jamais enviada, encontrada entre seus pertences em Reva. Revela que ela estava presente no Abraço das Águas Eternas e sobreviveu com o preço de carregar esse segredo."
+  },
+  {
+    "sourceId": "amelia",
+    "sourceType": "character",
+    "targetId": "corte-cortesas",
+    "targetType": "faction",
+    "label": "capitã do braço de extermínio",
+    "type": "political",
+    "secret": true,
+    "description": "As cortesãs que coletam informação respondem a coordenadoras. As que matam respondem a Amelia."
+  },
+  {
+    "sourceId": "amelia",
+    "sourceType": "character",
+    "targetId": "tulo-bresh",
+    "targetType": "character",
+    "label": "assassinou",
+    "type": "secret",
+    "secret": true,
+    "description": "Envenenou o Governador de Kaldera durante a audiência com os prisioneiros, por iniciativa própria, ao ouvir Soren Mael mencionar o artefato."
+  },
+  {
+    "sourceId": "amelia",
+    "sourceType": "character",
+    "targetId": "gloria-vittar",
+    "targetType": "character",
+    "label": "agiu sem ordem de",
+    "type": "secret",
+    "secret": true,
+    "description": "Vinte anos de lealdade absoluta quebrados numa noite. Amelia não voltou a Marvosa e não mandou explicação."
+  },
+  {
+    "sourceId": "gloria-vittar",
+    "sourceType": "character",
+    "targetId": "amelia",
+    "targetType": "character",
+    "label": "precisa encontrar antes da Corrente",
+    "type": "secret",
+    "secret": true,
+    "description": "Gloria não pode caçar a própria capitã de extermínio sem rachar a Corte ao meio — precisa de uma ferramenta descartável e já marcada pelo crime."
+  },
+  {
+    "sourceId": "amelia",
+    "sourceType": "character",
+    "targetId": "kaldera",
+    "targetType": "location",
+    "label": "desapareceu de",
+    "type": "secret",
+    "secret": true,
+    "description": "Saiu pela porta lateral do escritório de Tulo durante o combate e não foi vista desde então."
+  },
+  {
+    "sourceId": "hitch-fogo-fatuo",
+    "sourceType": "character",
+    "targetId": "mare-negra",
+    "targetType": "faction",
+    "label": "imediato do Dead Pool",
+    "type": "political",
+    "secret": false,
+    "description": "Segundo homem do navio-capitânia de Gangplank até morrer nas mãos dos jogadores."
+  },
+  {
+    "sourceId": "hitch-fogo-fatuo",
+    "sourceType": "character",
+    "targetId": "gangplank",
+    "targetType": "character",
+    "label": "imediato de",
+    "type": "political",
+    "secret": false,
+    "description": "Obediência absoluta que a tripulação lia como devoção."
+  },
+  {
+    "sourceId": "gangplank",
+    "sourceType": "character",
+    "targetId": "hitch-fogo-fatuo",
+    "targetType": "character",
+    "label": "aprisionou",
+    "type": "secret",
+    "secret": true,
+    "description": "A forma humana de Hitch era a jaula. Gangplank domina um método de prender criaturas elementais que não consta em lugar nenhum da sua reputação pública."
+  },
+  {
+    "sourceId": "hitch-fogo-fatuo",
+    "sourceType": "character",
+    "targetId": "o-peso",
+    "targetType": "character",
+    "label": "as cinzas desceram até",
+    "type": "secret",
+    "secret": true,
+    "description": "Ao morrer pela segunda vez, virou fumaça densa sugada para o fundo contra vento e corrente. Fogo não afunda — alguma coisa recolheu."
+  },
+  {
+    "sourceId": "thorne-mare",
+    "sourceType": "character",
+    "targetId": "aethon",
+    "targetType": "location",
+    "label": "morreu cobrindo a fuga em",
+    "type": "personal",
+    "secret": false,
+    "description": "Deu ao grupo um casco novo e ficou para trás no porto enquanto A Corrente fechava o cerco."
   }
 ]

@@ -1774,11 +1774,75 @@ function renderRoteiro() {
       <p>A frota mais temida de Pelágos cruza as rotas dos jogadores muito antes de eles entenderem com quem estão lidando. Dez a doze navios sob comando de Gangplank, controlando rotas com precisão territorial. Em portos, ninguém diz o nome em voz alta.</p>
       <div class="roteiro-nota">📌 Os momentos, em ordem: <strong>(1) Primeiro vislumbre</strong> — em mar aberto, velas negras no horizonte cortam a rota do grupo. Não é ataque, é cobrança: aquelas águas têm dono. Quem paga, navega; quem foge, vira história. Os jogadores ainda não sabem que é a Maré Negra. <strong>(2) Gangplank</strong> — lá na frente, navegando fundo demais sem se apresentar, o grupo é levado à presença do próprio Gangplank, a bordo do <em>Dead Pool</em>. Ele não grita. Avalia. Não ajuda por simpatia — só pelo que os jogadores valem para ele agora. Quem reconhece a hierarquia e se apresenta direito, ele ouve. Quem não, vira destroço.</div>
       <div class="roteiro-nota">📌 O mestre sabe: a Maré Negra executa serviços secretos para Aldric XIV — relação puramente financeira, sem lealdade. Isso pode (ou não) colocar Gangplank no caminho dos jogadores perto de Velmyr.</div>
+      <div class="roteiro-nota">⚔ <strong>Já aconteceu na mesa:</strong> o encontro com Gangplank veio muito antes do previsto, a caminho do Ancoradouro de Latão. Os jogadores mataram <strong>Hitch Fogo-Fátuo</strong>, imediato do Dead Pool — duas fases, porque a forma humana era jaula e a primeira morte só a abriu. A reação de Gangplank a perder o imediato ainda está em aberto e define o resto da linha da Maré Negra.</div>
+    </div>`;
+
+  // Diário de sessões — o que já aconteceu de fato na mesa.
+  // Para registrar uma sessão nova, acrescente um item no fim de `diario`
+  // e ajuste o `status` dos arcos correspondentes.
+  const diario = [
+    {
+      arco: 'Arco 1', local: 'Kaldera',
+      titulo: 'A cela, o Governador e o crime que não foi deles',
+      texto: 'O grupo se formou na cela do porto e encontrou Soren Mael, que ofereceu navegação em troca de ajuda para sair. Levados ao escritório do Governador Tulo Bresh, Soren mencionou o artefato na frente de quem não devia — havia uma cortesã na sala. O combate contra o guarda-costas orc cobriu a saída dela pela porta lateral. Tulo apareceu morto, envenenado, e o porto fechou.',
+      consequencia: 'A cortesã era <strong>Amelia</strong>, capitã do braço de extermínio da Corte das Cortesãs. Os jogadores deixaram Kaldera acusados de um assassinato que não cometeram, procurados pela Corrente e pelo Domínio de Velmarch.'
+    },
+    {
+      arco: 'Arco 2', local: 'Mar aberto',
+      titulo: 'A fuga, a magia e o monstro',
+      texto: 'Fugiram por mar com Soren Mael. Durante a travessia, Soren começou a conjurar — e disse, sem mentir, que era o primeiro contato da vida dele com magia. Um monstro marinho cortou a rota antes de chegarem a terra firme.',
+      consequencia: 'A magia de Soren é a fresta alargando: Selavin Doss foi magista élfico da língua alta, e o que vaza pela brecha não é poder concedido, é competência emprestada. Ver a camada nova na ficha de Soren Mael.'
+    },
+    {
+      arco: 'Arco 3A', local: 'Aethon',
+      titulo: 'O casco novo e o preço dele',
+      texto: 'Em Aethon o grupo conheceu Thorne Maré, mestre carpinteiro naval e pai de Cid. Thorne entregou a eles um casco novo — o melhor que suas mãos ainda faziam. Quando A Corrente fechou o cerco no porto, ficou para trás cobrindo a saída. Morreu ali.',
+      consequencia: '<strong>Thorne Maré: morto.</strong> Liris Maré, mãe de Cid, continua no Ancoradouro de Latão costurando velas militares para Velmarch — e não sabe de nada. Os jogadores são o único canal possível para a notícia, e estão indo exatamente para lá.'
+    },
+    {
+      arco: 'Arco 7B (fora de ordem)', local: 'Território da Maré Negra',
+      titulo: 'Gangplank e o que estava preso dentro de Hitch',
+      texto: 'A caminho do Ancoradouro de Latão, o grupo cruzou com Gangplank e seu imediato, <strong>Hitch Fogo-Fátuo</strong> — monge de túnica de linho, pés descalços, cordial e obediente demais. O combate teve duas fases: morto como homem, o que estava trancado dentro dele se ergueu livre e demoníaco. Morto de novo, as cinzas não se dispersaram: viraram fumaça densa e foram sugadas para o fundo do oceano, contra o vento e contra a corrente.',
+      consequencia: 'Primeiro sinal sensorial de <strong>O Peso</strong> para o grupo — fogo não afunda, alguma coisa recolheu. E Gangplank perdeu o imediato para os jogadores. O encontro com a Maré Negra aconteceu muito antes do previsto no roteiro original.'
+    }
+  ];
+
+  const fiosAbertos = [
+    ['Onde está Amelia', 'Não está se escondendo — está na frente. Ouviu sobre o tomo na mesma sala que os jogadores e tem vinte anos de rede de informantes de vantagem. Use-a como sombra: um alvo já morto, um registro já riscado, uma porta já arrombada.'],
+    ['Como Gangplank ficou', 'A definir na mesa. Ele respeita força genuína e Hitch era uma corrente, não um amigo — pode ter ficado impressionado, ou ter cobrado o prejuízo. A escolha aqui decide se a Maré Negra vira aliado caro, inimigo permanente ou indiferença calculada perto de Velmyr.'],
+    ['Liris não sabe', 'A viúva de Thorne está na ilha em que o grupo está entrando. Cid decide se conta, como conta, e se conta antes ou depois de precisar da ajuda dela.'],
+    ['O que desceu com as cinzas', 'O fundo do oceano de Pelágos não é fundo: é tampa. Plantar sem explicar — a explicação só chega no Tomo de Himmel, no Arco 8.'],
+    ['A magia de Soren', 'Quanto mais ele usa, menos fresta e mais porta. Cada conjuração é um passo em direção ao Arco 7.']
+  ];
+
+  const diarioBox = `
+    <div class="roteiro-diario">
+      <div class="roteiro-diario-header">
+        <span class="roteiro-diario-titulo">📖 Diário de Campanha</span>
+        <span class="roteiro-diario-agora">Agora: entrando no Ancoradouro de Latão</span>
+      </div>
+      ${diario.map(d => `
+        <div class="roteiro-diario-item">
+          <div class="roteiro-diario-meta"><span class="roteiro-diario-arco">${d.arco}</span><span class="roteiro-diario-local">${d.local}</span></div>
+          <div class="roteiro-diario-item-titulo">${d.titulo}</div>
+          <p class="roteiro-cena-texto">${d.texto}</p>
+          <div class="roteiro-nota">📌 ${d.consequencia}</div>
+        </div>
+      `).join('')}
+      <div class="roteiro-fios">
+        <div class="roteiro-docs-label">🧵 Fios em aberto</div>
+        ${fiosAbertos.map(([t, x]) => `
+          <div class="roteiro-doc-item">
+            <span class="roteiro-doc-nome">${t}</span>
+            <span class="roteiro-doc-como">${x}</span>
+          </div>
+        `).join('')}
+      </div>
     </div>`;
 
   const arcos = [
     {
-      id: 'arco1', num: '1', titulo: 'Kaldera: O Início', ilha: 'Kaldera',
+      id: 'arco1', status: 'concluido', num: '1', titulo: 'Kaldera: O Início', ilha: 'Kaldera',
       objetivo: 'Apresentação dos personagens, formação do grupo, fuga, gancho central — e primeira aparição de Cade Varek.',
       cenas: [
         {
@@ -1812,7 +1876,7 @@ function renderRoteiro() {
       ]
     },
     {
-      id: 'arco2', num: '2', titulo: 'O Mar Aberto: Primeiras Decisões', ilha: 'Mar Aberto',
+      id: 'arco2', status: 'concluido', num: '2', titulo: 'O Mar Aberto: Primeiras Decisões', ilha: 'Mar Aberto',
       objetivo: 'Primeiros momentos livres. Soren aprofunda o que sabe. Os jogadores escolhem o próximo destino.',
       cenas: [
         {
@@ -1833,19 +1897,50 @@ function renderRoteiro() {
       documentos: []
     },
     {
-      id: 'arco3a', num: '3A', titulo: 'Aethon: O Ancoradouro de Latão', ilha: 'Aethon',
-      objetivo: 'Recursos, história de Cid, backstory de jogadores. Ilha independente — os jogadores respiram.',
+      id: 'arco3a', status: 'concluido', num: '3A', titulo: 'Aethon: A Ilha das Velas', ilha: 'Aethon',
+      objetivo: 'Recursos, equipamento e a história de Cid. Ilha de estaleiros sob presença administrativa leve mas crescente de Velmarch.',
       cenas: [
         {
           titulo: 'O Que Encontram',
-          texto: 'Ilha metalúrgica independente de Velmarch. Ferreiros, mercadores de metal, estaleiros. Reparação do barco, equipamento melhor. Rumores sobre os fugitivos de Kaldera já circulam nos portos. Possível NPC relevante para a história pessoal de algum jogador.',
-          nota: 'Se Cid é jogador: Aethon é a ilha natal. O pai Thorne ainda trabalha nos estaleiros. A mãe Liris foi "realocada" para o Ancoradouro de Latão depois que Cid fugiu — Thorne não tentou ir atrás, ou não pôde.'
+          texto: 'Ilha montanhosa de estaleiros, conhecida em sete ilhas ao redor por uma coisa: seus barcos não afundam. Reparo e equipamento melhor. Rumores sobre os fugitivos de Kaldera já circulam nos portos.',
+          nota: 'Aethon é a ilha natal de Cid. O pai, Thorne Maré, trabalhava nos estaleiros. A mãe, Liris, foi "realocada" para o Ancoradouro de Latão depois que Cid fugiu.'
+        },
+        {
+          titulo: 'Thorne Maré — o que aconteceu na mesa',
+          texto: 'O grupo encontrou Thorne. Ele deu a eles um casco novo e ficou para trás cobrindo a saída do porto quando A Corrente fechou o cerco. Morreu ali.',
+          nota: 'Consequências ativas: Liris continua no Ancoradouro de Latão e não sabe. A morte provavelmente entrou nos arquivos do Domínio como resistência armada, o que encarece a cabeça de Cid — cujo registro de deserção continua ativo.'
         }
       ],
-      documentos: []
+      documentos: [
+        { nome: 'Carta de Thorne para Cid', como: 'Entregue pelo pai, ou encontrada depois entre as ferramentas da oficina' }
+      ]
     },
     {
-      id: 'arco3b', num: '3B', titulo: 'Kesvar: A Grande Biblioteca', ilha: 'Kesvar',
+      id: 'arco3d', status: 'atual', num: '3D', titulo: 'O Ancoradouro de Latão: A Forja Acorrentada', ilha: 'Ancoradouro de Latão',
+      objetivo: 'Ilha industrial ocupada por Velmarch. Onde o grupo está entrando agora — e onde está Liris Maré.',
+      cenas: [
+        {
+          titulo: 'O Que Encontram',
+          texto: 'Ilha pequena e densa, chaminés de fumaça amarelada, becos onde duas pessoas mal se cruzam, e um porto com brilho metálico na água de décadas de resíduo de fundição. Foi durante séculos uma república de artesãos onde quem inventava mandava. A Corrente chegou com papéis e argumentos de proteção de rota: a adesão levou três semanas, o confisco das oficinas levou três dias. Hoje produz munição, artilharia e componentes navais dentro de cotas que ninguém negociou.',
+          nota: 'Ao contrário do que o roteiro antigo dizia, esta ilha NÃO é independente de Velmarch — é ocupada. O grupo entra numa ilha sob administração da Corrente, procurado pela Corrente. Rumores de Kaldera já chegaram aqui.'
+        },
+        {
+          titulo: 'Liris Maré',
+          texto: 'A mãe de Cid está aqui, nas oficinas de vela, costurando velas militares para Velmarch desde a realocação forçada. Não sabe que Thorne morreu. Não sabe que o filho está na ilha.',
+          nota: 'Este é o beat emocional do arco e ele chegou por acidente de rota, não por planejamento. Deixe o grupo escolher o tempo. Liris é também a porta prática para os Becos dos Inventores: ela trabalha na ilha há anos e conhece quem ainda inventa de madrugada.'
+        },
+        {
+          titulo: 'O Arquivo Confiscado e o caderno',
+          texto: 'O edifício onde A Corrente catalogou todos os projetos e protótipos da ilha durante a absorção. Os artesãos chamam de A Morgue. O inventário tem um buraco: as pesquisas mais avançadas de química de pólvora de uma família de gnomos, registradas como material destruído antes da adesão. Não foram destruídas.',
+          nota: 'Gancho do personagem gnomo, se houver um na mesa. A estátua de latão na praça central é do avô dele. O Caderno de Proporções está no acervo — mas é metade de um documento: as medidas estão em passos de bancada e a tabela de conversão foi arrancada. Alguém com letra recente andou usando o caderno, e as somas batem com a produção que não aparece nos relatórios de Velmarch.'
+        }
+      ],
+      documentos: [
+        { nome: 'Caderno de Proporções — As Fórmulas do Chapéu Largo', como: 'Escondido na bancada pequena da oficina antiga, nos Becos dos Inventores. As folhas finais são recompensa separada' }
+      ]
+    },
+    {
+      id: 'arco3b', status: 'planejado', num: '3B', titulo: 'Kesvar: A Grande Biblioteca', ilha: 'Kesvar',
       objetivo: 'A maior biblioteca acessível fora de Velmyr — e Vaelkor, o dragão ancião que guarda as câmaras profundas.',
       cenas: [
         {
@@ -1865,7 +1960,7 @@ function renderRoteiro() {
       ]
     },
     {
-      id: 'arco3c', num: '3C', titulo: 'Mosteiro da Costa Afogada', ilha: 'Mosteiro da Costa Afogada',
+      id: 'arco3c', status: 'planejado', num: '3C', titulo: 'Mosteiro da Costa Afogada', ilha: 'Mosteiro da Costa Afogada',
       objetivo: 'Informação, XP e item poderoso. Os monges estão isolados por uma besta que açola as águas da ilha.',
       cenas: [
         {
@@ -1883,7 +1978,7 @@ function renderRoteiro() {
       ]
     },
     {
-      id: 'arco4', num: '4', titulo: 'Ondra: A Anciã', ilha: 'Ondra',
+      id: 'arco4', status: 'planejado', num: '4', titulo: 'Ondra: A Anciã', ilha: 'Ondra',
       objetivo: 'Galadriel Cass. A memória élfica mais completa que ainda existe numa mente viva.',
       cenas: [
         {
@@ -1905,7 +2000,7 @@ function renderRoteiro() {
       ]
     },
     {
-      id: 'arco5', num: '5', titulo: 'Marvosa: A Corte das Sombras', ilha: 'Marvosa',
+      id: 'arco5', status: 'planejado', num: '5', titulo: 'Marvosa: A Corte das Sombras', ilha: 'Marvosa',
       objetivo: 'Confronto político com Gloria Vittar. Proposta que define a segunda metade da campanha.',
       cenas: [
         {
@@ -1920,7 +2015,7 @@ function renderRoteiro() {
       ]
     },
     {
-      id: 'arco6', num: '6', titulo: 'Reva: A Memória do Mundo', ilha: 'Reva',
+      id: 'arco6', status: 'planejado', num: '6', titulo: 'Reva: A Memória do Mundo', ilha: 'Reva',
       objetivo: 'Frieren sabe o que ninguém mais sabe. Fern guarda o que Frieren não consegue mais guardar sozinha.',
       cenas: [
         {
@@ -1935,7 +2030,7 @@ function renderRoteiro() {
       ]
     },
     {
-      id: 'arco7', num: '7', titulo: 'A Revelação de Soren', ilha: 'Qualquer lugar',
+      id: 'arco7', status: 'planejado', num: '7', titulo: 'A Revelação de Soren', ilha: 'Qualquer lugar',
       objetivo: 'Os sinais acumulados tornam-se impossíveis de ignorar. Soren é uma vítima — e uma ferramenta.',
       cenas: [
         {
@@ -1951,7 +2046,7 @@ function renderRoteiro() {
       documentos: []
     },
     {
-      id: 'arco7b', num: '7B', titulo: 'Os Mares de Gangplank', ilha: 'Mar Aberto — território da Maré Negra',
+      id: 'arco7b', status: 'concluido', num: '7B', titulo: 'Os Mares de Gangplank', ilha: 'Mar Aberto — território da Maré Negra',
       objetivo: 'O encontro com Gangplank em pessoa, a bordo do Dead Pool — rota quase inevitável a caminho de Velmyr.',
       cenas: [
         {
@@ -1968,7 +2063,7 @@ function renderRoteiro() {
       documentos: []
     },
     {
-      id: 'arco8', num: '8', titulo: 'Velmyr: O Coração do Império', ilha: 'Velmyr',
+      id: 'arco8', status: 'planejado', num: '8', titulo: 'Velmyr: O Coração do Império', ilha: 'Velmyr',
       objetivo: 'A verdade completa. O Tomo de Himmel Varek. Cade Varek os leva para dentro do palácio.',
       cenas: [
         {
@@ -1990,7 +2085,7 @@ function renderRoteiro() {
       ]
     },
     {
-      id: 'arco-final', num: '∞', titulo: 'A Escolha Impossível', ilha: 'O Ponto de Selamento',
+      id: 'arco-final', status: 'planejado', num: '∞', titulo: 'A Escolha Impossível', ilha: 'O Ponto de Selamento',
       objetivo: 'A decisão final. Não há resposta certa.',
       cenas: [
         {
@@ -2031,6 +2126,10 @@ function renderRoteiro() {
           <tr><td>Memória dos Derradeiros Dias (Aelindra)</td><td>III</td><td>Arco 6 — Reva</td></tr>
           <tr><td>Palavras de Frieren</td><td>III</td><td>Arco 6 — Reva</td></tr>
           <tr><td>Tomo de Himmel Varek</td><td>Lendário</td><td>Arco 8 — Velmyr</td></tr>
+          <tr><td>Dossiê de Tulo Bresh — O Artefato de Velmyr</td><td>—</td><td>Arco 1 — Kaldera</td></tr>
+          <tr><td>Esboço de Rota até Velmyr</td><td>—</td><td>Arco 2 — Mar Aberto</td></tr>
+          <tr><td>Carta de Thorne para Cid</td><td>—</td><td>Arco 3A — Aethon</td></tr>
+          <tr><td>Caderno de Proporções — As Fórmulas do Chapéu Largo</td><td>—</td><td>Arco 3D — Ancoradouro de Latão</td></tr>
         </tbody>
       </table>
     </div>`;
@@ -2042,6 +2141,8 @@ function renderRoteiro() {
         <div class="roteiro-subtitle">Documento exclusivo do Mestre · Esboço linear da campanha</div>
       </div>
 
+      ${diarioBox}
+
       ${cadeBox}
       ${mareNegraBox}
 
@@ -2051,6 +2152,9 @@ function renderRoteiro() {
             <div class="roteiro-arco-header" onclick="this.parentElement.classList.toggle('open')">
               <span class="roteiro-arco-num">Arco ${a.num}</span>
               <span class="roteiro-arco-titulo">${a.titulo}</span>
+              ${a.status && a.status !== 'planejado'
+                ? `<span class="roteiro-arco-status is-${a.status}">${a.status === 'concluido' ? '✓ jogado' : '● atual'}</span>`
+                : ''}
               <span class="roteiro-arco-ilha">${a.ilha}</span>
               <span class="roteiro-arco-chevron">▸</span>
             </div>

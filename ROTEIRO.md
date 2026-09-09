@@ -9,7 +9,8 @@
 |---|---|---|
 | 1 | Kaldera | Apresentação, fuga, gancho central — Cade Varek aparece |
 | 2 | Mar Aberto | Primeira liberdade, primeira decisão |
-| 3A | Aethon | Recursos, história de Cid, backstory de jogadores |
+| 3A | Aethon | Recursos, história de Cid, backstory de jogadores — ✓ jogado |
+| 3D | Ancoradouro de Latão | Ilha ocupada, Liris Maré, o Arquivo Confiscado — ● arco atual |
 | 3B | Kesvar | Grande biblioteca, Vaelkor o dragão, item |
 | 3C | Mosteiro da Costa Afogada | Besta que açola a região, informação, item |
 | 4 | Ondra | Galadriel Cass, a memória élfica viva |
@@ -19,7 +20,49 @@
 | 8 | Velmyr | O Tomo de Himmel, a verdade completa — Cade Varek os leva |
 | Final | O Ponto de Selamento | A escolha impossível |
 
-Os arcos 3A, 3B, 3C, 4, 5 e 6 podem acontecer em ordens diferentes conforme as escolhas dos jogadores.
+Os arcos 3A, 3B, 3C, 3D, 4, 5 e 6 podem acontecer em ordens diferentes conforme as escolhas dos jogadores. O Arco 7B (Gangplank) **já aconteceu**, muito antes do previsto — ver o Diário.
+
+---
+
+## 📖 DIÁRIO DE CAMPANHA
+
+> Registro do que aconteceu de fato na mesa. **Estado atual: o grupo está entrando no Ancoradouro de Latão.**
+
+### Arco 1 — Kaldera · A cela, o Governador e o crime que não foi deles
+
+O grupo se formou na cela do porto e encontrou **Soren Mael**, que ofereceu navegação em troca de ajuda para sair. Levados ao escritório do Governador **Tulo Bresh**, Soren mencionou o artefato na frente de quem não devia — havia uma cortesã na sala. O combate contra o guarda-costas orc cobriu a saída dela pela porta lateral. Tulo apareceu morto, envenenado, e o porto fechou.
+
+> **Consequência:** a cortesã era **Amelia**, capitã do braço de extermínio da Corte das Cortesãs. Os jogadores deixaram Kaldera acusados de um assassinato que não cometeram, procurados pela Corrente e pelo Domínio de Velmarch.
+
+### Arco 2 — Mar aberto · A fuga, a magia e o monstro
+
+Fugiram por mar com Soren Mael. Durante a travessia, **Soren começou a conjurar** — e disse, sem mentir, que era o primeiro contato da vida dele com magia. Um monstro marinho cortou a rota antes de chegarem a terra firme.
+
+> **Consequência:** a magia de Soren é a fresta alargando. Selavin Doss foi magista élfico da língua alta; o que vaza pela brecha não é poder concedido, é competência emprestada. Ver a camada nova na ficha de Soren.
+
+### Arco 3A — Aethon · O casco novo e o preço dele
+
+O grupo conheceu **Thorne Maré**, mestre carpinteiro naval e pai de Cid. Thorne entregou a eles um casco novo. Quando A Corrente fechou o cerco no porto, ficou para trás cobrindo a saída. Morreu ali.
+
+> **Consequência:** **Thorne Maré está morto.** Liris Maré, mãe de Cid, continua no Ancoradouro de Latão costurando velas militares para Velmarch — e não sabe de nada. Os jogadores são o único canal possível para a notícia, e estão indo exatamente para lá.
+
+### Arco 7B (fora de ordem) — Território da Maré Negra · Gangplank e o que estava preso dentro de Hitch
+
+A caminho do Ancoradouro de Latão, o grupo cruzou com **Gangplank** e seu imediato, **Hitch Fogo-Fátuo** — monge de túnica de linho, pés descalços, cordial e obediente demais. O combate teve duas fases: morto como homem, o que estava trancado dentro dele se ergueu livre e demoníaco. Morto de novo, as cinzas não se dispersaram: viraram fumaça densa e foram sugadas para o fundo do oceano, contra o vento e contra a corrente.
+
+> **Consequência:** primeiro sinal sensorial de **O Peso** para o grupo — fogo não afunda, alguma coisa recolheu. E Gangplank perdeu o imediato para os jogadores.
+
+---
+
+### 🧵 Fios em aberto
+
+| Fio | Situação |
+|---|---|
+| **Onde está Amelia** | Não está se escondendo — está na frente. Ouviu sobre o tomo na mesma sala que os jogadores e tem vinte anos de rede de informantes de vantagem. Use-a como sombra: um alvo já morto, um registro já riscado, uma porta já arrombada |
+| **Como Gangplank ficou** | *A definir na mesa.* Ele respeita força genuína e Hitch era uma corrente, não um amigo — pode ter ficado impressionado, ou ter cobrado o prejuízo. Esta escolha decide se a Maré Negra vira aliado caro, inimigo permanente ou indiferença calculada perto de Velmyr |
+| **Liris não sabe** | A viúva de Thorne está na ilha em que o grupo está entrando. Cid decide se conta, como conta, e se conta antes ou depois de precisar da ajuda dela |
+| **O que desceu com as cinzas** | O fundo do oceano de Pelágos não é fundo: é tampa. Plantar sem explicar — a explicação só chega no Tomo de Himmel, no Arco 8 |
+| **A magia de Soren** | Quanto mais ele usa, menos fresta e mais porta. Cada conjuração é um passo em direção ao Arco 7 |
 
 ---
 
@@ -124,15 +167,16 @@ Ganchos por ilha: Aethon (equipamento), Kesvar ("se os documentos existem fora d
 
 ---
 
-## ARCO 3A — AETHON: O ANCORADOURO DE LATÃO
+## ARCO 3A — AETHON: A ILHA DAS VELAS ✓ jogado
 
-Ilha metalúrgica, independente de Velmarch. Ferreiros, mercadores de metal, estaleiros. Relativa liberdade — os jogadores respiram.
+Ilha montanhosa de estaleiros sob presença administrativa leve mas crescente de Velmarch. Conhecida em sete ilhas ao redor por uma coisa: seus barcos não afundam.
 
 **O que encontram:**
 - Reparação do barco, equipamento melhor
 - Rumores sobre os fugitivos de Kaldera já circulam nos portos
-- Se Cid é jogador: Aethon é a ilha natal — o pai Thorne ainda trabalha nos estaleiros; a mãe Liris foi levada para o Ancoradouro de Latão
-- Se o personagem gnomo é jogador: o Ancoradouro é a ilha natal — a estátua sem nome na praça é do avô dele, e o caderno de fórmulas da família continua escondido
+- Se Cid é jogador: Aethon é a ilha natal — o pai Thorne trabalhava nos estaleiros; a mãe Liris foi levada para o Ancoradouro de Latão
+
+**O que aconteceu na mesa:** Thorne deu ao grupo um casco novo e morreu cobrindo a saída do porto quando A Corrente fechou o cerco. Ver o Diário.
 
 ---
 
@@ -140,8 +184,29 @@ Ilha metalúrgica, independente de Velmarch. Ferreiros, mercadores de metal, est
 
 | Documento | Como encontrar |
 |---|---|
-| *Carta de Thorne para Cid* | Entregue pelo pai em Aethon, ou encontrada na bancada da oficina |
-| *Caderno de Proporções — As Fórmulas do Chapéu Largo* | Ancoradouro de Latão — escondido na "bancada pequena" da oficina antiga, nos Becos dos Inventores. As folhas finais (a tabela de conversão) foram arrancadas e são recompensa separada |
+| *Carta de Thorne para Cid* | Entregue pelo pai, ou encontrada depois entre as ferramentas da oficina |
+
+---
+
+## ARCO 3D — O ANCORADOURO DE LATÃO: A FORJA ACORRENTADA ● arco atual
+
+> **Correção:** o roteiro antigo tratava esta ilha como parte de Aethon e a descrevia como "independente de Velmarch". São ilhas distintas, e o Ancoradouro **é ocupado** — o grupo está entrando numa ilha administrada pela Corrente, procurado pela Corrente.
+
+Ilha pequena e densa, chaminés de fumaça amarelada, becos onde duas pessoas mal se cruzam. Foi durante séculos uma república de artesãos onde quem inventava mandava. A adesão ao Domínio levou três semanas; o confisco das oficinas levou três dias. Hoje produz munição, artilharia e componentes navais dentro de cotas que ninguém negociou.
+
+**O que encontram:**
+- **Liris Maré** — a mãe de Cid, nas oficinas de vela, costurando para Velmarch desde a realocação forçada. Não sabe que Thorne morreu. Não sabe que o filho está na ilha. Este é o beat emocional do arco, e ele chegou por acidente de rota, não por planejamento — deixe o grupo escolher o tempo
+- **O Arquivo Confiscado** (que os artesãos chamam de A Morgue) — o inventário tem um buraco registrado como "material destruído antes da adesão"
+- Se o personagem gnomo é jogador: o Ancoradouro é a ilha natal — a estátua sem nome na praça é do avô dele
+- Liris é também a porta prática para os Becos dos Inventores: trabalha na ilha há anos e conhece quem ainda inventa de madrugada
+
+---
+
+### 📄 Documentos disponíveis no Arco 3D
+
+| Documento | Como encontrar |
+|---|---|
+| *Caderno de Proporções — As Fórmulas do Chapéu Largo* | Escondido na "bancada pequena" da oficina antiga, nos Becos dos Inventores. As folhas finais (a tabela de conversão) foram arrancadas e são recompensa separada |
 
 ---
 
@@ -361,7 +426,7 @@ Os jogadores sabem tudo: a Maré Alta foi intencional, o oceano é um cárcere, 
 | Dossiê de Tulo Bresh — O Artefato de Velmyr | Arco 1 — Kaldera | Nos papéis do governador; é o que põe o tomo no radar do grupo |
 | Esboço de Rota até Velmyr | Arco 2 — Mar Aberto | Da mão de Soren; a rota "tecnicamente válida" que Selavin calculou |
 | Carta de Thorne para Cid | Arco 3A — Aethon | Gancho pessoal de Cid; entregue pelo pai ou encontrada na oficina |
-| Caderno de Proporções — As Fórmulas do Chapéu Largo | Arco 3A — Ancoradouro de Latão | Gancho pessoal do personagem gnomo; é o "material destruído antes da adesão" que Velmarch nunca achou |
+| Caderno de Proporções — As Fórmulas do Chapéu Largo | Arco 3D — Ancoradouro de Latão | Gancho pessoal do personagem gnomo; é o "material destruído antes da adesão" que Velmarch nunca achou |
 
 > **Fonte de verdade:** `data/documents.json` (14 documentos). Este apêndice é um resumo — ao criar um documento novo, criar lá primeiro.
 

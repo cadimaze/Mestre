@@ -568,6 +568,47 @@ Não vende informação por dinheiro. Vende por favores, por influência, por pr
 
 -----
 
+#### AMELIA
+
+**Papel:** Capitã de extermínio da Corte das Cortesãs
+**Status:** Desaparecida desde a noite da morte de Tulo Bresh
+**Localização:** Desconhecida — vista pela última vez em Kaldera
+
+##### Descrição Pública
+
+Nos arquivos da Corrente ela não existe. Nos de Marvosa, menos ainda. O que existe é uma mulher que esteve no escritório do Governador Tulo Bresh na noite em que ele morreu — que serviu a bebida, que riu na hora certa, e que saiu pela porta lateral enquanto um orc de duzentos quilos ocupava a atenção de todos na sala.
+
+Quem tenta descrevê-la não consegue duas vezes igual. As testemunhas de Kaldera só concordam no detalhe mais inútil possível: ela ouvia. Falava pouco. Ouvia com o corpo inteiro, como quem está trabalhando.
+
+Dentro da Corte, Amelia não é informante. As cortesãs que coletam informação respondem a coordenadoras; as coordenadoras respondem a Marvosa. As que matam respondem a Amelia.
+
+##### Personalidade
+
+Paciente de um jeito que assusta quem entende o que está vendo. Não improvisa e não se apressa: prepara, observa, e age uma vez só. Trata o próprio ofício como ofício — não sente prazer em matar e não sente culpa, o que a torna bem pior do que alguém que sentisse qualquer um dos dois. Com Gloria Vittar era leal, não por afeto, mas porque Gloria era a única pessoa cujo julgamento ela respeitava mais do que o próprio.
+
+##### Segredos
+
+**🔒 Camada 1** — *Foi Amelia quem matou Tulo Bresh*
+O veneno já estava no copo havia dez minutos quando o combate começou. Qualquer investigação competente do escritório chega nela e não nos jogadores. O problema é que ninguém em Kaldera está investigando com competência — estão investigando com pressa.
+
+**🔒 Camada 2** — *Ela agiu por conta própria*
+Ninguém mandou matar Tulo. Amelia estava ali para ouvir, e ouviu: quando Soren mencionou o artefato diante do Governador, ela entendeu na hora. Um governador corrupto, endividado e falante que sabe do tomo não é um ativo, é um vazamento com pernas. Foi a primeira ordem que ela deu a si mesma em vinte anos de Corte.
+
+**🔒 Camada 3** — *Gloria perdeu a própria capitã*
+A acusação contra os jogadores não foi só oportunismo — foi contenção de dano. Se A Corrente investigasse a sério, chegaria à Corte, e da Corte a Marvosa. Mas Gloria não sabe onde Amelia está nem o que ela fará com o que ouviu, e não pode caçar a própria capitã de extermínio sem rachar a Corte ao meio. Precisa que alguém descartável a encontre primeiro.
+*→ Ver também: Gloria Vittar; A Corte das Cortesãs*
+
+**🔒 Camada 4** — *Ela não está fugindo, está na frente*
+Amelia ouviu o mesmo que os jogadores ouviram. Não saiu de Kaldera para se esconder — saiu para chegar primeiro, com vinte anos de rede de informantes em quatro ilhas de vantagem. Para quem ela pretende vender o que encontrar (Gloria, Aldric, ou ninguém) é decisão do mestre.
+
+##### Relações
+
+- **Gloria Vittar** — vinte anos de lealdade absoluta, quebrados numa noite
+- **Tulo Bresh** — alvo, por iniciativa própria
+- **Jogadores** — carregam a culpa do crime dela, e são a ferramenta que Gloria vai usar para encontrá-la
+
+-----
+
 #### GANGPLANK
 
 **Papel:** Pirata / O Terror dos Mares de Pelágos
@@ -620,6 +661,48 @@ O contrato existe porque Aldric foi o primeiro a chegar com dinheiro suficiente 
 - **A Corrente** — oposição formal / trégua informal; ordem de não engajar
 - **Gloria Vittar** — respeito mútuo e cauteloso
 - **Jogadores** — problema em potencial ou utilidade possível, dependendo de como se apresentam
+
+-----
+
+#### HITCH FOGO-FÁTUO
+
+**Papel:** Imediato de Gangplank a bordo do *Dead Pool*
+**Status:** Morto — abatido pelos jogadores a caminho do Ancoradouro de Latão
+**Natureza:** Criatura de fogo aprisionada em forma humana
+
+##### Descrição Pública
+
+O segundo homem do *Dead Pool* era baixo, seco e descalço, e nunca vestiu mais do que uma túnica de linho cru num navio onde todo mundo usava couro contra o vento. Movia-se como monge — porque era um, pelo menos no treino: golpeava de mãos abertas, respirava contando, e passava madrugadas sentado na proa sem piscar.
+
+O que a tripulação não comentava em voz alta é que a madeira ficava morna onde ele pisava, que ele tirava a túnica quando o mar estava frio demais para os outros, e que a sombra dele, dependendo da luz, caía para o lado errado.
+
+Chamavam-no de Fogo-Fátuo pelo nome que os marinheiros dão à luz que aparece nos mastros antes da tempestade — a luz que promete terra e entrega naufrágio.
+
+##### Personalidade
+
+Cordial, contido, quase gentil — e obediente a Gangplank de um jeito que não combinava com o resto dele. Num navio inteiro de homens que seguiam Gangplank por medo, era o único que parecia seguir por outra coisa. Quem reparou concluiu que era devoção, e errou pela metade: não era devoção, era corrente.
+
+##### Segredos
+
+**🔒 Camada 1** — *A forma humana era a jaula, não um disfarce*
+Hitch não era um homem com poderes de fogo. Era fogo com forma de homem, e a forma foi imposta. A disciplina monástica não era filosofia: era fechadura.
+
+**🔒 Camada 2** — *Quem o prendeu foi Gangplank*
+Um pirata não faz isso. Gangplank tem, ou teve, um meio de prender uma criatura elemental dentro de uma forma e mantê-la ali por anos — e isso não aparece em lugar nenhum da sua reputação pública. Quem sabe fazer uma vez sabe fazer de novo. Fica em aberto o que mais anda no convés do *Dead Pool* com cara de gente, e o que Gangplank entregou em troca do método.
+*→ Ver também: Gangplank*
+
+**🔒 Camada 3** — *Matá-lo não destruiu; abriu*
+A primeira morte quebrou a jaula, não o prisioneiro. O que se ergueu do corpo estava trancado ali havia anos e agora não tinha forma humana para contê-lo. Do ponto de vista de Hitch, os jogadores não o mataram: soltaram-no.
+
+**🔒 Camada 4** — *As cinzas desceram*
+Quando a segunda forma caiu, as cinzas não se dispersaram no vento. Adensaram-se em fumaça pesada e foram puxadas para baixo — contra o vento, contra a corrente, para o fundo. Fogo não afunda. Alguma coisa recolheu. É a primeira evidência sensorial que os jogadores têm de que o fundo do oceano de Pelágos não é fundo: é tampa.
+*→ Ver também: O Peso (Thurvael)*
+
+##### Relações
+
+- **Gangplank** — carcereiro, disfarçado de capitão
+- **A Maré Negra** — imediato do navio-capitânia
+- **O Peso** — recolheu o que sobrou dele
 
 -----
 
