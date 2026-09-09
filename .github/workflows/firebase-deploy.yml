@@ -33,27 +33,23 @@ jobs:
             --force
 
       # As regras vivem no repositorio (firebase.json aponta para elas), mas ate
-      # aqui nunca eram publicadas: o deploy so cobria hosting. Roda depois do
-      # hosting para que uma falha aqui nao derrube o site.
+      # aqui nunca eram publicadas: o deploy so cobria hosting.
       #
-      # So firestore: o app nao usa Firebase Storage (as imagens vao para o
-      # Cloudinary), o bucket nunca foi provisionado e "--only storage" falha.
+      # HOJE ISTO NAO PUBLICA NADA: a service account do secret deploya Hosting,
+      # mas a API de Rules recusa com 403 "The caller does not have permission".
+      # Para ligar, conceda o papel "Firebase Rules Admin"
+      # (roles/firebaserules.admin) no IAM do projeto mestreapp-4e3e1 ao principal
+      # cujo e-mail esta no client_email do secret FIREBASE_SERVICE_ACCOUNT.
+      #
+      # Enquanto isso o passo nao derruba o build, mas emite um aviso visivel no
+      # resumo da execucao — o build verde nunca deve dar a entender que as
+      # regras subiram quando elas nao subiram.
       - name: Deploy Firestore rules
-        # BLOQUEADO NO IAM, nao no codigo. A service account do secret
-        # FIREBASE_SERVICE_ACCOUNT deploya Hosting, mas a API de Rules recusa:
-        #   firebaserules.googleapis.com ... HTTP Error: 403,
-        #   The caller does not have permission
-        # Para ligar: no Google Cloud IAM do projeto mestreapp-4e3e1, conceda
-        # o papel "Firebase Rules Admin" (roles/firebaserules.admin) ao principal
-        # cujo e-mail esta no campo client_email do secret. Feito isso, este
-        # passo passa a publicar firestore.rules sozinho e o continue-on-error
-        # abaixo pode ser removido.
-        continue-on-error: true
         run: |
-          set -euo pipefail
+          set -uo pipefail
           export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/firebase-sa.json"
-          npx -y firebase-tools@13 deploy \
-            --only firestore:rules \
-            --project mestreapp-4e3e1 \
-            --non-interactive \
-            --force
+          if npx -y firebase-tools@13 deploy --only firestore:rules --project mestreapp-4e3e1 --non-interactive --force; then
+            echo "Regras do Firestore publicadas."
+          else
+            echo "::warning title=Regras do Firestore NAO publicadas::firestore.rules continua desatualizado no projeto. Falta o papel Firebase Rules Admin na service account (403 em firebaserules.googleapis.com). Veja o comentario no workflow."
+          fi
