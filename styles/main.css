@@ -147,7 +147,19 @@ body::after {
   align-items: center;
   gap: 2px;
   margin-left: 18px;
+  /* Encolhe e rola em vez de empurrar as ações para fora da tela — o mestre
+     tem 12 abas e elas não cabem em telas de notebook. */
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 0;            /* espaço para o sublinhado da aba ativa */
+  scrollbar-width: none;
+  /* esmaece a borda direita para sinalizar que há mais abas ao rolar */
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
+          mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
 }
+.header-nav::-webkit-scrollbar { display: none; }
 
 .nav-btn {
   background: none;
@@ -162,6 +174,8 @@ body::after {
   transition: color .2s, background .2s;
   font-family: var(--font-title);
   position: relative;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .nav-btn::after {
@@ -178,7 +192,14 @@ body::after {
 .nav-btn.active { color: var(--accent-gold); text-shadow: 0 0 18px rgba(207,172,110,.4); }
 .nav-btn.active::after { left: 10px; right: 10px; }
 
-.header-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.header-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+/* Notebooks: aperta a navegação antes de precisar rolar */
+@media (min-width: 901px) and (max-width: 1500px) {
+  .site-header { padding: 0 18px; gap: 12px; }
+  .header-nav { margin-left: 6px; }
+  .nav-btn { padding: 8px 10px; letter-spacing: .8px; }
+}
 
 .search-toggle {
   background: rgba(207,172,110,.06);

@@ -568,47 +568,6 @@ Não vende informação por dinheiro. Vende por favores, por influência, por pr
 
 -----
 
-#### AMELIA
-
-**Papel:** Capitã de extermínio da Corte das Cortesãs
-**Status:** Desaparecida desde a noite da morte de Tulo Bresh
-**Localização:** Desconhecida — vista pela última vez em Kaldera
-
-##### Descrição Pública
-
-Nos arquivos da Corrente ela não existe. Nos de Marvosa, menos ainda. O que existe é uma mulher que esteve no escritório do Governador Tulo Bresh na noite em que ele morreu — que serviu a bebida, que riu na hora certa, e que saiu pela porta lateral enquanto um orc de duzentos quilos ocupava a atenção de todos na sala.
-
-Quem tenta descrevê-la não consegue duas vezes igual. As testemunhas de Kaldera só concordam no detalhe mais inútil possível: ela ouvia. Falava pouco. Ouvia com o corpo inteiro, como quem está trabalhando.
-
-Dentro da Corte, Amelia não é informante. As cortesãs que coletam informação respondem a coordenadoras; as coordenadoras respondem a Marvosa. As que matam respondem a Amelia.
-
-##### Personalidade
-
-Paciente de um jeito que assusta quem entende o que está vendo. Não improvisa e não se apressa: prepara, observa, e age uma vez só. Trata o próprio ofício como ofício — não sente prazer em matar e não sente culpa, o que a torna bem pior do que alguém que sentisse qualquer um dos dois. Com Gloria Vittar era leal, não por afeto, mas porque Gloria era a única pessoa cujo julgamento ela respeitava mais do que o próprio.
-
-##### Segredos
-
-**🔒 Camada 1** — *Foi Amelia quem matou Tulo Bresh*
-O veneno já estava no copo havia dez minutos quando o combate começou. Qualquer investigação competente do escritório chega nela e não nos jogadores. O problema é que ninguém em Kaldera está investigando com competência — estão investigando com pressa.
-
-**🔒 Camada 2** — *Ela agiu por conta própria*
-Ninguém mandou matar Tulo. Amelia estava ali para ouvir, e ouviu: quando Soren mencionou o artefato diante do Governador, ela entendeu na hora. Um governador corrupto, endividado e falante que sabe do tomo não é um ativo, é um vazamento com pernas. Foi a primeira ordem que ela deu a si mesma em vinte anos de Corte.
-
-**🔒 Camada 3** — *Gloria perdeu a própria capitã*
-A acusação contra os jogadores não foi só oportunismo — foi contenção de dano. Se A Corrente investigasse a sério, chegaria à Corte, e da Corte a Marvosa. Mas Gloria não sabe onde Amelia está nem o que ela fará com o que ouviu, e não pode caçar a própria capitã de extermínio sem rachar a Corte ao meio. Precisa que alguém descartável a encontre primeiro.
-*→ Ver também: Gloria Vittar; A Corte das Cortesãs*
-
-**🔒 Camada 4** — *Ela não está fugindo, está na frente*
-Amelia ouviu o mesmo que os jogadores ouviram. Não saiu de Kaldera para se esconder — saiu para chegar primeiro, com vinte anos de rede de informantes em quatro ilhas de vantagem. Para quem ela pretende vender o que encontrar (Gloria, Aldric, ou ninguém) é decisão do mestre.
-
-##### Relações
-
-- **Gloria Vittar** — vinte anos de lealdade absoluta, quebrados numa noite
-- **Tulo Bresh** — alvo, por iniciativa própria
-- **Jogadores** — carregam a culpa do crime dela, e são a ferramenta que Gloria vai usar para encontrá-la
-
------
-
 #### GANGPLANK
 
 **Papel:** Pirata / O Terror dos Mares de Pelágos
@@ -664,49 +623,72 @@ O contrato existe porque Aldric foi o primeiro a chegar com dinheiro suficiente 
 
 -----
 
-#### HITCH FOGO-FÁTUO
+#### ORWIN — O Chapéu Largo
 
-**Papel:** Imediato de Gangplank a bordo do *Dead Pool*
-**Status:** Morto — abatido pelos jogadores a caminho do Ancoradouro de Latão
-**Natureza:** Criatura de fogo aprisionada em forma humana
+**Papel:** Avô de Bizo / Inventor prisioneiro
+**Status:** Vivo — aprisionado por Vargan Drell
+**Raça:** Gnomo
+**Localização:** Grande Forja, Ancoradouro de Latão
 
-##### Descrição Pública
+##### Descrição
 
-O segundo homem do *Dead Pool* era baixo, seco e descalço, e nunca vestiu mais do que uma túnica de linho cru num navio onde todo mundo usava couro contra o vento. Movia-se como monge — porque era um, pelo menos no treino: golpeava de mãos abertas, respirava contando, e passava madrugadas sentado na proa sem piscar.
+Orwin é o avô de Bizo, um inventor do Ancoradouro de Latão ligado à tradição familiar de pesquisas sobre química de pólvora. É ele o gnomo de chapéu largo representado na estátua que Velmarch tentou remover. Seu nome foi apagado da memória pública da praça, mas os artesãos mais velhos ainda sabem quem ela homenageia.
 
-O que a tripulação não comentava em voz alta é que a madeira ficava morna onde ele pisava, que ele tirava a túnica quando o mar estava frio demais para os outros, e que a sombra dele, dependendo da luz, caía para o lado errado.
+##### Segredo — O inventor está preso
 
-Chamavam-no de Fogo-Fátuo pelo nome que os marinheiros dão à luz que aparece nos mastros antes da tempestade — a luz que promete terra e entrega naufrágio.
+Orwin está vivo e é mantido prisioneiro por Vargan dentro da Grande Forja, obrigado a trabalhar para ele. Sua colaboração não é uma adesão voluntária ao Domínio de Velmarch. Vargan precisa do conhecimento do inventor e o mantém sob coerção para atender aos interesses do Domínio.
 
-##### Personalidade
-
-Cordial, contido, quase gentil — e obediente a Gangplank de um jeito que não combinava com o resto dele. Num navio inteiro de homens que seguiam Gangplank por medo, era o único que parecia seguir por outra coisa. Quem reparou concluiu que era devoção, e errou pela metade: não era devoção, era corrente.
-
-##### Segredos
-
-**🔒 Camada 1** — *A forma humana era a jaula, não um disfarce*
-Hitch não era um homem com poderes de fogo. Era fogo com forma de homem, e a forma foi imposta. A disciplina monástica não era filosofia: era fechadura.
-
-**🔒 Camada 2** — *Quem o prendeu foi Gangplank*
-Um pirata não faz isso. Gangplank tem, ou teve, um meio de prender uma criatura elemental dentro de uma forma e mantê-la ali por anos — e isso não aparece em lugar nenhum da sua reputação pública. Quem sabe fazer uma vez sabe fazer de novo. Fica em aberto o que mais anda no convés do *Dead Pool* com cara de gente, e o que Gangplank entregou em troca do método.
-*→ Ver também: Gangplank*
-
-**🔒 Camada 3** — *Matá-lo não destruiu; abriu*
-A primeira morte quebrou a jaula, não o prisioneiro. O que se ergueu do corpo estava trancado ali havia anos e agora não tinha forma humana para contê-lo. Do ponto de vista de Hitch, os jogadores não o mataram: soltaram-no.
-
-**🔒 Camada 4** — *As cinzas desceram*
-Quando a segunda forma caiu, as cinzas não se dispersaram no vento. Adensaram-se em fumaça pesada e foram puxadas para baixo — contra o vento, contra a corrente, para o fundo. Fogo não afunda. Alguma coisa recolheu. É a primeira evidência sensorial que os jogadores têm de que o fundo do oceano de Pelágos não é fundo: é tampa.
-*→ Ver também: O Peso (Thurvael)*
+> **[NOTA DO MESTRE]** A invenção específica exigida de Orwin e sua relação exata com a produção fora dos registros ainda não foram definidas. Não assumir como estabelecidos um motor, canhão ou bomba. O Caderno de Proporções e sua tabela de conversão ausente permanecem ganchos existentes.
 
 ##### Relações
 
-- **Gangplank** — carcereiro, disfarçado de capitão
-- **A Maré Negra** — imediato do navio-capitânia
-- **O Peso** — recolheu o que sobrou dele
+- **Bizo** — neto, que fugiu da ilha.
+- **Vargan Drell** — carcereiro e responsável pelo trabalho forçado.
+- **Domínio de Velmarch / A Corrente** — beneficiários da coerção exercida sobre a forja e seus artesãos.
+- **Artesãos do Ancoradouro** — preservam discretamente sua memória na estátua do Chapéu Largo.
 
 -----
 
 ### 3.4 NPCs de Combate
+
+#### VARGAN DRELL — A Forja Viva
+
+**Papel:** Ferromante antigo / Antagonista do Ancoradouro de Latão
+**Status:** Vivo — alma mantida pela Grande Forja
+**Natureza:** Ferromante que cedeu sua forma física e se fundiu à forja
+**Localização:** Grande Forja, Ancoradouro de Latão
+**Vínculo político:** Serve ao Domínio de Velmarch sob ameaça de morte
+
+##### Descrição Pública
+
+Vargan se apresenta por meio de um corpo físico que pode enfrentar os jogadores. Para quem desconhece sua natureza, parece um ferromante a serviço de Velmarch, responsável por manter a produção e os artesãos sob controle.
+
+##### Segredos
+
+**🔒 Camada 1 — O carcereiro de Orwin**
+Vargan mantém Orwin, avô de Bizo, aprisionado e o obriga a trabalhar. A presença do inventor na produção do Domínio não prova lealdade: ele é um prisioneiro.
+
+**🔒 Camada 2 — Vargan é a forja**
+Vargan é um ferromante antigo que cedeu sua forma física e se fundiu à Grande Forja. Seu corpo aparente é uma manifestação física da entidade; sua verdadeira existência está na própria forja. Enfrentar esse corpo não significa enfrentar a totalidade de Vargan.
+
+**🔒 Camada 3 — A sobrevivência como coleira**
+O Domínio de Velmarch mantém Vargan trabalhando em troca de continuar vivo. A forja mantém sua alma viva; se ele deixar de cooperar, o Domínio apaga a forja e encerra sua existência. Vargan aprisiona Orwin enquanto ele próprio permanece preso à ameaça de ser extinto.
+
+##### Motivação e Conflito
+
+Sua motivação central para servir a Velmarch é sobreviver. A coerção explica sua obediência, mas não desfaz o sofrimento que impõe a Orwin. O conflito local tem três posições distintas: o Domínio controla a sobrevivência de Vargan; Vargan controla a liberdade de Orwin; Bizo e seus companheiros chegam ao meio dessa relação.
+
+> **[NOTA DO MESTRE — D&D 5e]** O corpo pode ser representado pela ficha usada no combate, mas sua derrota não deve ser tratada automaticamente como a morte da entidade. Ainda precisam ser definidos os efeitos de destruir o corpo, a possibilidade e o tempo de reconstrução, o mecanismo pelo qual Velmarch apaga a forja e eventuais maneiras de libertar a alma. A identidade de Forja Viva é cânone narrativo; não concede automaticamente imunidades, ações de covil ou outras habilidades mecânicas.
+
+##### Relações
+
+- **Grande Forja** — sua verdadeira forma e sustentação de sua alma.
+- **Domínio de Velmarch** — senhor coercitivo que pode extingui-lo apagando a forja.
+- **A Corrente** — operação imperial que controla o Ancoradouro.
+- **Orwin, o Chapéu Largo** — inventor que mantém aprisionado e força a trabalhar.
+- **Bizo e os jogadores** — adversários potenciais ao tentarem libertar Orwin.
+
+-----
 
 Esta seção reúne fichas mecânicas completas de inimigos recorrentes ou notáveis que os jogadores podem enfrentar. Cada entrada inclui stat block D&D 5e e JSON pronto para importação no FoundryVTT.
 
@@ -1037,7 +1019,7 @@ Hoje, o Ancoradouro de Latão produz munição, peças de artilharia e component
 
 #### Pontos de Interesse
 
-- **A Grande Forja** — a fundição central da ilha; antes o coração pulsante da comunidade, agora operada por supervisores d'A Corrente com cotas diárias afixadas na entrada
+- **A Grande Forja** — a fundição central da ilha; antes o coração pulsante da comunidade, agora operada por supervisores d'A Corrente com cotas diárias afixadas na entrada. **[SEGREDO DO MESTRE]** É a verdadeira forma de Vargan Drell, cuja alma depende de ela continuar acesa. Orwin, avô de Bizo, está aprisionado ali por Vargan.
 - **O Porto Militar do Latão** — onde navios cinzentos de Velmarch ancoram regularmente para carregar o que foi produzido e deixar as ordens do próximo mês
 - **Os Becos dos Inventores** — rede labiríntica de vielas onde as antigas oficinas particulares ainda existem, espremidas entre armazéns de Velmarch; de noite ainda se ouve o tilintar discreto de quem não parou de inventar
 - **O Arquivo Confiscado** — edifício administrado por A Corrente que abriga todos os projetos, fórmulas e protótipos catalogados durante a "absorção"; os artesãos chamam de A Morgue
@@ -1054,7 +1036,11 @@ Quando A Corrente catalogou as invenções da ilha, um conjunto de fórmulas nã
 > **Documento:** *Caderno de Proporções — As Fórmulas do Chapéu Largo* (no acervo). É o próprio material dado como destruído, escrito em três mãos ao longo de três gerações. As proporções estão em "passos de bancada", uma medida da casa cuja tabela de conversão foi arrancada antes do confisco — o caderno sozinho é uma chave sem fechadura. Na contracapa há uma coluna a lápis, recente, que bate com a discrepância da Camada 1.
 
 **🔒 Camada 3** — *A Estátua sabe quem é*
-A estátua do fundador sem nome é de um gnomo real — o avô do personagem que fugiu da ilha. Seu chapéu largo é um detalhe específico demais para ser coincidência. Alguém a construiu depois da "absorção", à noite, sem que A Corrente percebesse a tempo de impedir. Os mais velhos da ilha sabem de quem é a estátua. Não dizem.
+A estátua do fundador sem nome é de um gnomo real — **Orwin, o Chapéu Largo, avô de Bizo**. Seu chapéu largo é um detalhe específico demais para ser coincidência. Alguém a construiu depois da "absorção", à noite, sem que A Corrente percebesse a tempo de impedir. Os mais velhos da ilha sabem de quem é a estátua. Não dizem. Orwin continua vivo, aprisionado por Vargan na Grande Forja e obrigado a trabalhar.
+
+**🔒 Camada 4** — *A forja também é prisioneira*
+Vargan Drell cedeu sua forma física e se fundiu à Grande Forja. O corpo com que se apresenta é apenas sua manifestação: Vargan é a própria forja. O Domínio de Velmarch conhece sua dependência e exige cooperação em troca de mantê-lo vivo. Se ele se recusar, o Domínio apaga a forja que sustenta sua alma. O carcereiro de Orwin serve sob sua própria sentença de morte suspensa.
+*→ Ver também: Vargan Drell — A Forja Viva; Orwin — O Chapéu Largo*
 
 -----
 
@@ -1366,6 +1352,9 @@ Himmel registrou o método inverso não como instrução, mas como aviso. A desc
 |Gangplank pode virar problema ou ativo                  |Depende dos jogadores           |1     |Variável            |
 |Gloria tem dossiê sobre todos                           |Gloria                          |2     |Trunfo de aliança   |
 |Tulo está documentado por Gloria                        |Gloria                          |2     |Alavanca política   |
+|Orwin, avô de Bizo, está preso e trabalha sob coerção |Orwin, Vargan |1|Resgate pessoal de Bizo|
+|Vargan é a Grande Forja; seu corpo é uma manifestação |Vargan, Domínio de Velmarch |2|Revela a natureza do antagonista|
+|Velmarch pode extinguir Vargan apagando a forja |Vargan, Domínio de Velmarch |3|Sobrevivência usada como coerção|
 
 -----
 
@@ -1404,6 +1393,17 @@ REVA ── [protegida pelo cristal de Himmel] ── [conhecem o cristal] FRIER
 KALDERA ── [governada por] TULO BRESH
 VELMYR ── [sede de] ALDRIC XIV ── [guarda tomo de] HIMMEL VAREK
 ```
+
+-----
+
+**Relações do Ancoradouro de Latão**
+
+|Origem|Relação|Destino|
+|---|---|---|
+|Domínio de Velmarch|Exige trabalho sob ameaça de apagar a forja|Vargan Drell|
+|Vargan Drell|Fundiu-se a ela; depende de seu fogo para viver|Grande Forja|
+|Vargan Drell|Aprisiona e obriga a trabalhar|Orwin, o Chapéu Largo|
+|Orwin|É avô de|Bizo|
 
 -----
 
@@ -1672,5 +1672,5 @@ Para chegar até ele, vocês vão precisar atravessar Pelágos inteiro.
 
 -----
 
-*CAMPAIGN.md — Mares e Marés — Versão 2.0*
+*CAMPAIGN.md — Mares e Marés — Versão 2.1*
 *Documento confidencial do Mestre — não compartilhar com jogadores*

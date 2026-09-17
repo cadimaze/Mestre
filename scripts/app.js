@@ -103,6 +103,12 @@ function hideSplash() {
 function showAuthError(msg) { document.getElementById('auth-error').textContent = msg; }
 function clearAuthError()   { document.getElementById('auth-error').textContent = ''; }
 
+// Cadastro em andamento. createUserWithEmailAndPassword dispara o
+// onAuthStateChanged antes de o perfil ser gravado; sem esperar por isto,
+// onUserLoggedIn não encontra o perfil, desloga o jogador e o setDoc falha —
+// a conta fica existindo no Auth sem perfil e nunca mais consegue entrar.
+let pendingRegistration = null;
+
 function setupAuthUI() {
   const loginForm      = document.getElementById('login-form');
   const registerForm   = document.getElementById('register-form');
@@ -142,7 +148,7 @@ function setupAuthUI() {
     const email = document.getElementById('reg-email').value;
     const pass  = document.getElementById('reg-password').value;
     if (!name) { showAuthError('Informe seu nome.'); return; }
-    try {
+    const registration = (async () => {
       const cred = await createUserWithEmailAndPassword(auth, email, pass);
       const role = email.toLowerCase() === MASTER_EMAIL.toLowerCase() ? 'master' : 'player';
       await setDoc(doc(db, 'users', cred.user.uid), {
@@ -153,8 +159,16 @@ function setupAuthUI() {
         playerCharacter: null,
         createdAt: serverTimestamp(),
       });
+    })();
+    pendingRegistration = registration;
+    try {
+      await registration;
       clearAuthError();
-    } catch (err) { showAuthError(authErrMsg(err.code)); }
+    } catch (err) {
+      showAuthError(authErrMsg(err.code));
+    } finally {
+      if (pendingRegistration === registration) pendingRegistration = null;
+    }
   });
 
   document.getElementById('logout-btn').addEventListener('click', async () => {
@@ -989,6 +1003,33 @@ const getPlayerByUid  = uid => STATE.players.find(p => p.uid === uid);
 const playerCharName  = p => p?.playerCharacter?.name || p?.displayName || '—';
 const listPlayerChars = () => STATE.players.filter(p => p.role === 'player' && p.playerCharacter?.name);
 
+// As cores das facções são escuras de propósito (funcionam bem como fundo e
+// borda), mas somem quando usadas como cor de texto sobre o tema escuro.
+// Mantém o matiz e a saturação e só sobe a luminosidade até um mínimo legível.
+function readableColor(hex, minLightness = 0.66) {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
+  if (!m) return hex;
+  const n = parseInt(m[1], 16);
+  let r = (n >> 16 & 255) / 255, g = (n >> 8 & 255) / 255, b = (n & 255) / 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let h = 0, sat = 0, l = (max + min) / 2;
+  if (max !== min) {
+    const d = max - min;
+    sat = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    h = max === r ? (g - b) / d + (g < b ? 6 : 0) : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    h /= 6;
+  }
+  if (l >= minLightness) return hex;
+  l = minLightness;
+  const q = l < 0.5 ? l * (1 + sat) : l + sat - l * sat, p = 2 * l - q;
+  const ch = t => {
+    t = (t + 1) % 1;
+    const v = t < 1/6 ? p + (q - p) * 6 * t : t < 1/2 ? q : t < 2/3 ? p + (q - p) * (2/3 - t) * 6 : p;
+    return Math.round(v * 255).toString(16).padStart(2, '0');
+  };
+  return '#' + ch(h + 1/3) + ch(h) + ch(h - 1/3);
+}
+
 function factionColor(factionId) {
   const f = getFactionById(factionId);
   return f ? f.color : '#3a5a7a';
@@ -1097,7 +1138,7 @@ function statusBadgeHtml(status) {
 function factionBadgeHtml(factionId) {
   const f = getFactionById(factionId);
   if (!f) return '';
-  return `<span class="faction-badge" style="background:${f.color}22;color:${f.color};border:1px solid ${f.color}44;border-radius:10px;padding:2px 7px;font-size:10px;text-transform:uppercase;letter-spacing:.5px;">${f.name}</span>`;
+  return `<span class="faction-badge" style="background:${f.color}22;color:${readableColor(f.color)};border:1px solid ${f.color}44;border-radius:10px;padding:2px 7px;font-size:10px;text-transform:uppercase;letter-spacing:.5px;">${f.name}</span>`;
 }
 
 function scaleBadgeHtml(scale) {
@@ -1147,6 +1188,8 @@ function charPortraitHtml(c) {
 function switchTab(tab) {
   STATE.activeTab = tab;
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  // A navegação rola em telas estreitas: mantém a aba ativa à vista.
+  document.querySelector(`.nav-btn[data-tab="${tab}"]`)?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === `tab-${tab}`));
   if (tab === 'relacoes')       renderGraph();
   if (tab === 'jogadores')      renderJogadores();
@@ -1730,7 +1773,7 @@ function renderFactions() {
             <span>${f.symbol || '◆'}</span>
           </div>
           <div style="flex:1">
-            <div class="faction-name" style="color:${f.color};">${f.name}</div>
+            <div class="faction-name" style="color:${readableColor(f.color)};">${f.name}</div>
             <div class="faction-type">${f.type || ''}</div>
           </div>
           ${hasSecrets(f) && STATE.isMaster ? '<span class="secret-icon" title="Tem segredos">🔒</span>' : ''}
@@ -3122,7 +3165,7 @@ function renderAcervo() {
           </div>
         </div>`;
       }).join('')
-    : `<div class="empty-state"><div class="empty-icon">📜</div><p>${STATE.isMaster ? 'Nenhum documento cadastrado.' : 'Nenhum documento disponível ainda.'}</p></div>`;
+    : `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">📜</div><p>${STATE.isMaster ? 'Nenhum documento cadastrado.' : 'Nenhum documento disponível ainda.'}</p></div>`;
 
   itemsGrid.innerHTML = visibleItems.length
     ? visibleItems.map(i => {
@@ -3146,7 +3189,7 @@ function renderAcervo() {
           </div>
         </div>`;
       }).join('')
-    : `<div class="empty-state"><div class="empty-icon">🗝</div><p>${STATE.isMaster ? 'Nenhum item cadastrado.' : 'Nenhum item disponível ainda.'}</p></div>`;
+    : `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🗝</div><p>${STATE.isMaster ? 'Nenhum item cadastrado.' : 'Nenhum item disponível ainda.'}</p></div>`;
 
   docsGrid.querySelectorAll('.acervo-card').forEach(card => {
     card.addEventListener('click', () => openModal(card.dataset.id, card.dataset.type));
@@ -3686,7 +3729,7 @@ function buildFactionModalContent(id) {
       <div style="display:flex;gap:12px;align-items:center;">
         <span style="font-size:36px;">${f.symbol || '◆'}</span>
         <div>
-          <div class="modal-location-name" style="color:${f.color};">${f.name}</div>
+          <div class="modal-location-name" style="color:${readableColor(f.color)};">${f.name}</div>
           <div class="faction-type">${f.type || ''}</div>
         </div>
       </div>
@@ -5377,7 +5420,16 @@ function applyRoleUI() {
 async function onUserLoggedIn(user) {
   STATE.user = user;
 
-  const profile = await loadUserProfile(user.uid);
+  if (pendingRegistration) {
+    try { await pendingRegistration; } catch { /* o formulário já mostra o erro */ }
+  }
+
+  let profile = await loadUserProfile(user.uid);
+  if (!profile) {
+    // Segunda chance para leituras que chegam antes da escrita do perfil.
+    await new Promise(r => setTimeout(r, 1500));
+    profile = await loadUserProfile(user.uid);
+  }
   if (!profile) {
     // No Firestore profile — user was deleted or registration never completed.
     // Sign out to avoid an infinite reload loop, then show a clear error.
