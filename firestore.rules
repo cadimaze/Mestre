@@ -84,24 +84,6 @@ service cloud.firestore {
         allow write: if isMaster();
       }
 
-      // Acervo de navios — mestre gerencia; jogadores leem os visíveis (isVisible)
-      match /ships/{id} {
-        allow read, write: if isMaster();
-        allow read: if isAuth() && isVisible();
-      }
-
-      // Navio do grupo (legado) — visibilidade controlada pelo mestre.
-      // Sem o campo visibility → liberado para todos os autenticados.
-      match /ship/{id} {
-        allow read: if isMaster()
-          || (isAuth() && (
-               !('visibility' in resource.data)
-               || resource.data.visibility.mode == 'all'
-               || request.auth.uid in resource.data.visibility.playerIds
-             ));
-        allow write: if isMaster();
-      }
-
       // Anotações — todos autenticados podem ler e criar as próprias
       match /annotations/{id} {
         allow read:   if isAuth();

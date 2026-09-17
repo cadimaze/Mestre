@@ -24,7 +24,7 @@ const STATE = {
   isMaster:       false,
   players:        [],
   unsubscribers:  [],
-  data: { characters: [], locations: [], events: [], factions: [], relations: [], annotations: [], documents: [], items: [], ships: [], ship: null },
+  data: { characters: [], locations: [], events: [], factions: [], relations: [], annotations: [], documents: [], items: [] },
 
   activeTab:       'painel',
   secretsVisible:  localStorage.getItem('secretsVisible') !== 'false',
@@ -87,8 +87,6 @@ const NAV_DICE = [
 ];
 const NAV_BY_ID = Object.fromEntries(NAV_DICE.map(d => [d.id, d]));
 
-// Funções sugeridas para a tripulação do navio (campo é livre, com sugestões)
-const CREW_ROLES = ['Capitão','Imediato','Contramestre','Navegador','Timoneiro','Artilheiro','Marujo','Grumete','Vigia','Médico de Bordo','Cozinheiro','Passageiro','Viajante','Prisioneiro'];
 
 // ── AUTH UI ───────────────────────────────────────────────────────────────────
 function showAuthOverlay()  { document.getElementById('auth-overlay').classList.add('visible'); }
@@ -306,8 +304,6 @@ function rerenderSection(collName) {
     case 'relations':  renderPainel(); if (STATE.activeTab === 'relacoes') renderGraph(); break;
     case 'documents':  renderAcervo(); break;
     case 'items':      renderAcervo(); break;
-    case 'ships':      if (STATE.activeTab === 'navio') renderNavio();
-                       if (STATE.activeTab === 'relacoes') renderGraph(); break;
   }
 }
 
@@ -320,22 +316,6 @@ async function setupFirestoreListeners() {
   subscribeToCollection('documents');
   subscribeToCollection('items');
   subscribeToAnnotations();
-
-  // Acervo de navios — coleção com visibilidade (aliados, inimigos, neutros)
-  subscribeToCollection('ships');
-
-  // Navio legado (doc único antigo) — preservado; migra para a coleção ao ser editado.
-  const unsubShip = onSnapshot(doc(db, 'campaigns', CAMPAIGN_ID, 'ship', 'main'), snap => {
-    STATE.data.ship = snap.exists() ? { id: snap.id, ...snap.data() } : null;
-    if (STATE.activeTab === 'navio') renderNavio();
-    if (STATE.activeTab === 'relacoes') renderGraph();
-  }, err => {
-    console.error('[ship legacy]', err);
-    STATE.data.ship = null;
-    if (STATE.activeTab === 'navio') renderNavio();
-    if (STATE.activeTab === 'relacoes') renderGraph();
-  });
-  STATE.unsubscribers.push(unsubShip);
 
   // Curadoria de curiosidades — mestre seleciona; todos leem.
   const unsubCur = onSnapshot(doc(db, 'campaigns', CAMPAIGN_ID, 'curiosities', 'config'), snap => {
@@ -1195,7 +1175,6 @@ function switchTab(tab) {
   if (tab === 'jogadores')      renderJogadores();
   if (tab === 'meu-personagem') renderMeuPersonagem();
   if (tab === 'roteiro')        renderRoteiro();
-  if (tab === 'navio')          renderNavio();
   if (tab === 'curiosidades')   renderCuriosidadesAdmin();
 }
 
@@ -2228,379 +2207,6 @@ function renderRoteiro() {
 
       ${docMapHtml}
     </div>`;
-}
-
-// ── NAVIO DO GRUPO ──────────────────────────────────────────────────────────
-// Resolve nome e imagem de um tripulante (jogador ou personagem)
-function crewMemberInfo(m) {
-  if (!m) return { name: '—', img: null };
-  if (m.type === 'player') {
-    const p = getPlayerByUid(m.id);
-    return p ? { name: playerCharName(p), img: p.playerCharacter?.imageUrl || null }
-             : { name: '(jogador removido)', img: null };
-  }
-  const c = getCharById(m.id);
-  return c ? { name: c.name, img: charImgSrc(c) } : { name: '(personagem removido)', img: null };
-}
-
-// Visibilidade do navio para o usuário atual
-function shipVisibleToMe(ship) {
-  const v = ship && ship.visibility;
-  if (!v || v.mode === 'all') return true;
-  if (v.mode === 'specific') return (v.playerIds || []).includes(STATE.user.uid);
-  return false; // hidden
-}
-
-// Tipos de navio (facção/allegiance) — aliado, neutro, inimigo
-const SHIP_ALLEGIANCE = {
-  aliado:  { label: 'Aliado',  icon: '⚓',  color: '#4a9a5a' },
-  neutro:  { label: 'Neutro',  icon: '⛵',  color: '#5a8ab0' },
-  inimigo: { label: 'Inimigo', icon: '☠️', color: '#c0504e' },
-};
-
-// Lista combinada: navio legado (grupo) + coleção de navios. Filtra por visibilidade.
-function allShips() {
-  const list = [];
-  const legacy = STATE.data.ship;
-  if (legacy && legacy.name && (STATE.isMaster || shipVisibleToMe(legacy))) {
-    list.push({ ...legacy, id: '__main__', _legacy: true, allegiance: legacy.allegiance || 'aliado' });
-  }
-  (STATE.data.ships || []).forEach(s => {
-    if (STATE.isMaster || shipVisibleToMe(s)) list.push({ ...s, allegiance: s.allegiance || 'neutro' });
-  });
-  return list;
-}
-
-// Localiza um navio a partir do id de nó do grafo ('ship:<id>')
-function shipByNodeId(nodeId) {
-  const sid = nodeId && nodeId.startsWith('ship:') ? nodeId.slice(5) : nodeId;
-  return allShips().find(s => s.id === sid);
-}
-
-async function deleteShip(ship) {
-  if (!ship || !confirm(`Excluir o navio "${ship.name}" permanentemente? Esta ação não pode ser desfeita.`)) return;
-  try {
-    if (ship._legacy) await deleteDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'ship', 'main'));
-    else              await deleteDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'ships', ship.id));
-  } catch (err) {
-    console.error('[ship delete]', err);
-    alert('Erro ao excluir o navio. Tente novamente.');
-  }
-}
-
-function shipCardHtml(ship, isMaster) {
-  const hp = Number(ship.hp) || 0, maxHp = Number(ship.maxHp) || 0;
-  const hpPct = maxHp ? Math.max(0, Math.min(100, Math.round(hp / maxHp * 100))) : 0;
-  const hpClass = hpPct >= 50 ? 'navio-hp-ok' : hpPct >= 25 ? 'navio-hp-warn' : 'navio-hp-low';
-  const al = SHIP_ALLEGIANCE[ship.allegiance] || SHIP_ALLEGIANCE.neutro;
-
-  const visMode = ship.visibility?.mode || 'all';
-  const visBadge = isMaster
-    ? `<span class="navio-vis-badge navio-vis-${visMode}" title="Visibilidade para jogadores">${visMode === 'all' ? '🌐 Todos' : visMode === 'specific' ? '👁 Específicos' : '🔒 Oculto'}</span>`
-    : '';
-
-  const crew = Array.isArray(ship.crew) ? ship.crew : [];
-  const crewHtml = crew.length
-    ? `<div class="navio-crew-grid">
-        ${crew.map(m => {
-          const info = crewMemberInfo(m);
-          const av = info.img
-            ? `<img src="${escHtml(info.img)}" alt="" onerror="this.outerHTML='<span>${escHtml((info.name||'?').charAt(0).toUpperCase())}</span>'">`
-            : `<span>${escHtml((info.name || '?').charAt(0).toUpperCase())}</span>`;
-          return `<div class="navio-crew-card" data-crew-type="${m.type}" data-crew-id="${escHtml(m.id)}" title="Abrir ficha">
-            <div class="navio-crew-avatar">${av}</div>
-            <div class="navio-crew-info">
-              <div class="navio-crew-name">${escHtml(info.name)}</div>
-              <div class="navio-crew-role">${escHtml(m.role || '—')}</div>
-            </div>
-          </div>`;
-        }).join('')}
-       </div>`
-    : `<p class="navio-crew-empty">${isMaster ? 'Sem tripulação. Edite o navio para adicionar.' : 'Tripulação não informada.'}</p>`;
-
-  return `
-    <div class="navio-card navio-ally-${ship.allegiance || 'neutro'}" data-ship-id="${escHtml(ship.id)}" style="--ally-color:${al.color}">
-      ${ship.imageUrl
-        ? `<div class="navio-img-wrap"><img class="navio-img" src="${escHtml(ship.imageUrl)}" data-full="${escHtml(ship.imageUrl)}" alt="${escHtml(ship.name)}" onerror="this.parentElement.classList.add('navio-img-ph');this.remove()"></div>`
-        : `<div class="navio-img-wrap navio-img-ph">${al.icon}</div>`}
-      <div class="navio-body">
-        <div class="navio-head">
-          <div>
-            <h2 class="navio-name">${escHtml(ship.name)}</h2>
-            <span class="navio-ally-badge" style="--ally-color:${al.color}">${al.icon} ${al.label}</span>
-          </div>
-          <div class="navio-head-right">
-            ${visBadge}
-            ${isMaster ? `<button class="navio-edit-btn navio-ship-edit" data-ship-id="${escHtml(ship.id)}">✏ Editar</button>` : ''}
-            ${isMaster ? `<button class="navio-ship-del" data-ship-id="${escHtml(ship.id)}" title="Excluir navio">🗑</button>` : ''}
-          </div>
-        </div>
-        ${ship.description ? `<p class="navio-desc">${escHtml(ship.description)}</p>` : ''}
-        <div class="navio-stats">
-          <div class="navio-stat navio-stat-hp">
-            <div class="navio-stat-label">⚓ Pontos de Vida</div>
-            <div class="navio-stat-val">${hp} <span class="navio-stat-max">/ ${maxHp}</span></div>
-            ${maxHp ? `<div class="navio-hp-bar"><div class="navio-hp-fill ${hpClass}" style="width:${hpPct}%"></div></div>` : ''}
-          </div>
-          <div class="navio-stat navio-stat-speed">
-            <div class="navio-stat-label">💨 Rapidez</div>
-            <div class="navio-stat-val">${Number(ship.speed) || 0}</div>
-          </div>
-          <div class="navio-stat navio-stat-res">
-            <div class="navio-stat-label">🛡️ Resistência</div>
-            <div class="navio-stat-val">${Number(ship.resistance) || 0}</div>
-          </div>
-        </div>
-        <div class="navio-crew-block">
-          <div class="navio-crew-heading">⚓ Tripulação</div>
-          ${crewHtml}
-        </div>
-      </div>
-    </div>`;
-}
-
-function renderNavio() {
-  const container = document.getElementById('navio-content');
-  if (!container) return;
-  const isMaster = STATE.isMaster;
-  const ships = allShips();
-
-  const addBtn = isMaster
-    ? `<div class="navio-toolbar"><button class="navio-add-btn" id="navio-add-btn">＋ Adicionar Navio</button></div>`
-    : '';
-
-  if (!ships.length) {
-    container.innerHTML = addBtn + (isMaster
-      ? `<div class="navio-empty"><div class="navio-empty-icon">⛵</div><p>Nenhum navio no acervo ainda. Adicione o navio do grupo, aliados ou inimigos.</p></div>`
-      : `<div class="empty-state"><div class="empty-icon">⛵</div><p>Nenhum navio disponível para você ainda.</p></div>`);
-    document.getElementById('navio-add-btn')?.addEventListener('click', () => renderNavioForm({}));
-    return;
-  }
-
-  container.innerHTML = addBtn + `<div class="navio-list">${ships.map(s => shipCardHtml(s, isMaster)).join('')}</div>`;
-
-  document.getElementById('navio-add-btn')?.addEventListener('click', () => renderNavioForm({}));
-  container.querySelectorAll('.navio-img[data-full]').forEach(img =>
-    img.addEventListener('click', () => openLightbox(img.dataset.full)));
-  container.querySelectorAll('.navio-crew-card').forEach(card =>
-    card.addEventListener('click', () => openModal(card.dataset.crewId, card.dataset.crewType)));
-  container.querySelectorAll('.navio-ship-edit').forEach(btn =>
-    btn.addEventListener('click', () => {
-      const s = allShips().find(x => x.id === btn.dataset.shipId);
-      if (s) renderNavioForm(s);
-    }));
-  container.querySelectorAll('.navio-ship-del').forEach(btn =>
-    btn.addEventListener('click', () => {
-      const s = allShips().find(x => x.id === btn.dataset.shipId);
-      if (s) deleteShip(s);
-    }));
-}
-
-function renderNavioForm(ship) {
-  const container = document.getElementById('navio-content');
-  if (!container) return;
-  let pendingFile = null;
-  let crew = (Array.isArray(ship.crew) ? ship.crew : []).map(c => ({ type: c.type, id: c.id, role: c.role || '' }));
-  let shipVis = ship.visibility
-    ? { mode: ship.visibility.mode || 'all', playerIds: [...(ship.visibility.playerIds || [])] }
-    : { mode: 'all', playerIds: [] };
-
-  const players    = STATE.players.filter(p => p.role === 'player');
-  const characters = STATE.data.characters || [];
-
-  const previewHtml = ship.imageUrl
-    ? `<img src="${escHtml(ship.imageUrl)}" alt="">`
-    : `<span class="navio-img-preview-ph">⛵ Sem imagem</span>`;
-
-  container.innerHTML = `
-    <form class="navio-form" id="navio-form">
-      <div class="navio-form-title">${ship.name ? '✏ Editar Navio' : '＋ Adicionar Navio'}</div>
-      <div class="navio-form-row">
-        <div class="navio-field" style="flex:2"><label>Nome do Navio</label>
-          <input class="edit-input" name="name" value="${escHtml(ship.name || '')}" placeholder="Ex: A Brisa Vermilha" required></div>
-        <div class="navio-field" style="flex:1"><label>Tipo de Navio</label>
-          <select class="edit-input" name="allegiance">
-            ${Object.entries(SHIP_ALLEGIANCE).map(([k, v]) => `<option value="${k}"${(ship.allegiance || 'aliado') === k ? ' selected' : ''}>${v.icon} ${v.label}</option>`).join('')}
-          </select>
-        </div>
-      </div>
-
-      <div class="navio-field">
-        <label>Imagem do Navio</label>
-        <div class="navio-img-edit">
-          <div class="navio-img-preview" id="navio-img-preview">${previewHtml}</div>
-          <div class="navio-img-edit-actions">
-            <label class="navio-img-upload-btn">📷 Enviar do computador
-              <input type="file" id="navio-img-file" accept="image/*" style="display:none">
-            </label>
-            <div class="navio-img-uploading" id="navio-img-uploading" style="display:none">Enviando imagem...</div>
-            <input class="edit-input" name="imageUrl" id="navio-img-url" value="${escHtml(ship.imageUrl || '')}" placeholder="ou cole uma URL https://...">
-          </div>
-        </div>
-      </div>
-
-      <div class="navio-field"><label>Descrição</label>
-        <textarea class="edit-input" name="description" rows="3" placeholder="História, tipo, detalhes do navio...">${escHtml(ship.description || '')}</textarea></div>
-      <div class="navio-form-row">
-        <div class="navio-field"><label>PV Atual</label><input class="edit-input" type="number" name="hp" value="${Number(ship.hp) || 0}"></div>
-        <div class="navio-field"><label>PV Máximo</label><input class="edit-input" type="number" name="maxHp" value="${Number(ship.maxHp) || 0}"></div>
-        <div class="navio-field"><label>💨 Rapidez</label><input class="edit-input" type="number" name="speed" value="${Number(ship.speed) || 0}"></div>
-        <div class="navio-field"><label>🛡️ Resistência</label><input class="edit-input" type="number" name="resistance" value="${Number(ship.resistance) || 0}"></div>
-      </div>
-
-      <!-- Visibilidade -->
-      <div class="navio-field">
-        <label>Quem pode ver o navio</label>
-        <div class="navio-vis-row" id="navio-vis-row">
-          <button type="button" class="navio-vis-btn ${shipVis.mode === 'hidden' ? 'active' : ''}" data-mode="hidden">🔒 Ninguém</button>
-          <button type="button" class="navio-vis-btn ${shipVis.mode === 'specific' ? 'active' : ''}" data-mode="specific">👁 Específicos</button>
-          <button type="button" class="navio-vis-btn ${shipVis.mode === 'all' ? 'active' : ''}" data-mode="all">🌐 Todos</button>
-        </div>
-        <div class="navio-vis-players ${shipVis.mode === 'specific' ? '' : 'navio-hidden'}" id="navio-vis-players">
-          ${players.length
-            ? players.map(p => `<label class="navio-check"><input type="checkbox" class="navio-vis-check" data-uid="${p.uid}" ${shipVis.playerIds.includes(p.uid) ? 'checked' : ''}> ${escHtml(playerCharName(p))}</label>`).join('')
-            : '<span class="navio-crew-empty">Nenhum jogador registrado ainda.</span>'}
-        </div>
-      </div>
-
-      <!-- Tripulação -->
-      <div class="navio-field">
-        <label>Tripulação</label>
-        <div class="navio-crew-add">
-          <select class="edit-input" id="crew-add-select"></select>
-          <input class="edit-input" id="crew-add-role" list="crew-roles" placeholder="Função (ex: Capitão)">
-          <button type="button" class="navio-crew-add-btn" id="crew-add-btn">＋ Adicionar</button>
-        </div>
-        <datalist id="crew-roles">${CREW_ROLES.map(r => `<option value="${escHtml(r)}">`).join('')}</datalist>
-        <div class="navio-crew-editor" id="crew-editor"></div>
-      </div>
-
-      <div class="navio-form-actions">
-        <button type="submit" class="navio-save-btn">Salvar Navio</button>
-        <button type="button" class="navio-cancel-btn" id="navio-cancel-btn">Cancelar</button>
-      </div>
-    </form>`;
-
-  const preview = document.getElementById('navio-img-preview');
-  const urlInput = document.getElementById('navio-img-url');
-
-  // Arquivo do PC → pré-visualização imediata
-  document.getElementById('navio-img-file').addEventListener('change', function() {
-    const file = this.files[0];
-    if (!file) return;
-    pendingFile = file;
-    const reader = new FileReader();
-    reader.onload = ev => { preview.innerHTML = `<img src="${ev.target.result}" alt="">`; };
-    reader.readAsDataURL(file);
-  });
-
-  // URL → pré-visualização
-  urlInput.addEventListener('input', () => {
-    if (pendingFile) return;
-    const url = urlInput.value.trim();
-    preview.innerHTML = url ? `<img src="${escHtml(url)}" alt="" onerror="this.outerHTML='<span class=\\'navio-img-preview-ph\\'>URL inválida</span>'">` : `<span class="navio-img-preview-ph">⛵ Sem imagem</span>`;
-  });
-
-  // Visibilidade — wiring
-  const visRow = document.getElementById('navio-vis-row');
-  visRow.querySelectorAll('.navio-vis-btn').forEach(btn => btn.addEventListener('click', () => {
-    shipVis.mode = btn.dataset.mode;
-    visRow.querySelectorAll('.navio-vis-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === shipVis.mode));
-    document.getElementById('navio-vis-players').classList.toggle('navio-hidden', shipVis.mode !== 'specific');
-  }));
-  document.getElementById('navio-vis-players').querySelectorAll('.navio-vis-check').forEach(chk => chk.addEventListener('change', () => {
-    const uid = chk.dataset.uid;
-    if (chk.checked) { if (!shipVis.playerIds.includes(uid)) shipVis.playerIds.push(uid); }
-    else { const i = shipVis.playerIds.indexOf(uid); if (i >= 0) shipVis.playerIds.splice(i, 1); }
-  }));
-
-  // Tripulação — editor
-  const memberKey = m => `${m.type}:${m.id}`;
-  function renderCrewEditor() {
-    const editor = document.getElementById('crew-editor');
-    const sel    = document.getElementById('crew-add-select');
-    const used   = new Set(crew.map(memberKey));
-    const pOpts = players.filter(p => !used.has('player:' + p.uid))
-      .map(p => `<option value="player:${p.uid}">${escHtml(playerCharName(p))} — jogador</option>`).join('');
-    const cOpts = characters.filter(c => !used.has('character:' + c.id))
-      .map(c => `<option value="character:${escHtml(c.id)}">${escHtml(c.name)}</option>`).join('');
-    sel.innerHTML = `<option value="">— escolher pessoa —</option>`
-      + (pOpts ? `<optgroup label="Jogadores">${pOpts}</optgroup>` : '')
-      + (cOpts ? `<optgroup label="Personagens">${cOpts}</optgroup>` : '');
-
-    editor.innerHTML = crew.length
-      ? crew.map((m, i) => {
-          const info = crewMemberInfo(m);
-          return `<div class="navio-crew-edit-row" data-i="${i}">
-            <span class="navio-crew-edit-name">${escHtml(info.name)}</span>
-            <input class="edit-input navio-crew-role-input" data-i="${i}" list="crew-roles" value="${escHtml(m.role || '')}" placeholder="Função">
-            <button type="button" class="navio-crew-del" data-i="${i}" title="Remover">✕</button>
-          </div>`;
-        }).join('')
-      : '<p class="navio-crew-empty">Nenhum tripulante adicionado.</p>';
-
-    editor.querySelectorAll('.navio-crew-role-input').forEach(inp =>
-      inp.addEventListener('input', () => { crew[+inp.dataset.i].role = inp.value; }));
-    editor.querySelectorAll('.navio-crew-del').forEach(b =>
-      b.addEventListener('click', () => { crew.splice(+b.dataset.i, 1); renderCrewEditor(); }));
-  }
-  document.getElementById('crew-add-btn').addEventListener('click', () => {
-    const sel     = document.getElementById('crew-add-select');
-    const roleInp = document.getElementById('crew-add-role');
-    const val = sel.value;
-    if (!val) return;
-    const sep  = val.indexOf(':');
-    const type = val.slice(0, sep);
-    const id   = val.slice(sep + 1);
-    crew.push({ type, id, role: (roleInp.value || '').trim() });
-    roleInp.value = '';
-    renderCrewEditor();
-  });
-  renderCrewEditor();
-
-  document.getElementById('navio-cancel-btn').addEventListener('click', renderNavio);
-  document.getElementById('navio-form').addEventListener('submit', async e => {
-    e.preventDefault();
-    const fd = new FormData(e.target);
-    const btn = e.target.querySelector('.navio-save-btn');
-    btn.disabled = true; btn.textContent = 'Salvando...';
-
-    let imageUrl = String(fd.get('imageUrl') || '').trim();
-    try {
-      if (pendingFile) {
-        document.getElementById('navio-img-uploading').style.display = 'block';
-        imageUrl = await uploadToCloudinary(pendingFile);
-        document.getElementById('navio-img-uploading').style.display = 'none';
-      }
-      const data = {
-        name:        String(fd.get('name') || '').trim(),
-        allegiance:  fd.get('allegiance') || 'aliado',
-        imageUrl,
-        description: String(fd.get('description') || '').trim(),
-        hp:          parseInt(fd.get('hp') || '0') || 0,
-        maxHp:       parseInt(fd.get('maxHp') || '0') || 0,
-        speed:       parseInt(fd.get('speed') || '0') || 0,
-        resistance:  parseInt(fd.get('resistance') || '0') || 0,
-        crew:        crew.filter(m => m.id).map(m => ({ type: m.type, id: m.id, role: (m.role || '').trim() })),
-        visibility:  { mode: shipVis.mode, playerIds: shipVis.mode === 'specific' ? shipVis.playerIds : [] },
-      };
-      const shipsCol = collection(db, 'campaigns', CAMPAIGN_ID, 'ships');
-      if (ship._legacy) {
-        // Migra o navio legado para a coleção e remove o doc antigo
-        await addDoc(shipsCol, data);
-        await deleteDoc(doc(db, 'campaigns', CAMPAIGN_ID, 'ship', 'main'));
-      } else if (ship.id) {
-        await setDoc(doc(shipsCol, ship.id), data, { merge: true });
-      } else {
-        await addDoc(shipsCol, data);
-      }
-      renderNavio();
-    } catch (err) {
-      console.error('[ship save]', err);
-      document.getElementById('navio-img-uploading').style.display = 'none';
-      btn.disabled = false; btn.textContent = '✘ Erro — tentar de novo';
-    }
-  });
 }
 
 // ── JOGADORES TAB ─────────────────────────────────────────────────────────────
@@ -3862,8 +3468,8 @@ function setupSearch() {
 // ── GRAPH ─────────────────────────────────────────────────────────────────────
 let graphSimulation = null;
 
-const GRAPH_TYPE_LABEL = { character: 'Personagem', location: 'Local', event: 'Evento', faction: 'Facção', player: 'Jogador', ship: 'Navio' };
-const GRAPH_GLYPH      = { location: '🏝', event: '📜', ship: '⚓' };
+const GRAPH_TYPE_LABEL = { character: 'Personagem', location: 'Local', event: 'Evento', faction: 'Facção', player: 'Jogador' };
+const GRAPH_GLYPH      = { location: '🏝', event: '📜' };
 
 // Imagem do nó: retrato do personagem, ou imageUrl de qualquer entidade que tenha
 function nodeImgSrc(d) {
@@ -3872,7 +3478,6 @@ function nodeImgSrc(d) {
     return c ? charImgSrc(c) : null;
   }
   if (d.type === 'player') return getPlayerByUid(d.id)?.playerCharacter?.imageUrl || null;
-  if (d.type === 'ship')   return shipByNodeId(d.id)?.imageUrl || null;
   const item = getItemById(d.id, d.type);
   return item?.imageUrl || null;
 }
@@ -3900,12 +3505,6 @@ function graphTooltipSub(d) {
   if (d.type === 'player') {
     const pc = getPlayerByUid(d.id)?.playerCharacter || {};
     return [pc.race, pc.charClass].filter(Boolean).join(' · ') || 'Personagem de jogador';
-  }
-  if (d.type === 'ship') {
-    const s = shipByNodeId(d.id);
-    const n = (s?.crew || []).length;
-    const al = SHIP_ALLEGIANCE[s?.allegiance] || SHIP_ALLEGIANCE.neutro;
-    return `Navio (${al.label}) · ${n} ${n === 1 ? 'tripulante' : 'tripulantes'}`;
   }
   const item = getItemById(d.id, d.type);
   if (!item) return '';
@@ -3969,29 +3568,15 @@ function renderGraph() {
   if (faction)   STATE.data.factions.forEach(f => addNode(f.id, 'faction', f.name));
   if (player)    listPlayerChars().forEach(p => addNode(p.uid, 'player', playerCharName(p)));
 
-  // Navios + tripulação: cada navio vira um nó e cada tripulante é uma aresta
-  // rotulada pela função. Respeita a visibilidade de cada navio.
-  const crewLinks = [];
-  allShips().forEach(s => {
-    if (!Array.isArray(s.crew) || !s.crew.length) return;
-    const present = s.crew.filter(m => m && nodeMap[m.id]);
-    if (!present.length) return;
-    const nodeId = 'ship:' + s.id;
-    addNode(nodeId, 'ship', s.name);
-    present.forEach(m => crewLinks.push({ rel: null, source: nodeId, target: m.id, label: m.role || 'tripulação', type: 'neutral', secret: false, _crew: true }));
-  });
-
   const links = STATE.data.relations
     .filter(r => nodeMap[r.sourceId] && nodeMap[r.targetId])
     .map(r => ({ rel: r, source: r.sourceId, target: r.targetId, label: r.label, type: r.type || 'historical', secret: r.secret || false }));
-  crewLinks.forEach(cl => links.push(cl));
 
   links.forEach(l => { if (nodeMap[l.source]) nodeMap[l.source].degree++; if (nodeMap[l.target]) nodeMap[l.target].degree++; });
 
-  const NODE_COLOR = { character: '#cfac6e', location: '#5a8ab0', event: '#7a9a6a', faction: '#9a5a5a', player: '#4aa3a3', ship: '#cfac6e' };
+  const NODE_COLOR = { character: '#cfac6e', location: '#5a8ab0', event: '#7a9a6a', faction: '#9a5a5a', player: '#4aa3a3' };
   const getNodeColor = d => {
     if (d.type === 'faction') return getFactionById(d.id)?.color || NODE_COLOR.faction;
-    if (d.type === 'ship')    return (SHIP_ALLEGIANCE[shipByNodeId(d.id)?.allegiance] || SHIP_ALLEGIANCE.neutro).color;
     return NODE_COLOR[d.type] || '#9a5a5a';
   };
   const radiusOf = d => Math.min(34, Math.max(17, 13 + d.degree * 2));
@@ -4015,7 +3600,7 @@ function renderGraph() {
     .append('line').attr('class', 'graph-link-hit')
     .attr('stroke', 'transparent').attr('stroke-width', 16)
     .style('cursor', 'pointer')
-    .on('click', (e, d) => { e.stopPropagation(); if (d.rel) openRelationDialog(d.rel); else if (d._crew) switchTab('navio'); });
+    .on('click', (e, d) => { e.stopPropagation(); if (d.rel) openRelationDialog(d.rel); });
 
   const linkLabelEl = g.append('g').attr('class', 'link-labels').selectAll('.graph-link-label')
     .data(links).enter().append('text').attr('class', 'graph-link-label')
@@ -4126,7 +3711,7 @@ function renderGraph() {
       linkLabelEl.style('opacity', 1);
       tip.classList.remove('visible');
     })
-    .on('click', (e, d) => { e.stopPropagation(); tip.classList.remove('visible'); if (d.type === 'ship') switchTab('navio'); else openModal(d.id, d.type); });
+    .on('click', (e, d) => { e.stopPropagation(); tip.classList.remove('visible'); openModal(d.id, d.type); });
 
   graphSimulation.on('tick', () => {
     // Apara as linhas na borda dos medalhões para a seta ficar visível

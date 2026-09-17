@@ -15,8 +15,8 @@ Site de campanha D&D 5e, 100% estático (HTML/CSS/JS vanilla + D3.js CDN + Fireb
 **How to apply:** Pedidos de atualização de conteúdo se resolvem editando os JSONs em `/data` — nunca hardcodar no HTML/JS. A fonte de verdade de lore é `CAMPAIGN.md`; `ROTEIRO.md` é o esboço linear dos arcos.
 
 ## Estrutura
-- `index.html` — SPA com abas: Painel, Personagens, Locais, Eventos, Facções, Relações, Acervo, Navio, Jogadores (mestre), Roteiro (mestre), Curiosidades (mestre), Meu Personagem (jogador)
-- `scripts/app.js` — toda a lógica (modais, grafo D3, busca, segredos, roteiro inline, acervo de navios)
+- `index.html` — SPA com abas: Painel, Personagens, Locais, Eventos, Facções, Relações, Acervo, Jogadores (mestre), Roteiro (mestre), Curiosidades (mestre), Meu Personagem (jogador)
+- `scripts/app.js` — toda a lógica (modais, grafo D3, busca, segredos, roteiro inline)
 - `/data`: `characters.json` (18) · `locations.json` (10) · `events.json` (3) · `factions.json` (6) · `relations.json` (71) · `documents.json` (14) · `items.json` (vazio, mas ligado ao pipeline)
 - `curiosities.json` fica na **raiz** — é o único JSON lido em runtime por todos os usuários, por isso é publicado.
 
@@ -26,6 +26,7 @@ Site de campanha D&D 5e, 100% estático (HTML/CSS/JS vanilla + D3.js CDN + Fireb
 Seed e sync cobrem characters/locations/events/factions/relations/documents/items. Visibilidade é semeada só na primeira vez — o que o Mestre ajusta pela UI tem precedência sobre o JSON.
 
 ## Decisões do Mestre já tomadas
+- **Aba Navio removida** (set/2026) — a coleção `ships` e o doc `ship/main` ficaram no Firestore, mas nada no site os lê; os Dados de Navegação da ficha do jogador são outra coisa e continuam.
 - **NPCs foram descartados** — a aba foi removida e todo o código, CSS, rules e arquivos de NPC saíram do repo. NPCs de importância baixa são criados direto na mesa; só personagens importantes entram no site. Não reintroduzir.
 - **Segredos ficam ocultos por default** — `docVisible()` e `isItemVisible()` retornam `false` quando não há `visibility`.
 
