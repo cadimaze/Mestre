@@ -76,17 +76,6 @@ const DND_SKILLS = [
   {id:'survival',      name:'Sobrevivência',    ability:'wis'},
 ];
 
-// ── DADOS DE NAVEGAÇÃO (sistema exclusivo da mesa) ──────────────────────────────
-// Cada dado é um d20 + modificador editável manualmente. Cada um tem uma
-// animação de rolagem única conforme a função (variant).
-const NAV_DICE = [
-  { id:'combat',   name:'Combate Naval',      icon:'⚔️', variant:'combat',   color:'#c94040', hint:'Canhões, abordagens e fúria de batalha' },
-  { id:'piloting', name:'Pilotagem do Navio', icon:'🧭', variant:'piloting', color:'#5a8ab0', hint:'Manobras, rumo e leitura das marés' },
-  { id:'tuning',   name:'Ações do Navio',     icon:'⚙️', variant:'tuning',   color:'#cfac6e', hint:'Manobras e ações especiais da tripulação' },
-  { id:'repair',   name:'Conserto do Navio',  icon:'🛠️', variant:'repair',   color:'#4aa3a3', hint:'Reparos de casco e remendos no mar' },
-];
-const NAV_BY_ID = Object.fromEntries(NAV_DICE.map(d => [d.id, d]));
-
 
 // ── AUTH UI ───────────────────────────────────────────────────────────────────
 function showAuthOverlay()  { document.getElementById('auth-overlay').classList.add('visible'); }
@@ -354,88 +343,6 @@ async function sendRevealNotifications(targetUids, entityType, entityId, entityN
   await batch.commit();
 }
 
-// ── DICE ROLLER ───────────────────────────────────────────────────────────────
-function showDiceToast({ label, sides, roll, modifier, total, details, variant, icon, rollPair }) {
-  let overlay = document.getElementById('dice-overlay');
-  if (!overlay) {
-    overlay = document.createElement('div');
-    overlay.id = 'dice-overlay';
-    overlay.className = 'dice-overlay';
-    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
-    document.body.appendChild(overlay);
-  }
-  clearTimeout(overlay._timer);
-  clearTimeout(overlay._closeTimer);
-  clearInterval(overlay._rollInterval);
-
-  const vClass = variant ? ` dice-variant-${variant}` : '';
-  const iconHtml = icon ? `<div class="dice-toast-icon">${icon}</div>` : '';
-
-  // ── Phase 1: suspense animation ────────────────────────────────────────────
-  overlay.innerHTML = `
-    <div class="dice-toast dice-rolling-phase${vClass}">
-      ${iconHtml}
-      <div class="dice-label">${escHtml(label)}</div>
-      <div class="dice-die">d${sides}</div>
-      <div class="dice-anim-num" id="dice-anim-num">?</div>
-      <div class="dice-rolling-hint">Rolando...</div>
-    </div>`;
-  overlay.classList.add('open');
-
-  let tick = 0;
-  overlay._rollInterval = setInterval(() => {
-    const el = document.getElementById('dice-anim-num');
-    if (el) { el.textContent = Math.floor(Math.random() * sides) + 1; tick++; }
-  }, 55);
-
-  // ── Phase 2: reveal result ─────────────────────────────────────────────────
-  overlay._timer = setTimeout(() => {
-    clearInterval(overlay._rollInterval);
-    const isCrit   = roll === sides;
-    const isFumble = roll === 1 && sides === 20;
-    const modStr   = modifier > 0 ? `+${modifier}` : modifier < 0 ? `${modifier}` : '';
-
-    const detailRows = (details || []).map(d =>
-      `<div class="dice-detail-row">
-        <span class="dice-detail-label">${escHtml(String(d.label))}</span>
-        <span class="dice-detail-val">${escHtml(String(d.value))}</span>
-      </div>`
-    ).join('');
-
-    overlay.innerHTML = `
-      <div class="dice-toast dice-reveal-phase${vClass}${isCrit ? ' dice-crit' : ''}${isFumble ? ' dice-fumble' : ''}">
-        ${iconHtml}
-        <button class="dice-close" onclick="document.getElementById('dice-overlay').classList.remove('open')">✕</button>
-        <div class="dice-label">${escHtml(label)}</div>
-        <div class="dice-die">d${sides}</div>
-        ${rollPair ? `<div class="dice-pair dice-pair-${rollPair.mode}">
-          <span class="dice-pair-die${rollPair.a === rollPair.kept ? ' kept' : ' dropped'}">${rollPair.a}</span>
-          <span class="dice-pair-sep">${rollPair.mode === 'advantage' ? '⬆ maior' : '⬇ menor'}</span>
-          <span class="dice-pair-die${rollPair.b === rollPair.kept ? ' kept' : ' dropped'}">${rollPair.b}</span>
-        </div>` : ''}
-        <div class="dice-value">${roll}</div>
-        ${modifier !== 0 ? `<div class="dice-equation">${roll} ${modStr}</div>` : ''}
-        <div class="dice-total-wrap">
-          <div class="dice-total">${total}</div>
-          <div class="dice-total-label">TOTAL</div>
-        </div>
-        ${isCrit   ? '<div class="dice-badge dice-badge-crit">⚡ CRÍTICO!</div>'        : ''}
-        ${isFumble ? '<div class="dice-badge dice-badge-fumble">💀 FALHA CRÍTICA</div>' : ''}
-        ${detailRows ? `
-          <button class="dice-details-btn" id="dice-details-btn">📊 Ver detalhes</button>
-          <div class="dice-details-panel" id="dice-details-panel">${detailRows}</div>` : ''}
-      </div>`;
-
-    document.getElementById('dice-details-btn')?.addEventListener('click', function() {
-      const panel = document.getElementById('dice-details-panel');
-      const open  = panel.classList.toggle('open');
-      this.textContent = open ? '▲ Ocultar detalhes' : '📊 Ver detalhes';
-    });
-
-    overlay._closeTimer = setTimeout(() => overlay.classList.remove('open'), 7000);
-  }, 1350);
-}
-
 // profStateToMod: 0=none, 1=half, 2=prof, 3=expert. Accepts boolean for legacy data.
 function profStateToMod(state, pb) {
   const s = typeof state === 'boolean' ? (state ? 2 : 0) : (Number(state) || 0);
@@ -452,57 +359,6 @@ function profStateNorm(state) {
   return (n >= 0 && n <= 3) ? n : 0;
 }
 
-// Rola um dado de navegação: d20 + modificador fixo, com animação por variante.
-// prefix opcional (ex.: nome do jogador, para a visão do mestre).
-// mode: 'normal' | 'advantage' (dois dados, pega o maior) | 'disadvantage' (menor).
-function rollNavDie(dieId, modifier, prefix = '', mode = 'normal') {
-  const die = NAV_BY_ID[dieId];
-  if (!die) return;
-  const mod = Number(modifier) || 0;
-  const d20 = () => Math.floor(Math.random() * 20) + 1;
-
-  let roll, rollPair = null, modeLabel = '';
-  if (mode === 'advantage' || mode === 'disadvantage') {
-    const a = d20(), b = d20();
-    roll = mode === 'advantage' ? Math.max(a, b) : Math.min(a, b);
-    modeLabel = mode === 'advantage' ? 'Vantagem' : 'Desvantagem';
-    rollPair = { a, b, kept: roll, mode };
-  } else {
-    roll = d20();
-  }
-  const total = roll + mod;
-  const label = (prefix ? `${prefix} — ` : '') + die.name + (modeLabel ? ` · ${modeLabel}` : '');
-
-  showDiceToast({
-    label, sides: 20, roll, modifier: mod, total,
-    variant: die.variant, icon: die.icon, rollPair,
-    details: [
-      rollPair
-        ? { label: `Dados (${modeLabel})`, value: `${rollPair.a} e ${rollPair.b} → fica ${rollPair.kept}` }
-        : { label: 'Rolagem (d20)', value: roll },
-      { label: 'Modificador', value: (mod >= 0 ? '+' : '') + mod },
-      { label: 'Total', value: total },
-    ]
-  });
-}
-window.rollNavDie = rollNavDie;
-
-// Delegação global: qualquer botão [data-nav-roll] rola o dado de navegação.
-// Funciona em qualquer lugar (ficha do jogador, modal do mestre) sem re-wiring.
-function setupNavRollDelegation() {
-  document.addEventListener('click', e => {
-    const btn = e.target.closest('[data-nav-roll]');
-    if (!btn) return;
-    e.preventDefault();
-    e.stopPropagation();
-    rollNavDie(
-      btn.dataset.navRoll,
-      Number(btn.dataset.navMod) || 0,
-      btn.dataset.navPrefix || '',
-      btn.dataset.navMode || 'normal'
-    );
-  });
-}
 
 let _notifQueue  = [];
 let _notifActive = false;
@@ -2274,11 +2130,6 @@ function renderMeuPersonagem() {
   const classKey  = (pc.charClass || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, '');
   const otherPlayers = STATE.players.filter(p => p.role === 'player' && p.uid !== myUid);
 
-  // ── Dados de navegação ──────────────────────────────────────────────────────
-  const nav       = pc.navigation || {};
-  const navMod    = id => Number(nav[id]) || 0;
-  const navModStr = id => { const m = navMod(id); return (m >= 0 ? '+' : '') + m; };
-
   // Mutable state — saved together on form submit
   let sheetVis   = pc.sheetVisibility ? { ...pc.sheetVisibility, playerIds: [...(pc.sheetVisibility.playerIds || [])] }
                                        : { mode: 'all', playerIds: [] };
@@ -2330,22 +2181,6 @@ function renderMeuPersonagem() {
           <div class="cs-char-meta">${[pc.race, pc.charClass, pc.background].filter(Boolean).map(escHtml).join(' · ')}</div>
         </div>
       </div>
-      <div class="cs-nav-section">
-        <div class="cs-sh-title">🎲 Dados de Navegação — d20 + modificador (⬆ vantagem · ⬇ desvantagem)</div>
-        <div class="cs-nav-grid">
-          ${NAV_DICE.map(d => `<div class="cs-nav-card nav-variant-${d.variant}">
-            <div class="cs-nav-icon">${d.icon}</div>
-            <div class="cs-nav-name">${d.name}</div>
-            <div class="cs-nav-mod">${navModStr(d.id)}</div>
-            <div class="cs-nav-hint">${d.hint}</div>
-            <div class="cs-nav-actions">
-              <button type="button" class="cs-nav-btn cs-nav-btn-main" data-nav-roll="${d.id}" data-nav-mod="${navMod(d.id)}" data-nav-mode="normal">🎲 d20 ${navModStr(d.id)}</button>
-              <button type="button" class="cs-nav-btn cs-nav-btn-adv" data-nav-roll="${d.id}" data-nav-mod="${navMod(d.id)}" data-nav-mode="advantage" title="Vantagem — 2d20, pega o maior">⬆</button>
-              <button type="button" class="cs-nav-btn cs-nav-btn-dis" data-nav-roll="${d.id}" data-nav-mod="${navMod(d.id)}" data-nav-mode="disadvantage" title="Desvantagem — 2d20, pega o menor">⬇</button>
-            </div>
-          </div>`).join('')}
-        </div>
-      </div>
       ${pc.appearance ? `<div class="cs-text-block"><div class="cs-sh-title">Aparência</div><p class="cs-text-body">${escHtml(pc.appearance)}</p></div>` : ''}
       ${pc.personality ? `<div class="cs-text-block"><div class="cs-sh-title">Personalidade &amp; Motivações</div><p class="cs-text-body">${escHtml(pc.personality)}</p></div>` : ''}
       ${pc.history ? `<div class="cs-text-block"><div class="cs-sh-title">História</div><p class="cs-text-body">${escHtml(pc.history)}</p></div>` : ''}
@@ -2387,21 +2222,6 @@ function renderMeuPersonagem() {
           <div class="my-char-field"><label>Antecedente</label>
             <input class="my-char-input" name="background" value="${escHtml(pc.background||'')}" placeholder="Ex: Soldado, Sábio...">
           </div>
-        </div>
-      </div>
-
-      <!-- ── DADOS DE NAVEGAÇÃO ── -->
-      <div class="pc-section pc-sheet-section">
-        <div class="pc-section-title">🎲 Dados de Navegação — defina os modificadores (d20 + valor)</div>
-        <div class="pc-nav-edit-grid">
-          ${NAV_DICE.map(d => `
-            <div class="pc-nav-edit-box nav-variant-${d.variant}">
-              <div class="pc-nav-edit-icon">${d.icon}</div>
-              <div class="pc-nav-edit-name">${d.name}</div>
-              <div class="pc-nav-edit-hint">${d.hint}</div>
-              <label class="pc-nav-edit-label">Modificador</label>
-              <input class="pc-sheet-input pc-nav-input" name="nav_${d.id}" type="number" value="${navMod(d.id)}">
-            </div>`).join('')}
         </div>
       </div>
 
@@ -2609,13 +2429,10 @@ function renderMeuPersonagem() {
     const btn = document.getElementById('pc-save-btn');
     btn.disabled = true; btn.textContent = 'Salvando...';
     const fd = new FormData(e.target);
-    // Modificadores dos dados de navegação
-    const navigation = {};
-    NAV_DICE.forEach(d => { navigation[d.id] = parseInt(fd.get(`nav_${d.id}`) || '0') || 0; });
-    const charData = { sheetVisibility: sheetVis, fieldVisibility: fieldVis, secretsList, navigation };
+    const charData = { sheetVisibility: sheetVis, fieldVisibility: fieldVis, secretsList };
     // Preserva notas do mestre (não editáveis aqui)
     if (pc.notes) charData.notes = pc.notes;
-    fd.forEach((v, k) => { if (!k.startsWith('nav_') && typeof v === 'string') charData[k] = v.trim(); });
+    fd.forEach((v, k) => { if (typeof v === 'string') charData[k] = v.trim(); });
     if (pendingImageUrl) charData.imageUrl = pendingImageUrl;
     try {
       await updateDoc(doc(db, 'users', STATE.user.uid), { playerCharacter: charData });
@@ -2640,7 +2457,6 @@ function renderMeuPersonagem() {
   // ── View mode portrait zoom ───────────────────────────────────────────────
   document.getElementById('cs-portrait-view')?.addEventListener('click', () => openLightbox(pendingImageUrl));
 
-  // Rolagem dos dados de navegação é tratada por delegação global (setupNavRollDelegation)
 
   // ── Load other players (async, non-blocking) ──────────────────────────────
   buildAllPlayersCharHtml().then(html => {
@@ -3365,31 +3181,6 @@ function buildPlayerModalContent(uid) {
        </div>`
     : `<div class="modal-char-avatar"><div class="modal-char-avatar-placeholder">${escHtml(name.charAt(0).toUpperCase())}</div></div>`;
 
-  const nav = pc.navigation || {};
-
-  // Dados de navegação — visíveis ao mestre e ao próprio jogador; clicáveis para rolar
-  const canRollNav = STATE.isMaster || uid === STATE.user.uid;
-  const navSheetHtml = canRollNav ? `
-      <div class="modal-section pms-section">
-        <div class="modal-section-title">🎲 Dados de Navegação — d20 (⬆ vantagem · ⬇ desvantagem)</div>
-        <div class="pms-nav-grid">
-          ${NAV_DICE.map(d => {
-            const m = Number(nav[d.id]) || 0;
-            const ms = (m >= 0 ? '+' : '') + m;
-            return `<div class="pms-nav-card nav-variant-${d.variant}">
-              <span class="pms-nav-icon">${d.icon}</span>
-              <span class="pms-nav-name">${d.name}</span>
-              <span class="pms-nav-mod">${ms}</span>
-              <div class="pms-nav-actions">
-                <button type="button" class="cs-nav-btn cs-nav-btn-main" data-nav-roll="${d.id}" data-nav-mod="${m}" data-nav-prefix="${escHtml(name)}" data-nav-mode="normal" title="Rolar d20 ${ms}">🎲 d20</button>
-                <button type="button" class="cs-nav-btn cs-nav-btn-adv" data-nav-roll="${d.id}" data-nav-mod="${m}" data-nav-prefix="${escHtml(name)}" data-nav-mode="advantage" title="Vantagem — 2d20, pega o maior">⬆</button>
-                <button type="button" class="cs-nav-btn cs-nav-btn-dis" data-nav-roll="${d.id}" data-nav-mod="${m}" data-nav-prefix="${escHtml(name)}" data-nav-mode="disadvantage" title="Desvantagem — 2d20, pega o menor">⬇</button>
-              </div>
-            </div>`;
-          }).join('')}
-        </div>
-      </div>` : '';
-
   return `
     <div class="modal-char-hero">
       ${avatarHtml}
@@ -3399,7 +3190,6 @@ function buildPlayerModalContent(uid) {
         <div class="badges"><span class="badge player-badge">⚔ Jogador: ${escHtml(p.displayName || '')}</span></div>
       </div>
     </div>
-    ${navSheetHtml}
     ${pc.appearance && (STATE.isMaster || isFieldVisible(pc, 'appearance', STATE.user.uid)) ? `<div class="modal-section"><div class="modal-section-title">Aparência</div><div class="modal-section-text">${escHtml(pc.appearance)}</div></div>` : ''}
     ${pc.personality && (STATE.isMaster || isFieldVisible(pc, 'personality', STATE.user.uid)) ? `<div class="modal-section"><div class="modal-section-title">Personalidade &amp; Motivações</div><div class="modal-section-text">${escHtml(pc.personality)}</div></div>` : ''}
     ${pc.history && (STATE.isMaster || isFieldVisible(pc, 'history', STATE.user.uid)) ? `<div class="modal-section"><div class="modal-section-title">História</div><div class="modal-section-text">${escHtml(pc.history)}</div></div>` : ''}
@@ -4407,14 +4197,6 @@ function buildPlayerEditFields(p = {}) {
     ${editField('História do Personagem', editTextarea('pcHistory', pc.history, 'De onde veio, o que viveu, o que o moldou...', 4))}
     ${editField('Notas (visíveis a todos)', editTextarea('pcNotes', pc.notes, 'Anotações públicas da jornada...', 3))}
 
-    <div class="edit-form-section-title">🎲 Dados de Navegação (modificadores)</div>
-    <div class="pev-nav-grid">
-      ${NAV_DICE.map(d => `<div class="pev-nav-box">
-        <label>${d.icon} ${d.name}</label>
-        <input class="edit-input" type="number" name="nav_${d.id}" value="${Number((pc.navigation||{})[d.id]) || 0}">
-      </div>`).join('')}
-    </div>
-
     <div class="edit-form-section-title">Visibilidade da Ficha</div>
     <div class="pc-vis-row" id="pev-sheet-vis-btns">
       ${visBtn('hidden','🔒 Só o jogador')}${visBtn('specific','👁 Específicos')}${visBtn('all','🌐 Todos')}
@@ -4711,8 +4493,6 @@ function attachEditFormEvents(id, type) {
         const fd  = new FormData(form);
         const get = k => String(fd.get(k) || '').trim();
         const player = getPlayerByUid(id) || {};
-        const navigation = {};
-        NAV_DICE.forEach(d => { navigation[d.id] = parseInt(fd.get(`nav_${d.id}`) || '0') || 0; });
         const merged = {
           ...(player.playerCharacter || {}),
           name:           get('pcName'),
@@ -4723,7 +4503,6 @@ function attachEditFormEvents(id, type) {
           personality:    get('pcPersonality'),
           history:        get('pcHistory'),
           notes:          get('pcNotes'),
-          navigation,
           secretsList:    charSecretsList,
           sheetVisibility: form._pevSheetVis || (player.playerCharacter?.sheetVisibility || { mode: 'all', playerIds: [] }),
         };
@@ -5110,7 +4889,6 @@ async function init() {
   if (secretsBtn) secretsBtn.addEventListener('click', toggleSecrets);
 
   setupSearch();
-  setupNavRollDelegation();
 
   // Firebase auth state listener
   onAuthStateChanged(auth, user => {
