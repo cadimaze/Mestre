@@ -1311,6 +1311,30 @@ async function syncCampaignContent() {
       return newList.map(s => ({ ...s, visibility: visByID[s.id] || s.visibility }));
     }
 
+    // Assinatura do que o arquivo mandou da última vez. Se o arquivo não mudou
+    // desde então, não tocamos no registro — o que o Mestre editou pelo site
+    // continua valendo. Se mudou, o arquivo vence, porque foi edição deliberada.
+    function assinatura(obj) {
+      const txt = JSON.stringify(obj);
+      let h = 0x811c9dc5;
+      for (let i = 0; i < txt.length; i++) {
+        h ^= txt.charCodeAt(i);
+        h = Math.imul(h, 0x01000193) >>> 0;
+      }
+      return h.toString(16);
+    }
+
+    let enviados = 0, preservados = 0;
+
+    // Devolve false quando o arquivo não mudou desde a última sincronização.
+    function agendar(ref, update, existing) {
+      const hash = assinatura(update);
+      if (existing && existing._syncHash === hash) { preservados++; return false; }
+      batch.set(ref, { ...update, _syncHash: hash }, { merge: true });
+      enviados++;
+      return true;
+    }
+
     const batch = writeBatch(db);
     const base  = `campaigns/${CAMPAIGN_ID}`;
 
@@ -1322,7 +1346,7 @@ async function syncCampaignContent() {
         description: c.description || '', personality: c.personality || '',
         secretsList: mergeSecretsList(c.secretsList, existing),
       };
-      batch.set(ref, update, { merge: true });
+      agendar(ref, update, existing);
     });
 
     locs.forEach(l => {
@@ -1334,7 +1358,7 @@ async function syncCampaignContent() {
         pointsOfInterest: l.pointsOfInterest || [], secrets: l.secrets || '',
         secretsList: mergeSecretsList(l.secretsList, existing),
       };
-      batch.set(ref, update, { merge: true });
+      agendar(ref, update, existing);
     });
 
     evts.forEach(e => {
@@ -1346,7 +1370,7 @@ async function syncCampaignContent() {
         secretsList: mergeSecretsList(e.secretsList, existing),
         relatedEvents: e.relatedEvents || [],
       };
-      batch.set(ref, update, { merge: true });
+      agendar(ref, update, existing);
     });
 
     facts.forEach(f => {
@@ -1356,7 +1380,7 @@ async function syncCampaignContent() {
         symbol: f.symbol || '', description: f.description || '',
         secrets: f.secrets || '',
       };
-      batch.set(ref, update, { merge: true });
+      agendar(ref, update, existing);
     });
 
     docs.forEach(d => {
@@ -1373,7 +1397,7 @@ async function syncCampaignContent() {
       // pela UI tem precedencia sobre o JSON.
       if (!existing?.visibility)        update.visibility        = d.visibility        || { ...HIDDEN_VIS };
       if (!existing?.contentVisibility) update.contentVisibility = d.contentVisibility || { ...HIDDEN_VIS };
-      batch.set(ref, update, { merge: true });
+      agendar(ref, update, existing);
     });
 
     itms.forEach(i => {
@@ -1386,11 +1410,12 @@ async function syncCampaignContent() {
       };
       if (i.imageUrl) update.imageUrl = i.imageUrl;
       if (!existing?.visibility) update.visibility = i.visibility || { ...HIDDEN_VIS };
-      batch.set(ref, update, { merge: true });
+      agendar(ref, update, existing);
     });
 
     await batch.commit();
-    if (btn) { btn.textContent = '✓ Sincronizado!'; setTimeout(() => { btn.textContent = '🔄 Sincronizar Dados'; btn.disabled = false; }, 3000); }
+    console.info(`[sync] ${enviados} registro(s) enviado(s), ${preservados} preservado(s) (sem mudança no arquivo)`);
+    if (btn) { btn.textContent = `✓ ${enviados} enviado(s), ${preservados} mantido(s)`; setTimeout(() => { btn.textContent = '🔄 Sincronizar Dados'; btn.disabled = false; }, 3000); }
   } catch (err) {
     console.error('Sync error:', err);
     alert('Erro ao sincronizar: ' + err.message);

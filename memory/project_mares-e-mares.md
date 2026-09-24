@@ -23,6 +23,11 @@ Site de campanha D&D 5e, 100% estático (HTML/CSS/JS vanilla + D3.js CDN + Fireb
 ## Fluxo de dados — o ponto que mais confunde
 `/data/**` fica **fora do deploy** (`firebase.json` → `ignore`) porque os JSONs carregam `secrets`/`secretsList` em texto puro; publicá-los furaria as regras do Firestore. Como o rewrite `**` devolve o `index.html` para esses caminhos, `seedCampaign()` e `syncCampaignContent()` **só funcionam rodando o repositório localmente** (`npx serve .`). O `app.js` tem `fetchCampaignJson()` + `DATA_LOCAL_ONLY_MSG` para explicar isso, e o botão "Sincronizar Dados" fica oculto fora do localhost.
 
+## Sincronização nos dois sentidos (set/2026)
+- **Arquivo → site:** botão "Sincronizar Dados" (só no localhost). Agora grava `_syncHash` por registro: se o JSON não mudou desde o último sync, o registro **não** é tocado — o que o Mestre editou pelo site sobrevive. Se o JSON mudou, ele vence.
+- **Site → arquivo:** `npm run pull` (`scripts/pull.mjs`) entra como Mestre, reescreve os `data/*.json` e atualiza o `CAMPAIGN.md`. Não commita nada.
+- O `CAMPAIGN.md` tem marcas `<!-- AUTO:<tipo>:<id> -->` por entidade e containers `<!-- AUTO-NEW:<tipo> -->`. `scripts/campaign-md.mjs` reescreve **só** Papel, Status, Descrição Pública, Personalidade e Segredos; preserva metadados extras (Raça, Navio, Idade), subseções não modeladas (Relações, Conexões), remissões `*→ Ver também*` e valores de Status mais detalhados/no feminino. Fora das marcas nada é tocado — Orwin e Vargan seguem manuais.
+
 Seed e sync cobrem characters/locations/events/factions/relations/documents/items. Visibilidade é semeada só na primeira vez — o que o Mestre ajusta pela UI tem precedência sobre o JSON.
 
 ## Decisões do Mestre já tomadas

@@ -64,7 +64,13 @@ Raça extremamente rara e perseguida. A maioria das pessoas em Pelágos nunca vi
 
 ## 2. FACÇÕES
 
+<!-- AUTO:faction:velmarch -->
 ### 2.1 O Domínio de Velmarch
+
+**Tipo:** Potência imperial
+**Símbolo:** Âncora dourada sobre fundo azul-escuro
+**Sede:** Ilha de Velmyr
+**Governante:** Aldric Varek XIV
 
 **Tipo:** Potência imperial
 **Símbolo:** Âncora dourada sobre fundo azul-escuro
@@ -87,9 +93,23 @@ As ilhas não são invadidas — elas "aderem". Velmarch lembra de tudo que cada
 
 > **[SEGREDO DO MESTRE]** Velmarch foi fundada por Himmel Varek após a Maré Alta, originalmente como estrutura de organização dos sobreviventes. O poder acumulado ao longo de catorze gerações transformou uma organização de sobrevivência numa máquina imperial que o próprio fundador não reconheceria.
 
------
+##### Descrição Pública
 
+O Domínio de Velmarch não se apresenta como um império conquistador — ele se apresenta como uma necessidade. Há séculos a maior potência de Pelágos expande sua influência de ilha em ilha, não pela força bruta, mas pela lógica implacável da ordem: rotas comerciais seguras, arbitragem de conflitos, erradicação da pirataria, moeda unificada. As ilhas não são invadidas — elas 'aderem'. Velmarch lembra de tudo que cada ilha deve, e cobra com juros.
+
+##### Segredos
+
+SEGREDO DO MESTRE: Velmarch foi fundada por Himmel Varek após a Maré Alta, originalmente como estrutura de organização dos sobreviventes. O Domínio que seus descendentes construíram sobre esse sacrifício é algo que Himmel nunca planejou. O poder acumulado ao longo de catorze gerações transformou uma organização de sobrevivência numa máquina imperial que o próprio fundador não reconheceria.
+
+-----
+<!-- /AUTO:faction:velmarch -->
+
+<!-- AUTO:faction:a-corrente -->
 ### 2.2 A Corrente
+
+**Tipo:** Marinha imperial de Velmarch
+**Uniforme:** Capas brancas com detalhes em dourado
+**Função oficial:** Patrulha de rotas, arbitragem de conflitos, combate à pirataria
 
 **Tipo:** Marinha imperial de Velmarch
 **Uniforme:** Capas brancas com detalhes em dourado
@@ -108,9 +128,26 @@ A marinha do Domínio de Velmarch é chamada de A Corrente — e como uma corren
 
 > **[SEGREDO DO MESTRE]** A Corrente recebeu ordem de não engajar o *Dead Pool* de Gangplank sem autorização direta de Velmyr — resultado das três tentativas fracassadas de interceptação. Oficialmente, Gangplank é classificado como "ameaça ativa sob monitoramento". Extraoficialmente, é um ativo de Aldric XIV.
 
------
+##### Descrição Pública
 
+A marinha do Domínio de Velmarch é chamada de A Corrente — e como uma corrente, ela flui para todo lugar e é impossível de segurar. Seus navios patrulham todas as rotas principais de Pelágos. A Corrente não é apenas uma força militar — é a face visível de Velmarch no cotidiano das ilhas. São eles que cobram as taxas, que julgam os piratas, que escoltam os comboios de grãos. Uniforme: capas brancas com detalhes em dourado.
+
+##### Segredos
+
+SEGREDO DO MESTRE: A Corrente proíbe oficialmente o tráfico élfico. Extraoficialmente, fecha os olhos quando o comprador é suficientemente rico. A vigilância de atividades políticas nas ilhas é sistematizada e vai além do que qualquer decreto oficial admite.
+
+A Corrente recebeu ordem de não engajar o Dead Pool de Gangplank sem autorização direta de Velmyr — resultado das três tentativas fracassadas de interceptação. Oficialmente, Gangplank é classificado como 'ameaça ativa sob monitoramento'. Extraoficialmente, é um ativo de Aldric XIV.
+
+-----
+<!-- /AUTO:faction:a-corrente -->
+
+<!-- AUTO:faction:casa-varek -->
 ### 2.3 Casa Varek
+
+**Tipo:** Dinastia real fundadora
+**Gerações:** 14
+**Sede:** Velmyr
+**Membros ativos:** Aldric XIV, Taliyah, Cade
 
 **Tipo:** Família governante / Dinastia imperial
 **Gerações:** 14
@@ -121,9 +158,23 @@ A família que governa Velmarch há quatorze gerações já ultrapassou a catego
 
 > **[SEGREDO DO MESTRE]** Nenhum membro vivo da Casa Varek conhece o conteúdo completo do tomo de Himmel. Sabem que existe, sabem que é importante, não sabem o que está escrito. Governam sobre um segredo que nem eles compreendem.
 
------
+##### Descrição Pública
 
+A Casa Varek não é o mesmo que o Domínio de Velmarch — é mais antiga, mais pessoal e mais mítica. É a linhagem que começa com Himmel Varek e chega a Aldric XIV. Cada geração carrega o nome como um peso e uma responsabilidade. A Casa Varek é a razão pela qual o Domínio existe, e é a razão pela qual o Domínio às vezes parece um peso em vez de um poder.
+
+##### Segredos
+
+SEGREDO DO MESTRE: A Câmara Selada no subsolo do Palácio de Velmyr contém o tomo que Himmel escreveu antes de realizar o ritual. O tomo descreve O Peso, o selo, o sacrifício — e o que está lá embaixo. Aldric XIV sabe que o tomo existe e que deve ser guardado. Não sabe o que está escrito nele. Nunca leu.
+
+-----
+<!-- /AUTO:faction:casa-varek -->
+
+<!-- AUTO:faction:familia-talion -->
 ### 2.4 Família Talion
+
+**Tipo:** Colônia élfica secreta
+**Sede:** Ilha de Reva
+**Liderança:** Fern Talion (prática) / Frieren Talion (origem)
 
 **Tipo:** Colônia élfica secreta
 **Sede:** Ilha de Reva
@@ -133,9 +184,28 @@ A família Talion aparenta ser uma família humana simples de pescadores e agric
 
 > **[SEGREDO DO MESTRE — CRÍTICO]** Se o cristal for destruído, todos os elfos de Reva revelarão sua verdadeira aparência simultaneamente. Com qualquer navio nas proximidades, isso seria sentença de morte para a família inteira.
 
------
+##### Descrição Pública
 
+Uma família de pescadores e agricultores simples numa ilha pequena e tranquila. Ninguém questiona sua existência — Reva não causa problemas, não tem valor estratégico, e seus habitantes raramente saem. A Família Talion existe há gerações, trocando minério por grãos com navios de passagem.
+
+##### Segredos
+
+SEGREDO DO MESTRE — CRÍTICO: A Família Talion é inteiramente composta por elfos. A maioria dos membros não sabe disso, pois nascem e vivem em Reva, onde um cristal instalado por Himmel Varek remove as aparências élficas de todos os presentes.
+
+Quem sai da ilha e se afasta da costa percebe que algo muda no próprio rosto — orelhas que se alongam, olhos que ganham brilho. Nenhum que percebeu entendeu o que era. Os que perceberam, voltaram correndo e nunca falaram.
+
+Apenas Frieren e Fern sabem a verdade completa. O cristal é a única razão pela qual os Talion existem. Se for destruído, todos os elfos de Reva revelarão sua verdadeira aparência simultaneamente — uma sentença de morte se houver qualquer navio nas proximidades.
+
+-----
+<!-- /AUTO:faction:familia-talion -->
+
+<!-- AUTO:faction:mare-negra -->
 ### 2.5 A Maré Negra
+
+**Tipo:** Frota pirata
+**Líder:** Gangplank
+**Navio capitânia:** *Dead Pool*
+**Território:** Rotas específicas de Pelágos — controladas com precisão territorial
 
 **Tipo:** Frota pirata
 **Líder:** Gangplank
@@ -146,7 +216,42 @@ A frota mais temida de Pelágos. Dez a doze navios sob comando direto de Gangpla
 
 > **[SEGREDO DO MESTRE]** A Maré Negra executa serviços secretos para Aldric XIV mediante pagamento. A relação é estritamente contratual — sem lealdade, sem ideologia. Se alguém pagasse mais pelo lado oposto, a conversa seria outra.
 
+##### Descrição Pública
+
+A frota mais temida de Pelágos. Dez a doze navios sob comando direto de Gangplank, cada um com seu próprio capitão, leal a Gangplank com o tipo de lealdade que também é medo. Não tem nome oficial — em portos é chamada de A Maré Negra, sempre em voz baixa. Opera com lógica territorial precisa: não é pirataria aleatória, é administração paralela de rotas marítimas. Nenhum navio passa sem sua ciência, nenhuma rota é usada sem sua permissão.
+
+##### Segredos
+
+SEGREDO DO MESTRE: A Maré Negra executa serviços secretos para Aldric XIV mediante pagamento. A relação é estritamente contratual — sem lealdade, sem ideologia. Se alguém pagasse mais pelo lado oposto, a conversa seria outra.
+
+Qualquer capitão ou cartógrafo que analise os padrões da Maré Negra percebe que há lógica territorial clara. Gangplank não está saqueando. Está administrando.
+
+A Corrente tentou interceptar o Dead Pool em pelo menos três ocasiões. Em duas, os navios voltaram com baixas pesadas. Na terceira, não voltaram.
+
 -----
+<!-- /AUTO:faction:mare-negra -->
+
+<!-- AUTO-NEW:faction -->
+
+<!-- AUTO:faction:corte-cortesas -->
+### A Corte das Cortesãs
+
+**Tipo:** Rede de inteligência / Assassinas de aluguel
+
+##### Descrição Pública
+
+A Corte das Cortesãs não existe oficialmente. Não tem sede, não tem estandarte, não tem nome gravado em nenhum documento. O que existe é Gloria Vittar — e a rede de mulheres que ela treinou, posicionou e mantém espalhadas pelos principais portos de Pelágos. Cada uma delas ocupa um papel legítimo: cortesãs, acompanhantes, dançarinas, enfermeiras, criadas em casas ricas. Cada uma delas envia informação a Marvosa. E quando necessário, cada uma delas age. A morte de Tulo Bresh em Kaldera é o trabalho da Corte — não ordenada por Gloria, mas executada por iniciativa de campo. O que acontece quando uma das suas age sem ordem é o único tipo de problema que Gloria Vittar não consegue resolver com elegância.
+
+##### Segredos
+
+SEGREDO DO MESTRE — A Corte opera com três funções distintas: inteligência (coleta de informação de todos os portos de Pelágos), pressão política (chantagear figuras influentes com o que as cortesãs documentaram) e eliminação (quando o alvo não pode ser controlado nem comprado). Gloria Vittar não ordena mortes por capricho — cada eliminação é calculada. A cortesã que matou Tulo Bresh em Kaldera o fez por iniciativa própria ao ouvir sobre o artefato, o que colocou Gloria numa posição incômoda: a acusação contra os jogadores foi a forma de transformar um erro num ativo.
+
+A Corte tem informantes em Kaldera, Aethon, Marvosa e — de forma mais esparsa — em Velmyr. A única ilha onde Gloria não tem presença segura é Reva. Ela tentou. As tentativas não voltaram.
+
+-----
+<!-- /AUTO:faction:corte-cortesas -->
+
+<!-- /AUTO-NEW:faction -->
 
 ## 3. PERSONAGENS
 
@@ -154,16 +259,17 @@ A frota mais temida de Pelágos. Dez a doze navios sob comando direto de Gangpla
 
 -----
 
+<!-- AUTO:character:himmel-varek -->
 #### HIMMEL VAREK
 
-**Papel:** Fundador da Casa Varek / O Fundador
+**Papel:** Sacerdote-rei / O Fundador
 **Status:** Morto (há séculos)
 **Raça:** Humano
 **Profissão original:** Sacerdote-rei
 
 ##### Descrição Pública
 
-O primeiro rei. O Fundador. Nos templos oficiais de Velmarch é tratado como figura quase divina — representado sempre de costas, olhando para o horizonte. Ninguém pinta seu rosto. A tradição diz que é respeito.
+O primeiro rei. O Fundador. Nos templos oficiais de Velmarch é tratado como figura quase divina — representado sempre de costas, olhando para o horizonte. Ninguém pinta seu rosto. A tradição diz que é respeito. Era um estudioso que teve acesso a um conhecimento que nenhum ser humano deveria carregar sozinho. Curioso, inconvenientemente questionador, capaz de amar profundamente — e de separar o amor da decisão quando achava que não havia alternativa.
 
 ##### Personalidade
 
@@ -196,7 +302,9 @@ Antes do ritual, Himmel apaixonou-se por Frieren, uma elfa, e teve com ela uma f
 - **Casa Varek** — seus descendentes, que não sabem quem ele realmente foi
 
 -----
+<!-- /AUTO:character:himmel-varek -->
 
+<!-- AUTO:character:aldric-xiv -->
 #### ALDRIC VAREK XIV
 
 **Papel:** Rei do Domínio de Velmarch
@@ -206,7 +314,7 @@ Antes do ritual, Himmel apaixonou-se por Frieren, uma elfa, e teve com ela uma f
 
 ##### Descrição Pública
 
-O décimo quarto rei da Casa Varek. Governa com inteligência fria, raramente levanta a voz e nunca deixa sua ilha capital. Não é cruel por prazer — é pragmático por convicção. Acredita genuinamente que sem Velmarch, Pelágos implode em guerras insulares.
+O décimo quarto rei da Casa Varek. Governa com inteligência fria, raramente levanta a voz e nunca deixa sua ilha capital. Não é cruel por prazer — é pragmático por convicção. Acredita genuinamente que sem Velmarch, Pelágos implode em guerras insulares. Carrega o peso do governo como quem carrega uma âncora — necessária para não derivar, insuportável de qualquer outro jeito. Às vezes visto nas janelas do palácio de madrugada, olhando para o mar com uma expressão que ninguém consegue nomear. Não dorme bem há décadas.
 
 ##### Personalidade
 
@@ -219,7 +327,7 @@ Sabe que existe um tomo antigo guardado na câmara selada do palácio. Sabe que 
 *→ Ver também: Velmyr — Camada 2*
 
 **🔒 Camada 2** — *Aldric não sabe o que está selado*
-Genuinamente ignora que O Peso existe. Não sabe que a inundação foi intencional. Não sabe o que aconteceria se o nível do mar baixasse. Governa sobre um segredo que nem ele compreende.
+Genuinamente ignora que O Peso existe. Não sabe que a inundação foi intencional. Não sabe o que aconteceria se o nível do mar baixasse. Governa sobre um segredo que nem ele compreende — o vilão maior da campanha cuida de um cofre sem saber o que há dentro.
 *→ Ver também: O Peso — Camada 1*
 
 **🔒 Camada 3** — *Aldric e as madrugadas*
@@ -238,7 +346,9 @@ Aldric contratou Gangplank para executar serviços que A Corrente não pode faze
 - **Gangplank** — contratado secreto, relação estritamente financeira
 
 -----
+<!-- /AUTO:character:aldric-xiv -->
 
+<!-- AUTO:character:taliyah-varek -->
 #### TALIYAH VAREK
 
 **Papel:** Rainha do Domínio de Velmarch
@@ -248,7 +358,7 @@ Aldric contratou Gangplank para executar serviços que A Corrente não pode faze
 
 ##### Descrição Pública
 
-A pessoa mais gentil que já pisou no Palácio de Velmyr. Não governa, não influencia política, não recebe embaixadores. Cuida dos jardins do palácio com dedicação que seus assessores consideram excêntrica — ela mesma planta, poda, rega.
+A pessoa mais gentil que já pisou no Palácio de Velmyr. Não governa, não influencia política, não recebe embaixadores. Cuida dos jardins do palácio com dedicação que seus assessores consideram excêntrica — ela mesma planta, poda, rega. Com Cade, é presença constante e paciente — talvez a única pessoa no palácio que o ama sem agenda. Vê a ansiedade do filho e sofre com uma impotência silenciosa.
 
 ##### Personalidade
 
@@ -268,10 +378,12 @@ A obsessão com floricultura não é excentricidade — é o único espaço em V
 - **Cade Varek** — filho, amor incondicional e sofrimento silencioso
 
 -----
+<!-- /AUTO:character:taliyah-varek -->
 
+<!-- AUTO:character:cade-varek -->
 #### CADE VAREK
 
-**Papel:** Príncipe herdeiro de Velmarch
+**Papel:** Príncipe Herdeiro de Velmarch
 **Status:** Vivo
 **Raça:** Humano
 **Idade:** Vinte e poucos anos
@@ -279,7 +391,7 @@ A obsessão com floricultura não é excentricidade — é o único espaço em V
 
 ##### Descrição Pública
 
-O príncipe rebelde. Critica abertamente as políticas de Velmarch, fala sobre "um Domínio mais justo", já recebeu emissários de ilhas descontentes. Parece ser exatamente o aliado que os jogadores precisam dentro de Velmarch.
+O príncipe rebelde. Critica abertamente as políticas de Velmarch, fala sobre 'um Domínio mais justo', já recebeu emissários de ilhas descontentes. Parece ser exatamente o aliado que os jogadores precisam dentro de Velmarch.
 
 ##### Personalidade
 
@@ -288,7 +400,7 @@ Fraco e ansioso. Não é mau — é desesperado por aprovação. Toda rebeldia �
 ##### Segredos
 
 **🔒 Camada 1** — *A rebeldia é performance*
-Cade nunca de fato *faz* nada — só fala. Cada ação é calculada para chegar aos ouvidos de Aldric. Jogadores que investigarem suas ações percebem o padrão.
+Cade nunca de fato faz nada — só fala. Cada ação é calculada para chegar aos ouvidos de Aldric. Jogadores que investigarem suas ações percebem o padrão: muita retórica, zero consequência prática.
 
 **🔒 Camada 2** — *Cade sabe sobre o tomo*
 Como herdeiro, conhece a existência do tomo selado — não seu conteúdo. Pode usar essa informação para se aproximar dos jogadores e ganhar confiança, oferecendo algo real como prova de boa-fé.
@@ -305,6 +417,7 @@ No momento em que trair os jogadores se tornar a moeda mais valiosa para comprar
 - **Jogadores** — aliado temporário, futuro traidor
 
 -----
+<!-- /AUTO:character:cade-varek -->
 
 ### 3.2 A Família Talion
 
@@ -312,9 +425,10 @@ No momento em que trair os jogadores se tornar a moeda mais valiosa para comprar
 
 -----
 
+<!-- AUTO:character:frieren-talion -->
 #### FRIEREN TALION
 
-**Papel:** Matriarca / Origem da família Talion
+**Papel:** Matriarca / Origem da Família Talion
 **Status:** Viva
 **Raça:** Elfa (aparência humana em Reva)
 **Idade:** Incalculável — viveu antes da Maré Alta
@@ -322,7 +436,7 @@ No momento em que trair os jogadores se tornar a moeda mais valiosa para comprar
 
 ##### Descrição Pública
 
-Uma anciã que sempre esteve lá. Os mais antigos da família dizem que a avó da avó já a conhecia assim — pequena, de cabelos brancos, olhos claros que parecem olhar ligeiramente para o lado do que estão vendo de verdade. Os mais jovens simplesmente a chamam de Tia Frieren. Não deixa ninguém plantar flores no jardim.
+Uma anciã que sempre esteve lá. Os mais antigos da família dizem que a avó da avó já a conhecia assim — pequena, de cabelos brancos, olhos claros que parecem olhar ligeiramente para o lado do que estão vendo de verdade. Os mais jovens simplesmente a chamam de Tia Frieren. Vive na casa no fim da praia. Não deixa ninguém plantar flores no jardim. Carrega uma perda impossível com a serenidade de quem passou séculos aprendendo a sobreviver a ela.
 
 ##### Personalidade
 
@@ -353,10 +467,12 @@ Himmel explicou tudo antes de partir. Frieren sabe sobre O Peso, sabe o que acon
 - **Família Talion** — seus descendentes, que ela protege sem que saibam que precisam
 
 -----
+<!-- /AUTO:character:frieren-talion -->
 
+<!-- AUTO:character:fern-talion -->
 #### FERN TALION
 
-**Papel:** Filha de Frieren / Administradora silenciosa de Reva
+**Papel:** Filha de Frieren / Administradora de Reva
 **Status:** Viva
 **Raça:** Elfa (aparência humana em Reva)
 **Idade:** Muito velha — nasceu logo após a Maré Alta
@@ -391,6 +507,7 @@ Frieren contou tudo a Fern quando ainda conseguia falar sobre isso. Fern sabe so
 - **Himmel Varek** — pai que nunca conheceu, mas sobre quem sabe mais que qualquer pessoa viva
 
 -----
+<!-- /AUTO:character:fern-talion -->
 
 #### OS DEMAIS TALION
 
@@ -407,7 +524,13 @@ Pescadores, agricultores, comerciantes locais. Envelhecem mais devagar do que de
 
 -----
 
+<!-- AUTO:character:selavin-doss -->
 #### SELAVIN DOSS
+
+**Papel:** Magista Élfico / Arquiteto da Grande Guerra
+**Status:** Desaparecido
+**Raça:** Élfico
+**Idade:** Desconhecida (morreu/fundiu-se durante a Grande Guerra)
 
 **Papel:** Arquiteto da Grande Guerra / Hospedeiro do Thurvael / Vilão Final
 **Status:** Fundido — nem vivo nem morto, existindo dentro do Selo
@@ -427,6 +550,31 @@ Dentro do selo, Selavin e o Thurvael existem em simbiose: o Peso fornece poder e
 Encontrou em Soren Mael uma fresta — um humano que mergulhou perto demais do ponto de selagem. Desde então usa essa fresta com precisão cirúrgica: não para vazar como impulso cego, mas para plantar informações, redirecionar rotas, criar as condições exatas para que alguém encontre o tomo de Himmel e quebre o selo. Voluntariamente. Com as melhores intenções.
 
 Se o selo quebrar, o Thurvael não emergirá como força amorfa. Emergirá como Selavin Doss — corpo reconstituído, memória intacta, séculos de isolamento e fome acumulados — com o poder total do Peso dentro de si.
+
+##### Descrição Pública
+
+O magista élfico mais brilhante de sua geração. Liderou a descoberta e a invocação do ser que o povo chamaria de O Peso — acreditando que uma força primordial poderia ser domesticada como vantagem definitiva dos elfos. Não era malicioso. Era genial demais para imaginar que poderia estar errado. Desapareceu no momento em que Himmel completava o ritual de selamento. Nunca encontraram o corpo.
+
+##### Personalidade
+
+Brilhante, calculista e absolutamente convicto de si mesmo. Não era malicioso — era genial demais para imaginar que poderia estar errado. Disse a Vaelindra, numa conversa que ela nunca esqueceu: 'Não é um ser. É uma força. As forças podem ser dirigidas.'
+
+##### Segredos
+
+**🔒 Camada 1** — *Selavin Doss liderou a invocação*
+O nome do magista responsável sobreviveu no Lamento de Galadriel Cass. Era o arquiteto intelectual da invocação — convenceu os outros magistas de que o Thurvael poderia ser controlado. A responsabilidade moral da Grande Guerra se concentra nele.
+
+**🔒 Camada 2** — *Selavin não morreu — fundiu-se com o Peso no momento do selamento*
+No instante em que Himmel completava o ritual, Selavin cedeu voluntariamente seu corpo e consciência ao Thurvael como hospedeiro. O Peso foi selado, mas não está sozinho dentro do selo. Selavin e o Thurvael existem em simbiose forçada há séculos: o Peso fornece poder e permanência; Selavin fornece forma, vontade e intelecto. Ninguém sabe disso — nem Himmel sabia.
+
+**🔒 Camada 3** — *Se o selo quebrar, Selavin Doss emerge com o poder integral do Thurvael*
+Quebrar o selo não liberta uma força amorfa. Liberta Selavin Doss — corpo reconstituído, memória intacta, séculos de isolamento e fome acumulados — com o poder integral do Peso dentro de si. Ele tem linguagem, charme, intelecto e vai tentar convencer os jogadores de que foi vítima, de que o mundo errou, de que há uma forma de resolver tudo sem destruição. Pode ser que não esteja completamente mentindo.
+
+**🔒 Camada 4** — *Soren Mael é instrumento direto de Selavin, não do Peso cego*
+O que vaza por Soren não é impulso cego do Thurvael. É Selavin Doss, usando a fresta que Soren representa para orquestrar o caminho dos jogadores em direção ao tomo de Himmel. Cada informação que Soren passa foi escolhida. Cada rota que ele sugere foi calculada. Soren não sabe disso. Selavin está há séculos preparando o terreno — e encontrou, em Soren, a ferramenta perfeita.
+
+-----
+<!-- /AUTO:character:selavin-doss -->
 
 #### Segredos
 
@@ -451,9 +599,10 @@ O que vaza por Soren não é o impulso cego do Thurvael. É Selavin Doss, usando
 
 -----
 
+<!-- AUTO:character:soren-mael -->
 #### SOREN MAEL
 
-**Papel:** Cartógrafo errante
+**Papel:** Cartógrafo Errante
 **Status:** Vivo
 **Raça:** Humano
 **Idade:** Pouco mais de trinta anos
@@ -487,11 +636,12 @@ Soren tem um tremor leve na mão direita que compromete a precisão dos mapas �
 Há um gap nas suas anotações — semanas sem registro, seguidas de retorno abrupto ao trabalho normal. Ele não fala sobre esse período. Se pressionado, diz que estava doente. Seus olhos dizem que não sabe o que estava.
 *→ Ver também: O Peso — Camada 1*
 
-**🔒 Camada 4** — *Soren é veículo de O Peso*
-O mergulho que ele não lembra foi sobre o ponto de selagem de O Peso. Sobreviveu, mas algo ficou. O Peso não o possui — vaza por ele. Reorienta suas motivações de forma suave e total, usando verdades reais como instrumentos. Nenhuma magia convencional detecta isso. O Peso é mais antigo que a taxonomia de magia que os personagens conhecem.
-
-Soren é inocente. É perigoso. São a mesma coisa. Se os jogadores descobrirem, vão precisar decidir o que fazer com um homem com família que está acordado dentro de si mesmo sem saber que está preso. Essa ambiguidade é intencional — deixe os jogadores carregarem ela.
+**🔒 Camada 4** — *Soren é instrumento direto de Selavin Doss, não do Peso cego*
+O que vaza por Soren não é impulso amorfo do Thurvael — é a vontade calculada de Selavin Doss, operando através da fresta que o mergulho abriu. Cada informação que Soren compartilha foi escolhida. Cada rota que sugere foi calculada por séculos de planejamento. Soren não sabe disso. Acredita genuinamente em cada coisa que diz. Selavin o usa para conduzir os jogadores ao tomo de Himmel — e ao selo.
 *→ Ver também: O Peso — Camadas 2 e 3*
+
+**🔒 Camada nova (sessão atual)** — *A magia que ele não aprendeu*
+Soren começou a conjurar. Ele mesmo diz, sem mentir, que é o primeiro contato da vida dele com magia — e é verdade do ponto de vista da biografia de Soren Mael, cartógrafo. Não é verdade do ponto de vista do que está usando as mãos dele. Selavin Doss foi um magista élfico da língua alta; o que está vazando pela fresta não é poder concedido, é competência emprestada. Sinais a plantar: ele nunca hesita sobre o gesto, só sobre o fato de ter feito; a magia sai mais limpa perto de água profunda; se alguém lhe perguntar como sabia, a resposta chega antes da lembrança de tê-la formulado. Quanto mais ele usa, menos fresta e mais porta.
 
 ##### Relações
 
@@ -499,7 +649,9 @@ Soren é inocente. É perigoso. São a mesma coisa. Se os jogadores descobrirem,
 - **Jogadores** — catalisador da missão, possível aliado, possível vítima
 
 -----
+<!-- /AUTO:character:soren-mael -->
 
+<!-- AUTO:character:tulo-bresh -->
 #### TULO BRESH
 
 **Papel:** Governador de Kaldera
@@ -531,7 +683,9 @@ As noites de Tulo em Marvosa estão documentadas com riqueza de detalhes que o f
 - **Gangplank** — nunca se encontraram diretamente, mas Tulo paga pedágio indireto por operar em rotas controladas pela Maré Negra
 
 -----
+<!-- /AUTO:character:tulo-bresh -->
 
+<!-- AUTO:character:gloria-vittar -->
 #### GLORIA VITTAR
 
 **Papel:** Senhora de Marvosa
@@ -567,7 +721,9 @@ Não vende informação por dinheiro. Vende por favores, por influência, por pr
 - **Jogadores** — aliada potencial de alto valor
 
 -----
+<!-- /AUTO:character:gloria-vittar -->
 
+<!-- AUTO:character:amelia -->
 #### AMELIA
 
 **Papel:** Capitã de extermínio da Corte das Cortesãs
@@ -578,28 +734,34 @@ Não vende informação por dinheiro. Vende por favores, por influência, por pr
 
 Nos arquivos da Corrente ela não existe. Nos de Marvosa, menos ainda. O que existe é uma mulher que esteve no escritório do Governador Tulo Bresh na noite em que ele morreu — que serviu a bebida, que riu na hora certa, e que saiu pela porta lateral enquanto um orc de duzentos quilos ocupava a atenção de todos na sala.
 
-Quem tenta descrevê-la não consegue duas vezes igual. As testemunhas de Kaldera só concordam no detalhe mais inútil possível: ela ouvia. Falava pouco. Ouvia com o corpo inteiro, como quem está trabalhando.
+Quem tenta descrevê-la não consegue duas vezes igual. Alta, dizem uns; de estatura comum, dizem outros. Cabelo escuro, ou castanho, ou preso demais para saber. As testemunhas de Kaldera só concordam no detalhe mais inútil possível: ela ouvia. Falava pouco. Ouvia com o corpo inteiro, como quem está trabalhando.
 
-Dentro da Corte, Amelia não é informante. As cortesãs que coletam informação respondem a coordenadoras; as coordenadoras respondem a Marvosa. As que matam respondem a Amelia.
+Dentro da Corte das Cortesãs, Amelia não é informante. As cortesãs que coletam informação respondem a coordenadoras; as coordenadoras respondem a Marvosa. As que matam respondem a Amelia. Gloria Vittar, quando é obrigada a nomear esse braço, chama-o de 'a última ferramenta' — e Amelia é quem o segura.
+
+Desde a noite de Kaldera, ninguém da Corte a viu.
 
 ##### Personalidade
 
-Paciente de um jeito que assusta quem entende o que está vendo. Não improvisa e não se apressa: prepara, observa, e age uma vez só. Trata o próprio ofício como ofício — não sente prazer em matar e não sente culpa, o que a torna bem pior do que alguém que sentisse qualquer um dos dois. Com Gloria Vittar era leal, não por afeto, mas porque Gloria era a única pessoa cujo julgamento ela respeitava mais do que o próprio.
+Paciente de um jeito que assusta quem entende o que está vendo. Amelia não improvisa e não se apressa: prepara, observa, e age uma vez só. Trata o próprio ofício como ofício — não sente prazer em matar e não sente culpa, o que a torna bem pior do que alguém que sentisse qualquer um dos dois.
+
+Com as mulheres sob seu comando é generosa e exigente na mesma medida; várias devem a vida a ela e todas sabem disso. Com Gloria Vittar era leal — não por afeto, mas porque Gloria era a única pessoa em Pelágos cujo julgamento ela respeitava mais do que o próprio.
+
+Foi por isso que a noite de Kaldera quebrou alguma coisa. Amelia agiu sem ordem pela primeira vez em vinte anos. E não voltou para explicar.
 
 ##### Segredos
 
 **🔒 Camada 1** — *Foi Amelia quem matou Tulo Bresh*
-O veneno já estava no copo havia dez minutos quando o combate começou. Qualquer investigação competente do escritório chega nela e não nos jogadores. O problema é que ninguém em Kaldera está investigando com competência — estão investigando com pressa.
+A cortesã que estava na sala serviu a bebida, esperou o combate começar e saiu pela porta lateral. O veneno já estava no copo havia dez minutos. Qualquer investigação competente do escritório — dosagem, tempo de ação, quem tocou o quê — chega nela e não nos jogadores. O problema é que ninguém em Kaldera está investigando com competência: estão investigando com pressa.
 
 **🔒 Camada 2** — *Ela agiu por conta própria*
-Ninguém mandou matar Tulo. Amelia estava ali para ouvir, e ouviu: quando Soren mencionou o artefato diante do Governador, ela entendeu na hora. Um governador corrupto, endividado e falante que sabe do tomo não é um ativo, é um vazamento com pernas. Foi a primeira ordem que ela deu a si mesma em vinte anos de Corte.
+Ninguém mandou matar Tulo. Amelia estava ali para ouvir, e ouviu — quando Soren Mael mencionou o artefato na frente do Governador, ela entendeu na hora o que aquilo significava. Um governador corrupto, endividado e falante que sabe da existência do tomo não é um ativo; é um vazamento com pernas. Ela fechou o vazamento no mesmo expediente. Foi a primeira ordem que deu a si mesma em vinte anos de Corte.
 
 **🔒 Camada 3** — *Gloria perdeu a própria capitã*
-A acusação contra os jogadores não foi só oportunismo — foi contenção de dano. Se A Corrente investigasse a sério, chegaria à Corte, e da Corte a Marvosa. Mas Gloria não sabe onde Amelia está nem o que ela fará com o que ouviu, e não pode caçar a própria capitã de extermínio sem rachar a Corte ao meio. Precisa que alguém descartável a encontre primeiro.
+A acusação contra os jogadores não foi só oportunismo elegante — foi contenção de dano. Se A Corrente investigasse Kaldera a sério, chegaria à Corte; da Corte, a Marvosa. Jogar a culpa em cinco fugitivos comprou tempo. Mas Gloria não sabe onde Amelia está, não sabe o que ela vai fazer com o que ouviu, e não pode mandar a Corte atrás da própria capitã de extermínio sem rachar a Corte ao meio. Ela precisa que alguém descartável encontre Amelia primeiro. Os jogadores são, por acaso, perfeitamente descartáveis — e já estão marcados pelo crime dela.
 *→ Ver também: Gloria Vittar; A Corte das Cortesãs*
 
 **🔒 Camada 4** — *Ela não está fugindo, está na frente*
-Amelia ouviu o mesmo que os jogadores ouviram. Não saiu de Kaldera para se esconder — saiu para chegar primeiro, com vinte anos de rede de informantes em quatro ilhas de vantagem. Para quem ela pretende vender o que encontrar (Gloria, Aldric, ou ninguém) é decisão do mestre.
+Amelia ouviu na sala de Tulo exatamente o que os jogadores ouviram: que existe um tomo, que a Casa Varek o guarda, que vale mais do que qualquer coisa em Pelágos. Não saiu de Kaldera para se esconder — saiu para chegar primeiro. Onde os jogadores tiveram que descobrir a rota, ela teve vinte anos de rede de informantes em quatro ilhas. Use-a como sombra: um alvo já morto que eles iam interrogar, um nome riscado num registro que deveriam ler, uma porta arrombada antes deles. O mestre decide para quem ela pretende vender o que encontrar — para Gloria (recompra do próprio perdão), para Aldric (o lance mais alto de Pelágos), ou para ninguém.
 
 ##### Relações
 
@@ -608,7 +770,9 @@ Amelia ouviu o mesmo que os jogadores ouviram. Não saiu de Kaldera para se esco
 - **Jogadores** — carregam a culpa do crime dela, e são a ferramenta que Gloria vai usar para encontrá-la
 
 -----
+<!-- /AUTO:character:amelia -->
 
+<!-- AUTO:character:gangplank -->
 #### GANGPLANK
 
 **Papel:** Pirata / O Terror dos Mares de Pelágos
@@ -663,39 +827,45 @@ O contrato existe porque Aldric foi o primeiro a chegar com dinheiro suficiente 
 - **Jogadores** — problema em potencial ou utilidade possível, dependendo de como se apresentam
 
 -----
+<!-- /AUTO:character:gangplank -->
 
+<!-- AUTO:character:hitch-fogo-fatuo -->
 #### HITCH FOGO-FÁTUO
 
-**Papel:** Imediato de Gangplank a bordo do *Dead Pool*
+**Papel:** Imediato de Gangplank a bordo do Dead Pool
 **Status:** Morto — abatido pelos jogadores a caminho do Ancoradouro de Latão
 **Natureza:** Criatura de fogo aprisionada em forma humana
 
 ##### Descrição Pública
 
-O segundo homem do *Dead Pool* era baixo, seco e descalço, e nunca vestiu mais do que uma túnica de linho cru num navio onde todo mundo usava couro contra o vento. Movia-se como monge — porque era um, pelo menos no treino: golpeava de mãos abertas, respirava contando, e passava madrugadas sentado na proa sem piscar.
+O segundo homem do Dead Pool era baixo, seco e descalço, e nunca vestiu mais do que uma túnica de linho cru num navio onde todo mundo usava couro contra o vento. Movia-se como monge — porque era um, pelo menos no treino: golpeava de mãos abertas, respirava contando, e passava madrugadas inteiras sentado na proa sem piscar.
 
-O que a tripulação não comentava em voz alta é que a madeira ficava morna onde ele pisava, que ele tirava a túnica quando o mar estava frio demais para os outros, e que a sombra dele, dependendo da luz, caía para o lado errado.
+O que a tripulação não comentava em voz alta é que a madeira ficava morna onde ele pisava. Que ele tirava a túnica quando o mar estava frio demais para os outros. Que a sombra dele, dependendo da luz, caía para o lado errado.
 
-Chamavam-no de Fogo-Fátuo pelo nome que os marinheiros dão à luz que aparece nos mastros antes da tempestade — a luz que promete terra e entrega naufrágio.
+Chamavam-no de Fogo-Fátuo pelo nome que os marinheiros dão à luz que aparece nos mastros antes da tempestade — a luz que promete terra e entrega naufrágio. Ninguém lembrava quem tinha dado o apelido. O próprio Hitch atendia por ele com uma paciência quase divertida, do jeito que um adulto atende pelo nome que uma criança inventou.
+
+Morreu duas vezes na mesma noite, nas mãos dos jogadores. A primeira como homem. A segunda como o que era.
 
 ##### Personalidade
 
-Cordial, contido, quase gentil — e obediente a Gangplank de um jeito que não combinava com o resto dele. Num navio inteiro de homens que seguiam Gangplank por medo, era o único que parecia seguir por outra coisa. Quem reparou concluiu que era devoção, e errou pela metade: não era devoção, era corrente.
+Cordial, contido, quase gentil — e obediente a Gangplank de um jeito que não combinava com o resto dele. Hitch nunca discutiu uma ordem, nunca hesitou, nunca demonstrou ambição própria. Num navio inteiro de homens que seguiam Gangplank por medo, ele era o único que parecia seguir por outra coisa. Quem reparou concluiu que era devoção, e errou pela metade: não era devoção, era corrente.
+
+Sob o autocontrole havia uma pressão constante, perceptível para quem soubesse olhar — como estar perto de um forno fechado. Falava devagar porque falar depressa custava. Sorria pouco pelo mesmo motivo.
 
 ##### Segredos
 
 **🔒 Camada 1** — *A forma humana era a jaula, não um disfarce*
-Hitch não era um homem com poderes de fogo. Era fogo com forma de homem, e a forma foi imposta. A disciplina monástica não era filosofia: era fechadura.
+Hitch não era um homem com poderes de fogo. Era fogo com forma de homem — e a forma foi imposta, não escolhida. A disciplina monástica não era filosofia: era fechadura. O treino, a respiração contada, a economia de gestos e de palavras, tudo aquilo era o trabalho contínuo de manter comprimido dentro de um corpo alguma coisa que não cabia nele.
 
 **🔒 Camada 2** — *Quem o prendeu foi Gangplank*
-Um pirata não faz isso. Gangplank tem, ou teve, um meio de prender uma criatura elemental dentro de uma forma e mantê-la ali por anos — e isso não aparece em lugar nenhum da sua reputação pública. Quem sabe fazer uma vez sabe fazer de novo. Fica em aberto o que mais anda no convés do *Dead Pool* com cara de gente, e o que Gangplank entregou em troca do método.
+Um pirata não faz isso. Gangplank tem, ou teve, um meio de prender uma criatura elemental dentro de uma forma e mantê-la ali por anos — e isso não aparece em lugar nenhum na reputação pública dele. Quem sabe fazer uma vez sabe fazer de novo. A pergunta que fica aberta é o que mais anda no convés do Dead Pool com cara de gente, e o que Gangplank teve que entregar em troca do método.
 *→ Ver também: Gangplank*
 
 **🔒 Camada 3** — *Matá-lo não destruiu; abriu*
-A primeira morte quebrou a jaula, não o prisioneiro. O que se ergueu do corpo estava trancado ali havia anos e agora não tinha forma humana para contê-lo. Do ponto de vista de Hitch, os jogadores não o mataram: soltaram-no.
+A primeira morte quebrou a jaula, não o prisioneiro. O que se ergueu do corpo foi o que estava trancado ali dentro havia anos, agora sem forma humana para contê-lo — e sem nada que Gangplank pudesse fazer a respeito. Do ponto de vista de Hitch, os jogadores não o mataram: soltaram-no. A segunda luta foi contra uma coisa livre pela primeira vez em muito tempo e com muito a cobrar.
 
 **🔒 Camada 4** — *As cinzas desceram*
-Quando a segunda forma caiu, as cinzas não se dispersaram no vento. Adensaram-se em fumaça pesada e foram puxadas para baixo — contra o vento, contra a corrente, para o fundo. Fogo não afunda. Alguma coisa recolheu. É a primeira evidência sensorial que os jogadores têm de que o fundo do oceano de Pelágos não é fundo: é tampa.
+Quando a segunda forma caiu, as cinzas não se dispersaram no vento. Adensaram-se em fumaça pesada e foram puxadas para baixo — contra o vento, contra a corrente, para o fundo. Fogo não afunda. Alguma coisa recolheu. É a primeira evidência sensorial que os jogadores têm de que o fundo do oceano de Pelágos não é fundo: é tampa. O Peso não se alimentou por acaso — uma essência elemental solta perto da água é exatamente o tipo de coisa que o selo de Himmel não foi feito para filtrar.
 *→ Ver também: O Peso (Thurvael)*
 
 ##### Relações
@@ -705,6 +875,7 @@ Quando a segunda forma caiu, as cinzas não se dispersaram no vento. Adensaram-s
 - **O Peso** — recolheu o que sobrou dele
 
 -----
+<!-- /AUTO:character:hitch-fogo-fatuo -->
 
 #### ORWIN — O Chapéu Largo
 
@@ -964,9 +1135,191 @@ Grak não é um soldado. É uma ferramenta. Tulo o comprou ainda jovem de um com
 
 -----
 
+<!-- AUTO-NEW:character -->
+
+<!-- AUTO:character:aelindra -->
+#### AELINDRA
+
+**Papel:** Sacerdotisa do Selamento
+**Status:** Morto
+
+##### Descrição Pública
+
+Sacerdotisa élfica que viveu durante a Grande Guerra e foi contemporânea de Himmel Varek. Pertencia à Ordem da Última Chama — uma ordem religiosa que tentou resistir à Fome por meios espirituais. Estava presente quando Himmel surgiu com o método de selamento e descreveu a reação de sua superiora ao ouvir o preço: chorar, ela que não chorava desde a Guerra dos Cinquenta Anos. Deixou escrito o único registro direto dos acontecimentos da Grande Guerra do ponto de vista de quem os viveu.
+
+##### Personalidade
+
+Sóbria, direta, sem ilusões. Escrevia para a posteridade, não para o conforto. Acreditava que a verdade mal contada era mais perigosa que o silêncio — e viveu a ironia de ter causado o maior desastre de sua vida ao tentar proteger alguém que não merecia proteção.
+
+##### Segredos
+
+**🔒 Camada 1** — *Aelindra era élfica e fazia parte do círculo de selamento*
+Não era uma observadora — era uma das sacerdotisas ativamente envolvidas no esforço de selar O Peso. Conhecia o plano de Himmel por dentro, incluindo o preço que ele estava disposto a pagar.
+
+**🔒 Camada 2** — *Aelindra contou o plano a Selavin Doss por medo, não por traição*
+O que o plano de Himmel exigia a aterrorizou — a escala do sacrifício, a inundação, a irreversibilidade. Em um momento de medo, ela foi a Selavin acreditando que ele poderia encontrar uma alternativa. Não sabia que Selavin usaria essa informação para preparar o ritual de fusão com o Thurvael no tempo que ela lhe deu. Ela lhe entregou o único presente que ele precisava: tempo.
+
+**🔒 Camada 3** — *O erro de Aelindra é a razão de Selavin sobreviver*
+Sem o aviso dela, Selavin teria sido selado ou destruído com os demais magistas. A fusão com o Thurvael só foi possível porque ele teve minutos — talvez uma hora — para preparar o ritual que garantiu sua sobrevivência dentro do selo. Aelindra não traiu ninguém conscientemente. Mas a consequência de seu medo foi tornar o maior vilão do mundo imortal.
+
+**🔒 Camada 4** — *A Memória dos Derradeiros Dias é o testemunho de alguém que sabe o que fez*
+Aelindra escreveu o documento mais preciso sobre o ritual de selamento porque estava lá — e porque a escrita era a única penitência que podia oferecer. O texto não menciona o aviso a Selavin. O silêncio sobre o assunto, para quem souber o que procurar, é mais eloquente do que qualquer confissão.
+
+-----
+<!-- /AUTO:character:aelindra -->
+
+<!-- AUTO:character:frei-assolvan -->
+#### FREI ASSOLVAN
+
+**Papel:** Monge do Mosteiro da Costa Afogada
+**Status:** Morto
+
+##### Descrição Pública
+
+Monge que passou três anos pesquisando arquivos de mosteiros costeiros em busca de registros sobre a Maré Alta. Concluiu, sozinho e sem apoio institucional, que a inundação não foi natural e que houve um ritual de sacrifício que selou algo sob o oceano. Encontrou referências fragmentadas ao 'rito do abraço' em três arquivos distintos. Terminou suas notas recomendando que não fossem divulgadas — e aparentemente foram seguidas suas instruções por gerações, até que o pergaminho fosse encontrado.
+
+##### Personalidade
+
+Curioso além do que a segurança recomendava. Sabia que estava pisando em terreno que o Domínio preferia manter lacrado, e escreveu assim mesmo. A nota final — 'não recomendo divulgar' — sugere que entendia as consequências.
+
+-----
+<!-- /AUTO:character:frei-assolvan -->
+
+<!-- AUTO:character:maren-oss -->
+#### MAREN KRILL
+
+**Papel:** Estudioso errante
+**Status:** Morto
+
+##### Descrição Pública
+
+Estudioso independente que passou anos coletando fragmentos de arquivos sobreviventes à Maré Alta para tentar reconstruir a história da Grande Guerra. Escreveu suas investigações em Kaldera, aproximadamente cinquenta anos após a inundação. Não chegou a descobrir a verdade completa — apenas que magistas élficos invocaram algo e que a guerra mudou de natureza quando isso aconteceu. Terminou suas notas com a frase: 'Aguardo encontrar mais registros. Temo que não existam.'
+
+##### Personalidade
+
+Meticuloso e honesto intelectualmente — preferia dizer que não sabia a fingir certeza. Trabalhava sozinho, sem vínculos com nenhuma facção, o que lhe dava acesso a arquivos que pesquisadores ligados ao Domínio não consultariam.
+
+-----
+<!-- /AUTO:character:maren-oss -->
+
+<!-- AUTO:character:o-peso -->
+#### O PESO
+
+**Papel:** Entidade Primordial / O Selado
+**Status:** Selado
+
+##### Descrição Pública
+
+Anterior aos deuses conhecidos de Pelágos. O Peso é o nome dado pelos sobreviventes da Grande Guerra. Foi invocado pelos magistas elfos nas camadas mais profundas da realidade e recusou qualquer forma de controle. Não pensa em termos humanos. Não tem malícia consciente. Tem apenas um impulso primitivo de liberdade. Está selado a quilômetros de profundidade sob o oceano de Pelágos desde o dia do Abraço das Águas Eternas.
+
+##### Personalidade
+
+Não possui personalidade própria articulada — é uma presença, uma fome gravitacional. Não pensa em termos humanos. Não tem malícia consciente. Tem apenas um impulso primitivo de liberdade.
+
+##### Segredos
+
+**🔒 Camada 1** — *O nome verdadeiro é Thurvael*
+O Peso é apenas o nome popular. O nome verdadeiro — Thurvael — existe apenas em registros élficos antigos e nas anotações do Tomo de Himmel Varek. Quem conhece o nome verdadeiro tem acesso a informações que os registros comuns não contêm.
+
+**🔒 Camada 2** — *O Peso não está sozinho no selo*
+Selavin Doss fundiu sua consciência ao Thurvael no instante do selamento. Os dois existem em simbiose há séculos: o Peso fornece poder e permanência; Selavin fornece forma, vontade e intelecto. Ninguém sabe disso — nem Himmel sabia.
+
+**🔒 Camada 3** — *O oceano inteiro é o cárcere*
+A água de Pelágos não é água comum. É consagrada pelo sacrifício voluntário de Himmel Varek. Se o nível do mar baixar significativamente, o selo enfraquece. Se o ritual for revertido, o selo quebra — e o que emerge é Selavin Doss com o poder integral do Thurvael.
+
+-----
+<!-- /AUTO:character:o-peso -->
+
+<!-- AUTO:character:telvis-oran -->
+#### TELVIS ORAN
+
+**Papel:** Arquivista de Kaldera
+**Status:** Morto
+
+##### Descrição Pública
+
+Arquivista de Kaldera que, quarenta e três anos após as perseguições, tentou documentar a Caça aos Elfos com distância histórica e moral. Foi o primeiro a registrar formalmente a distinção entre magistas e elfos comuns, e o primeiro a encontrar e preservar a nota anônima de um sobrevivente élfico: 'Nós também não sabíamos. Fomos os últimos a saber. E os primeiros a pagar.' Seu pergaminho foi arquivado e praticamente esquecido.
+
+##### Personalidade
+
+Honesto ao ponto do desconforto. Fazia perguntas morais que os arquivos não respondiam e registrava isso sem pudor. Em Kaldera, sob controle de Velmarch, esse tipo de honestidade era mais seguro em forma de pergaminho do que em forma de conversa.
+
+-----
+<!-- /AUTO:character:telvis-oran -->
+
+<!-- AUTO:character:vaelindra-cass -->
+#### GALADRIEL CASS
+
+**Papel:** Última Anciã de Elarindë
+**Status:** Desaparecido
+
+##### Descrição Pública
+
+Élfica de trezentos anos na época da Maré Alta. Conhecia Selavin Doss antes de ele realizar a invocação e tentou avisá-lo. Sobreviveu à Grande Guerra e à Caça aos Elfos escondida em uma caverna com quarenta e dois outros élficos — dos quais apenas doze sobreviveram à perseguição. Escreveu o Lamento de Galadriel Cass em couro que não apodrece, com tinta que não desbota, para que a verdade não se perdesse. Sua localização atual é desconhecida.
+
+##### Personalidade
+
+Carrega trezentos anos de história com uma serenidade que não é paz — é o peso de quem já viu demais para se surpreender. Entende o ódio dos humanos. Entender não significa aceitar.
+
+##### Segredos
+
+**🔒 Camada 1** — *Vaelindra pode ainda estar viva*
+Com trezentos anos na época da Maré Alta, e sendo élfica, pode ter vivido mais séculos. Se ainda viva, seria a pessoa com o conhecimento mais completo e direto sobre os eventos da Grande Guerra — além de Frieren.
+
+**🔒 Camada 2** — *Vaelindra sabe onde outros elfos sobreviventes estão*
+Mencionou seis sobreviventes do seu grupo ainda vivos. Conhece esconderijos, rotas e artifícios usados pelos elfos remanescentes. Seria um ativo inestimável — ou um alvo, dependendo de quem pergunta.
+
+-----
+<!-- /AUTO:character:vaelindra-cass -->
+
+<!-- AUTO:character:thorne-mare -->
+#### THORNE MARÉ
+
+**Papel:** Mestre carpinteiro naval de Aethon
+**Status:** Morto
+
+##### Descrição Pública
+
+O melhor carpinteiro naval de Aethon — e, segundo muitos, das sete ilhas ao redor. Trabalha nos estaleiros da Costa Norte desde antes de saber ler mapas, com mãos que conhecem a madeira melhor do que conhecem palavras. Os barcos que saem de suas mãos parecem querer flutuar: absorvem tempestades que destroçariam outro casco e resistem ao sal com uma obstinação que alguns marinheiros juram ser magia. Não é magia — é uma vida inteira de ofício passado em silêncio, de pai para filho.
+
+Hoje os estaleiros produzem para A Corrente, em cotas que ninguém negociou e ninguém pode recusar. Thorne ainda é o melhor, e por isso A Corrente nunca o tirou de lá. Trabalha. Fala o necessário. E não comenta sobre o rapaz que sumiu num de seus barcos há oito anos.
+
+É pai de Cid. O casco da Brisa Vermilha — o barco que o filho roubou ao fugir — saiu das mãos de Thorne; a vela vermelha bordada era da mãe. Oito anos de consertos tornaram o barco outra coisa. A alma, não.
+
+Morreu em Aethon, na noite em que o filho voltou. Deu ao grupo um casco novo — o melhor que suas mãos ainda conseguiam — e ficou para trás cobrindo a saída do porto enquanto A Corrente fechava o cerco. Não disse nada memorável. Não era homem disso. Empurrou o barco, acenou uma vez e voltou a andar em direção às luzes.
+
+##### Personalidade
+
+Calado, preciso, econômico em tudo — em palavras, em gestos, em afeto demonstrado. Não fala mais do que o necessário, e quase nunca fala de si. Não é frieza: é um homem que aprendeu que algumas dores se carregam melhor sem nome. Respeita quem trabalha bem e desconfia de quem fala demais. Quando o assunto chega perto de Cid, ele muda de assunto com a naturalidade de quem já fez isso mil vezes.
+
+##### Segredos
+
+**🔒 Camada 1** — *Ele não fala de Cid de propósito*
+Thorne não esqueceu o filho. Cala-se sobre ele porque não quer que a pergunta seja feita — qualquer pergunta. Quem insistir vai encontrar uma parede educada e intransponível. Quem ganhar sua confiança, com tempo e trabalho, pode encontrar um homem que ainda guarda as ferramentas do filho exatamente onde ele as deixou.
+
+**🔒 Camada 2** — *Liris foi levada*
+dois meses depois da fuga de Cid, A Corrente registrou a esposa de Thorne, Liris Maré, como 'voluntariamente realocada' para as oficinas do Ancoradouro de Latão, onde suas habilidades de tecedora de velas seriam 'mais bem aproveitadas' na produção de velas militares. Ela está lá até hoje, costurando velas de Velmarch. Thorne não tentou ir atrás. Ou não pôde. Os padrões de vela de Liris ainda decoram janelas de outras casas de Aethon.
+
+**🔒 Camada 3** — *O nome de Cid ainda está nos arquivos*
+'Cid Maré, navegador de Aethon' consta nos registros portuários do Domínio como 'desertado de recrutamento obrigatório'. A recompensa é pequena demais para que alguém vá atrás — mas os registros d'A Corrente não somem por esquecimento. Qualquer oficial que conecte 'Cid' a 'Aethon' pode confirmar tudo nos arquivos em poucas horas. Thorne sabe que o nome do filho continua ali, esperando.
+
+**🔒 Camada 4** — *Liris ainda não sabe*
+Thorne morreu em Aethon e a esposa continua no Ancoradouro de Latão, costurando velas militares para Velmarch, sem notícia nenhuma. Não há serviço de correio entre uma ilha ocupada e outra para um carpinteiro morto num incidente que A Corrente vai registrar como resistência armada. Se os jogadores chegarem ao Ancoradouro de Latão — e é exatamente para lá que estão indo — são eles que carregam a notícia. Cid decide se conta, como conta, e se conta antes ou depois de pedir ajuda a ela.
+
+-----
+<!-- /AUTO:character:thorne-mare -->
+
+<!-- /AUTO-NEW:character -->
+
 ## 4. LOCAIS
 
+<!-- AUTO:location:kaldera -->
 ### 4.1 KALDERA — A Grande Capital
+
+**Tipo:** Ilha urbana / Capital comercial de fato de Pelágos
+**Controle:** Domínio de Velmarch — Governador Tulo Bresh
+**Tom:** Porto caótico — barulhento, superlotado, vibrante e perigoso
+**Subtítulo:** A Grande Capital
 
 **Tipo:** Ilha urbana / Capital comercial de fato de Pelágos
 **Controle:** Domínio de Velmarch — Governador Tulo Bresh
@@ -994,9 +1347,35 @@ Os impostos cobrados em Kaldera excedem em muito os mandatos de Velmarch. Qualqu
 **🔒 Camada 2** — *O Palácio por dentro*
 Dentro do Palácio do Governador há alas inteiras que nenhum funcionário público acessa — apenas os convidados pessoais de Tulo. As prostitutas trazidas de Marvosa vivem permanentemente em ala própria.
 
------
+##### Descrição Pública
 
+Kaldera é o coração pulsante de Pelágos. A maior ilha habitada do arquipélago é também a mais barulhenta, a mais superlotada e a mais perigosa para quem não sabe onde pisa. Seus portos nunca dormem. Seus mercados nunca fecham. Seus becos nunca ficam vazios.
+
+A cidade cresceu sem planejamento sobre si mesma: bairros empilhados sobre bairros, pontes improvisadas conectando telhados, canais que antes eram ruas e ruas que antes eram canais. O cheiro é de peixe, especiaria, fumaça e esgoto, dependendo de qual vento sopra.
+
+A bandeira de Velmarch está em todo lugar. Oficiais d'A Corrente patrulham os mercados com a expressão de quem cobra pedágio existencial. Kaldera é oficialmente a vitrine do Domínio. Na prática, é onde o Domínio mostra os dentes.
+
+##### Segredos
+
+**🔒 Camada 1** — *As taxas reais de Kaldera*
+Os impostos cobrados em Kaldera excedem em muito os mandatos de Velmarch. Qualquer personagem que pergunte a mercadores ou verifique registros descobre a discrepância rapidamente. A diferença vai para os cofres pessoais de Tulo Bresh.
+
+**🔒 Camada 2** — *O Palácio por dentro*
+Dentro do Palácio do Governador há alas inteiras que nenhum funcionário público acessa — apenas os convidados pessoais de Tulo. As prostitutas trazidas de Marvosa vivem permanentemente em ala própria. Gloria Vittar documenta cada visita.
+
+**🔒 Camada 3** — *Soren aparece aqui*
+Soren Mael frequenta Kaldera regularmente — é um dos portos onde costuma ancorar. Se os jogadores o encontrarem aqui, é o início de tudo. Ele carrega O Peso sem saber e será o gatilho da campanha.
+
+-----
+<!-- /AUTO:location:kaldera -->
+
+<!-- AUTO:location:velmyr -->
 ### 4.2 VELMYR — A Ilha do Trono
+
+**Tipo:** Capital imperial
+**Controle:** Aldric Varek XIV / Casa Varek
+**Tom:** Imponente e solar, austera e militar
+**Subtítulo:** A Ilha do Trono
 
 **Tipo:** Ilha capital do Domínio de Velmarch
 **Controle:** Aldric Varek XIV / Casa Varek
@@ -1026,9 +1405,33 @@ O ponto mais alto de Velmyr — onde fica o Palácio — é o mesmo ponto onde H
 **🔒 Camada 3** — *As inscrições de Himmel*
 As inscrições nas fundações antigas foram escritas por Himmel antes do ritual. Se os jogadores chegarem lá, são a confirmação final de tudo — a prova irrefutável do sacrifício, do Peso, e da escolha impossível que fundou Pelágos.
 
------
+##### Descrição Pública
 
+Do outro lado de Pelágos, onde o oceano fica mais fundo e o vento mais constante, ergue-se Velmyr. Branca e dourada à distância — uma ilha de pedra clara que reflete a luz do sol de um jeito que a torna visível no horizonte antes de qualquer outra. Bela, sim. Mas a beleza é funcional: os muros altos, as torres de vigia, os canhões voltados para o mar em todas as direções.
+
+Não há nada em Velmyr que não sirva a um propósito. Os jardins são simétricos e sem exuberância. As ruas são largas o suficiente para marchar tropas. Chegar a Velmyr sem convite é quase impossível — não recebe mercadores, peregrinos ou curiosos.
+
+##### Segredos
+
+**🔒 Camada 1** — *A Câmara Selada existe*
+Membros da Casa Varek e poucos conselheiros sabem que existe uma câmara de acesso extremamente restrito no palácio. O que está lá dentro, ninguém dos que têm acesso sabe completamente.
+
+**🔒 Camada 2** — *O pico tem história*
+O ponto mais alto de Velmyr — onde fica o Palácio — é o mesmo ponto onde Himmel realizou O Abraço das Águas Eternas. Nas fundações mais antigas do palácio existem inscrições que nenhum arquiteto moderno consegue datar.
+
+**🔒 Camada 3** — *As inscrições de Himmel*
+As inscrições nas fundações antigas foram escritas por Himmel antes do ritual. Se os jogadores chegarem lá, são a confirmação final de tudo — a prova irrefutável do sacrifício, do Peso, e da escolha impossível que fundou Pelágos. A Câmara Selada contém o tomo completo: descreve O Peso, o ritual, o sacrifício — e o aviso: se o nível do mar baixar, O Peso acorda.
+
+-----
+<!-- /AUTO:location:velmyr -->
+
+<!-- AUTO:location:marvosa -->
 ### 4.3 MARVOSA — A Ilha do Prazer
+
+**Tipo:** Território livre / Capital do entretenimento
+**Controle:** Gloria Vittar — sem presença de Velmarch
+**Tom:** Carnavalesco — festa permanente, cores, barulho, excesso em tudo
+**Subtítulo:** A Ilha do Prazer
 
 **Tipo:** Território livre
 **Controle:** Gloria Vittar — sem presença de Velmarch
@@ -1055,9 +1458,35 @@ Velmarch tentou duas vezes. Ambas falharam de forma inexplicável. Isso é conhe
 **🔒 Camada 2** — *A rede de inteligência*
 Cada casa de entretenimento de Gloria é também um posto de coleta de informações. Qualquer segredo dito em Marvosa tem chances consideráveis de chegar aos ouvidos da Senhorita Vittar.
 
------
+##### Descrição Pública
 
+Marvosa é visível a quilômetros de distância — não pelo tamanho, mas pelo barulho e pelas cores. Bandeiras, lanternas e tecidos de todas as tonalidades enfeitam cada mastro, cada janela, cada beco. À noite, o reflexo das luzes sobre o mar faz Marvosa parecer uma estrela caída no oceano.
+
+Não há estação seca nem chuvosa em Marvosa. Há apenas a festa — permanente, ininterrupta. Mercadores chegam para negociar e ficam três dias a mais do que planejavam. Oficiais d'A Corrente chegam com ordens e saem sem memória do que vieram fazer.
+
+Velmarch tentou estabelecer presença em Marvosa duas vezes. As duas vezes, os oficiais enviados voltaram sem ter conseguido nada concreto. A terceira tentativa nunca aconteceu.
+
+##### Segredos
+
+**🔒 Camada 1** — *Ninguém consegue tomar Marvosa*
+Velmarch tentou duas vezes estabelecer presença. Ambas falharam de forma inexplicável — oficiais voltaram sem ter conseguido nada concreto. Isso é conhecido por qualquer capitão ou diplomata experiente, mas ninguém sabe o motivo real.
+
+**🔒 Camada 2** — *A rede de inteligência*
+Cada casa de entretenimento de Gloria é também um posto de coleta de informações. A Ala de Gloria tem aposentos com paredes falsas, espelhos de observação e acústica manipulada. Qualquer segredo dito em Marvosa tem chances consideráveis de chegar aos ouvidos da Senhorita Vittar.
+
+**🔒 Camada 3** — *O dossiê de Tulo*
+Tulo Bresh frequenta Marvosa regularmente e seus segredos estão todos documentados por Gloria. Ela possui informação suficiente para destruir sua carreira e possivelmente sua liberdade — e Tulo não sabe que está sendo monitorado.
+
+-----
+<!-- /AUTO:location:marvosa -->
+
+<!-- AUTO:location:reva -->
 ### 4.4 REVA — A Ilha dos Talion
+
+**Tipo:** Ilha pequena / Colônia élfica secreta
+**Controle:** Família Talion — Fern Talion na prática
+**Tom:** Tranquila, humilde, agrícola
+**Subtítulo:** A Ilha dos Talion
 
 **Tipo:** Ilha pequena / Colônia élfica secreta
 **Controle:** Família Talion — Fern Talion na prática
@@ -1082,9 +1511,33 @@ Quem sair de Reva e se afastar da costa suficientemente vai notar mudanças fís
 **🔒 Camada 3** — *O cristal é de Himmel*
 A magia do cristal é anterior a qualquer escola arcana conhecida em Pelágos. Sua assinatura é a mesma que permeia as inscrições nas fundações de Velmyr. Himmel instalou ambos.
 
------
+##### Descrição Pública
 
+Uma ilha pequena, tranquila, de gente simples que cultiva a terra e troca minérios por grãos com navios que passam sem nunca ancorar por muito tempo. Nenhum viajante fica. Nenhum oficial d'A Corrente tem razão para inspecionar. Reva não causa problemas.
+
+Aparentemente, não há nada de especial em Reva. É exatamente o que parece ser — e isso é intencional. Planificado por Himmel há séculos, mantido por Fern com cuidado diário.
+
+##### Segredos
+
+**🔒 Camada 1** — *Reva é estranhamente isolada*
+Para uma ilha com minérios de qualidade, Reva tem pouquíssimo tráfego. Ninguém da família sai para comercializar pessoalmente. Os contratos são sempre feitos à distância. Uma investigação de padrões comerciais revela o isolamento sistemático.
+
+**🔒 Camada 2** — *Os habitantes são elfos*
+Quem sair de Reva e se afastar da costa suficientemente vai notar mudanças físicas no próprio reflexo — orelhas que se alongam, olhos que ganham brilho. Investigação arcana da ilha revela o cristal no núcleo — e o que ele faz. A família Talion inteira é élfica.
+
+**🔒 Camada 3** — *O cristal é de Himmel*
+A magia do cristal é anterior a qualquer escola arcana conhecida em Pelágos. Sua assinatura é a mesma que permeia as inscrições nas fundações de Velmyr. Himmel instalou ambos. Se o cristal for destruído, todos os elfos de Reva revelarão sua verdadeira aparência simultaneamente — sentença de morte se houver qualquer navio nas proximidades.
+
+-----
+<!-- /AUTO:location:reva -->
+
+<!-- AUTO:location:ancoradouro-de-latao -->
 ### 4.5 O ANCORADOURO DE LATÃO — A Forja Acorrentada
+
+**Tipo:** Ilha industrial / Colônia metalúrgica
+**Controle:** Domínio de Velmarch — operação direta d'A Corrente
+**Tom:** Enxofre e metal quente — uma ilha que cheirava a invenção e agora cheira a obrigação
+**Subtítulo:** A Forja Acorrentada
 
 **Tipo:** Ilha industrial / Colônia metalúrgica
 **Controle:** Domínio de Velmarch — operação direta d'A Corrente
@@ -1125,9 +1578,37 @@ A estátua do fundador sem nome é de um gnomo real — **Orwin, o Chapéu Largo
 Vargan Drell cedeu sua forma física e se fundiu à Grande Forja. O corpo com que se apresenta é apenas sua manifestação: Vargan é a própria forja. O Domínio de Velmarch conhece sua dependência e exige cooperação em troca de mantê-lo vivo. Se ele se recusar, o Domínio apaga a forja que sustenta sua alma. O carcereiro de Orwin serve sob sua própria sentença de morte suspensa.
 *→ Ver também: Vargan Drell — A Forja Viva; Orwin — O Chapéu Largo*
 
------
+##### Descrição Pública
 
+O Ancoradouro de Latão é uma ilha pequena e densa, encravada num ponto de rotas comerciais que ninguém considerava estratégico até A Corrente perceber o que ela produzia. Suas colinas são atravessadas por chaminés que soltam fumaça amarelada, seus becos são tão estreitos que duas pessoas mal se cruzam, e seu porto tem um brilho metálico na água que vem de décadas de limalha e resíduos de fundição despejados no mar.
+
+Foi durante séculos uma república de artesãos — sem rei, sem governador, sem hierarquia que não fosse o talento. Gnomos, principalmente, mas também humanos e halflings que vieram atrás do trabalho bom e ficaram atrás da filosofia: aqui, quem inventa manda. As oficinas eram abertas, as fórmulas eram compartilhadas e as brigas mais ferozes eram sobre calibragem de engrenagens e proporções de pólvora.
+
+Quando A Corrente chegou, não chegou como invasora. Chegou com papéis, com argumentos de 'proteção de rota' e com navios que eram grandes demais para ignorar. A 'adesão' ao Domínio levou três semanas. O confisco das oficinas levou três dias.
+
+Hoje, o Ancoradouro de Latão produz munição, peças de artilharia e componentes navais dentro das cotas estabelecidas por Velmarch. Os artesãos trabalham — mas agora para um cliente que não negocia preço e não aceita recusa.
+
+##### Segredos
+
+**🔒 Camada 1** — *As cotas não cobrem tudo*
+A produção oficial registrada nos relatórios de Velmarch não bate com a quantidade de matéria-prima consumida. A diferença é pequena — pequena o suficiente para parecer erro de medição. Não é. Alguma coisa está sendo fabricada fora dos registros.
+
+**🔒 Camada 2** — *O Arquivo Confiscado tem um inventário incompleto*
+Quando A Corrente catalogou as invenções da ilha, um conjunto de fórmulas não foi encontrado — especificamente, as pesquisas mais avançadas sobre química de pólvora de uma família de gnomos. Os supervisores registraram 'material destruído antes da adesão'. Não foi destruído. Foi escondido, ou levado, ou ambos. Velmarch ainda procura, discretamente.
+
+**🔒 Camada 3** — *A Estátua sabe quem é*
+A estátua do fundador sem nome é de um gnomo real — o avô do personagem que fugiu da ilha. Seu chapéu largo é um detalhe específico demais para ser coincidência. Alguém a construiu depois da 'absorção', à noite, sem que A Corrente percebesse a tempo de impedir. Os mais velhos da ilha sabem de quem é a estátua. Não dizem.
+
+-----
+<!-- /AUTO:location:ancoradouro-de-latao -->
+
+<!-- AUTO:location:aethon -->
 ### 4.6 AETHON — A Ilha das Velas
+
+**Tipo:** Ilha pequena / Comunidade naval e de construção de embarcações
+**Controle:** Domínio de Velmarch — presença administrativa leve mas crescente
+**Tom:** Madeira de lei e vento salgado — uma ilha que ainda cheira a verniz e mar, e aprendeu a obedecer sem dizer que obedece
+**Subtítulo:** A Ilha das Velas
 
 **Tipo:** Ilha pequena / Comunidade naval e de construção de embarcações
 **Controle:** Domínio de Velmarch — presença administrativa leve mas crescente
@@ -1162,9 +1643,35 @@ Depois que Cid fugiu, A Corrente registrou o incidente como "recrutamento malsuc
 **🔒 Camada 3** — *O registro de Cid ainda está ativo*
 O nome "Cid Maré, navegador de Aethon" consta nos registros portuários do Domínio como "desertado de recrutamento obrigatório". A recompensa era pequena — moedas suficientes para que um informante ocasional ficasse atento, não suficientes para que alguém fosse atrás. Pequena o suficiente para ser esquecida. Mas os registros de A Corrente não somem por esquecimento. O nome ainda está lá. Qualquer oficial que conecte "Cid" a "Aethon" pode verificar nos arquivos e confirmar em horas.
 
------
+##### Descrição Pública
 
+Aethon é uma ilha montanhosa de tamanho modesto, encravada entre rotas costeiras que os grandes navios de guerra d'A Corrente não precisam usar — e por isso, por séculos, foi esquecida. O que não precisam não significa que não querem: quando Velmarch percebeu o que saía das oficinas de Aethon, os navios de 'recrutamento' apareceram no porto com a mesma suavidade inevitável com que a maré entra.
+
+A ilha é conhecida em sete ilhas ao redor por uma coisa: seus barcos não afundam. Não no sentido de que são difíceis de afundar — no sentido de que parecem querer flutuar. As embarcações de Aethon respondem ao toque como animais treinados, absorvem tempestades que destroçariam casco de outro estaleiro e resistem ao sal com uma obstinação que alguns marinheiros juram ser magia. Não é. É gerações de conhecimento acumulado, passado em silêncio entre pais e filhos, entre mestres e aprendizes, entre os dedos e a madeira.
+
+Hoje, os estaleiros de Aethon ainda produzem as melhores embarcações do arquipélago — agora principalmente para A Corrente, em cotas que ninguém negociou e ninguém pode recusar.
+
+##### Segredos
+
+**🔒 Camada 1** — *Thorne Maré ainda vive e trabalha em Aethon*
+Cid foi embora. O pai ficou. Thorne continua sendo o melhor carpinteiro naval da ilha — A Corrente sabe disso e nunca o tirou de lá. Qualquer viajante que pergunte pelos estaleiros de Aethon vai ouvir o nome Thorne. Ele não fala sobre Cid. Não porque tenha esquecido — porque não quer que a pergunta seja feita.
+
+**🔒 Camada 2** — *Liris foi levada*
+Depois que Cid fugiu, A Corrente registrou o incidente como 'recrutamento malsucedido' e adicionou uma nota: a mãe do fugitivo, Liris Maré, foi 'voluntariamente realocada' para as oficinas do Ancoradouro de Latão, onde suas habilidades como tecedora de velas poderiam ser 'mais bem aproveitadas' na produção de velas militares. A realocação aconteceu dois meses depois da fuga de Cid. Ela está no Ancoradouro de Latão, costurando velas de Velmarch. Thorne não tentou ir atrás. Ou não pôde.
+
+**🔒 Camada 3** — *O registro de Cid ainda está ativo*
+O nome 'Cid Maré, navegador de Aethon' consta nos registros portuários do Domínio como 'desertado de recrutamento obrigatório'. A recompensa era pequena — suficiente para que um informante ficasse atento, não para que alguém fosse atrás. Mas os registros de A Corrente não somem por esquecimento. Qualquer oficial que conecte 'Cid' a 'Aethon' pode verificar nos arquivos e confirmar em horas.
+
+-----
+<!-- /AUTO:location:aethon -->
+
+<!-- AUTO:location:ondra -->
 ### 4.7 ONDRA — A Cidade Que Se Esqueceu de Si Mesma
+
+**Tipo:** Ilha religiosa / Refúgio élfico secreto
+**Controle:** Ordens religiosas locais — nominalmente sob Velmarch, na prática autônoma
+**Tom:** Reverente e fechada — uma ilha que respira história e desconfia de estranhos. Quem chega sem recomendação encontra hospitalidade educada e portas que não abrem.
+**Subtítulo:** A Cidade Que Se Esqueceu de Si Mesma
 
 **Tipo:** Ilha religiosa / Refúgio élfico secreto
 **Controle:** Ordens religiosas locais — nominalmente sob Velmarch, na prática autônoma
@@ -1218,11 +1725,119 @@ Vinte e três elfos vivem nas seções internas do templo há gerações. A "Anc
 **🔒 Camada 4** — *Os Arquivos de Ondra foram escritos pelos elfos*
 Os textos históricos de Ondra que os monges leem como poesia espiritual são relatos literais de sobreviventes élficos, escritos em linguagem oblíqua para passar pela inspeção de Velmarch. "A escuridão que os elfos abriram nas profundezas" é o Thurvael. "O abraço eterno que selou o que não podia ser destruído" é o sacrifício de Himmel. "Aquele que ficou quando todos foram" é Selavin Doss. Os jogadores que chegarem a Ondra com contexto suficiente vão conseguir ler esses textos de uma forma que os monges nunca conseguiram.
 
+##### Descrição Pública
+
+Ondra é uma ilha de pedra escura e névoa permanente. Não tem os portos movimentados de Kaldera nem a grandiosidade militar de Velmyr — tem templos, arquivos e silêncio. As ordens religiosas que a habitam há séculos cultivam uma forma de devoção discreta que Velmarch nunca soube muito bem como classificar nem tributar. Tentou uma vez. Os navios que enviou voltaram com oficiais febris que não conseguiam explicar por que tinham virado e ido embora.
+
+A comunidade religiosa vive em torno do Templo das Marés, uma estrutura de pedra negra construída com blocos recuperados do fundo do oceano. Os monges que mantêm o templo são conhecidos por sua longevidade incomum e sua recusa em aceitar aprendizes que não passem por um período de avaliação que pode durar meses.
+
+O que os visitantes ocasionais não percebem: a ilha tem mais habitantes do que os que aparecem no porto. Nos corredores mais internos do templo e nas Celas dos Penitentes vivem vinte e três elfos — o que restou do grupo de Galadriel Cass após décadas de perseguição. Eles aparecem ao público apenas encapuzados como 'penitentes em retiro espiritual prolongado' e, em troca da proteção das ordens, contribuíram com séculos de conhecimento histórico para os Arquivos. Os textos que os monges leem como poesia espiritual são memória élfica literal.
+
+##### Segredos
+
+**🔒 Camada 1** — *A comunidade de Ondra é mais fechada do que admite*
+Há setores da ilha que simplesmente não são mostrados. 'As seções internas são para retiro espiritual' é a resposta padrão. Quem perguntar mais de uma vez vai notar que a resposta não muda, nem o tom.
+
+**🔒 Camada 2** — *Os penitentes de Ondra nunca encerram o retiro*
+Em ordens religiosas, penitentes em retiro eventualmente saem. Em Ondra, nenhum 'penitente em retiro prolongado' jamais foi embora. Alguns estão lá há décadas. A quantidade é sempre a mesma — nunca mais, nunca menos.
+
+**🔒 Camada 3** — *Ondra abriga sobreviventes élficos sob o comando de Galadriel Cass*
+Vinte e três elfos vivem nas seções internas do templo. A 'Anciã das Ordens' é Galadriel Cass — sobrevivente da Grande Guerra, da Maré Alta e da Caça. Ela sabe sobre o Thurvael, sobre Selavin Doss e sobre o que acontecerá se o selo quebrar. Teme que alguém com as melhores intenções do mundo vá quebrá-lo.
+
+**🔒 Camada 4** — *Os Arquivos de Ondra foram escritos pelos elfos*
+Os textos históricos que os monges leem como poesia espiritual são relatos literais de sobreviventes élficos em linguagem deliberadamente oblíqua. 'A escuridão que os elfos abriram nas profundezas' é o Thurvael. 'O abraço eterno que selou o que não podia ser destruído' é o sacrifício de Himmel. 'Aquele que ficou quando todos foram' é Selavin Doss. Com contexto suficiente, os jogadores conseguem ler esses textos de uma forma que os monges nunca conseguiram.
+
 -----
+<!-- /AUTO:location:ondra -->
+
+<!-- AUTO-NEW:location -->
+
+<!-- AUTO:location:pelagos -->
+### Pelágos
+
+**Subtítulo:** O Continente dos Mil Mares
+**Tipo:** Arquipélago-continente
+
+##### Descrição Pública
+
+Não existe terra firme em Pelágos. O que os mapas chamam de continente é um arquipélago sem fim — centenas de ilhas espalhadas por um oceano que não tem fundo conhecido, cada uma com sua própria lei, seus próprios deuses e sua própria maneira de sobreviver. As montanhas mais altas de Pelágos são apenas os dentes do que um dia foi um mundo maior — afogado por um evento tão antigo que virou mito.
+
+Entre as ilhas, o mar é tudo: estrada, fronteira, mercado, cemitério e templo. As civilizações de Pelágos cresceram voltadas para a água, e seus deuses cheiram a sal. Saber navegar não é um talento aqui. É alfabetização.
+
+##### Segredos
+
+**🔒 Camada 1** — *O mundo anterior existia*
+Sob as águas de Pelágos há fundações de pelo menos três grandes civilizações, identificáveis por estilo arquitetônico. Estudiosos que mergulham nas ruínas encontram cerâmicas com inscrições em línguas sem tradutor vivo e moedas de ligas que nenhum ferreiro moderno reproduz.
+
+**🔒 Camada 2** — *Algo está sob o oceano*
+Personagens com sensibilidade arcana ou divina que se aproximam do centro geográfico de Pelágos podem sentir algo — uma pressão, uma presença, uma gravidade que não é física. Difícil de nomear, impossível de ignorar. É O Peso, selado a quilômetros de profundidade.
+
+**🔒 Camada 3** — *O oceano é um cárcere*
+Toda a política, toda a história, toda a geografia de Pelágos existe por causa do selamento de O Peso. O oceano não é apenas água — é o cárcere de algo que não deveria existir. Se o nível do mar baixar significativamente, o selo enfraquece. Se o ritual for revertido, o selo quebra.
+
+-----
+<!-- /AUTO:location:pelagos -->
+
+<!-- AUTO:location:mosteiro-costa-afogada -->
+### Mosteiro da Costa Afogada
+
+**Subtítulo:** Ordem dos Monges da Maré
+**Tipo:** Ilha monástica / Arquivo histórico
+
+##### Descrição Pública
+
+Um mosteiro antigo construído no alto de uma ilha costeira que sobreviveu à Maré Alta — mas apenas a parte superior. As fundações e os claustros inferiores foram engolidos pela inundação, e as paredes que emergem do oceano carregam a linha d'água marcada nas pedras como uma cicatriz. Os monges que habitam o que sobrou chamam isso de 'a memória visível do preço.'
+
+O mosteiro mantém um dos arquivos mais antigos de Pelágos — fragmentos de documentos que sobreviveram à inundação em cofres de pedra vedada. A maioria está danificada. Alguns são ilegíveis. Os que sobreviveram inteiros são tratados como relíquias.
+
+A Ordem não tem nome oficial — os monges simplesmente chamam uns aos outros de irmãos. Não pregam, não aceitam convertidos formalmente. Apenas guardam. E às vezes, quando alguém parece digno, deixam ler.
+
+##### Segredos
+
+**🔒 Camada 1** — *O Arquivo Submerso ainda contém documentos intocados*
+As câmaras inferiores inundadas têm cofres que nunca foram abertos. Os monges sabem que estão lá. Não têm como chegar — ou escolheram não chegar.
+
+**🔒 Camada 2** — *Os monges guardam mais do que admitem*
+Frei Assolvan era deste mosteiro. Suas notas sobre a Maré Alta e o 'rito do abraço' foram escritas aqui — e a recomendação de não divulgar foi seguida por gerações. Não é a única pesquisa arquivada que nunca foi compartilhada.
+
+-----
+<!-- /AUTO:location:mosteiro-costa-afogada -->
+
+<!-- AUTO:location:kesvar -->
+### Kesvar
+
+**Subtítulo:** A Ilha dos Arquivos Perdidos
+**Tipo:** Ilha / Ruína habitada
+
+##### Descrição Pública
+
+Kesvar é uma ilha pequena com uma história de resistência silenciosa. Antes da Maré Alta era um centro de conhecimento secular — não religioso, não militar, apenas acadêmico. Cartógrafos, filósofos, arquivistas. Quando as águas subiram, os habitantes de Kesvar subiram junto — literalmente, construindo estruturas mais altas sobre as que a inundação cobria.
+
+O resultado é uma ilha que parece construída em camadas: os fundamentos antigos do mundo pré-dilúvio emergem do mar em pedaços, e sobre eles novas construções cresceram ao longo de séculos. Os moradores chamam isso de 'a cidade de dois mundos'.
+
+Kesvar mantém um fragmento do arquivo acadêmico original — muito do qual foi perdido, mas o suficiente para que estudiosos em busca de história antiga ainda façam a viagem. Foi de um arquivo em Kesvar que Maren Krill obteve um dos fragmentos que mencionava 'os magistas da língua alta que chamaram o que não devia ser chamado.'
+
+##### Segredos
+
+**🔒 Camada 1** — *O Arquivo de Kesvar tem fragmentos sobre a Grande Guerra*
+Entre os documentos sobreviventes há referências aos magistas élficos e à invocação — material que Maren Krill encontrou e usou em sua investigação. Há mais fragmentos não catalogados.
+
+**🔒 Camada 2** — *Nas Fundações Emersas há inscrições do mundo anterior*
+Parte das fundações emergidas do pré-dilúvio tem inscrições em língua arcaica. Ninguém em Kesvar as lê. Alguém com conhecimento das línguas antigas — ou acesso ao tomo certo — poderia.
+
+-----
+<!-- /AUTO:location:kesvar -->
+
+<!-- /AUTO-NEW:location -->
 
 ## 5. EVENTOS HISTÓRICOS
 
+<!-- AUTO:event:grande-guerra -->
 ### 5.1 A GRANDE GUERRA
+
+**Período:** Era Antiga — 40 a 80 anos antes da Maré Alta
+**Escala:** Mundial
+**Causa:** Invocação de O Peso pelos magistas elfos
 
 **Período:** Aproximadamente 40 a 80 anos antes da Maré Alta
 **Escala:** Mundial
@@ -1247,9 +1862,37 @@ Registros não censurados em ilhas fora do controle de Velmarch documentam clara
 **🔒 Camada 3** — *O Peso não foi destruído, foi selado*
 A Grande Guerra terminou não com a destruição de O Peso, mas com seu selamento sob o oceano. Isso significa que ainda está lá. Documentos sobre isso existem apenas no tomo de Himmel.
 
------
+##### Descrição Pública
 
+A Grande Guerra não começou como uma guerra entre povos — foi uma crise de origem sobrenatural que consumiu toda estrutura política e militar existente. Os maiores magistas elfos da era antiga descobriram, nas camadas mais profundas da realidade, a existência de O Peso. Acreditaram que poderiam invocá-lo, domesticá-lo, usá-lo como ferramenta para consolidar o domínio élfico definitivo.
+
+O que invocaram não obedeceu. Simplesmente começou a consumir.
+
+O que avançava não era um exército. Não tomava territórios nem exigia rendição. Regiões inteiras desapareciam dos mapas não porque fossem conquistadas, mas porque paravam de ser. A resposta das civilizações foi primeiro militar, depois diplomática, depois desesperada. Entre 60% e 80% da população mundial foi dizimada. Cidades inteiras pararam de existir.
+
+Em Pelágos é chamada simplesmente de A Guerra ou A Grande Guerra. Não há nome oficial — e Pelágos, coletivamente, não parece querer um.
+
+##### Segredos
+
+**🔒 Camada 1** — *Os registros de Velmarch têm lacunas*
+Seções dos arquivos históricos de Velmarch sobre A Grande Guerra estão marcadas como 'classificação restrita'. Estudiosos que tentam acessá-las são redirecionados. Qualquer pesquisador que perceba o padrão entende que algo está sendo suprimido.
+
+**🔒 Camada 2** — *Os elfos foram os responsáveis*
+Registros não censurados em ilhas fora do controle de Velmarch documentam claramente que foram magistas elfos que invocaram O Peso numa tentativa de dominar o mundo definitivamente. Velmarch suprime essa informação — não por proteger os elfos, mas porque revelar a origem de O Peso seria revelar que O Peso ainda existe.
+
+**🔒 Camada 3** — *O Peso não foi destruído, foi selado*
+A Grande Guerra terminou não com a destruição de O Peso, mas com seu selamento sob o oceano. Isso significa que ainda está lá. Documentos sobre isso existem apenas no tomo de Himmel na Câmara Selada de Velmyr — e na memória de Frieren Talion.
+
+-----
+<!-- /AUTO:event:grande-guerra -->
+
+<!-- AUTO:event:abraco-aguas-eternas -->
 ### 5.2 O ABRAÇO DAS ÁGUAS ETERNAS
+
+**Data:** Há séculos — geração de Himmel Varek
+**Agente:** Himmel Varek
+**Resultado:** Criação de Pelágos / Selo de O Peso
+**Período:** A Maré Alta — O Marco Zero da História de Pelágos
 
 **Data:** Há séculos — geração de Himmel Varek
 **Agente:** Himmel Varek
@@ -1275,9 +1918,33 @@ Em registros muito antigos de ilhas não controladas por Velmarch, o evento é c
 **🔒 Camada 3** — *Foi um sacrifício voluntário*
 O nome original completo — *O Abraço das Águas Eternas* — e seu significado estão preservados apenas no tomo de Himmel em Velmyr, e na memória de Frieren Talion. Quando os jogadores descobrirem isso, a moral da campanha vira de cabeça para baixo.
 
------
+##### Descrição Pública
 
+O evento que dividiu a história de Pelágos em antes e depois. Conhecido popularmente como A Maré Alta — o nome poético que Himmel escolheu foi gradualmente apagado pela oralidade até virar uma força da natureza sem autor, sem intenção, sem amor.
+
+Himmel realizou o ritual no pico mais alto do continente — hoje a ilha de Velmyr. Usou sua própria vida como catalisador. O sacrifício precisava ser voluntário e partir de alguém que amasse o mundo o suficiente para destruí-lo. As águas subiram em sete dias. Cidades inteiras afundaram. Civilizações viraram lendas. Pelágos nasceu dos fragmentos do que sobrou.
+
+O nome original — O Abraço das Águas Eternas — foi gradualmente apagado: virou O Grande Abraço nos tomos acadêmicos, O Grande Alagamento na tradição oral, e finalmente A Maré Alta no uso popular. Sem autor, sem intenção, sem amor. Uma força da natureza com nome de previsão do tempo.
+
+##### Segredos
+
+**🔒 Camada 1** — *A Maré Alta teve uma data*
+Registros de diversas ilhas convergem numa data aproximada para A Maré Alta — sete dias de subida das águas. Esse nível de precisão sugere que houve testemunhas que sobreviveram e documentaram. Não foi um fenômeno instantâneo.
+
+**🔒 Camada 2** — *O nome original era diferente*
+Em registros muito antigos de ilhas não controladas por Velmarch, o evento é chamado de O Grande Abraço ou O Grande Alagamento — sugerindo que houve um nome ainda mais antigo, anterior a esses. O nome original aponta para um ato humano, não um fenômeno natural.
+
+**🔒 Camada 3** — *Foi um sacrifício voluntário*
+O nome original completo — O Abraço das Águas Eternas — e seu significado estão preservados apenas no tomo de Himmel em Velmyr, e na memória de Frieren Talion. Himmel escolheu esse nome para ela. Quando os jogadores descobrirem isso, a moral da campanha vira de cabeça para baixo. Frieren estava presente. Viu as águas subirem do pico mais alto de Reva, com Fern nos braços.
+
+-----
+<!-- /AUTO:event:abraco-aguas-eternas -->
+
+<!-- AUTO:event:caca-elfos -->
 ### 5.3 A CAÇA AOS ELFOS
+
+**Período:** Pós-Maré Alta — imediata e contínua até o presente
+**Causa:** Ódio acumulado pelos povos que perderam tudo
 
 **Período:** Imediatamente após a Maré Alta — continua até o presente
 **Causa:** Ódio acumulado pelos povos que perderam tudo
@@ -1294,7 +1961,28 @@ A Corrente proíbe oficialmente o tráfico élfico. Qualquer investigação port
 **🔒 Camada 2** — *A família Talion é a maior colônia élfica viva*
 Se Velmarch descobrisse Reva, seria o fim dos Talion. A existência de uma colônia organizada e funcional seria considerada ameaça a ser eliminada, não uma anomalia a ser ignorada.
 
+##### Descrição Pública
+
+Os elfos sobreviventes à Maré Alta foram caçados até quase o fim. Não por ordem de nenhum rei ou decreto formal — pelo ódio acumulado de povos que haviam perdido tudo por causa dos magistas elfos que invocaram O Peso. A caça durou gerações.
+
+Hoje, elfos são raridade tão extrema que mercadores inescrupulosos pagam fortunas por eles — vendidos como troféus vivos a burgueses das ilhas próximas a Velmyr. A maioria das pessoas em Pelágos nunca viu um elfo. Muitas não acreditam que ainda existam.
+
+A Corrente proíbe oficialmente o tráfico élfico. Extraoficialmente, fecha os olhos quando o comprador é suficientemente rico.
+
+##### Segredos
+
+**🔒 Camada 1** — *O tráfico existe e é tolerado*
+A Corrente proíbe oficialmente o tráfico élfico. Qualquer investigação portuária séria revela que a proibição não é aplicada quando o comprador tem posição suficiente. O mercado existe, é discreto, e está próximo das esferas de poder de Velmarch.
+
+**🔒 Camada 2** — *A família Talion é a maior colônia élfica viva*
+Se Velmarch descobrisse Reva, seria o fim dos Talion. A existência de uma colônia organizada e funcional seria considerada ameaça a ser eliminada, não uma anomalia a ser ignorada. A Caça aos Elfos não terminou — apenas ficou mais discreta.
+
 -----
+<!-- /AUTO:event:caca-elfos -->
+
+<!-- AUTO-NEW:event -->
+
+<!-- /AUTO-NEW:event -->
 
 ## 6. ENTIDADES E FORÇAS SOBRENATURAIS
 
