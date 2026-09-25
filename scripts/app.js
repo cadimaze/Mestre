@@ -1294,13 +1294,14 @@ async function syncCampaignContent() {
   if (btn) { btn.disabled = true; btn.textContent = 'Sincronizando...'; }
 
   try {
-    const [chars, locs, evts, facts, docs, itms] = await Promise.all([
+    const [chars, locs, evts, facts, docs, itms, rels] = await Promise.all([
       fetchCampaignJson('data/characters.json'),
       fetchCampaignJson('data/locations.json'),
       fetchCampaignJson('data/events.json'),
       fetchCampaignJson('data/factions.json'),
       fetchCampaignJson('data/documents.json'),
       fetchCampaignJson('data/items.json'),
+      fetchCampaignJson('data/relations.json'),
     ]);
 
     // Preserve existing secret visibility when syncing secretsList
@@ -1327,10 +1328,14 @@ async function syncCampaignContent() {
     let enviados = 0, preservados = 0;
 
     // Devolve false quando o arquivo não mudou desde a última sincronização.
-    function agendar(ref, update, existing) {
+    //
+    // `extras` são campos gravados só na criação (visibilidade) e que NÃO
+    // entram na assinatura: eles aparecem no payload da primeira vez e somem
+    // na segunda, o que faria a assinatura mudar sozinha e reenviar tudo.
+    function agendar(ref, update, existing, extras) {
       const hash = assinatura(update);
       if (existing && existing._syncHash === hash) { preservados++; return false; }
-      batch.set(ref, { ...update, _syncHash: hash }, { merge: true });
+      batch.set(ref, { ...update, ...(extras || {}), _syncHash: hash }, { merge: true });
       enviados++;
       return true;
     }
@@ -1374,8 +1379,9 @@ async function syncCampaignContent() {
     });
 
     facts.forEach(f => {
-      const ref    = doc(db, base, 'factions', f.id);
-      const update = {
+      const ref      = doc(db, base, 'factions', f.id);
+      const existing = STATE.data.factions.find(x => x.id === f.id);
+      const update   = {
         name: f.name, type: f.type || '', color: f.color || '',
         symbol: f.symbol || '', description: f.description || '',
         secrets: f.secrets || '',
@@ -1395,9 +1401,10 @@ async function syncCampaignContent() {
       if (d.imageUrl) update.imageUrl = d.imageUrl;
       // Visibilidade so e semeada na primeira vez: o que o Mestre ajustou
       // pela UI tem precedencia sobre o JSON.
-      if (!existing?.visibility)        update.visibility        = d.visibility        || { ...HIDDEN_VIS };
-      if (!existing?.contentVisibility) update.contentVisibility = d.contentVisibility || { ...HIDDEN_VIS };
-      agendar(ref, update, existing);
+      const extras = {};
+      if (!existing?.visibility)        extras.visibility        = d.visibility        || { ...HIDDEN_VIS };
+      if (!existing?.contentVisibility) extras.contentVisibility = d.contentVisibility || { ...HIDDEN_VIS };
+      agendar(ref, update, existing, extras);
     });
 
     itms.forEach(i => {
@@ -1409,8 +1416,31 @@ async function syncCampaignContent() {
         secretsList: mergeSecretsList(i.secretsList, existing),
       };
       if (i.imageUrl) update.imageUrl = i.imageUrl;
-      if (!existing?.visibility) update.visibility = i.visibility || { ...HIDDEN_VIS };
-      agendar(ref, update, existing);
+      const extras = existing?.visibility ? null : { visibility: i.visibility || { ...HIDDEN_VIS } };
+      agendar(ref, update, existing, extras);
+    });
+
+    // Relações não têm id no arquivo — as que vieram do seed ganharam id
+    // aleatório no Firestore. Casa pelo trio origem+destino+rótulo e, quando
+    // não existe, cria com um id derivado do próprio trio, para que rodar de
+    // novo não duplique. Nunca apaga: laços criados pelos jogadores ficam.
+    const chaveRel = r => `${r.sourceId}__${r.label}__${r.targetId}`;
+    const idDeRel  = r => chaveRel(r)
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .toLowerCase().replace(/[^a-z0-9_]+/g, '-').replace(/^-|-$/g, '').slice(0, 120);
+
+    rels.forEach(r => {
+      const existing = (STATE.data.relations || []).find(x => chaveRel(x) === chaveRel(r));
+      const id  = existing?.id || idDeRel(r);
+      const ref = doc(db, base, 'relations', id);
+      const update = {
+        sourceId: r.sourceId, sourceType: r.sourceType,
+        targetId: r.targetId, targetType: r.targetType,
+        label: r.label, type: r.type || 'historical',
+        secret: !!r.secret, description: r.description || '',
+      };
+      const extras = existing?.visibility ? null : { visibility: r.visibility || { ...HIDDEN_VIS } };
+      agendar(ref, update, existing, extras);
     });
 
     await batch.commit();

@@ -4,7 +4,8 @@
   "type": "module",
   "description": "Site da campanha Mares e Marés — utilitários de linha de comando",
   "scripts": {
-    "pull": "node scripts/pull.mjs"
+    "pull": "node scripts/pull.mjs",
+    "test:sync": "node scripts/sync-test.mjs"
   },
   "dependencies": {
     "firebase": "^10.12.0"

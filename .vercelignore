@@ -24,6 +24,7 @@ package.json
 package-lock.json
 scripts/pull.mjs
 scripts/campaign-md.mjs
+scripts/sync-test.mjs
 
 # Ruído
 node_modules/
