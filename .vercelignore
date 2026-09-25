@@ -1,0 +1,29 @@
+# O que NÃO pode ser publicado na Vercel.
+#
+# Espelha a lista `hosting.ignore` do firebase.json. Sem isto, a Vercel serve
+# o repositório inteiro — inclusive os segredos do Mestre em texto puro.
+#
+# Ao mexer aqui, mexa também no firebase.json: os dois deploys servem o
+# mesmo site e precisam esconder as mesmas coisas.
+
+# Segredos do Mestre — os JSONs trazem secrets/secretsList em texto puro e
+# os .md trazem a campanha inteira com spoilers
+data/
+CAMPAIGN.md
+ROTEIRO.md
+memory/
+
+# Configuração e ferramentas de linha de comando (não pertencem ao site)
+firebase.json
+firestore.rules
+storage.rules
+.firebaserc
+.github/
+package.json
+package-lock.json
+scripts/pull.mjs
+scripts/campaign-md.mjs
+
+# Ruído
+node_modules/
+*.log
