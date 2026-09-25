@@ -1,43 +1,17 @@
 {
-  "hosting": {
-    "public": ".",
-    "ignore": [
-      "firebase.json",
-      "firestore.rules",
-      "storage.rules",
-      "**/.*",
-      ".firebaserc",
-      ".git/**",
-      ".github/**",
-      "node_modules/**",
-      "**/*.log",
-      "package.json",
-      "package-lock.json",
-      "scripts/pull.mjs",
-      "scripts/campaign-md.mjs",
-      "CAMPAIGN.md",
-      "ROTEIRO.md",
-      "memory/**",
-      "data/**"
-    ],
-    "headers": [
-      {
-        "source": "**/*.@(js|mjs)",
-        "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
-      },
-      {
-        "source": "**/*.@(css|html)",
-        "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
-      },
-      {
-        "source": "assets/**",
-        "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
-      }
-    ],
-    "rewrites": [
-      { "source": "**", "destination": "/index.html" }
-    ]
-  },
+  "_comentario": [
+    "O site é publicado na Vercel (mares-e-mares.vercel.app), conectada ao",
+    "GitHub: todo push na main reconstrói. O que NÃO pode ir ao ar está em",
+    ".vercelignore — lista única, para não repetir o descompasso que deixou",
+    "os segredos do Mestre públicos.",
+    "",
+    "Este arquivo existe só para as regras do Firestore. O Firebase segue",
+    "sendo o banco (Firestore) e a autenticação; o Hosting dele foi",
+    "abandonado e a configuração removida para ninguém republicar sem querer.",
+    "",
+    "Publicar as regras:  npx firebase-tools login && npx firebase-tools deploy --only firestore:rules",
+    "(ou colar firestore.rules no console: Firestore Database -> Regras)"
+  ],
   "firestore": {
     "rules": "firestore.rules"
   },

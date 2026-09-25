@@ -20,6 +20,13 @@ Site de campanha D&D 5e, 100% estático (HTML/CSS/JS vanilla + D3.js CDN + Fireb
 - `/data`: `characters.json` (18) · `locations.json` (10) · `events.json` (3) · `factions.json` (6) · `relations.json` (71) · `documents.json` (14) · `items.json` (vazio, mas ligado ao pipeline)
 - `curiosities.json` fica na **raiz** — é o único JSON lido em runtime por todos os usuários, por isso é publicado.
 
+## Onde o site mora (set/2026)
+O site oficial é **mares-e-mares.vercel.app** (projeto Vercel `mestreapp`, conectado ao GitHub: todo push na main reconstrói). O Firebase continua sendo **só banco (Firestore) e autenticação** — o Hosting dele foi abandonado, a config de hosting saiu do `firebase.json` e o workflow do GitHub Actions foi removido.
+
+**A lista do que não pode ir ao ar é única: `.vercelignore`.** Manter duas listas (firebase.json + Vercel) falhou: a Vercel não lia a do Firebase e serviu `CAMPAIGN.md`, `data/*.json`, `ROTEIRO.md` e `memory/` publicamente, sem login. Ao adicionar qualquer arquivo com segredo, adicione lá.
+
+Regras do Firestore não têm deploy automático (a service account não tem o papel Firebase Rules Admin — 403). Publicar à mão: colar `firestore.rules` no console, ou `npx firebase-tools login && npx firebase-tools deploy --only firestore:rules`.
+
 ## Fluxo de dados — o ponto que mais confunde
 `/data/**` fica **fora do deploy** (`firebase.json` → `ignore`) porque os JSONs carregam `secrets`/`secretsList` em texto puro; publicá-los furaria as regras do Firestore. Como o rewrite `**` devolve o `index.html` para esses caminhos, `seedCampaign()` e `syncCampaignContent()` **só funcionam rodando o repositório localmente** (`npx serve .`). O `app.js` tem `fetchCampaignJson()` + `DATA_LOCAL_ONLY_MSG` para explicar isso, e o botão "Sincronizar Dados" fica oculto fora do localhost.
 
