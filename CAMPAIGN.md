@@ -134,7 +134,7 @@ A Casa Varek não é o mesmo que o Domínio de Velmarch — é mais antiga, mais
 <!-- AUTO:faction:familia-talion -->
 ### 2.4 Família Talion
 
-**Tipo:** Colônia élfica secreta
+**Tipo:** Família insular de Reva
 **Sede:** Ilha de Reva
 **Liderança:** Fern Talion (prática) / Frieren Talion (origem)
 
@@ -173,11 +173,13 @@ A frota mais temida de Pelágos. Dez a doze navios sob comando direto de Gangpla
 <!-- AUTO:faction:corte-cortesas -->
 ### A Corte das Cortesãs
 
-**Tipo:** Rede de inteligência / Assassinas de aluguel
+**Tipo:** Rede de influência ligada a Marvosa
 
 #### Descrição
 
-A Corte das Cortesãs não existe oficialmente. Não tem sede, não tem estandarte, não tem nome gravado em nenhum documento. O que existe é Gloria Vittar — e a rede de mulheres que ela treinou, posicionou e mantém espalhadas pelos principais portos de Pelágos. Cada uma delas ocupa um papel legítimo: cortesãs, acompanhantes, dançarinas, enfermeiras, criadas em casas ricas. Cada uma delas envia informação a Marvosa. E quando necessário, cada uma delas age. A morte de Tulo Bresh em Kaldera é o trabalho da Corte — não ordenada por Gloria, mas executada por iniciativa de campo. O que acontece quando uma das suas age sem ordem é o único tipo de problema que Gloria Vittar não consegue resolver com elegância.
+A Corte das Cortesãs não existe oficialmente. Não tem sede, não tem estandarte, não tem nome gravado em nenhum documento. O que existe é Gloria Vittar — e a rede de mulheres que ela treinou, posicionou e mantém espalhadas pelos principais portos de Pelágos. Cada uma delas ocupa um papel legítimo: cortesãs, acompanhantes, dançarinas, enfermeiras, criadas em casas ricas.
+
+O que fazem além disso é assunto de boato de porto, e os boatos não combinam entre si. A única coisa em que todos concordam é que contrariar Marvosa costuma sair caro de um jeito que ninguém consegue provar.
 
 -----
 <!-- /AUTO:faction:corte-cortesas -->
@@ -403,7 +405,7 @@ Himmel explicou tudo antes de partir. Frieren sabe sobre O Peso, sabe o que acon
 <!-- AUTO:character:fern-talion -->
 #### FERN TALION
 
-**Papel:** Filha de Frieren / Administradora de Reva
+**Papel:** Administradora de Reva
 **Status:** Viva
 **Raça:** Elfa (aparência humana em Reva)
 **Idade:** Muito velha — nasceu logo após a Maré Alta
@@ -415,7 +417,7 @@ Uma mulher de meia-idade aparente que cuida dos acordos comerciais de Reva e das
 
 ##### Personalidade
 
-Carrega o peso do segredo com a serenidade de quem já teve tempo demais para se acostumar. Não odeia os elfos que causaram tudo — nasceu depois. Mas entende que o ódio de Pelágos não distingue culpados de inocentes.
+Discreta por hábito e por necessidade. Cordial com forasteiros, precisa nos acordos, econômica no que conta sobre a própria família. Entende, sem precisar dizer, que em Pelágos há assuntos que não se discutem com quem chega de barco.
 
 ##### Segredos
 
@@ -458,7 +460,7 @@ Pescadores, agricultores, comerciantes locais. Envelhecem mais devagar do que de
 <!-- AUTO:character:selavin-doss -->
 #### SELAVIN DOSS
 
-**Papel:** Magista Élfico / Arquiteto da Grande Guerra
+**Papel:** Magista da língua alta — nome preservado só em registros não censurados
 **Status:** Desaparecido
 **Raça:** Élfico
 **Idade:** Desconhecida (morreu/fundiu-se durante a Grande Guerra)
@@ -479,16 +481,18 @@ Se o selo quebrar, o Thurvael não emergirá como força amorfa. Emergirá como 
 
 ##### Descrição Pública
 
-O magista élfico mais brilhante de sua geração. Liderou a descoberta e a invocação do ser que o povo chamaria de O Peso — acreditando que uma força primordial poderia ser domesticada como vantagem definitiva dos elfos. Não era malicioso. Era genial demais para imaginar que poderia estar errado. Desapareceu no momento em que Himmel completava o ritual de selamento. Nunca encontraram o corpo.
+O magista mais brilhante de sua geração, segundo os poucos fragmentos que escaparam da censura de Velmarch. Desapareceu no fim da Grande Guerra e nunca encontraram o corpo.
+
+Fora das ilhas controladas pelo Domínio, o nome ainda aparece em registros que os arquivistas copiam sem entender — sempre associado ao período em que a Guerra deixou de ser uma guerra entre povos e virou outra coisa.
 
 ##### Personalidade
 
-Brilhante, calculista e absolutamente convicto de si mesmo. Não era malicioso — era genial demais para imaginar que poderia estar errado. Disse a Vaelindra, numa conversa que ela nunca esqueceu: 'Não é um ser. É uma força. As forças podem ser dirigidas.'
+Brilhante, calculista e absolutamente convicto de si mesmo. Não era malicioso — era genial demais para imaginar que poderia estar errado.
 
 ##### Segredos
 
 **🔒 Camada 1** — *Selavin Doss liderou a invocação*
-O nome do magista responsável sobreviveu no Lamento de Galadriel Cass. Era o arquiteto intelectual da invocação — convenceu os outros magistas de que o Thurvael poderia ser controlado. A responsabilidade moral da Grande Guerra se concentra nele.
+O nome do magista responsável sobreviveu no Lamento de Galadriel Cass. Era o arquiteto intelectual da invocação — convenceu os outros magistas de que o Thurvael poderia ser controlado. A responsabilidade moral da Grande Guerra se concentra nele. Disse a Galadriel Cass, numa conversa que ela nunca esqueceu: "Não é um ser. É uma força. As forças podem ser dirigidas."
 
 **🔒 Camada 2** — *Selavin não morreu — fundiu-se com o Peso no momento do selamento*
 No instante em que Himmel completava o ritual, Selavin cedeu voluntariamente seu corpo e consciência ao Thurvael como hospedeiro. O Peso foi selado, mas não está sozinho dentro do selo. Selavin e o Thurvael existem em simbiose forçada há séculos: o Peso fornece poder e permanência; Selavin fornece forma, vontade e intelecto. Ninguém sabe disso — nem Himmel sabia.
@@ -652,7 +656,7 @@ Não vende informação por dinheiro. Vende por favores, por influência, por pr
 <!-- AUTO:character:amelia -->
 #### AMELIA
 
-**Papel:** Capitã de extermínio da Corte das Cortesãs
+**Papel:** Cortesã da Corte das Cortesãs
 **Status:** Desaparecida desde a noite da morte de Tulo Bresh
 **Localização:** Desconhecida — vista pela última vez em Kaldera
 
@@ -662,17 +666,11 @@ Nos arquivos da Corrente ela não existe. Nos de Marvosa, menos ainda. O que exi
 
 Quem tenta descrevê-la não consegue duas vezes igual. Alta, dizem uns; de estatura comum, dizem outros. Cabelo escuro, ou castanho, ou preso demais para saber. As testemunhas de Kaldera só concordam no detalhe mais inútil possível: ela ouvia. Falava pouco. Ouvia com o corpo inteiro, como quem está trabalhando.
 
-Dentro da Corte das Cortesãs, Amelia não é informante. As cortesãs que coletam informação respondem a coordenadoras; as coordenadoras respondem a Marvosa. As que matam respondem a Amelia. Gloria Vittar, quando é obrigada a nomear esse braço, chama-o de 'a última ferramenta' — e Amelia é quem o segura.
-
-Desde a noite de Kaldera, ninguém da Corte a viu.
+Desde aquela noite, ninguém mais a viu em Kaldera.
 
 ##### Personalidade
 
-Paciente de um jeito que assusta quem entende o que está vendo. Amelia não improvisa e não se apressa: prepara, observa, e age uma vez só. Trata o próprio ofício como ofício — não sente prazer em matar e não sente culpa, o que a torna bem pior do que alguém que sentisse qualquer um dos dois.
-
-Com as mulheres sob seu comando é generosa e exigente na mesma medida; várias devem a vida a ela e todas sabem disso. Com Gloria Vittar era leal — não por afeto, mas porque Gloria era a única pessoa em Pelágos cujo julgamento ela respeitava mais do que o próprio.
-
-Foi por isso que a noite de Kaldera quebrou alguma coisa. Amelia agiu sem ordem pela primeira vez em vinte anos. E não voltou para explicar.
+Paciente de um jeito que assusta quem entende o que está vendo. Não improvisa e não se apressa: prepara, observa, e age uma vez só. Trata o próprio ofício como ofício, seja ele qual for.
 
 ##### Segredos
 
@@ -806,18 +804,24 @@ Quando a segunda forma caiu, as cinzas não se dispersaram no vento. Adensaram-s
 <!-- AUTO:character:orwin -->
 #### ORWIN — O Chapéu Largo
 
-**Papel:** Avô de Bizo / Inventor prisioneiro
-**Status:** Vivo — aprisionado por Vargan Drell
+**Papel:** Inventor do Ancoradouro de Latão
+**Status:** Desaparecido
 **Raça:** Gnomo
 **Localização:** Grande Forja, Ancoradouro de Latão
 
 ##### Descrição
 
-Orwin é o avô de Bizo, um inventor do Ancoradouro de Latão ligado à tradição familiar de pesquisas sobre química de pólvora. É ele o gnomo de chapéu largo representado na estátua que Velmarch tentou remover. Seu nome foi apagado da memória pública da praça, mas os artesãos mais velhos ainda sabem quem ela homenageia.
+Inventor do Ancoradouro de Latão, da família ligada à tradição de pesquisas sobre química de pólvora da ilha. Sumiu por volta da "adesão" ao Domínio, e o nome saiu das conversas junto com ele.
+
+No centro da praça principal há uma estátua de latão de um gnomo de chapéu largo, sem placa e sem nome. Velmarch tentou removê-la duas vezes e nas duas algo deu errado. Quem pergunta de quem é recebe, dos artesãos mais velhos, uma mudança de assunto.
 
 ##### Segredos
 
-**🔒 Camada 1** — *O inventor está preso*
+**🔒 Camada 1** — *A estátua sem nome é dele*
+O gnomo de chapéu largo da praça central é Orwin, avô de Bizo. Alguém a ergueu depois da "absorção", à noite, sem que A Corrente percebesse a tempo de impedir. Os artesãos mais velhos sabem de quem é e não dizem — não por medo do Domínio, mas porque dizer o nome em voz alta seria admitir que ele ainda importa.
+> **[NOTA DO MESTRE]** A invenção específica exigida de Orwin e sua relação exata com a produção fora dos registros ainda não foram definidas. Não assumir como estabelecidos um motor, canhão ou bomba. O Caderno de Proporções e sua tabela de conversão ausente permanecem ganchos existentes.
+
+**🔒 Camada 2** — *O inventor está preso*
 Orwin está vivo e é mantido prisioneiro por Vargan dentro da Grande Forja, obrigado a trabalhar para ele. Sua colaboração não é uma adesão voluntária ao Domínio de Velmarch. Vargan precisa do conhecimento do inventor e o mantém sob coerção para atender aos interesses do Domínio.
 
 > **[NOTA DO MESTRE]** A invenção específica exigida de Orwin e sua relação exata com a produção fora dos registros ainda não foram definidas. Não assumir como estabelecidos um motor, canhão ou bomba. O Caderno de Proporções e sua tabela de conversão ausente permanecem ganchos existentes.
@@ -837,7 +841,7 @@ Orwin está vivo e é mantido prisioneiro por Vargan dentro da Grande Forja, obr
 <!-- AUTO:character:vargan-drell -->
 #### VARGAN DRELL — A Forja Viva
 
-**Papel:** Ferromante antigo / Antagonista do Ancoradouro de Latão
+**Papel:** Ferromante a serviço de Velmarch / Supervisor da Grande Forja
 **Status:** Vivo — alma mantida pela Grande Forja
 **Natureza:** Ferromante que cedeu sua forma física e se fundiu à forja
 **Localização:** Grande Forja, Ancoradouro de Latão
@@ -845,7 +849,9 @@ Orwin está vivo e é mantido prisioneiro por Vargan dentro da Grande Forja, obr
 
 ##### Descrição Pública
 
-Vargan se apresenta por meio de um corpo físico que pode enfrentar os jogadores. Para quem desconhece sua natureza, parece um ferromante a serviço de Velmarch, responsável por manter a produção e os artesãos sob controle.
+Ferromante a serviço de Velmarch, responsável por manter a produção da Grande Forja e os artesãos do Ancoradouro sob controle. Fala pouco e resolve pouco pessoalmente: quase tudo passa por supervisores.
+
+Quem trabalha na ilha há tempo o bastante nota uma coisa sem dar importância: ninguém nunca o viu longe da fundição.
 
 ##### Segredos
 
@@ -1071,16 +1077,16 @@ Grak não é um soldado. É uma ferramenta. Tulo o comprou ainda jovem de um com
 <!-- AUTO:character:aelindra -->
 #### AELINDRA
 
-**Papel:** Sacerdotisa do Selamento
+**Papel:** Sacerdotisa da Ordem da Última Chama
 **Status:** Morto
 
 ##### Descrição Pública
 
-Sacerdotisa élfica que viveu durante a Grande Guerra e foi contemporânea de Himmel Varek. Pertencia à Ordem da Última Chama — uma ordem religiosa que tentou resistir à Fome por meios espirituais. Estava presente quando Himmel surgiu com o método de selamento e descreveu a reação de sua superiora ao ouvir o preço: chorar, ela que não chorava desde a Guerra dos Cinquenta Anos. Deixou escrito o único registro direto dos acontecimentos da Grande Guerra do ponto de vista de quem os viveu.
+Sacerdotisa da Ordem da Última Chama — ordem religiosa que tentou resistir à Fome por meios espirituais durante a Grande Guerra. Contemporânea de Himmel Varek. Deixou escrito o único registro direto dos acontecimentos daqueles anos do ponto de vista de quem os viveu, e é por esse registro, não por sua vida, que o nome sobreviveu.
 
 ##### Personalidade
 
-Sóbria, direta, sem ilusões. Escrevia para a posteridade, não para o conforto. Acreditava que a verdade mal contada era mais perigosa que o silêncio — e viveu a ironia de ter causado o maior desastre de sua vida ao tentar proteger alguém que não merecia proteção.
+Sóbria, direta, sem ilusões. Escrevia para a posteridade, não para o conforto. Acreditava que a verdade mal contada era mais perigosa que o silêncio.
 
 ##### Segredos
 
@@ -1107,11 +1113,16 @@ Aelindra escreveu o documento mais preciso sobre o ritual de selamento porque es
 
 ##### Descrição Pública
 
-Monge que passou três anos pesquisando arquivos de mosteiros costeiros em busca de registros sobre a Maré Alta. Concluiu, sozinho e sem apoio institucional, que a inundação não foi natural e que houve um ritual de sacrifício que selou algo sob o oceano. Encontrou referências fragmentadas ao 'rito do abraço' em três arquivos distintos. Terminou suas notas recomendando que não fossem divulgadas — e aparentemente foram seguidas suas instruções por gerações, até que o pergaminho fosse encontrado.
+Monge do Mosteiro da Costa Afogada que passou três anos pesquisando arquivos de mosteiros costeiros em busca de registros sobre a Maré Alta. Trabalhou sozinho e sem apoio institucional. Terminou suas notas recomendando que não fossem divulgadas — e as instruções foram seguidas por gerações, até que o pergaminho fosse encontrado.
 
 ##### Personalidade
 
 Curioso além do que a segurança recomendava. Sabia que estava pisando em terreno que o Domínio preferia manter lacrado, e escreveu assim mesmo. A nota final — 'não recomendo divulgar' — sugere que entendia as consequências.
+
+##### Segredos
+
+**🔒 Camada 1** — *O que ele concluiu*
+Que a inundação não foi natural e que houve um ritual de sacrifício que selou alguma coisa sob o oceano. Encontrou referências fragmentadas ao "rito do abraço" em três arquivos distintos. É essa conclusão que está nas Especulações de um Monge Costeiro — e é por isso que ele mesmo pediu que o texto não circulasse. Quem só ouviu falar do monge não sabe disso: precisa achar o documento.
 
 -----
 <!-- /AUTO:character:frei-assolvan -->
@@ -1124,11 +1135,16 @@ Curioso além do que a segurança recomendava. Sabia que estava pisando em terre
 
 ##### Descrição Pública
 
-Estudioso independente que passou anos coletando fragmentos de arquivos sobreviventes à Maré Alta para tentar reconstruir a história da Grande Guerra. Escreveu suas investigações em Kaldera, aproximadamente cinquenta anos após a inundação. Não chegou a descobrir a verdade completa — apenas que magistas élficos invocaram algo e que a guerra mudou de natureza quando isso aconteceu. Terminou suas notas com a frase: 'Aguardo encontrar mais registros. Temo que não existam.'
+Estudioso independente que passou anos coletando fragmentos de arquivos sobreviventes à Maré Alta para tentar reconstruir a história da Grande Guerra. Escreveu suas investigações em Kaldera, aproximadamente cinquenta anos após a inundação. Nunca chegou onde queria chegar: terminou as notas com a frase "Aguardo encontrar mais registros. Temo que não existam."
 
 ##### Personalidade
 
 Meticuloso e honesto intelectualmente — preferia dizer que não sabia a fingir certeza. Trabalhava sozinho, sem vínculos com nenhuma facção, o que lhe dava acesso a arquivos que pesquisadores ligados ao Domínio não consultariam.
+
+##### Segredos
+
+**🔒 Camada 1** — *Até onde ele chegou*
+Reconstruiu que magistas élficos invocaram alguma coisa e que a guerra mudou de natureza quando isso aconteceu. Não chegou à verdade completa, mas chegou longe o bastante para que o Domínio preferisse suas investigações esquecidas. Essa conclusão é o conteúdo das Investigações sobre a Guerra Antiga — quem não encontrou o documento não tem como saber.
 
 -----
 <!-- /AUTO:character:maren-oss -->
@@ -1136,12 +1152,14 @@ Meticuloso e honesto intelectualmente — preferia dizer que não sabia a fingir
 <!-- AUTO:character:o-peso -->
 #### O PESO
 
-**Papel:** Entidade Primordial / O Selado
-**Status:** Selado
+**Papel:** A Fome — o que veio durante a Grande Guerra
+**Status:** Desconhecido
 
 ##### Descrição Pública
 
-Anterior aos deuses conhecidos de Pelágos. O Peso é o nome dado pelos sobreviventes da Grande Guerra. Foi invocado pelos magistas elfos nas camadas mais profundas da realidade e recusou qualquer forma de controle. Não pensa em termos humanos. Não tem malícia consciente. Tem apenas um impulso primitivo de liberdade. Está selado a quilômetros de profundidade sob o oceano de Pelágos desde o dia do Abraço das Águas Eternas.
+Anterior aos deuses conhecidos de Pelágos. "O Peso" é o nome que os sobreviventes da Grande Guerra deram ao que avançava sobre o mundo. Não era um exército e não era um povo: regiões inteiras simplesmente deixavam de existir, e quem estava perto o bastante para ver não voltava para contar. Não pensa em termos humanos. Não tem malícia consciente. Tem apenas um impulso primitivo de liberdade.
+
+O que aconteceu com ele quando a Guerra terminou não está escrito em nenhum registro que Velmarch permita ler.
 
 ##### Personalidade
 
@@ -1169,11 +1187,16 @@ A água de Pelágos não é água comum. É consagrada pelo sacrifício voluntá
 
 ##### Descrição Pública
 
-Arquivista de Kaldera que, quarenta e três anos após as perseguições, tentou documentar a Caça aos Elfos com distância histórica e moral. Foi o primeiro a registrar formalmente a distinção entre magistas e elfos comuns, e o primeiro a encontrar e preservar a nota anônima de um sobrevivente élfico: 'Nós também não sabíamos. Fomos os últimos a saber. E os primeiros a pagar.' Seu pergaminho foi arquivado e praticamente esquecido.
+Arquivista de Kaldera que, quarenta e três anos após as perseguições, tentou documentar a Caça aos Elfos com distância histórica e moral — coisa que ninguém em Kaldera tinha tentado antes e quase ninguém tentou depois. Seu pergaminho foi arquivado e praticamente esquecido.
 
 ##### Personalidade
 
 Honesto ao ponto do desconforto. Fazia perguntas morais que os arquivos não respondiam e registrava isso sem pudor. Em Kaldera, sob controle de Velmarch, esse tipo de honestidade era mais seguro em forma de pergaminho do que em forma de conversa.
+
+##### Segredos
+
+**🔒 Camada 1** — *O que o pergaminho dele registra*
+Foi o primeiro a distinguir formalmente magistas de elfos comuns — distinção que implica que houve responsáveis e que a maioria dos perseguidos não estava entre eles. Foi também quem encontrou e preservou a nota anônima de um sobrevivente élfico: "Nós também não sabíamos. Fomos os últimos a saber. E os primeiros a pagar." É o miolo de Uma Investigação Histórica.
 
 -----
 <!-- /AUTO:character:telvis-oran -->
@@ -1218,16 +1241,18 @@ Thorne morreu em Aethon e a esposa continua no Ancoradouro de Latão, costurando
 <!-- AUTO:character:vaelindra-cass -->
 #### GALADRIEL CASS
 
-**Papel:** Última Anciã de Elarindë
+**Papel:** A Anciã das Ordens — figura de rumor em Ondra
 **Status:** Desaparecido
 
 ##### Descrição Pública
 
-Élfica de trezentos anos na época da Maré Alta. Conhecia Selavin Doss antes de ele realizar a invocação e tentou avisá-lo. Sobreviveu à Grande Guerra e à Caça aos Elfos escondida em uma caverna com quarenta e dois outros élficos — dos quais apenas doze sobreviveram à perseguição. Escreveu o Lamento de Galadriel Cass em couro que não apodrece, com tinta que não desbota, para que a verdade não se perdesse. Sua localização atual é desconhecida.
+Nome que sobrevive por causa de um documento: o Lamento de Galadriel Cass, escrito em couro que não apodrece, com tinta que não desbota, por alguém decidido a que aquilo não se perdesse.
+
+Em Ondra corre o rumor de uma anciã reclusa que sabe coisas que não cabem numa vida só. Os monges não confirmam e não desmentem — respondem que a ilha tem áreas que não se mostram a visitantes.
 
 ##### Personalidade
 
-Carrega trezentos anos de história com uma serenidade que não é paz — é o peso de quem já viu demais para se surpreender. Entende o ódio dos humanos. Entender não significa aceitar.
+Carrega a própria história com uma serenidade que não é paz — é o peso de quem já viu demais para se surpreender. Entende o ódio dos humanos. Entender não significa aceitar.
 
 ##### Segredos
 
@@ -1236,6 +1261,9 @@ Com trezentos anos na época da Maré Alta, e sendo élfica, pode ter vivido mai
 
 **🔒 Camada 2** — *Vaelindra sabe onde outros elfos sobreviventes estão*
 Mencionou seis sobreviventes do seu grupo ainda vivos. Conhece esconderijos, rotas e artifícios usados pelos elfos remanescentes. Seria um ativo inestimável — ou um alvo, dependendo de quem pergunta.
+
+**🔒 Camada 3** — *Quem ela é de fato*
+Élfica, tinha trezentos anos na época da Maré Alta. Conhecia Selavin Doss antes da invocação e tentou dissuadi-lo — falhou. Sobreviveu à Grande Guerra e à Caça escondida numa caverna com outros quarenta e dois élficos, dos quais apenas doze chegaram ao fim da perseguição. Escreveu o Lamento para que a verdade não dependesse da memória de ninguém.
 
 -----
 <!-- /AUTO:character:vaelindra-cass -->
@@ -1356,7 +1384,7 @@ Tulo Bresh frequenta Marvosa regularmente e seus segredos estão todos documenta
 <!-- AUTO:location:reva -->
 ### 4.4 REVA — A Ilha dos Talion
 
-**Tipo:** Ilha pequena / Colônia élfica secreta
+**Tipo:** Ilha pequena / Comunidade agrícola e mineradora
 **Controle:** Família Talion — Fern Talion na prática
 **Tom:** Tranquila, humilde, agrícola
 
@@ -1364,7 +1392,7 @@ Tulo Bresh frequenta Marvosa regularmente e seus segredos estão todos documenta
 
 Uma ilha pequena, tranquila, de gente simples que cultiva a terra e troca minérios por grãos com navios que passam sem nunca ancorar por muito tempo. Nenhum viajante fica. Nenhum oficial d'A Corrente tem razão para inspecionar. Reva não causa problemas.
 
-Aparentemente, não há nada de especial em Reva. É exatamente o que parece ser — e isso é intencional. Planificado por Himmel há séculos, mantido por Fern com cuidado diário.
+Aparentemente, não há nada de especial em Reva. É exatamente o que parece ser.
 
 #### O Cristal
 
@@ -1471,7 +1499,7 @@ O nome 'Cid Maré, navegador de Aethon' consta nos registros portuários do Dom�
 <!-- AUTO:location:ondra -->
 ### 4.7 ONDRA — A Cidade Que Se Esqueceu de Si Mesma
 
-**Tipo:** Ilha religiosa / Refúgio élfico secreto
+**Tipo:** Ilha religiosa / Comunidade monástica reclusa
 **Controle:** Ordens religiosas locais — nominalmente sob Velmarch, na prática autônoma
 **Tom:** Reverente e fechada — uma ilha que respira história e desconfia de estranhos. Quem chega sem recomendação encontra hospitalidade educada e portas que não abrem.
 
@@ -1481,7 +1509,7 @@ Ondra é uma ilha de pedra escura e névoa permanente. Não tem os portos movime
 
 A comunidade religiosa vive em torno do Templo das Marés, uma estrutura de pedra negra construída com blocos recuperados do fundo do oceano. Os monges que mantêm o templo são conhecidos por sua longevidade incomum e sua recusa em aceitar aprendizes que não passem por um período de avaliação que pode durar meses.
 
-O que os visitantes ocasionais não percebem: a ilha tem mais habitantes do que os que aparecem no porto. Nos corredores mais internos do templo e nas Celas dos Penitentes vivem vinte e três elfos — o que restou do grupo de Galadriel Cass após décadas de perseguição. Eles aparecem ao público apenas encapuzados como 'penitentes em retiro espiritual prolongado' e, em troca da proteção das ordens, contribuíram com séculos de conhecimento histórico para os Arquivos. Os textos que os monges leem como poesia espiritual são memória élfica literal.
+O que os visitantes ocasionais não percebem é simples de enunciar e difícil de verificar: a ilha tem mais habitantes do que os que aparecem no porto.
 
 #### O Segredo de Ondra
 
@@ -1635,9 +1663,7 @@ Parte das fundações emergidas do pré-dilúvio tem inscrições em língua arc
 
 #### Descrição
 
-A Grande Guerra não começou como uma guerra entre povos — foi uma crise de origem sobrenatural que consumiu toda estrutura política e militar existente. Os maiores magistas elfos da era antiga descobriram, nas camadas mais profundas da realidade, a existência de O Peso. Acreditaram que poderiam invocá-lo, domesticá-lo, usá-lo como ferramenta para consolidar o domínio élfico definitivo.
-
-O que invocaram não obedeceu. Simplesmente começou a consumir.
+A Grande Guerra não começou como uma guerra entre povos — foi uma crise de origem sobrenatural que consumiu toda estrutura política e militar existente. Nenhum registro público explica o que a iniciou.
 
 O que avançava não era um exército. Não tomava territórios nem exigia rendição. Regiões inteiras desapareciam dos mapas não porque fossem conquistadas, mas porque paravam de ser. A resposta das civilizações foi primeiro militar, depois diplomática, depois desesperada. Entre 60% e 80% da população mundial foi dizimada. Cidades inteiras pararam de existir.
 
@@ -1687,11 +1713,11 @@ O nome original completo — O Abraço das Águas Eternas — e seu significado 
 
 #### Descrição
 
-O evento que dividiu a história de Pelágos em antes e depois. Conhecido popularmente como A Maré Alta — o nome poético que Himmel escolheu foi gradualmente apagado pela oralidade até virar uma força da natureza sem autor, sem intenção, sem amor.
+O evento que dividiu a história de Pelágos em antes e depois. Conhecido popularmente como A Maré Alta.
 
-Himmel realizou o ritual no pico mais alto do continente — hoje a ilha de Velmyr. Usou sua própria vida como catalisador. O sacrifício precisava ser voluntário e partir de alguém que amasse o mundo o suficiente para destruí-lo. As águas subiram em sete dias. Cidades inteiras afundaram. Civilizações viraram lendas. Pelágos nasceu dos fragmentos do que sobrou.
+As águas subiram em sete dias. Cidades inteiras afundaram, civilizações viraram lendas, e Pelágos nasceu dos fragmentos do que sobrou. Nenhum registro que Velmarch permita ler explica por quê.
 
-O nome original — O Abraço das Águas Eternas — foi gradualmente apagado: virou O Grande Abraço nos tomos acadêmicos, O Grande Alagamento na tradição oral, e finalmente A Maré Alta no uso popular. Sem autor, sem intenção, sem amor. Uma força da natureza com nome de previsão do tempo.
+O nome mudou com o tempo — O Grande Abraço nos tomos acadêmicos, O Grande Alagamento na tradição oral, e finalmente A Maré Alta no uso popular. Sem autor, sem intenção, sem amor. Uma força da natureza com nome de previsão do tempo.
 
 -----
 <!-- /AUTO:event:abraco-aguas-eternas -->

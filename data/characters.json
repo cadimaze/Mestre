@@ -1,7 +1,7 @@
 [
   {
-    "role": "Sacerdotisa do Selamento",
-    "personality": "Sóbria, direta, sem ilusões. Escrevia para a posteridade, não para o conforto. Acreditava que a verdade mal contada era mais perigosa que o silêncio — e viveu a ironia de ter causado o maior desastre de sua vida ao tentar proteger alguém que não merecia proteção.",
+    "role": "Sacerdotisa da Ordem da Última Chama",
+    "personality": "Sóbria, direta, sem ilusões. Escrevia para a posteridade, não para o conforto. Acreditava que a verdade mal contada era mais perigosa que o silêncio.",
     "secretsList": [
       {
         "text": "Camada 1 — Aelindra era élfica e fazia parte do círculo de selamento: Não era uma observadora — era uma das sacerdotisas ativamente envolvidas no esforço de selar O Peso. Conhecia o plano de Himmel por dentro, incluindo o preço que ele estava disposto a pagar.",
@@ -43,7 +43,7 @@
     "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781715514/copmduolicv8xn3py5d3.jpg",
     "name": "Aelindra",
     "faction": null,
-    "description": "Sacerdotisa élfica que viveu durante a Grande Guerra e foi contemporânea de Himmel Varek. Pertencia à Ordem da Última Chama — uma ordem religiosa que tentou resistir à Fome por meios espirituais. Estava presente quando Himmel surgiu com o método de selamento e descreveu a reação de sua superiora ao ouvir o preço: chorar, ela que não chorava desde a Guerra dos Cinquenta Anos. Deixou escrito o único registro direto dos acontecimentos da Grande Guerra do ponto de vista de quem os viveu.",
+    "description": "Sacerdotisa da Ordem da Última Chama — ordem religiosa que tentou resistir à Fome por meios espirituais durante a Grande Guerra. Contemporânea de Himmel Varek. Deixou escrito o único registro direto dos acontecimentos daqueles anos do ponto de vista de quem os viveu, e é por esse registro, não por sua vida, que o nome sobreviveu.",
     "status": "Morto",
     "id": "aelindra"
   },
@@ -135,7 +135,7 @@
   {
     "id": "amelia",
     "name": "Amelia",
-    "role": "Capitã de extermínio da Corte das Cortesãs",
+    "role": "Cortesã da Corte das Cortesãs",
     "status": "Desaparecida",
     "faction": "corte-cortesas",
     "imageUrl": "",
@@ -143,8 +143,8 @@
       "kaldera"
     ],
     "events": [],
-    "description": "Nos arquivos da Corrente ela não existe. Nos de Marvosa, menos ainda. O que existe é uma mulher que esteve no escritório do Governador Tulo Bresh na noite em que ele morreu — que serviu a bebida, que riu na hora certa, e que saiu pela porta lateral enquanto um orc de duzentos quilos ocupava a atenção de todos na sala.\n\nQuem tenta descrevê-la não consegue duas vezes igual. Alta, dizem uns; de estatura comum, dizem outros. Cabelo escuro, ou castanho, ou preso demais para saber. As testemunhas de Kaldera só concordam no detalhe mais inútil possível: ela ouvia. Falava pouco. Ouvia com o corpo inteiro, como quem está trabalhando.\n\nDentro da Corte das Cortesãs, Amelia não é informante. As cortesãs que coletam informação respondem a coordenadoras; as coordenadoras respondem a Marvosa. As que matam respondem a Amelia. Gloria Vittar, quando é obrigada a nomear esse braço, chama-o de 'a última ferramenta' — e Amelia é quem o segura.\n\nDesde a noite de Kaldera, ninguém da Corte a viu.",
-    "personality": "Paciente de um jeito que assusta quem entende o que está vendo. Amelia não improvisa e não se apressa: prepara, observa, e age uma vez só. Trata o próprio ofício como ofício — não sente prazer em matar e não sente culpa, o que a torna bem pior do que alguém que sentisse qualquer um dos dois.\n\nCom as mulheres sob seu comando é generosa e exigente na mesma medida; várias devem a vida a ela e todas sabem disso. Com Gloria Vittar era leal — não por afeto, mas porque Gloria era a única pessoa em Pelágos cujo julgamento ela respeitava mais do que o próprio.\n\nFoi por isso que a noite de Kaldera quebrou alguma coisa. Amelia agiu sem ordem pela primeira vez em vinte anos. E não voltou para explicar.",
+    "description": "Nos arquivos da Corrente ela não existe. Nos de Marvosa, menos ainda. O que existe é uma mulher que esteve no escritório do Governador Tulo Bresh na noite em que ele morreu — que serviu a bebida, que riu na hora certa, e que saiu pela porta lateral enquanto um orc de duzentos quilos ocupava a atenção de todos na sala.\n\nQuem tenta descrevê-la não consegue duas vezes igual. Alta, dizem uns; de estatura comum, dizem outros. Cabelo escuro, ou castanho, ou preso demais para saber. As testemunhas de Kaldera só concordam no detalhe mais inútil possível: ela ouvia. Falava pouco. Ouvia com o corpo inteiro, como quem está trabalhando.\n\nDesde aquela noite, ninguém mais a viu em Kaldera.",
+    "personality": "Paciente de um jeito que assusta quem entende o que está vendo. Não improvisa e não se apressa: prepara, observa, e age uma vez só. Trata o próprio ofício como ofício, seja ele qual for.",
     "secretsList": [
       {
         "id": "amelia-s1",
@@ -248,7 +248,7 @@
     }
   },
   {
-    "role": "Filha de Frieren / Administradora de Reva",
+    "role": "Administradora de Reva",
     "secretsVisibility": {
       "playerIds": [],
       "mode": "hidden"
@@ -261,7 +261,7 @@
     "name": "Fern Talion",
     "image": "fern-talion.jpg",
     "status": "Vivo",
-    "personality": "Carrega o peso do segredo com a serenidade de quem já teve tempo demais para se acostumar. Não odeia os elfos que causaram tudo — nasceu depois. Mas entende que o ódio de Pelágos não distingue culpados de inocentes.",
+    "personality": "Discreta por hábito e por necessidade. Cordial com forasteiros, precisa nos acordos, econômica no que conta sobre a própria família. Entende, sem precisar dizer, que em Pelágos há assuntos que não se discutem com quem chega de barco.",
     "secretsList": [
       {
         "visibility": {
@@ -322,9 +322,18 @@
   {
     "name": "Frei Assolvan",
     "status": "Morto",
-    "description": "Monge que passou três anos pesquisando arquivos de mosteiros costeiros em busca de registros sobre a Maré Alta. Concluiu, sozinho e sem apoio institucional, que a inundação não foi natural e que houve um ritual de sacrifício que selou algo sob o oceano. Encontrou referências fragmentadas ao 'rito do abraço' em três arquivos distintos. Terminou suas notas recomendando que não fossem divulgadas — e aparentemente foram seguidas suas instruções por gerações, até que o pergaminho fosse encontrado.",
+    "description": "Monge do Mosteiro da Costa Afogada que passou três anos pesquisando arquivos de mosteiros costeiros em busca de registros sobre a Maré Alta. Trabalhou sozinho e sem apoio institucional. Terminou suas notas recomendando que não fossem divulgadas — e as instruções foram seguidas por gerações, até que o pergaminho fosse encontrado.",
     "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781719879/w0ol5xsdfgaqhfttoust.jpg",
-    "secretsList": [],
+    "secretsList": [
+      {
+        "id": "assolvan-s1",
+        "text": "Camada 1 — O que ele concluiu: Que a inundação não foi natural e que houve um ritual de sacrifício que selou alguma coisa sob o oceano. Encontrou referências fragmentadas ao \"rito do abraço\" em três arquivos distintos. É essa conclusão que está nas Especulações de um Monge Costeiro — e é por isso que ele mesmo pediu que o texto não circulasse. Quem só ouviu falar do monge não sabe disso: precisa achar o documento.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      }
+    ],
     "faction": null,
     "role": "Monge do Mosteiro da Costa Afogada",
     "personality": "Curioso além do que a segurança recomendava. Sabia que estava pisando em terreno que o Domínio preferia manter lacrado, e escreveu assim mesmo. A nota final — 'não recomendo divulgar' — sugere que entendia as consequências.",
@@ -670,18 +679,27 @@
     "role": "Estudioso errante",
     "status": "Morto",
     "name": "Maren Krill",
-    "secretsList": [],
-    "description": "Estudioso independente que passou anos coletando fragmentos de arquivos sobreviventes à Maré Alta para tentar reconstruir a história da Grande Guerra. Escreveu suas investigações em Kaldera, aproximadamente cinquenta anos após a inundação. Não chegou a descobrir a verdade completa — apenas que magistas élficos invocaram algo e que a guerra mudou de natureza quando isso aconteceu. Terminou suas notas com a frase: 'Aguardo encontrar mais registros. Temo que não existam.'",
+    "secretsList": [
+      {
+        "id": "maren-s1",
+        "text": "Camada 1 — Até onde ele chegou: Reconstruiu que magistas élficos invocaram alguma coisa e que a guerra mudou de natureza quando isso aconteceu. Não chegou à verdade completa, mas chegou longe o bastante para que o Domínio preferisse suas investigações esquecidas. Essa conclusão é o conteúdo das Investigações sobre a Guerra Antiga — quem não encontrou o documento não tem como saber.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      }
+    ],
+    "description": "Estudioso independente que passou anos coletando fragmentos de arquivos sobreviventes à Maré Alta para tentar reconstruir a história da Grande Guerra. Escreveu suas investigações em Kaldera, aproximadamente cinquenta anos após a inundação. Nunca chegou onde queria chegar: terminou as notas com a frase \"Aguardo encontrar mais registros. Temo que não existam.\"",
     "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781719783/bzteg3m3mtoqpkx0bqje.jpg",
     "id": "maren-oss"
   },
   {
     "faction": null,
     "personality": "Não possui personalidade própria articulada — é uma presença, uma fome gravitacional. Não pensa em termos humanos. Não tem malícia consciente. Tem apenas um impulso primitivo de liberdade.",
-    "role": "Entidade Primordial / O Selado",
+    "role": "A Fome — o que veio durante a Grande Guerra",
     "name": "O Peso",
-    "status": "Selado",
-    "description": "Anterior aos deuses conhecidos de Pelágos. O Peso é o nome dado pelos sobreviventes da Grande Guerra. Foi invocado pelos magistas elfos nas camadas mais profundas da realidade e recusou qualquer forma de controle. Não pensa em termos humanos. Não tem malícia consciente. Tem apenas um impulso primitivo de liberdade. Está selado a quilômetros de profundidade sob o oceano de Pelágos desde o dia do Abraço das Águas Eternas.",
+    "status": "Desconhecido",
+    "description": "Anterior aos deuses conhecidos de Pelágos. \"O Peso\" é o nome que os sobreviventes da Grande Guerra deram ao que avançava sobre o mundo. Não era um exército e não era um povo: regiões inteiras simplesmente deixavam de existir, e quem estava perto o bastante para ver não voltava para contar. Não pensa em termos humanos. Não tem malícia consciente. Tem apenas um impulso primitivo de liberdade.\n\nO que aconteceu com ele quando a Guerra terminou não está escrito em nenhum registro que Velmarch permita ler.",
     "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781720608/eu13i3wsq8fne1bpgalo.jpg",
     "secretsList": [
       {
@@ -714,20 +732,28 @@
   {
     "id": "orwin",
     "name": "Orwin, o Chapéu Largo",
-    "role": "Avô de Bizo / Inventor prisioneiro",
-    "status": "Vivo",
+    "role": "Inventor do Ancoradouro de Latão",
+    "status": "Desaparecido",
     "faction": "",
     "imageUrl": "",
     "locations": [
       "ancoradouro-de-latao"
     ],
     "events": [],
-    "description": "Orwin é o avô de Bizo, um inventor do Ancoradouro de Latão ligado à tradição familiar de pesquisas sobre química de pólvora. É ele o gnomo de chapéu largo representado na estátua que Velmarch tentou remover. Seu nome foi apagado da memória pública da praça, mas os artesãos mais velhos ainda sabem quem ela homenageia.",
+    "description": "Inventor do Ancoradouro de Latão, da família ligada à tradição de pesquisas sobre química de pólvora da ilha. Sumiu por volta da \"adesão\" ao Domínio, e o nome saiu das conversas junto com ele.\n\nNo centro da praça principal há uma estátua de latão de um gnomo de chapéu largo, sem placa e sem nome. Velmarch tentou removê-la duas vezes e nas duas algo deu errado. Quem pergunta de quem é recebe, dos artesãos mais velhos, uma mudança de assunto.",
     "personality": "",
     "secretsList": [
       {
         "id": "orwin-s1",
-        "text": "Camada 1 — O inventor está preso: Orwin está vivo e é mantido prisioneiro por Vargan dentro da Grande Forja, obrigado a trabalhar para ele. Sua colaboração não é uma adesão voluntária ao Domínio de Velmarch. Vargan precisa do conhecimento do inventor e o mantém sob coerção para atender aos interesses do Domínio.\n\n> **[NOTA DO MESTRE]** A invenção específica exigida de Orwin e sua relação exata com a produção fora dos registros ainda não foram definidas. Não assumir como estabelecidos um motor, canhão ou bomba. O Caderno de Proporções e sua tabela de conversão ausente permanecem ganchos existentes.",
+        "text": "Camada 1 — A estátua sem nome é dele: O gnomo de chapéu largo da praça central é Orwin, avô de Bizo. Alguém a ergueu depois da \"absorção\", à noite, sem que A Corrente percebesse a tempo de impedir. Os artesãos mais velhos sabem de quem é e não dizem — não por medo do Domínio, mas porque dizer o nome em voz alta seria admitir que ele ainda importa.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      },
+      {
+        "id": "orwin-s2",
+        "text": "Camada 2 — O inventor está preso: Orwin está vivo e é mantido prisioneiro por Vargan dentro da Grande Forja, obrigado a trabalhar para ele. Sua colaboração não é uma adesão voluntária ao Domínio de Velmarch. Vargan precisa do conhecimento do inventor e o mantém sob coerção para atender aos interesses do Domínio.\n\n> **[NOTA DO MESTRE]** A invenção específica exigida de Orwin e sua relação exata com a produção fora dos registros ainda não foram definidas. Não assumir como estabelecidos um motor, canhão ou bomba. O Caderno de Proporções e sua tabela de conversão ausente permanecem ganchos existentes.",
         "visibility": {
           "mode": "hidden",
           "playerIds": []
@@ -742,14 +768,14 @@
   },
   {
     "faction": null,
-    "role": "Magista Élfico / Arquiteto da Grande Guerra",
-    "personality": "Brilhante, calculista e absolutamente convicto de si mesmo. Não era malicioso — era genial demais para imaginar que poderia estar errado. Disse a Vaelindra, numa conversa que ela nunca esqueceu: 'Não é um ser. É uma força. As forças podem ser dirigidas.'",
+    "role": "Magista da língua alta — nome preservado só em registros não censurados",
+    "personality": "Brilhante, calculista e absolutamente convicto de si mesmo. Não era malicioso — era genial demais para imaginar que poderia estar errado.",
     "name": "Selavin Doss",
     "status": "Desaparecido",
     "secretsList": [
       {
         "id": "selavin-s1",
-        "text": "Camada 1 — Selavin Doss liderou a invocação: O nome do magista responsável sobreviveu no Lamento de Galadriel Cass. Era o arquiteto intelectual da invocação — convenceu os outros magistas de que o Thurvael poderia ser controlado. A responsabilidade moral da Grande Guerra se concentra nele.",
+        "text": "Camada 1 — Selavin Doss liderou a invocação: O nome do magista responsável sobreviveu no Lamento de Galadriel Cass. Era o arquiteto intelectual da invocação — convenceu os outros magistas de que o Thurvael poderia ser controlado. A responsabilidade moral da Grande Guerra se concentra nele. Disse a Galadriel Cass, numa conversa que ela nunca esqueceu: \"Não é um ser. É uma força. As forças podem ser dirigidas.\"",
         "visibility": {
           "mode": "hidden",
           "playerIds": []
@@ -780,7 +806,7 @@
         "id": "selavin-s4"
       }
     ],
-    "description": "O magista élfico mais brilhante de sua geração. Liderou a descoberta e a invocação do ser que o povo chamaria de O Peso — acreditando que uma força primordial poderia ser domesticada como vantagem definitiva dos elfos. Não era malicioso. Era genial demais para imaginar que poderia estar errado. Desapareceu no momento em que Himmel completava o ritual de selamento. Nunca encontraram o corpo.",
+    "description": "O magista mais brilhante de sua geração, segundo os poucos fragmentos que escaparam da censura de Velmarch. Desapareceu no fim da Grande Guerra e nunca encontraram o corpo.\n\nFora das ilhas controladas pelo Domínio, o nome ainda aparece em registros que os arquivistas copiam sem entender — sempre associado ao período em que a Guerra deixou de ser uma guerra entre povos e virou outra coisa.",
     "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781715876/p249ahcmgpqiuscsziwk.jpg",
     "id": "selavin-doss"
   },
@@ -914,9 +940,18 @@
   {
     "name": "Telvis Oran",
     "status": "Morto",
-    "description": "Arquivista de Kaldera que, quarenta e três anos após as perseguições, tentou documentar a Caça aos Elfos com distância histórica e moral. Foi o primeiro a registrar formalmente a distinção entre magistas e elfos comuns, e o primeiro a encontrar e preservar a nota anônima de um sobrevivente élfico: 'Nós também não sabíamos. Fomos os últimos a saber. E os primeiros a pagar.' Seu pergaminho foi arquivado e praticamente esquecido.",
+    "description": "Arquivista de Kaldera que, quarenta e três anos após as perseguições, tentou documentar a Caça aos Elfos com distância histórica e moral — coisa que ninguém em Kaldera tinha tentado antes e quase ninguém tentou depois. Seu pergaminho foi arquivado e praticamente esquecido.",
     "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781715643/s3vijmtd43cjq3sdiopt.jpg",
-    "secretsList": [],
+    "secretsList": [
+      {
+        "id": "telvis-s1",
+        "text": "Camada 1 — O que o pergaminho dele registra: Foi o primeiro a distinguir formalmente magistas de elfos comuns — distinção que implica que houve responsáveis e que a maioria dos perseguidos não estava entre eles. Foi também quem encontrou e preservou a nota anônima de um sobrevivente élfico: \"Nós também não sabíamos. Fomos os últimos a saber. E os primeiros a pagar.\" É o miolo de Uma Investigação Histórica.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      }
+    ],
     "faction": null,
     "personality": "Honesto ao ponto do desconforto. Fazia perguntas morais que os arquivos não respondiam e registrava isso sem pudor. Em Kaldera, sob controle de Velmarch, esse tipo de honestidade era mais seguro em forma de pergaminho do que em forma de conversa.",
     "role": "Arquivista de Kaldera",
@@ -1032,12 +1067,12 @@
   },
   {
     "faction": null,
-    "role": "Última Anciã de Elarindë",
-    "personality": "Carrega trezentos anos de história com uma serenidade que não é paz — é o peso de quem já viu demais para se surpreender. Entende o ódio dos humanos. Entender não significa aceitar.",
+    "role": "A Anciã das Ordens — figura de rumor em Ondra",
+    "personality": "Carrega a própria história com uma serenidade que não é paz — é o peso de quem já viu demais para se surpreender. Entende o ódio dos humanos. Entender não significa aceitar.",
     "status": "Desaparecido",
     "name": "Galadriel Cass",
     "imageUrl": "https://res.cloudinary.com/dnvifwj08/image/upload/v1781715569/vnhmefqwr2haombtqm09.jpg",
-    "description": "Élfica de trezentos anos na época da Maré Alta. Conhecia Selavin Doss antes de ele realizar a invocação e tentou avisá-lo. Sobreviveu à Grande Guerra e à Caça aos Elfos escondida em uma caverna com quarenta e dois outros élficos — dos quais apenas doze sobreviveram à perseguição. Escreveu o Lamento de Galadriel Cass em couro que não apodrece, com tinta que não desbota, para que a verdade não se perdesse. Sua localização atual é desconhecida.",
+    "description": "Nome que sobrevive por causa de um documento: o Lamento de Galadriel Cass, escrito em couro que não apodrece, com tinta que não desbota, por alguém decidido a que aquilo não se perdesse.\n\nEm Ondra corre o rumor de uma anciã reclusa que sabe coisas que não cabem numa vida só. Os monges não confirmam e não desmentem — respondem que a ilha tem áreas que não se mostram a visitantes.",
     "secretsList": [
       {
         "visibility": {
@@ -1054,6 +1089,14 @@
           "playerIds": [],
           "mode": "hidden"
         }
+      },
+      {
+        "id": "vaelindra-s3",
+        "text": "Camada 3 — Quem ela é de fato: Élfica, tinha trezentos anos na época da Maré Alta. Conhecia Selavin Doss antes da invocação e tentou dissuadi-lo — falhou. Sobreviveu à Grande Guerra e à Caça escondida numa caverna com outros quarenta e dois élficos, dos quais apenas doze chegaram ao fim da perseguição. Escreveu o Lamento para que a verdade não dependesse da memória de ninguém.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
       }
     ],
     "id": "vaelindra-cass"
@@ -1061,7 +1104,7 @@
   {
     "id": "vargan-drell",
     "name": "Vargan Drell",
-    "role": "Ferromante antigo / Antagonista do Ancoradouro de Latão",
+    "role": "Ferromante a serviço de Velmarch / Supervisor da Grande Forja",
     "status": "Vivo",
     "faction": "velmarch",
     "imageUrl": "",
@@ -1069,7 +1112,7 @@
       "ancoradouro-de-latao"
     ],
     "events": [],
-    "description": "Vargan se apresenta por meio de um corpo físico que pode enfrentar os jogadores. Para quem desconhece sua natureza, parece um ferromante a serviço de Velmarch, responsável por manter a produção e os artesãos sob controle.",
+    "description": "Ferromante a serviço de Velmarch, responsável por manter a produção da Grande Forja e os artesãos do Ancoradouro sob controle. Fala pouco e resolve pouco pessoalmente: quase tudo passa por supervisores.\n\nQuem trabalha na ilha há tempo o bastante nota uma coisa sem dar importância: ninguém nunca o viu longe da fundição.",
     "personality": "",
     "secretsList": [
       {
