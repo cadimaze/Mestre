@@ -72,16 +72,9 @@ Raça extremamente rara e perseguida. A maioria das pessoas em Pelágos nunca vi
 **Sede:** Ilha de Velmyr
 **Governante:** Aldric Varek XIV
 
-**Tipo:** Potência imperial
-**Símbolo:** Âncora dourada sobre fundo azul-escuro
-**Sede:** Ilha de Velmyr
-**Governante:** Aldric Varek XIV
-
 #### Descrição
 
-O Domínio de Velmarch não se apresenta como um império conquistador — ele se apresenta como uma necessidade. Há séculos a maior potência de Pelágos expande sua influência de ilha em ilha, não pela força bruta, mas pela lógica implacável da ordem: rotas comerciais seguras, arbitragem de conflitos, erradicação da pirataria, moeda unificada.
-
-As ilhas não são invadidas — elas "aderem". Velmarch lembra de tudo que cada ilha deve, e cobra com juros.
+O Domínio de Velmarch não se apresenta como um império conquistador — ele se apresenta como uma necessidade. Há séculos a maior potência de Pelágos expande sua influência de ilha em ilha, não pela força bruta, mas pela lógica implacável da ordem: rotas comerciais seguras, arbitragem de conflitos, erradicação da pirataria, moeda unificada. As ilhas não são invadidas — elas 'aderem'. Velmarch lembra de tudo que cada ilha deve, e cobra com juros.
 
 #### Métodos
 
@@ -93,14 +86,6 @@ As ilhas não são invadidas — elas "aderem". Velmarch lembra de tudo que cada
 
 > **[SEGREDO DO MESTRE]** Velmarch foi fundada por Himmel Varek após a Maré Alta, originalmente como estrutura de organização dos sobreviventes. O poder acumulado ao longo de catorze gerações transformou uma organização de sobrevivência numa máquina imperial que o próprio fundador não reconheceria.
 
-##### Descrição Pública
-
-O Domínio de Velmarch não se apresenta como um império conquistador — ele se apresenta como uma necessidade. Há séculos a maior potência de Pelágos expande sua influência de ilha em ilha, não pela força bruta, mas pela lógica implacável da ordem: rotas comerciais seguras, arbitragem de conflitos, erradicação da pirataria, moeda unificada. As ilhas não são invadidas — elas 'aderem'. Velmarch lembra de tudo que cada ilha deve, e cobra com juros.
-
-##### Segredos
-
-SEGREDO DO MESTRE: Velmarch foi fundada por Himmel Varek após a Maré Alta, originalmente como estrutura de organização dos sobreviventes. O Domínio que seus descendentes construíram sobre esse sacrifício é algo que Himmel nunca planejou. O poder acumulado ao longo de catorze gerações transformou uma organização de sobrevivência numa máquina imperial que o próprio fundador não reconheceria.
-
 -----
 <!-- /AUTO:faction:velmarch -->
 
@@ -111,13 +96,9 @@ SEGREDO DO MESTRE: Velmarch foi fundada por Himmel Varek após a Maré Alta, ori
 **Uniforme:** Capas brancas com detalhes em dourado
 **Função oficial:** Patrulha de rotas, arbitragem de conflitos, combate à pirataria
 
-**Tipo:** Marinha imperial de Velmarch
-**Uniforme:** Capas brancas com detalhes em dourado
-**Função oficial:** Patrulha de rotas, arbitragem de conflitos, combate à pirataria
-
 #### Descrição
 
-A marinha do Domínio de Velmarch é chamada de A Corrente — e como uma corrente, ela flui para todo lugar e é impossível de segurar. Seus navios patrulham todas as rotas principais de Pelágos. São eles que cobram as taxas, que julgam os piratas, que escoltam os comboios de grãos. E são eles que fazem as perguntas quando alguém fala alto demais sobre a Casa Varek.
+A marinha do Domínio de Velmarch é chamada de A Corrente — e como uma corrente, ela flui para todo lugar e é impossível de segurar. Seus navios patrulham todas as rotas principais de Pelágos. A Corrente não é apenas uma força militar — é a face visível de Velmarch no cotidiano das ilhas. São eles que cobram as taxas, que julgam os piratas, que escoltam os comboios de grãos. Uniforme: capas brancas com detalhes em dourado.
 
 #### Funções Reais
 
@@ -127,16 +108,6 @@ A marinha do Domínio de Velmarch é chamada de A Corrente — e como uma corren
 - Fechamento de olhos para o tráfico élfico quando conveniente
 
 > **[SEGREDO DO MESTRE]** A Corrente recebeu ordem de não engajar o *Dead Pool* de Gangplank sem autorização direta de Velmyr — resultado das três tentativas fracassadas de interceptação. Oficialmente, Gangplank é classificado como "ameaça ativa sob monitoramento". Extraoficialmente, é um ativo de Aldric XIV.
-
-##### Descrição Pública
-
-A marinha do Domínio de Velmarch é chamada de A Corrente — e como uma corrente, ela flui para todo lugar e é impossível de segurar. Seus navios patrulham todas as rotas principais de Pelágos. A Corrente não é apenas uma força militar — é a face visível de Velmarch no cotidiano das ilhas. São eles que cobram as taxas, que julgam os piratas, que escoltam os comboios de grãos. Uniforme: capas brancas com detalhes em dourado.
-
-##### Segredos
-
-SEGREDO DO MESTRE: A Corrente proíbe oficialmente o tráfico élfico. Extraoficialmente, fecha os olhos quando o comprador é suficientemente rico. A vigilância de atividades políticas nas ilhas é sistematizada e vai além do que qualquer decreto oficial admite.
-
-A Corrente recebeu ordem de não engajar o Dead Pool de Gangplank sem autorização direta de Velmyr — resultado das três tentativas fracassadas de interceptação. Oficialmente, Gangplank é classificado como 'ameaça ativa sob monitoramento'. Extraoficialmente, é um ativo de Aldric XIV.
 
 -----
 <!-- /AUTO:faction:a-corrente -->
@@ -149,22 +120,13 @@ A Corrente recebeu ordem de não engajar o Dead Pool de Gangplank sem autorizaç
 **Sede:** Velmyr
 **Membros ativos:** Aldric XIV, Taliyah, Cade
 
-**Tipo:** Família governante / Dinastia imperial
-**Gerações:** 14
-**Sede:** Velmyr
-**Membros ativos:** Aldric XIV, Taliyah, Cade
-
 A família que governa Velmarch há quatorze gerações já ultrapassou a categoria de dinastia — é instituição, mito e religião. Seu fundador, Himmel Varek, é tratado como figura quase divina. Nos templos oficiais ele é chamado de O Fundador, sempre representado de costas, olhando para o horizonte. Ninguém pinta seu rosto.
 
 > **[SEGREDO DO MESTRE]** Nenhum membro vivo da Casa Varek conhece o conteúdo completo do tomo de Himmel. Sabem que existe, sabem que é importante, não sabem o que está escrito. Governam sobre um segredo que nem eles compreendem.
 
-##### Descrição Pública
+#### Descrição
 
 A Casa Varek não é o mesmo que o Domínio de Velmarch — é mais antiga, mais pessoal e mais mítica. É a linhagem que começa com Himmel Varek e chega a Aldric XIV. Cada geração carrega o nome como um peso e uma responsabilidade. A Casa Varek é a razão pela qual o Domínio existe, e é a razão pela qual o Domínio às vezes parece um peso em vez de um poder.
-
-##### Segredos
-
-SEGREDO DO MESTRE: A Câmara Selada no subsolo do Palácio de Velmyr contém o tomo que Himmel escreveu antes de realizar o ritual. O tomo descreve O Peso, o selo, o sacrifício — e o que está lá embaixo. Aldric XIV sabe que o tomo existe e que deve ser guardado. Não sabe o que está escrito nele. Nunca leu.
 
 -----
 <!-- /AUTO:faction:casa-varek -->
@@ -176,25 +138,13 @@ SEGREDO DO MESTRE: A Câmara Selada no subsolo do Palácio de Velmyr contém o t
 **Sede:** Ilha de Reva
 **Liderança:** Fern Talion (prática) / Frieren Talion (origem)
 
-**Tipo:** Colônia élfica secreta
-**Sede:** Ilha de Reva
-**Liderança:** Fern Talion (prática) / Frieren Talion (origem)
-
 A família Talion aparenta ser uma família humana simples de pescadores e agricultores numa ilha pequena. Na realidade, são todos elfos — a maioria sem saber — descendentes de Himmel Varek e Frieren Talion, protegidos por um cristal mágico que remove suas aparências élficas enquanto permanecem em Reva.
 
 > **[SEGREDO DO MESTRE — CRÍTICO]** Se o cristal for destruído, todos os elfos de Reva revelarão sua verdadeira aparência simultaneamente. Com qualquer navio nas proximidades, isso seria sentença de morte para a família inteira.
 
-##### Descrição Pública
+#### Descrição
 
 Uma família de pescadores e agricultores simples numa ilha pequena e tranquila. Ninguém questiona sua existência — Reva não causa problemas, não tem valor estratégico, e seus habitantes raramente saem. A Família Talion existe há gerações, trocando minério por grãos com navios de passagem.
-
-##### Segredos
-
-SEGREDO DO MESTRE — CRÍTICO: A Família Talion é inteiramente composta por elfos. A maioria dos membros não sabe disso, pois nascem e vivem em Reva, onde um cristal instalado por Himmel Varek remove as aparências élficas de todos os presentes.
-
-Quem sai da ilha e se afasta da costa percebe que algo muda no próprio rosto — orelhas que se alongam, olhos que ganham brilho. Nenhum que percebeu entendeu o que era. Os que perceberam, voltaram correndo e nunca falaram.
-
-Apenas Frieren e Fern sabem a verdade completa. O cristal é a única razão pela qual os Talion existem. Se for destruído, todos os elfos de Reva revelarão sua verdadeira aparência simultaneamente — uma sentença de morte se houver qualquer navio nas proximidades.
 
 -----
 <!-- /AUTO:faction:familia-talion -->
@@ -207,26 +157,13 @@ Apenas Frieren e Fern sabem a verdade completa. O cristal é a única razão pel
 **Navio capitânia:** *Dead Pool*
 **Território:** Rotas específicas de Pelágos — controladas com precisão territorial
 
-**Tipo:** Frota pirata
-**Líder:** Gangplank
-**Navio capitânia:** *Dead Pool*
-**Território:** Rotas específicas de Pelágos — controladas com precisão territorial
-
 A frota mais temida de Pelágos. Dez a doze navios sob comando direto de Gangplank, cada um com seu próprio capitão. Não tem nome oficial — em portos é chamada de *A Maré Negra*, sempre em voz baixa. Opera com lógica territorial precisa: não é pirataria aleatória, é administração paralela de rotas marítimas.
 
 > **[SEGREDO DO MESTRE]** A Maré Negra executa serviços secretos para Aldric XIV mediante pagamento. A relação é estritamente contratual — sem lealdade, sem ideologia. Se alguém pagasse mais pelo lado oposto, a conversa seria outra.
 
-##### Descrição Pública
+#### Descrição
 
 A frota mais temida de Pelágos. Dez a doze navios sob comando direto de Gangplank, cada um com seu próprio capitão, leal a Gangplank com o tipo de lealdade que também é medo. Não tem nome oficial — em portos é chamada de A Maré Negra, sempre em voz baixa. Opera com lógica territorial precisa: não é pirataria aleatória, é administração paralela de rotas marítimas. Nenhum navio passa sem sua ciência, nenhuma rota é usada sem sua permissão.
-
-##### Segredos
-
-SEGREDO DO MESTRE: A Maré Negra executa serviços secretos para Aldric XIV mediante pagamento. A relação é estritamente contratual — sem lealdade, sem ideologia. Se alguém pagasse mais pelo lado oposto, a conversa seria outra.
-
-Qualquer capitão ou cartógrafo que analise os padrões da Maré Negra percebe que há lógica territorial clara. Gangplank não está saqueando. Está administrando.
-
-A Corrente tentou interceptar o Dead Pool em pelo menos três ocasiões. Em duas, os navios voltaram com baixas pesadas. Na terceira, não voltaram.
 
 -----
 <!-- /AUTO:faction:mare-negra -->
@@ -238,15 +175,9 @@ A Corrente tentou interceptar o Dead Pool em pelo menos três ocasiões. Em duas
 
 **Tipo:** Rede de inteligência / Assassinas de aluguel
 
-##### Descrição Pública
+#### Descrição
 
 A Corte das Cortesãs não existe oficialmente. Não tem sede, não tem estandarte, não tem nome gravado em nenhum documento. O que existe é Gloria Vittar — e a rede de mulheres que ela treinou, posicionou e mantém espalhadas pelos principais portos de Pelágos. Cada uma delas ocupa um papel legítimo: cortesãs, acompanhantes, dançarinas, enfermeiras, criadas em casas ricas. Cada uma delas envia informação a Marvosa. E quando necessário, cada uma delas age. A morte de Tulo Bresh em Kaldera é o trabalho da Corte — não ordenada por Gloria, mas executada por iniciativa de campo. O que acontece quando uma das suas age sem ordem é o único tipo de problema que Gloria Vittar não consegue resolver com elegância.
-
-##### Segredos
-
-SEGREDO DO MESTRE — A Corte opera com três funções distintas: inteligência (coleta de informação de todos os portos de Pelágos), pressão política (chantagear figuras influentes com o que as cortesãs documentaram) e eliminação (quando o alvo não pode ser controlado nem comprado). Gloria Vittar não ordena mortes por capricho — cada eliminação é calculada. A cortesã que matou Tulo Bresh em Kaldera o fez por iniciativa própria ao ouvir sobre o artefato, o que colocou Gloria numa posição incômoda: a acusação contra os jogadores foi a forma de transformar um erro num ativo.
-
-A Corte tem informantes em Kaldera, Aethon, Marvosa e — de forma mais esparsa — em Velmyr. A única ilha onde Gloria não tem presença segura é Reva. Ela tentou. As tentativas não voltaram.
 
 -----
 <!-- /AUTO:faction:corte-cortesas -->
@@ -529,11 +460,6 @@ Pescadores, agricultores, comerciantes locais. Envelhecem mais devagar do que de
 
 **Papel:** Magista Élfico / Arquiteto da Grande Guerra
 **Status:** Desaparecido
-**Raça:** Élfico
-**Idade:** Desconhecida (morreu/fundiu-se durante a Grande Guerra)
-
-**Papel:** Arquiteto da Grande Guerra / Hospedeiro do Thurvael / Vilão Final
-**Status:** Fundido — nem vivo nem morto, existindo dentro do Selo
 **Raça:** Élfico
 **Idade:** Desconhecida (morreu/fundiu-se durante a Grande Guerra)
 
@@ -877,6 +803,7 @@ Quando a segunda forma caiu, as cinzas não se dispersaram no vento. Adensaram-s
 -----
 <!-- /AUTO:character:hitch-fogo-fatuo -->
 
+<!-- AUTO:character:orwin -->
 #### ORWIN — O Chapéu Largo
 
 **Papel:** Avô de Bizo / Inventor prisioneiro
@@ -888,8 +815,9 @@ Quando a segunda forma caiu, as cinzas não se dispersaram no vento. Adensaram-s
 
 Orwin é o avô de Bizo, um inventor do Ancoradouro de Latão ligado à tradição familiar de pesquisas sobre química de pólvora. É ele o gnomo de chapéu largo representado na estátua que Velmarch tentou remover. Seu nome foi apagado da memória pública da praça, mas os artesãos mais velhos ainda sabem quem ela homenageia.
 
-##### Segredo — O inventor está preso
+##### Segredos
 
+**🔒 Camada 1** — *O inventor está preso*
 Orwin está vivo e é mantido prisioneiro por Vargan dentro da Grande Forja, obrigado a trabalhar para ele. Sua colaboração não é uma adesão voluntária ao Domínio de Velmarch. Vargan precisa do conhecimento do inventor e o mantém sob coerção para atender aos interesses do Domínio.
 
 > **[NOTA DO MESTRE]** A invenção específica exigida de Orwin e sua relação exata com a produção fora dos registros ainda não foram definidas. Não assumir como estabelecidos um motor, canhão ou bomba. O Caderno de Proporções e sua tabela de conversão ausente permanecem ganchos existentes.
@@ -902,9 +830,11 @@ Orwin está vivo e é mantido prisioneiro por Vargan dentro da Grande Forja, obr
 - **Artesãos do Ancoradouro** — preservam discretamente sua memória na estátua do Chapéu Largo.
 
 -----
+<!-- /AUTO:character:orwin -->
 
 ### 3.4 NPCs de Combate
 
+<!-- AUTO:character:vargan-drell -->
 #### VARGAN DRELL — A Forja Viva
 
 **Papel:** Ferromante antigo / Antagonista do Ancoradouro de Latão
@@ -919,13 +849,13 @@ Vargan se apresenta por meio de um corpo físico que pode enfrentar os jogadores
 
 ##### Segredos
 
-**🔒 Camada 1 — O carcereiro de Orwin**
+**🔒 Camada 1** — *O carcereiro de Orwin*
 Vargan mantém Orwin, avô de Bizo, aprisionado e o obriga a trabalhar. A presença do inventor na produção do Domínio não prova lealdade: ele é um prisioneiro.
 
-**🔒 Camada 2 — Vargan é a forja**
+**🔒 Camada 2** — *Vargan é a forja*
 Vargan é um ferromante antigo que cedeu sua forma física e se fundiu à Grande Forja. Seu corpo aparente é uma manifestação física da entidade; sua verdadeira existência está na própria forja. Enfrentar esse corpo não significa enfrentar a totalidade de Vargan.
 
-**🔒 Camada 3 — A sobrevivência como coleira**
+**🔒 Camada 3** — *A sobrevivência como coleira*
 O Domínio de Velmarch mantém Vargan trabalhando em troca de continuar vivo. A forja mantém sua alma viva; se ele deixar de cooperar, o Domínio apaga a forja e encerra sua existência. Vargan aprisiona Orwin enquanto ele próprio permanece preso à ameaça de ser extinto.
 
 ##### Motivação e Conflito
@@ -947,6 +877,7 @@ Sua motivação central para servir a Velmarch é sobreviver. A coerção explic
 Esta seção reúne fichas mecânicas completas de inimigos recorrentes ou notáveis que os jogadores podem enfrentar. Cada entrada inclui stat block D&D 5e e JSON pronto para importação no FoundryVTT.
 
 -----
+<!-- /AUTO:character:vargan-drell -->
 
 #### O PUNHO DE TULO *(Grak)*
 
@@ -1247,31 +1178,6 @@ Honesto ao ponto do desconforto. Fazia perguntas morais que os arquivos não res
 -----
 <!-- /AUTO:character:telvis-oran -->
 
-<!-- AUTO:character:vaelindra-cass -->
-#### GALADRIEL CASS
-
-**Papel:** Última Anciã de Elarindë
-**Status:** Desaparecido
-
-##### Descrição Pública
-
-Élfica de trezentos anos na época da Maré Alta. Conhecia Selavin Doss antes de ele realizar a invocação e tentou avisá-lo. Sobreviveu à Grande Guerra e à Caça aos Elfos escondida em uma caverna com quarenta e dois outros élficos — dos quais apenas doze sobreviveram à perseguição. Escreveu o Lamento de Galadriel Cass em couro que não apodrece, com tinta que não desbota, para que a verdade não se perdesse. Sua localização atual é desconhecida.
-
-##### Personalidade
-
-Carrega trezentos anos de história com uma serenidade que não é paz — é o peso de quem já viu demais para se surpreender. Entende o ódio dos humanos. Entender não significa aceitar.
-
-##### Segredos
-
-**🔒 Camada 1** — *Vaelindra pode ainda estar viva*
-Com trezentos anos na época da Maré Alta, e sendo élfica, pode ter vivido mais séculos. Se ainda viva, seria a pessoa com o conhecimento mais completo e direto sobre os eventos da Grande Guerra — além de Frieren.
-
-**🔒 Camada 2** — *Vaelindra sabe onde outros elfos sobreviventes estão*
-Mencionou seis sobreviventes do seu grupo ainda vivos. Conhece esconderijos, rotas e artifícios usados pelos elfos remanescentes. Seria um ativo inestimável — ou um alvo, dependendo de quem pergunta.
-
------
-<!-- /AUTO:character:vaelindra-cass -->
-
 <!-- AUTO:character:thorne-mare -->
 #### THORNE MARÉ
 
@@ -1309,6 +1215,31 @@ Thorne morreu em Aethon e a esposa continua no Ancoradouro de Latão, costurando
 -----
 <!-- /AUTO:character:thorne-mare -->
 
+<!-- AUTO:character:vaelindra-cass -->
+#### GALADRIEL CASS
+
+**Papel:** Última Anciã de Elarindë
+**Status:** Desaparecido
+
+##### Descrição Pública
+
+Élfica de trezentos anos na época da Maré Alta. Conhecia Selavin Doss antes de ele realizar a invocação e tentou avisá-lo. Sobreviveu à Grande Guerra e à Caça aos Elfos escondida em uma caverna com quarenta e dois outros élficos — dos quais apenas doze sobreviveram à perseguição. Escreveu o Lamento de Galadriel Cass em couro que não apodrece, com tinta que não desbota, para que a verdade não se perdesse. Sua localização atual é desconhecida.
+
+##### Personalidade
+
+Carrega trezentos anos de história com uma serenidade que não é paz — é o peso de quem já viu demais para se surpreender. Entende o ódio dos humanos. Entender não significa aceitar.
+
+##### Segredos
+
+**🔒 Camada 1** — *Vaelindra pode ainda estar viva*
+Com trezentos anos na época da Maré Alta, e sendo élfica, pode ter vivido mais séculos. Se ainda viva, seria a pessoa com o conhecimento mais completo e direto sobre os eventos da Grande Guerra — além de Frieren.
+
+**🔒 Camada 2** — *Vaelindra sabe onde outros elfos sobreviventes estão*
+Mencionou seis sobreviventes do seu grupo ainda vivos. Conhece esconderijos, rotas e artifícios usados pelos elfos remanescentes. Seria um ativo inestimável — ou um alvo, dependendo de quem pergunta.
+
+-----
+<!-- /AUTO:character:vaelindra-cass -->
+
 <!-- /AUTO-NEW:character -->
 
 ## 4. LOCAIS
@@ -1319,35 +1250,8 @@ Thorne morreu em Aethon e a esposa continua no Ancoradouro de Latão, costurando
 **Tipo:** Ilha urbana / Capital comercial de fato de Pelágos
 **Controle:** Domínio de Velmarch — Governador Tulo Bresh
 **Tom:** Porto caótico — barulhento, superlotado, vibrante e perigoso
-**Subtítulo:** A Grande Capital
-
-**Tipo:** Ilha urbana / Capital comercial de fato de Pelágos
-**Controle:** Domínio de Velmarch — Governador Tulo Bresh
-**Tom:** Porto caótico — barulhento, superlotado, vibrante e perigoso
 
 #### Descrição
-
-Kaldera é o coração pulsante de Pelágos. A maior ilha habitada do arquipélago é também a mais barulhenta, a mais superlotada e a mais perigosa para quem não sabe onde pisa. Seus portos nunca dormem. Seus mercados nunca fecham. A cidade cresceu sem planejamento sobre si mesma: bairros empilhados sobre bairros, canais que antes eram ruas e ruas que antes eram canais.
-
-A bandeira de Velmarch está em todo lugar. Oficiais d'A Corrente patrulham os mercados com a expressão de quem cobra pedágio existencial. Kaldera é oficialmente a vitrine do Domínio. Na prática, é onde o Domínio mostra os dentes.
-
-#### Pontos de Interesse
-
-- **O Porto Principal** — navios de guerra de A Corrente ancorados permanentemente
-- **Os Grandes Mercados** — onde produtos de todo Pelágos circulam
-- **O Palácio do Governador** — separado do caos por muros altos, cheio dos excessos de Tulo Bresh
-- **Os Bairros Baixos** — onde os pobres vivem sob taxação abusiva
-- **O Distrito das Trocas** — onde mercadores de todas as ilhas negociam
-
-#### Segredos
-
-**🔒 Camada 1** — *As taxas reais de Kaldera*
-Os impostos cobrados em Kaldera excedem em muito os mandatos de Velmarch. Qualquer personagem que pergunte a mercadores ou verifique registros descobre a discrepância rapidamente.
-
-**🔒 Camada 2** — *O Palácio por dentro*
-Dentro do Palácio do Governador há alas inteiras que nenhum funcionário público acessa — apenas os convidados pessoais de Tulo. As prostitutas trazidas de Marvosa vivem permanentemente em ala própria.
-
-##### Descrição Pública
 
 Kaldera é o coração pulsante de Pelágos. A maior ilha habitada do arquipélago é também a mais barulhenta, a mais superlotada e a mais perigosa para quem não sabe onde pisa. Seus portos nunca dormem. Seus mercados nunca fecham. Seus becos nunca ficam vazios.
 
@@ -1355,7 +1259,15 @@ A cidade cresceu sem planejamento sobre si mesma: bairros empilhados sobre bairr
 
 A bandeira de Velmarch está em todo lugar. Oficiais d'A Corrente patrulham os mercados com a expressão de quem cobra pedágio existencial. Kaldera é oficialmente a vitrine do Domínio. Na prática, é onde o Domínio mostra os dentes.
 
-##### Segredos
+#### Pontos de Interesse
+
+- **O Porto Principal** — navios de guerra d'A Corrente ancorados permanentemente
+- **Os Grandes Mercados** — onde produtos de todo Pelágos circulam
+- **O Palácio do Governador** — separado do caos por muros altos, cheio dos excessos pessoais de Tulo Bresh
+- **Os Bairros Baixos** — onde os pobres de Kaldera vivem sob taxação abusiva
+- **O Distrito das Trocas** — onde mercadores de todas as ilhas negociam
+
+#### Segredos
 
 **🔒 Camada 1** — *As taxas reais de Kaldera*
 Os impostos cobrados em Kaldera excedem em muito os mandatos de Velmarch. Qualquer personagem que pergunte a mercadores ou verifique registros descobre a discrepância rapidamente. A diferença vai para os cofres pessoais de Tulo Bresh.
@@ -1375,43 +1287,22 @@ Soren Mael frequenta Kaldera regularmente — é um dos portos onde costuma anco
 **Tipo:** Capital imperial
 **Controle:** Aldric Varek XIV / Casa Varek
 **Tom:** Imponente e solar, austera e militar
-**Subtítulo:** A Ilha do Trono
-
-**Tipo:** Ilha capital do Domínio de Velmarch
-**Controle:** Aldric Varek XIV / Casa Varek
-**Tom:** Imponente e solar, austera e militar
 
 #### Descrição
-
-Branca e dourada à distância — uma ilha de pedra clara que reflete a luz do sol de um jeito que a torna visível no horizonte antes de qualquer outra. Bela, mas funcional: muros altos, torres de vigia, canhões voltados para o mar em todas as direções. Não há nada em Velmyr que não sirva a um propósito.
-
-Chegar sem convite é quase impossível. Não recebe mercadores, peregrinos ou curiosos. Recebe navios de guerra, dignitários e, ocasionalmente, prisioneiros que nunca mais são vistos.
-
-#### Pontos de Interesse
-
-- **O Palácio Varek** — no ponto mais alto da ilha, onde Himmel realizou o ritual
-- **A Câmara Selada** — onde o tomo de Himmel é guardado; acesso conhecido por menos de cinco pessoas vivas
-- **O Porto Militar** — único porto da ilha, sem função comercial
-- **Os Templos d'O Fundador** — Himmel venerado sem rosto e sem história
-
-#### Segredos
-
-**🔒 Camada 1** — *A Câmara Selada existe*
-Membros da Casa Varek e poucos conselheiros sabem que existe uma câmara de acesso extremamente restrito no palácio. O que está lá dentro, ninguém dos que têm acesso sabe completamente.
-
-**🔒 Camada 2** — *O pico tem história*
-O ponto mais alto de Velmyr — onde fica o Palácio — é o mesmo ponto onde Himmel realizou O Abraço das Águas Eternas. Nas fundações mais antigas do palácio existem inscrições que nenhum arquiteto moderno consegue datar.
-
-**🔒 Camada 3** — *As inscrições de Himmel*
-As inscrições nas fundações antigas foram escritas por Himmel antes do ritual. Se os jogadores chegarem lá, são a confirmação final de tudo — a prova irrefutável do sacrifício, do Peso, e da escolha impossível que fundou Pelágos.
-
-##### Descrição Pública
 
 Do outro lado de Pelágos, onde o oceano fica mais fundo e o vento mais constante, ergue-se Velmyr. Branca e dourada à distância — uma ilha de pedra clara que reflete a luz do sol de um jeito que a torna visível no horizonte antes de qualquer outra. Bela, sim. Mas a beleza é funcional: os muros altos, as torres de vigia, os canhões voltados para o mar em todas as direções.
 
 Não há nada em Velmyr que não sirva a um propósito. Os jardins são simétricos e sem exuberância. As ruas são largas o suficiente para marchar tropas. Chegar a Velmyr sem convite é quase impossível — não recebe mercadores, peregrinos ou curiosos.
 
-##### Segredos
+#### Pontos de Interesse
+
+- **O Palácio Varek** — ocupa o ponto mais alto da ilha, o mesmo pico onde Himmel realizou o ritual
+- **A Câmara Selada** — onde o tomo de Himmel é guardado; acesso conhecido por menos de cinco pessoas vivas
+- **O Porto Militar** — único porto da ilha, sem função comercial
+- **Os Templos d'O Fundador** — onde Himmel é venerado sem rosto e sem história pessoal
+- **Os Jardins de Taliyah** — único espaço da ilha onde algo cresce por vontade, não por função
+
+#### Segredos
 
 **🔒 Camada 1** — *A Câmara Selada existe*
 Membros da Casa Varek e poucos conselheiros sabem que existe uma câmara de acesso extremamente restrito no palácio. O que está lá dentro, ninguém dos que têm acesso sabe completamente.
@@ -1431,34 +1322,8 @@ As inscrições nas fundações antigas foram escritas por Himmel antes do ritua
 **Tipo:** Território livre / Capital do entretenimento
 **Controle:** Gloria Vittar — sem presença de Velmarch
 **Tom:** Carnavalesco — festa permanente, cores, barulho, excesso em tudo
-**Subtítulo:** A Ilha do Prazer
-
-**Tipo:** Território livre
-**Controle:** Gloria Vittar — sem presença de Velmarch
-**Tom:** Carnavalesco — festa permanente, cores, barulho, excesso em tudo
 
 #### Descrição
-
-Marvosa é visível a quilômetros de distância — não pelo tamanho, mas pelo barulho e pelas cores. Bandeiras, lanternas e tecidos de todas as tonalidades enfeitam cada mastro, cada janela, cada beco. À noite, o reflexo das luzes sobre o mar faz Marvosa parecer uma estrela caída no oceano.
-
-Não há estação seca nem chuvosa em Marvosa. Há apenas a festa. Mercadores chegam para negociar e ficam três dias a mais. Oficiais d'A Corrente chegam com ordens e saem sem memória do que vieram fazer.
-
-#### Pontos de Interesse
-
-- **O Grande Cassino** — Gloria Vittar tem seu camarim no andar mais alto
-- **O Porto Aberto** — único porto de Pelágos sem inspeção de A Corrente
-- **Os Bairros de Entretenimento** — tavernas, cassinos, casas de espetáculo
-- **A Ala de Gloria** — onde as trabalhadoras da Senhorita Vittar vivem e operam
-
-#### Segredos
-
-**🔒 Camada 1** — *Ninguém consegue tomar Marvosa*
-Velmarch tentou duas vezes. Ambas falharam de forma inexplicável. Isso é conhecido por qualquer capitão ou diplomata experiente — mas ninguém sabe o motivo real.
-
-**🔒 Camada 2** — *A rede de inteligência*
-Cada casa de entretenimento de Gloria é também um posto de coleta de informações. Qualquer segredo dito em Marvosa tem chances consideráveis de chegar aos ouvidos da Senhorita Vittar.
-
-##### Descrição Pública
 
 Marvosa é visível a quilômetros de distância — não pelo tamanho, mas pelo barulho e pelas cores. Bandeiras, lanternas e tecidos de todas as tonalidades enfeitam cada mastro, cada janela, cada beco. À noite, o reflexo das luzes sobre o mar faz Marvosa parecer uma estrela caída no oceano.
 
@@ -1466,7 +1331,15 @@ Não há estação seca nem chuvosa em Marvosa. Há apenas a festa — permanent
 
 Velmarch tentou estabelecer presença em Marvosa duas vezes. As duas vezes, os oficiais enviados voltaram sem ter conseguido nada concreto. A terceira tentativa nunca aconteceu.
 
-##### Segredos
+#### Pontos de Interesse
+
+- **O Grande Cassino** — onde Gloria Vittar tem seu camarim no andar mais alto
+- **O Porto Aberto** — único porto de Pelágos sem inspeção d'A Corrente
+- **Os Bairros de Entretenimento** — tavernas, cassinos, casas de espetáculo
+- **A Ala de Gloria** — onde as trabalhadoras da Senhorita Vittar vivem e operam
+- **O Teatro das Tempestades** — onde as melhores companhias de Pelágos se apresentam
+
+#### Segredos
 
 **🔒 Camada 1** — *Ninguém consegue tomar Marvosa*
 Velmarch tentou duas vezes estabelecer presença. Ambas falharam de forma inexplicável — oficiais voltaram sem ter conseguido nada concreto. Isso é conhecido por qualquer capitão ou diplomata experiente, mas ninguém sabe o motivo real.
@@ -1486,15 +1359,12 @@ Tulo Bresh frequenta Marvosa regularmente e seus segredos estão todos documenta
 **Tipo:** Ilha pequena / Colônia élfica secreta
 **Controle:** Família Talion — Fern Talion na prática
 **Tom:** Tranquila, humilde, agrícola
-**Subtítulo:** A Ilha dos Talion
-
-**Tipo:** Ilha pequena / Colônia élfica secreta
-**Controle:** Família Talion — Fern Talion na prática
-**Tom:** Tranquila, humilde, agrícola
 
 #### Descrição
 
 Uma ilha pequena, tranquila, de gente simples que cultiva a terra e troca minérios por grãos com navios que passam sem nunca ancorar por muito tempo. Nenhum viajante fica. Nenhum oficial d'A Corrente tem razão para inspecionar. Reva não causa problemas.
+
+Aparentemente, não há nada de especial em Reva. É exatamente o que parece ser — e isso é intencional. Planificado por Himmel há séculos, mantido por Fern com cuidado diário.
 
 #### O Cristal
 
@@ -1506,38 +1376,24 @@ No núcleo da ilha, enterrado sob gerações de terra cultivada, pulsa um crista
 Para uma ilha com minérios de qualidade, Reva tem pouquíssimo tráfego. Ninguém da família sai para comercializar pessoalmente. Os contratos são sempre feitos à distância. Uma investigação de padrões comerciais revela o isolamento sistemático.
 
 **🔒 Camada 2** — *Os habitantes são elfos*
-Quem sair de Reva e se afastar da costa suficientemente vai notar mudanças físicas no próprio reflexo. Investigação arcana da ilha revela o cristal no núcleo — e o que ele faz.
-
-**🔒 Camada 3** — *O cristal é de Himmel*
-A magia do cristal é anterior a qualquer escola arcana conhecida em Pelágos. Sua assinatura é a mesma que permeia as inscrições nas fundações de Velmyr. Himmel instalou ambos.
-
-##### Descrição Pública
-
-Uma ilha pequena, tranquila, de gente simples que cultiva a terra e troca minérios por grãos com navios que passam sem nunca ancorar por muito tempo. Nenhum viajante fica. Nenhum oficial d'A Corrente tem razão para inspecionar. Reva não causa problemas.
-
-Aparentemente, não há nada de especial em Reva. É exatamente o que parece ser — e isso é intencional. Planificado por Himmel há séculos, mantido por Fern com cuidado diário.
-
-##### Segredos
-
-**🔒 Camada 1** — *Reva é estranhamente isolada*
-Para uma ilha com minérios de qualidade, Reva tem pouquíssimo tráfego. Ninguém da família sai para comercializar pessoalmente. Os contratos são sempre feitos à distância. Uma investigação de padrões comerciais revela o isolamento sistemático.
-
-**🔒 Camada 2** — *Os habitantes são elfos*
 Quem sair de Reva e se afastar da costa suficientemente vai notar mudanças físicas no próprio reflexo — orelhas que se alongam, olhos que ganham brilho. Investigação arcana da ilha revela o cristal no núcleo — e o que ele faz. A família Talion inteira é élfica.
 
 **🔒 Camada 3** — *O cristal é de Himmel*
 A magia do cristal é anterior a qualquer escola arcana conhecida em Pelágos. Sua assinatura é a mesma que permeia as inscrições nas fundações de Velmyr. Himmel instalou ambos. Se o cristal for destruído, todos os elfos de Reva revelarão sua verdadeira aparência simultaneamente — sentença de morte se houver qualquer navio nas proximidades.
+
+#### Pontos de Interesse
+
+- **A Casa dos Talion** — uma estrutura que parece crescer das árvores em vez de construída
+- **As Minas de Minério** — a principal atividade econômica da ilha, de qualidade surpreendente
+- **A Casa no Fim da Praia** — onde Frieren vive, jardim sem flores por ordem dela
+- **O Bosque do Centro** — onde, sob gerações de terra cultivada, pulsa o cristal de Himmel
+- **A Costa de Ancoramento** — onde navios param brevemente para negociar
 
 -----
 <!-- /AUTO:location:reva -->
 
 <!-- AUTO:location:ancoradouro-de-latao -->
 ### 4.5 O ANCORADOURO DE LATÃO — A Forja Acorrentada
-
-**Tipo:** Ilha industrial / Colônia metalúrgica
-**Controle:** Domínio de Velmarch — operação direta d'A Corrente
-**Tom:** Enxofre e metal quente — uma ilha que cheirava a invenção e agora cheira a obrigação
-**Subtítulo:** A Forja Acorrentada
 
 **Tipo:** Ilha industrial / Colônia metalúrgica
 **Controle:** Domínio de Velmarch — operação direta d'A Corrente
@@ -1549,46 +1405,19 @@ O Ancoradouro de Latão é uma ilha pequena e densa, encravada num ponto de rota
 
 Foi durante séculos uma república de artesãos — sem rei, sem governador, sem hierarquia que não fosse o talento. Gnomos, principalmente, mas também humanos e halflings que vieram atrás do trabalho bom e ficaram atrás da filosofia: aqui, quem inventa manda. As oficinas eram abertas, as fórmulas eram compartilhadas e as brigas mais ferozes eram sobre calibragem de engrenagens e proporções de pólvora.
 
-Quando A Corrente chegou, não chegou como invasora. Chegou com papéis, com argumentos de "proteção de rota" e com navios que eram grandes demais para ignorar. A "adesão" ao Domínio levou três semanas. O confisco das oficinas levou três dias.
-
-Hoje, o Ancoradouro de Latão produz munição, peças de artilharia e componentes navais dentro das cotas estabelecidas por Velmarch. Os artesãos trabalham — mas agora para um cliente que não negocia preço e não aceita recusa. As crianças que antes aprendiam a calibrar pelo prazer de calibrar agora aprendem para não ficar devendo cota.
-
-#### Pontos de Interesse
-
-- **A Grande Forja** — a fundição central da ilha; antes o coração pulsante da comunidade, agora operada por supervisores d'A Corrente com cotas diárias afixadas na entrada. **[SEGREDO DO MESTRE]** É a verdadeira forma de Vargan Drell, cuja alma depende de ela continuar acesa. Orwin, avô de Bizo, está aprisionado ali por Vargan.
-- **O Porto Militar do Latão** — onde navios cinzentos de Velmarch ancoram regularmente para carregar o que foi produzido e deixar as ordens do próximo mês
-- **Os Becos dos Inventores** — rede labiríntica de vielas onde as antigas oficinas particulares ainda existem, espremidas entre armazéns de Velmarch; de noite ainda se ouve o tilintar discreto de quem não parou de inventar
-- **O Arquivo Confiscado** — edifício administrado por A Corrente que abriga todos os projetos, fórmulas e protótipos catalogados durante a "absorção"; os artesãos chamam de A Morgue
-- **A Estátua do Fundador Sem Nome** — no centro da praça principal, uma estátua de latão de um gnomo de chapéu largo que ninguém mais lembra quem é; Velmarch tentou removê-la duas vezes e ambas as vezes algo deu errado
-
-#### Segredos
-
-**🔒 Camada 1** — *As cotas não cobrem tudo*
-A produção oficial registrada nos relatórios de Velmarch não bate com a quantidade de matéria-prima consumida. A diferença é pequena — pequena o suficiente para parecer erro de medição. Não é. Alguma coisa está sendo fabricada fora dos registros.
-
-**🔒 Camada 2** — *O Arquivo Confiscado tem um inventário incompleto*
-Quando A Corrente catalogou as invenções da ilha, um conjunto de fórmulas não foi encontrado — especificamente, as pesquisas mais avançadas sobre química de pólvora de uma família de gnomos. Os supervisores registraram "material destruído antes da adesão". Não foi destruído. Foi escondido, ou levado, ou ambos. Velmarch ainda procura, discretamente.
-
-> **Documento:** *Caderno de Proporções — As Fórmulas do Chapéu Largo* (no acervo). É o próprio material dado como destruído, escrito em três mãos ao longo de três gerações. As proporções estão em "passos de bancada", uma medida da casa cuja tabela de conversão foi arrancada antes do confisco — o caderno sozinho é uma chave sem fechadura. Na contracapa há uma coluna a lápis, recente, que bate com a discrepância da Camada 1.
-
-**🔒 Camada 3** — *A Estátua sabe quem é*
-A estátua do fundador sem nome é de um gnomo real — **Orwin, o Chapéu Largo, avô de Bizo**. Seu chapéu largo é um detalhe específico demais para ser coincidência. Alguém a construiu depois da "absorção", à noite, sem que A Corrente percebesse a tempo de impedir. Os mais velhos da ilha sabem de quem é a estátua. Não dizem. Orwin continua vivo, aprisionado por Vargan na Grande Forja e obrigado a trabalhar.
-
-**🔒 Camada 4** — *A forja também é prisioneira*
-Vargan Drell cedeu sua forma física e se fundiu à Grande Forja. O corpo com que se apresenta é apenas sua manifestação: Vargan é a própria forja. O Domínio de Velmarch conhece sua dependência e exige cooperação em troca de mantê-lo vivo. Se ele se recusar, o Domínio apaga a forja que sustenta sua alma. O carcereiro de Orwin serve sob sua própria sentença de morte suspensa.
-*→ Ver também: Vargan Drell — A Forja Viva; Orwin — O Chapéu Largo*
-
-##### Descrição Pública
-
-O Ancoradouro de Latão é uma ilha pequena e densa, encravada num ponto de rotas comerciais que ninguém considerava estratégico até A Corrente perceber o que ela produzia. Suas colinas são atravessadas por chaminés que soltam fumaça amarelada, seus becos são tão estreitos que duas pessoas mal se cruzam, e seu porto tem um brilho metálico na água que vem de décadas de limalha e resíduos de fundição despejados no mar.
-
-Foi durante séculos uma república de artesãos — sem rei, sem governador, sem hierarquia que não fosse o talento. Gnomos, principalmente, mas também humanos e halflings que vieram atrás do trabalho bom e ficaram atrás da filosofia: aqui, quem inventa manda. As oficinas eram abertas, as fórmulas eram compartilhadas e as brigas mais ferozes eram sobre calibragem de engrenagens e proporções de pólvora.
-
 Quando A Corrente chegou, não chegou como invasora. Chegou com papéis, com argumentos de 'proteção de rota' e com navios que eram grandes demais para ignorar. A 'adesão' ao Domínio levou três semanas. O confisco das oficinas levou três dias.
 
 Hoje, o Ancoradouro de Latão produz munição, peças de artilharia e componentes navais dentro das cotas estabelecidas por Velmarch. Os artesãos trabalham — mas agora para um cliente que não negocia preço e não aceita recusa.
 
-##### Segredos
+#### Pontos de Interesse
+
+- **A Grande Forja** — a fundição central da ilha; antes o coração pulsante da comunidade, agora operada por supervisores d'A Corrente com cotas diárias afixadas na entrada
+- **O Porto Militar do Latão** — onde navios cinzentos de Velmarch ancoram regularmente para carregar o que foi produzido e deixar as ordens do próximo mês
+- **Os Becos dos Inventores** — rede labiríntica de vielas onde as antigas oficinas particulares ainda existem, espremidas entre armazéns de Velmarch; de noite ainda se ouve o tilintar discreto de quem não parou de inventar
+- **O Arquivo Confiscado** — edifício administrado por A Corrente que abriga todos os projetos, fórmulas e protótipos catalogados durante a 'absorção'; os artesãos chamam de A Morgue
+- **A Estátua do Fundador Sem Nome** — no centro da praça principal, uma estátua de latão de um gnomo de chapéu largo que ninguém mais lembra quem é; Velmarch tentou removê-la duas vezes e ambas as vezes algo deu errado
+
+#### Segredos
 
 **🔒 Camada 1** — *As cotas não cobrem tudo*
 A produção oficial registrada nos relatórios de Velmarch não bate com a quantidade de matéria-prima consumida. A diferença é pequena — pequena o suficiente para parecer erro de medição. Não é. Alguma coisa está sendo fabricada fora dos registros.
@@ -1608,42 +1437,8 @@ A estátua do fundador sem nome é de um gnomo real — o avô do personagem que
 **Tipo:** Ilha pequena / Comunidade naval e de construção de embarcações
 **Controle:** Domínio de Velmarch — presença administrativa leve mas crescente
 **Tom:** Madeira de lei e vento salgado — uma ilha que ainda cheira a verniz e mar, e aprendeu a obedecer sem dizer que obedece
-**Subtítulo:** A Ilha das Velas
-
-**Tipo:** Ilha pequena / Comunidade naval e de construção de embarcações
-**Controle:** Domínio de Velmarch — presença administrativa leve mas crescente
-**Tom:** Madeira de lei e vento salgado — uma ilha que ainda cheira a verniz e mar, e aprendeu a obedecer sem dizer que obedece
 
 #### Descrição
-
-Aethon é uma ilha montanhosa de tamanho modesto, encravada entre rotas costeiras que os grandes navios de guerra d'A Corrente não precisam usar — e por isso, por séculos, foi esquecida. O que não precisam não significa que não querem: quando Velmarch percebeu o que saía das oficinas de Aethon, os navios de "recrutamento" apareceram no porto com a mesma suavidade inevitável com que a maré entra.
-
-A ilha é conhecida em sete ilhas ao redor por uma coisa: seus barcos não afundam. Não no sentido de que são difíceis de afundar — no sentido de que parecem *querer* flutuar. As embarcações de Aethon respondem ao toque como animais treinados, absorvem tempestades que destroçariam casco de outro estaleiro e resistem ao sal com uma obstinação que alguns marinheiros juram ser magia. Não é. É gerações de conhecimento acumulado, passado em silêncio entre pais e filhos, entre mestres e aprendizes, entre os dedos e a madeira.
-
-A *Brisa Vermilha* — o barco que Cid Maré roubou ao fugir — foi construída nessa ilha. O casco era de seu pai. A vela vermelha com padrão bordado era de sua mãe. Oito anos de consertos a tornaram outra coisa; a alma, não.
-
-Hoje, os estaleiros de Aethon ainda produzem as melhores embarcações do arquipélago — agora principalmente para A Corrente, em cotas que ninguém negociou e ninguém pode recusar. Os carpinteiros trabalham. As velas são costuradas. Os barcos saem pelo porto carregando a bandeira de Velmarch. E ninguém comenta sobre o rapaz que sumiu num deles há oito anos.
-
-#### Pontos de Interesse
-
-- **Os Estaleiros da Costa Norte** — onde as embarcações são construídas; cheiro permanente de serragem úmida e betume; supervisores d'A Corrente aparecem uma vez por mês para contar o que foi produzido
-- **A Oficina de Thorne** — menor do que já foi, agora funcionando num canto dos estaleiros maiores; Thorne ainda trabalha, ainda é o melhor, ainda não fala mais do que o necessário
-- **O Porto de Aethon** — porto pequeno, limpo, funcional; os barcos que saem daqui são bonitos mesmo quando carregam canhões
-- **A Casa dos Maré** — construção de madeira escura no alto da colina; Liris não está mais lá, mas os padrões de suas velas ainda decoram janelas de outras casas da ilha
-- **O Mirante** — ponto mais alto da ilha, onde os aprendizes de navegação aprendem a reconhecer as formações de rocha que marcam a entrada do porto; Cid as memorizou antes de saber ler mapas
-
-#### Segredos
-
-**🔒 Camada 1** — *Thorne Maré ainda vive e trabalha em Aethon*
-Cid foi embora. O pai ficou. Thorne Maré continua sendo o melhor carpinteiro naval da ilha — e A Corrente sabe disso, então nunca o tirou de lá. Qualquer viajante que pergunte pelos estaleiros de Aethon vai ouvir o nome Thorne. Qualquer capitão que queira uma embarcação de verdade vai tentar chegar a ele. Ele não fala sobre Cid. Não porque tenha esquecido — porque não quer que a pergunta seja feita.
-
-**🔒 Camada 2** — *Liris foi levada*
-Depois que Cid fugiu, A Corrente registrou o incidente como "recrutamento malsucedido" e adicionou uma nota: a mãe do fugitivo, Liris Maré, foi "voluntariamente realocada" para as oficinas do Ancoradouro de Latão, onde suas habilidades como tecedora de velas poderiam ser "mais bem aproveitadas" na produção de velas militares. A realocação aconteceu dois meses depois da fuga de Cid. Ela está no Ancoradouro de Latão, costurando velas de Velmarch. Thorne não tentou ir atrás. Ou não pôde.
-
-**🔒 Camada 3** — *O registro de Cid ainda está ativo*
-O nome "Cid Maré, navegador de Aethon" consta nos registros portuários do Domínio como "desertado de recrutamento obrigatório". A recompensa era pequena — moedas suficientes para que um informante ocasional ficasse atento, não suficientes para que alguém fosse atrás. Pequena o suficiente para ser esquecida. Mas os registros de A Corrente não somem por esquecimento. O nome ainda está lá. Qualquer oficial que conecte "Cid" a "Aethon" pode verificar nos arquivos e confirmar em horas.
-
-##### Descrição Pública
 
 Aethon é uma ilha montanhosa de tamanho modesto, encravada entre rotas costeiras que os grandes navios de guerra d'A Corrente não precisam usar — e por isso, por séculos, foi esquecida. O que não precisam não significa que não querem: quando Velmarch percebeu o que saía das oficinas de Aethon, os navios de 'recrutamento' apareceram no porto com a mesma suavidade inevitável com que a maré entra.
 
@@ -1651,7 +1446,15 @@ A ilha é conhecida em sete ilhas ao redor por uma coisa: seus barcos não afund
 
 Hoje, os estaleiros de Aethon ainda produzem as melhores embarcações do arquipélago — agora principalmente para A Corrente, em cotas que ninguém negociou e ninguém pode recusar.
 
-##### Segredos
+#### Pontos de Interesse
+
+- **Os Estaleiros da Costa Norte** — onde as embarcações são construídas; cheiro permanente de serragem úmida e betume; supervisores d'A Corrente aparecem uma vez por mês para contar o que foi produzido
+- **A Oficina de Thorne** — menor do que já foi, agora funcionando num canto dos estaleiros maiores; Thorne Maré ainda trabalha, ainda é o melhor, ainda não fala mais do que o necessário
+- **O Porto de Aethon** — porto pequeno, limpo, funcional; os barcos que saem daqui são bonitos mesmo quando carregam canhões
+- **A Casa dos Maré** — construção de madeira escura no alto da colina; Liris não está mais lá, mas os padrões de suas velas ainda decoram janelas de outras casas da ilha
+- **O Mirante** — ponto mais alto da ilha, onde os aprendizes de navegação aprendem a reconhecer as formações de rocha que marcam a entrada do porto
+
+#### Segredos
 
 **🔒 Camada 1** — *Thorne Maré ainda vive e trabalha em Aethon*
 Cid foi embora. O pai ficou. Thorne continua sendo o melhor carpinteiro naval da ilha — A Corrente sabe disso e nunca o tirou de lá. Qualquer viajante que pergunte pelos estaleiros de Aethon vai ouvir o nome Thorne. Ele não fala sobre Cid. Não porque tenha esquecido — porque não quer que a pergunta seja feita.
@@ -1671,21 +1474,14 @@ O nome 'Cid Maré, navegador de Aethon' consta nos registros portuários do Dom�
 **Tipo:** Ilha religiosa / Refúgio élfico secreto
 **Controle:** Ordens religiosas locais — nominalmente sob Velmarch, na prática autônoma
 **Tom:** Reverente e fechada — uma ilha que respira história e desconfia de estranhos. Quem chega sem recomendação encontra hospitalidade educada e portas que não abrem.
-**Subtítulo:** A Cidade Que Se Esqueceu de Si Mesma
-
-**Tipo:** Ilha religiosa / Refúgio élfico secreto
-**Controle:** Ordens religiosas locais — nominalmente sob Velmarch, na prática autônoma
-**Tom:** Reverente e fechada — uma ilha que respira história e desconfia de estranhos. Quem chega sem recomendação encontra hospitalidade educada e portas que não abrem.
 
 #### Descrição
 
 Ondra é uma ilha de pedra escura e névoa permanente. Não tem os portos movimentados de Kaldera nem a grandiosidade militar de Velmyr — tem templos, arquivos e silêncio. As ordens religiosas que a habitam há séculos cultivam uma forma de devoção discreta que Velmarch nunca soube muito bem como classificar nem tributar. Tentou uma vez. Os navios que enviou voltaram com oficiais febris que não conseguiam explicar por que tinham virado e ido embora.
 
-A ilha não é agressiva. Simplesmente não recebe quem não deve receber.
+A comunidade religiosa vive em torno do Templo das Marés, uma estrutura de pedra negra construída com blocos recuperados do fundo do oceano. Os monges que mantêm o templo são conhecidos por sua longevidade incomum e sua recusa em aceitar aprendizes que não passem por um período de avaliação que pode durar meses.
 
-A comunidade religiosa vive em torno do Templo das Marés, uma estrutura de pedra negra construída com blocos recuperados do fundo do oceano — literalmente o mundo de antes da inundação, erguido em homenagem ao que o mundo perdeu. Os monges que mantêm o templo são conhecidos por sua longevidade incomum e sua recusa em aceitar aprendizes que não passem por um período de "avaliação" que pode durar meses.
-
-O que os visitantes ocasionais não percebem: a ilha tem mais habitantes do que os que aparecem no porto.
+O que os visitantes ocasionais não percebem: a ilha tem mais habitantes do que os que aparecem no porto. Nos corredores mais internos do templo e nas Celas dos Penitentes vivem vinte e três elfos — o que restou do grupo de Galadriel Cass após décadas de perseguição. Eles aparecem ao público apenas encapuzados como 'penitentes em retiro espiritual prolongado' e, em troca da proteção das ordens, contribuíram com séculos de conhecimento histórico para os Arquivos. Os textos que os monges leem como poesia espiritual são memória élfica literal.
 
 #### O Segredo de Ondra
 
@@ -1706,34 +1502,12 @@ Ela sabe o que Aelindra fez. Sabe o que Selavin se tornou. Sabe, com uma certeza
 #### Pontos de Interesse
 
 - **O Templo das Marés** — estrutura de pedra negra pré-diluviana; o interior vai mais fundo do que sugere o exterior; as seções mais profundas não são abertas a visitantes
-- **Os Arquivos de Ondra** — biblioteca religiosa com textos que os monges interpretam como poesia espiritual e que são memória literal de sobreviventes élficos
-- **O Porto das Bênçãos** — único porto da ilha; navios recebem bênçãos rituais antes de partir; visitantes são recebidos aqui e raramente convidados a ir mais longe
-- **As Celas dos Penitentes** — estruturas de pedra no anel interno do templo, nominalmente para retiros religiosos prolongados; os "penitentes" que as habitam há décadas nunca saem sem capuz
+- **Os Arquivos de Ondra** — biblioteca religiosa com textos que os monges interpretam como poesia espiritual e que são relatos literais de sobreviventes élficos em linguagem oblíqua
+- **O Porto das Bênçãos** — único porto da ilha; visitantes são recebidos aqui e raramente convidados a ir mais longe
+- **As Celas dos Penitentes** — estruturas de pedra no anel interno do templo; os 'penitentes' que as habitam há décadas nunca saem sem capuz
 - **O Jardim da Maré** — espaço entre as celas e o templo, aberto ao céu; único lugar onde os elfos aparecem sem capuz, ao amanhecer, quando não há visitantes no porto
 
 #### Segredos
-
-**🔒 Camada 1** — *A comunidade de Ondra é mais fechada do que admite*
-Qualquer visitante percebe rapidamente que há setores da ilha que simplesmente não são mostrados. A hospitalidade é real — mas tem uma borda. "As seções internas são para retiro espiritual" é a resposta padrão. Quem perguntar mais de uma vez vai notar que a resposta não muda, nem o tom.
-
-**🔒 Camada 2** — *Os penitentes de Ondra nunca saem do retiro*
-Penitentes em retiro são comuns em ordens religiosas — mas em Ondra, nenhum "penitente em retiro prolongado" jamais encerrou o retiro e foi embora. Alguns estão lá há décadas. Visitantes que ficam tempo suficiente para comparar notas começam a perceber que os penitentes são sempre a mesma quantidade, nunca mais, nunca menos.
-
-**🔒 Camada 3** — *Ondra abriga sobreviventes élficos sob o comando de Galadriel Cass*
-Vinte e três elfos vivem nas seções internas do templo há gerações. A "Anciã das Ordens" é Galadriel Cass — sobrevivente da Grande Guerra, da Maré Alta e da Caça. Ela sabe sobre o Thurvael, sobre Selavin Doss e sobre o papel que Aelindra teve inadvertidamente na sobrevivência do grande vilão. Também sabe sobre o selo — e teme que alguém com as melhores intenções do mundo vá quebrá-lo.
-
-**🔒 Camada 4** — *Os Arquivos de Ondra foram escritos pelos elfos*
-Os textos históricos de Ondra que os monges leem como poesia espiritual são relatos literais de sobreviventes élficos, escritos em linguagem oblíqua para passar pela inspeção de Velmarch. "A escuridão que os elfos abriram nas profundezas" é o Thurvael. "O abraço eterno que selou o que não podia ser destruído" é o sacrifício de Himmel. "Aquele que ficou quando todos foram" é Selavin Doss. Os jogadores que chegarem a Ondra com contexto suficiente vão conseguir ler esses textos de uma forma que os monges nunca conseguiram.
-
-##### Descrição Pública
-
-Ondra é uma ilha de pedra escura e névoa permanente. Não tem os portos movimentados de Kaldera nem a grandiosidade militar de Velmyr — tem templos, arquivos e silêncio. As ordens religiosas que a habitam há séculos cultivam uma forma de devoção discreta que Velmarch nunca soube muito bem como classificar nem tributar. Tentou uma vez. Os navios que enviou voltaram com oficiais febris que não conseguiam explicar por que tinham virado e ido embora.
-
-A comunidade religiosa vive em torno do Templo das Marés, uma estrutura de pedra negra construída com blocos recuperados do fundo do oceano. Os monges que mantêm o templo são conhecidos por sua longevidade incomum e sua recusa em aceitar aprendizes que não passem por um período de avaliação que pode durar meses.
-
-O que os visitantes ocasionais não percebem: a ilha tem mais habitantes do que os que aparecem no porto. Nos corredores mais internos do templo e nas Celas dos Penitentes vivem vinte e três elfos — o que restou do grupo de Galadriel Cass após décadas de perseguição. Eles aparecem ao público apenas encapuzados como 'penitentes em retiro espiritual prolongado' e, em troca da proteção das ordens, contribuíram com séculos de conhecimento histórico para os Arquivos. Os textos que os monges leem como poesia espiritual são memória élfica literal.
-
-##### Segredos
 
 **🔒 Camada 1** — *A comunidade de Ondra é mais fechada do que admite*
 Há setores da ilha que simplesmente não são mostrados. 'As seções internas são para retiro espiritual' é a resposta padrão. Quem perguntar mais de uma vez vai notar que a resposta não muda, nem o tom.
@@ -1755,16 +1529,24 @@ Os textos históricos que os monges leem como poesia espiritual são relatos lit
 <!-- AUTO:location:pelagos -->
 ### Pelágos
 
-**Subtítulo:** O Continente dos Mil Mares
 **Tipo:** Arquipélago-continente
 
-##### Descrição Pública
+#### Descrição
 
 Não existe terra firme em Pelágos. O que os mapas chamam de continente é um arquipélago sem fim — centenas de ilhas espalhadas por um oceano que não tem fundo conhecido, cada uma com sua própria lei, seus próprios deuses e sua própria maneira de sobreviver. As montanhas mais altas de Pelágos são apenas os dentes do que um dia foi um mundo maior — afogado por um evento tão antigo que virou mito.
 
 Entre as ilhas, o mar é tudo: estrada, fronteira, mercado, cemitério e templo. As civilizações de Pelágos cresceram voltadas para a água, e seus deuses cheiram a sal. Saber navegar não é um talento aqui. É alfabetização.
 
-##### Segredos
+#### Pontos de Interesse
+
+- **Kaldera** — a maior ilha habitada, coração comercial do arquipélago
+- **Velmyr** — a ilha do trono, sede do Domínio de Velmarch
+- **Marvosa** — território livre, capital do entretenimento e dos segredos
+- **Reva** — ilha pequena e tranquila, oculta mais do que parece
+- **As Ruínas Submersas** — fundações de cidades do mundo anterior visíveis em águas rasas
+- **O Povo das Torres** — estruturas verticais encontradas no fundo oceânico a noroeste de Kaldera
+
+#### Segredos
 
 **🔒 Camada 1** — *O mundo anterior existia*
 Sob as águas de Pelágos há fundações de pelo menos três grandes civilizações, identificáveis por estilo arquitetônico. Estudiosos que mergulham nas ruínas encontram cerâmicas com inscrições em línguas sem tradutor vivo e moedas de ligas que nenhum ferreiro moderno reproduz.
@@ -1781,10 +1563,9 @@ Toda a política, toda a história, toda a geografia de Pelágos existe por caus
 <!-- AUTO:location:mosteiro-costa-afogada -->
 ### Mosteiro da Costa Afogada
 
-**Subtítulo:** Ordem dos Monges da Maré
 **Tipo:** Ilha monástica / Arquivo histórico
 
-##### Descrição Pública
+#### Descrição
 
 Um mosteiro antigo construído no alto de uma ilha costeira que sobreviveu à Maré Alta — mas apenas a parte superior. As fundações e os claustros inferiores foram engolidos pela inundação, e as paredes que emergem do oceano carregam a linha d'água marcada nas pedras como uma cicatriz. Os monges que habitam o que sobrou chamam isso de 'a memória visível do preço.'
 
@@ -1792,7 +1573,14 @@ O mosteiro mantém um dos arquivos mais antigos de Pelágos — fragmentos de do
 
 A Ordem não tem nome oficial — os monges simplesmente chamam uns aos outros de irmãos. Não pregam, não aceitam convertidos formalmente. Apenas guardam. E às vezes, quando alguém parece digno, deixam ler.
 
-##### Segredos
+#### Pontos de Interesse
+
+- **A Linha da Maré** — marca permanente nas paredes externas que indica o nível exato que as águas atingiram
+- **O Arquivo Submerso** — câmaras inferiores parcialmente inundadas onde ainda existem documentos em cofres vedados nunca abertos
+- **A Torre do Silêncio** — estrutura mais alta do mosteiro, usada para meditação e, segundo rumores, para observar algo no oceano que os monges não descrevem
+- **O Scriptorium da Costa** — sala onde os monges copiam e preservam os fragmentos recuperados
+
+#### Segredos
 
 **🔒 Camada 1** — *O Arquivo Submerso ainda contém documentos intocados*
 As câmaras inferiores inundadas têm cofres que nunca foram abertos. Os monges sabem que estão lá. Não têm como chegar — ou escolheram não chegar.
@@ -1806,10 +1594,9 @@ Frei Assolvan era deste mosteiro. Suas notas sobre a Maré Alta e o 'rito do abr
 <!-- AUTO:location:kesvar -->
 ### Kesvar
 
-**Subtítulo:** A Ilha dos Arquivos Perdidos
 **Tipo:** Ilha / Ruína habitada
 
-##### Descrição Pública
+#### Descrição
 
 Kesvar é uma ilha pequena com uma história de resistência silenciosa. Antes da Maré Alta era um centro de conhecimento secular — não religioso, não militar, apenas acadêmico. Cartógrafos, filósofos, arquivistas. Quando as águas subiram, os habitantes de Kesvar subiram junto — literalmente, construindo estruturas mais altas sobre as que a inundação cobria.
 
@@ -1817,7 +1604,14 @@ O resultado é uma ilha que parece construída em camadas: os fundamentos antigo
 
 Kesvar mantém um fragmento do arquivo acadêmico original — muito do qual foi perdido, mas o suficiente para que estudiosos em busca de história antiga ainda façam a viagem. Foi de um arquivo em Kesvar que Maren Krill obteve um dos fragmentos que mencionava 'os magistas da língua alta que chamaram o que não devia ser chamado.'
 
-##### Segredos
+#### Pontos de Interesse
+
+- **As Fundações Emersas** — seções do mundo pré-Maré Alta visíveis e transitáveis na parte baixa da ilha
+- **O Arquivo Duplo** — biblioteca construída sobre ruínas de outra biblioteca, com documentos de duas eras
+- **O Mercado das Memórias** — onde colecionadores e estudiosos trocam e vendem fragmentos antigos
+- **A Torre dos Cartógrafos** — estrutura alta que ainda mantém mapas do mundo anterior, ilegíveis por falta de referências
+
+#### Segredos
 
 **🔒 Camada 1** — *O Arquivo de Kesvar tem fragmentos sobre a Grande Guerra*
 Entre os documentos sobreviventes há referências aos magistas élficos e à invocação — material que Maren Krill encontrou e usou em sua investigação. Há mais fragmentos não catalogados.
@@ -1839,30 +1633,7 @@ Parte das fundações emergidas do pré-dilúvio tem inscrições em língua arc
 **Escala:** Mundial
 **Causa:** Invocação de O Peso pelos magistas elfos
 
-**Período:** Aproximadamente 40 a 80 anos antes da Maré Alta
-**Escala:** Mundial
-**Causa:** Invocação de O Peso pelos magistas elfos
-
 #### Descrição
-
-A Grande Guerra não começou como uma guerra entre povos — foi uma crise de origem sobrenatural. Os maiores magistas elfos da era antiga descobriram O Peso nas camadas mais profundas da realidade e acreditaram que poderiam invocá-lo e domesticá-lo para consolidar o domínio élfico definitivo. O que invocaram não obedeceu. Simplesmente começou a consumir.
-
-O que avançava não era um exército. Não tomava territórios nem exigia rendição. Regiões inteiras desapareciam dos mapas não porque fossem conquistadas, mas porque *paravam de ser*. Entre 60% e 80% da população mundial foi dizimada.
-
-Em Pelágos, é chamada simplesmente de *A Guerra* ou *A Grande Guerra*. Não há nome oficial — e Pelágos, coletivamente, não parece querer um.
-
-#### Segredos
-
-**🔒 Camada 1** — *Os registros de Velmarch têm lacunas*
-Seções dos arquivos históricos de Velmarch sobre A Grande Guerra estão marcadas como "classificação restrita". Estudiosos que tentam acessá-las são redirecionados.
-
-**🔒 Camada 2** — *Os elfos foram os responsáveis*
-Registros não censurados em ilhas fora do controle de Velmarch documentam claramente que foram magistas elfos que invocaram O Peso. Velmarch suprime essa informação — não por proteger os elfos, mas porque revelar a origem de O Peso seria revelar que O Peso ainda existe.
-
-**🔒 Camada 3** — *O Peso não foi destruído, foi selado*
-A Grande Guerra terminou não com a destruição de O Peso, mas com seu selamento sob o oceano. Isso significa que ainda está lá. Documentos sobre isso existem apenas no tomo de Himmel.
-
-##### Descrição Pública
 
 A Grande Guerra não começou como uma guerra entre povos — foi uma crise de origem sobrenatural que consumiu toda estrutura política e militar existente. Os maiores magistas elfos da era antiga descobriram, nas camadas mais profundas da realidade, a existência de O Peso. Acreditaram que poderiam invocá-lo, domesticá-lo, usá-lo como ferramenta para consolidar o domínio élfico definitivo.
 
@@ -1872,7 +1643,7 @@ O que avançava não era um exército. Não tomava territórios nem exigia rendi
 
 Em Pelágos é chamada simplesmente de A Guerra ou A Grande Guerra. Não há nome oficial — e Pelágos, coletivamente, não parece querer um.
 
-##### Segredos
+#### Segredos
 
 **🔒 Camada 1** — *Os registros de Velmarch têm lacunas*
 Seções dos arquivos históricos de Velmarch sobre A Grande Guerra estão marcadas como 'classificação restrita'. Estudiosos que tentam acessá-las são redirecionados. Qualquer pesquisador que perceba o padrão entende que algo está sendo suprimido.
@@ -1894,10 +1665,6 @@ A Grande Guerra terminou não com a destruição de O Peso, mas com seu selament
 **Resultado:** Criação de Pelágos / Selo de O Peso
 **Período:** A Maré Alta — O Marco Zero da História de Pelágos
 
-**Data:** Há séculos — geração de Himmel Varek
-**Agente:** Himmel Varek
-**Resultado:** Criação de Pelágos / Selo de O Peso
-
 #### A Evolução do Nome
 
 |Época                          |Nome                          |Observação                                                                            |
@@ -1910,25 +1677,6 @@ A Grande Guerra terminou não com a destruição de O Peso, mas com seu selament
 #### Segredos
 
 **🔒 Camada 1** — *A Maré Alta teve uma data*
-Registros de diversas ilhas convergem numa data aproximada para A Maré Alta — sete dias de subida das águas. Esse nível de precisão sugere que houve testemunhas que sobreviveram e documentaram.
-
-**🔒 Camada 2** — *O nome original era diferente*
-Em registros muito antigos de ilhas não controladas por Velmarch, o evento é chamado de *O Grande Abraço* ou *O Grande Alagamento* — sugerindo que houve um nome ainda mais antigo, anterior a esses.
-
-**🔒 Camada 3** — *Foi um sacrifício voluntário*
-O nome original completo — *O Abraço das Águas Eternas* — e seu significado estão preservados apenas no tomo de Himmel em Velmyr, e na memória de Frieren Talion. Quando os jogadores descobrirem isso, a moral da campanha vira de cabeça para baixo.
-
-##### Descrição Pública
-
-O evento que dividiu a história de Pelágos em antes e depois. Conhecido popularmente como A Maré Alta — o nome poético que Himmel escolheu foi gradualmente apagado pela oralidade até virar uma força da natureza sem autor, sem intenção, sem amor.
-
-Himmel realizou o ritual no pico mais alto do continente — hoje a ilha de Velmyr. Usou sua própria vida como catalisador. O sacrifício precisava ser voluntário e partir de alguém que amasse o mundo o suficiente para destruí-lo. As águas subiram em sete dias. Cidades inteiras afundaram. Civilizações viraram lendas. Pelágos nasceu dos fragmentos do que sobrou.
-
-O nome original — O Abraço das Águas Eternas — foi gradualmente apagado: virou O Grande Abraço nos tomos acadêmicos, O Grande Alagamento na tradição oral, e finalmente A Maré Alta no uso popular. Sem autor, sem intenção, sem amor. Uma força da natureza com nome de previsão do tempo.
-
-##### Segredos
-
-**🔒 Camada 1** — *A Maré Alta teve uma data*
 Registros de diversas ilhas convergem numa data aproximada para A Maré Alta — sete dias de subida das águas. Esse nível de precisão sugere que houve testemunhas que sobreviveram e documentaram. Não foi um fenômeno instantâneo.
 
 **🔒 Camada 2** — *O nome original era diferente*
@@ -1936,6 +1684,14 @@ Em registros muito antigos de ilhas não controladas por Velmarch, o evento é c
 
 **🔒 Camada 3** — *Foi um sacrifício voluntário*
 O nome original completo — O Abraço das Águas Eternas — e seu significado estão preservados apenas no tomo de Himmel em Velmyr, e na memória de Frieren Talion. Himmel escolheu esse nome para ela. Quando os jogadores descobrirem isso, a moral da campanha vira de cabeça para baixo. Frieren estava presente. Viu as águas subirem do pico mais alto de Reva, com Fern nos braços.
+
+#### Descrição
+
+O evento que dividiu a história de Pelágos em antes e depois. Conhecido popularmente como A Maré Alta — o nome poético que Himmel escolheu foi gradualmente apagado pela oralidade até virar uma força da natureza sem autor, sem intenção, sem amor.
+
+Himmel realizou o ritual no pico mais alto do continente — hoje a ilha de Velmyr. Usou sua própria vida como catalisador. O sacrifício precisava ser voluntário e partir de alguém que amasse o mundo o suficiente para destruí-lo. As águas subiram em sete dias. Cidades inteiras afundaram. Civilizações viraram lendas. Pelágos nasceu dos fragmentos do que sobrou.
+
+O nome original — O Abraço das Águas Eternas — foi gradualmente apagado: virou O Grande Abraço nos tomos acadêmicos, O Grande Alagamento na tradição oral, e finalmente A Maré Alta no uso popular. Sem autor, sem intenção, sem amor. Uma força da natureza com nome de previsão do tempo.
 
 -----
 <!-- /AUTO:event:abraco-aguas-eternas -->
@@ -1946,22 +1702,7 @@ O nome original completo — O Abraço das Águas Eternas — e seu significado 
 **Período:** Pós-Maré Alta — imediata e contínua até o presente
 **Causa:** Ódio acumulado pelos povos que perderam tudo
 
-**Período:** Imediatamente após a Maré Alta — continua até o presente
-**Causa:** Ódio acumulado pelos povos que perderam tudo
-
 #### Descrição
-
-Os elfos sobreviventes foram caçados até quase o fim — não por decreto, mas pelo ódio acumulado de povos que haviam perdido tudo. Hoje, elfos são raridade tão extrema que mercadores inescrupulosos pagam fortunas por eles — vendidos como troféus vivos a burgueses próximos a Velmyr.
-
-#### Segredos
-
-**🔒 Camada 1** — *O tráfico existe e é tolerado*
-A Corrente proíbe oficialmente o tráfico élfico. Qualquer investigação portuária revela que a proibição não é aplicada quando o comprador tem posição suficiente.
-
-**🔒 Camada 2** — *A família Talion é a maior colônia élfica viva*
-Se Velmarch descobrisse Reva, seria o fim dos Talion. A existência de uma colônia organizada e funcional seria considerada ameaça a ser eliminada, não uma anomalia a ser ignorada.
-
-##### Descrição Pública
 
 Os elfos sobreviventes à Maré Alta foram caçados até quase o fim. Não por ordem de nenhum rei ou decreto formal — pelo ódio acumulado de povos que haviam perdido tudo por causa dos magistas elfos que invocaram O Peso. A caça durou gerações.
 
@@ -1969,7 +1710,7 @@ Hoje, elfos são raridade tão extrema que mercadores inescrupulosos pagam fortu
 
 A Corrente proíbe oficialmente o tráfico élfico. Extraoficialmente, fecha os olhos quando o comprador é suficientemente rico.
 
-##### Segredos
+#### Segredos
 
 **🔒 Camada 1** — *O tráfico existe e é tolerado*
 A Corrente proíbe oficialmente o tráfico élfico. Qualquer investigação portuária séria revela que a proibição não é aplicada quando o comprador tem posição suficiente. O mercado existe, é discreto, e está próximo das esferas de poder de Velmarch.

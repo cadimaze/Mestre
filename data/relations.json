@@ -808,5 +808,45 @@
     "type": "personal",
     "secret": false,
     "description": "Deu ao grupo um casco novo e ficou para trás no porto enquanto A Corrente fechava o cerco."
+  },
+  {
+    "sourceId": "vargan-drell",
+    "sourceType": "character",
+    "targetId": "orwin",
+    "targetType": "character",
+    "label": "aprisiona e obriga a trabalhar",
+    "type": "secret",
+    "secret": true,
+    "description": "Vargan mantém Orwin dentro da Grande Forja para extrair seu conhecimento. A colaboração do inventor com o Domínio é coerção, não adesão."
+  },
+  {
+    "sourceId": "velmarch",
+    "sourceType": "faction",
+    "targetId": "vargan-drell",
+    "targetType": "character",
+    "label": "mantém vivo sob ameaça",
+    "type": "secret",
+    "secret": true,
+    "description": "A forja sustenta a alma de Vargan. Se ele deixar de cooperar, o Domínio a apaga e o extingue — a sobrevivência dele é a coleira."
+  },
+  {
+    "sourceId": "vargan-drell",
+    "sourceType": "character",
+    "targetId": "ancoradouro-de-latao",
+    "targetType": "location",
+    "label": "é a Grande Forja de",
+    "type": "secret",
+    "secret": true,
+    "description": "Cedeu a forma física e se fundiu à fundição central da ilha. Seu corpo aparente é manifestação; a existência real é a forja."
+  },
+  {
+    "sourceId": "orwin",
+    "sourceType": "character",
+    "targetId": "ancoradouro-de-latao",
+    "targetType": "location",
+    "label": "é a estátua sem nome de",
+    "type": "personal",
+    "secret": false,
+    "description": "O gnomo de chapéu largo da praça central é Orwin. Velmarch tentou remover a estátua duas vezes; os artesãos mais velhos sabem de quem é e não dizem."
   }
 ]

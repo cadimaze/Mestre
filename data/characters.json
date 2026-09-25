@@ -133,6 +133,59 @@
     "id": "aldric-xiv"
   },
   {
+    "id": "amelia",
+    "name": "Amelia",
+    "role": "Capitã de extermínio da Corte das Cortesãs",
+    "status": "Desaparecida",
+    "faction": "corte-cortesas",
+    "imageUrl": "",
+    "locations": [
+      "kaldera"
+    ],
+    "events": [],
+    "description": "Nos arquivos da Corrente ela não existe. Nos de Marvosa, menos ainda. O que existe é uma mulher que esteve no escritório do Governador Tulo Bresh na noite em que ele morreu — que serviu a bebida, que riu na hora certa, e que saiu pela porta lateral enquanto um orc de duzentos quilos ocupava a atenção de todos na sala.\n\nQuem tenta descrevê-la não consegue duas vezes igual. Alta, dizem uns; de estatura comum, dizem outros. Cabelo escuro, ou castanho, ou preso demais para saber. As testemunhas de Kaldera só concordam no detalhe mais inútil possível: ela ouvia. Falava pouco. Ouvia com o corpo inteiro, como quem está trabalhando.\n\nDentro da Corte das Cortesãs, Amelia não é informante. As cortesãs que coletam informação respondem a coordenadoras; as coordenadoras respondem a Marvosa. As que matam respondem a Amelia. Gloria Vittar, quando é obrigada a nomear esse braço, chama-o de 'a última ferramenta' — e Amelia é quem o segura.\n\nDesde a noite de Kaldera, ninguém da Corte a viu.",
+    "personality": "Paciente de um jeito que assusta quem entende o que está vendo. Amelia não improvisa e não se apressa: prepara, observa, e age uma vez só. Trata o próprio ofício como ofício — não sente prazer em matar e não sente culpa, o que a torna bem pior do que alguém que sentisse qualquer um dos dois.\n\nCom as mulheres sob seu comando é generosa e exigente na mesma medida; várias devem a vida a ela e todas sabem disso. Com Gloria Vittar era leal — não por afeto, mas porque Gloria era a única pessoa em Pelágos cujo julgamento ela respeitava mais do que o próprio.\n\nFoi por isso que a noite de Kaldera quebrou alguma coisa. Amelia agiu sem ordem pela primeira vez em vinte anos. E não voltou para explicar.",
+    "secretsList": [
+      {
+        "id": "amelia-s1",
+        "text": "Camada 1 — Foi Amelia quem matou Tulo Bresh: A cortesã que estava na sala serviu a bebida, esperou o combate começar e saiu pela porta lateral. O veneno já estava no copo havia dez minutos. Qualquer investigação competente do escritório — dosagem, tempo de ação, quem tocou o quê — chega nela e não nos jogadores. O problema é que ninguém em Kaldera está investigando com competência: estão investigando com pressa.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      },
+      {
+        "id": "amelia-s2",
+        "text": "Camada 2 — Ela agiu por conta própria: Ninguém mandou matar Tulo. Amelia estava ali para ouvir, e ouviu — quando Soren Mael mencionou o artefato na frente do Governador, ela entendeu na hora o que aquilo significava. Um governador corrupto, endividado e falante que sabe da existência do tomo não é um ativo; é um vazamento com pernas. Ela fechou o vazamento no mesmo expediente. Foi a primeira ordem que deu a si mesma em vinte anos de Corte.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      },
+      {
+        "id": "amelia-s3",
+        "text": "Camada 3 — Gloria perdeu a própria capitã: A acusação contra os jogadores não foi só oportunismo elegante — foi contenção de dano. Se A Corrente investigasse Kaldera a sério, chegaria à Corte; da Corte, a Marvosa. Jogar a culpa em cinco fugitivos comprou tempo. Mas Gloria não sabe onde Amelia está, não sabe o que ela vai fazer com o que ouviu, e não pode mandar a Corte atrás da própria capitã de extermínio sem rachar a Corte ao meio. Ela precisa que alguém descartável encontre Amelia primeiro. Os jogadores são, por acaso, perfeitamente descartáveis — e já estão marcados pelo crime dela.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      },
+      {
+        "id": "amelia-s4",
+        "text": "Camada 4 — Ela não está fugindo, está na frente: Amelia ouviu na sala de Tulo exatamente o que os jogadores ouviram: que existe um tomo, que a Casa Varek o guarda, que vale mais do que qualquer coisa em Pelágos. Não saiu de Kaldera para se esconder — saiu para chegar primeiro. Onde os jogadores tiveram que descobrir a rota, ela teve vinte anos de rede de informantes em quatro ilhas. Use-a como sombra: um alvo já morto que eles iam interrogar, um nome riscado num registro que deveriam ler, uma porta arrombada antes deles. O mestre decide para quem ela pretende vender o que encontrar — para Gloria (recompra do próprio perdão), para Aldric (o lance mais alto de Pelágos), ou para ninguém.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      }
+    ],
+    "secrets": "SEGREDO DO MESTRE: Amelia é a assassina de Tulo Bresh e a capitã do braço de extermínio da Corte das Cortesãs. Matou por iniciativa própria ao ouvir Soren falar do artefato — a primeira vez que agiu sem ordem de Gloria Vittar. Está desaparecida desde a noite de Kaldera e não está se escondendo: está indo atrás do tomo com vinte anos de rede de informantes de vantagem. Gloria precisa encontrá-la e não pode usar a própria Corte para isso, o que faz dos jogadores a ferramenta óbvia no Arco 5 — eles carregam a culpa do crime dela e são descartáveis.",
+    "visibility": {
+      "mode": "all",
+      "playerIds": []
+    }
+  },
+  {
     "image": "cade-varek.jpg",
     "status": "Vivo",
     "role": "Príncipe Herdeiro de Velmarch",
@@ -561,6 +614,57 @@
     "status": "Morto"
   },
   {
+    "id": "hitch-fogo-fatuo",
+    "name": "Hitch Fogo-Fátuo",
+    "role": "Imediato de Gangplank a bordo do Dead Pool",
+    "status": "Morto",
+    "faction": "mare-negra",
+    "imageUrl": "",
+    "locations": [],
+    "events": [],
+    "description": "O segundo homem do Dead Pool era baixo, seco e descalço, e nunca vestiu mais do que uma túnica de linho cru num navio onde todo mundo usava couro contra o vento. Movia-se como monge — porque era um, pelo menos no treino: golpeava de mãos abertas, respirava contando, e passava madrugadas inteiras sentado na proa sem piscar.\n\nO que a tripulação não comentava em voz alta é que a madeira ficava morna onde ele pisava. Que ele tirava a túnica quando o mar estava frio demais para os outros. Que a sombra dele, dependendo da luz, caía para o lado errado.\n\nChamavam-no de Fogo-Fátuo pelo nome que os marinheiros dão à luz que aparece nos mastros antes da tempestade — a luz que promete terra e entrega naufrágio. Ninguém lembrava quem tinha dado o apelido. O próprio Hitch atendia por ele com uma paciência quase divertida, do jeito que um adulto atende pelo nome que uma criança inventou.\n\nMorreu duas vezes na mesma noite, nas mãos dos jogadores. A primeira como homem. A segunda como o que era.",
+    "personality": "Cordial, contido, quase gentil — e obediente a Gangplank de um jeito que não combinava com o resto dele. Hitch nunca discutiu uma ordem, nunca hesitou, nunca demonstrou ambição própria. Num navio inteiro de homens que seguiam Gangplank por medo, ele era o único que parecia seguir por outra coisa. Quem reparou concluiu que era devoção, e errou pela metade: não era devoção, era corrente.\n\nSob o autocontrole havia uma pressão constante, perceptível para quem soubesse olhar — como estar perto de um forno fechado. Falava devagar porque falar depressa custava. Sorria pouco pelo mesmo motivo.",
+    "secretsList": [
+      {
+        "id": "hitch-s1",
+        "text": "Camada 1 — A forma humana era a jaula, não um disfarce: Hitch não era um homem com poderes de fogo. Era fogo com forma de homem — e a forma foi imposta, não escolhida. A disciplina monástica não era filosofia: era fechadura. O treino, a respiração contada, a economia de gestos e de palavras, tudo aquilo era o trabalho contínuo de manter comprimido dentro de um corpo alguma coisa que não cabia nele.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      },
+      {
+        "id": "hitch-s2",
+        "text": "Camada 2 — Quem o prendeu foi Gangplank: Um pirata não faz isso. Gangplank tem, ou teve, um meio de prender uma criatura elemental dentro de uma forma e mantê-la ali por anos — e isso não aparece em lugar nenhum na reputação pública dele. Quem sabe fazer uma vez sabe fazer de novo. A pergunta que fica aberta é o que mais anda no convés do Dead Pool com cara de gente, e o que Gangplank teve que entregar em troca do método.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      },
+      {
+        "id": "hitch-s3",
+        "text": "Camada 3 — Matá-lo não destruiu; abriu: A primeira morte quebrou a jaula, não o prisioneiro. O que se ergueu do corpo foi o que estava trancado ali dentro havia anos, agora sem forma humana para contê-lo — e sem nada que Gangplank pudesse fazer a respeito. Do ponto de vista de Hitch, os jogadores não o mataram: soltaram-no. A segunda luta foi contra uma coisa livre pela primeira vez em muito tempo e com muito a cobrar.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      },
+      {
+        "id": "hitch-s4",
+        "text": "Camada 4 — As cinzas desceram: Quando a segunda forma caiu, as cinzas não se dispersaram no vento. Adensaram-se em fumaça pesada e foram puxadas para baixo — contra o vento, contra a corrente, para o fundo. Fogo não afunda. Alguma coisa recolheu. É a primeira evidência sensorial que os jogadores têm de que o fundo do oceano de Pelágos não é fundo: é tampa. O Peso não se alimentou por acaso — uma essência elemental solta perto da água é exatamente o tipo de coisa que o selo de Himmel não foi feito para filtrar.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      }
+    ],
+    "secrets": "SEGREDO DO MESTRE: Hitch era uma criatura de fogo aprisionada por Gangplank numa forma humana; o treino monástico era o mecanismo da prisão. Morto pelos jogadores, a primeira morte apenas rompeu a jaula e liberou a segunda forma. Ao cair de vez, as cinzas viraram fumaça densa e foram sugadas para o fundo do oceano contra vento e corrente — primeiro sinal concreto de O Peso (Thurvael) para o grupo, e a prova de que Gangplank domina um método de aprisionar elementais que não consta em lugar nenhum da sua reputação.",
+    "visibility": {
+      "mode": "all",
+      "playerIds": []
+    }
+  },
+  {
     "faction": null,
     "personality": "Meticuloso e honesto intelectualmente — preferia dizer que não sabia a fingir certeza. Trabalhava sozinho, sem vínculos com nenhuma facção, o que lhe dava acesso a arquivos que pesquisadores ligados ao Domínio não consultariam.",
     "role": "Estudioso errante",
@@ -606,6 +710,35 @@
       }
     ],
     "id": "o-peso"
+  },
+  {
+    "id": "orwin",
+    "name": "Orwin, o Chapéu Largo",
+    "role": "Avô de Bizo / Inventor prisioneiro",
+    "status": "Vivo",
+    "faction": "",
+    "imageUrl": "",
+    "locations": [
+      "ancoradouro-de-latao"
+    ],
+    "events": [],
+    "description": "Orwin é o avô de Bizo, um inventor do Ancoradouro de Latão ligado à tradição familiar de pesquisas sobre química de pólvora. É ele o gnomo de chapéu largo representado na estátua que Velmarch tentou remover. Seu nome foi apagado da memória pública da praça, mas os artesãos mais velhos ainda sabem quem ela homenageia.",
+    "personality": "",
+    "secretsList": [
+      {
+        "id": "orwin-s1",
+        "text": "Camada 1 — O inventor está preso: Orwin está vivo e é mantido prisioneiro por Vargan dentro da Grande Forja, obrigado a trabalhar para ele. Sua colaboração não é uma adesão voluntária ao Domínio de Velmarch. Vargan precisa do conhecimento do inventor e o mantém sob coerção para atender aos interesses do Domínio.\n\n> **[NOTA DO MESTRE]** A invenção específica exigida de Orwin e sua relação exata com a produção fora dos registros ainda não foram definidas. Não assumir como estabelecidos um motor, canhão ou bomba. O Caderno de Proporções e sua tabela de conversão ausente permanecem ganchos existentes.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      }
+    ],
+    "secrets": "SEGREDO DO MESTRE: Orwin está vivo, preso por Vargan Drell dentro da Grande Forja e forçado a trabalhar para o Domínio. A estátua sem nome da praça central é dele. Para Bizo, é o gancho pessoal do arco: o avô que a ilha inteira finge não lembrar está a poucos metros da fundição.",
+    "visibility": {
+      "mode": "hidden",
+      "playerIds": []
+    }
   },
   {
     "faction": null,
@@ -790,6 +923,55 @@
     "id": "telvis-oran"
   },
   {
+    "id": "thorne-mare",
+    "name": "Thorne Maré",
+    "role": "Mestre carpinteiro naval de Aethon",
+    "status": "Morto",
+    "faction": "",
+    "imageUrl": "",
+    "description": "O melhor carpinteiro naval de Aethon — e, segundo muitos, das sete ilhas ao redor. Trabalha nos estaleiros da Costa Norte desde antes de saber ler mapas, com mãos que conhecem a madeira melhor do que conhecem palavras. Os barcos que saem de suas mãos parecem querer flutuar: absorvem tempestades que destroçariam outro casco e resistem ao sal com uma obstinação que alguns marinheiros juram ser magia. Não é magia — é uma vida inteira de ofício passado em silêncio, de pai para filho.\n\nHoje os estaleiros produzem para A Corrente, em cotas que ninguém negociou e ninguém pode recusar. Thorne ainda é o melhor, e por isso A Corrente nunca o tirou de lá. Trabalha. Fala o necessário. E não comenta sobre o rapaz que sumiu num de seus barcos há oito anos.\n\nÉ pai de Cid. O casco da Brisa Vermilha — o barco que o filho roubou ao fugir — saiu das mãos de Thorne; a vela vermelha bordada era da mãe. Oito anos de consertos tornaram o barco outra coisa. A alma, não.\n\nMorreu em Aethon, na noite em que o filho voltou. Deu ao grupo um casco novo — o melhor que suas mãos ainda conseguiam — e ficou para trás cobrindo a saída do porto enquanto A Corrente fechava o cerco. Não disse nada memorável. Não era homem disso. Empurrou o barco, acenou uma vez e voltou a andar em direção às luzes.",
+    "personality": "Calado, preciso, econômico em tudo — em palavras, em gestos, em afeto demonstrado. Não fala mais do que o necessário, e quase nunca fala de si. Não é frieza: é um homem que aprendeu que algumas dores se carregam melhor sem nome. Respeita quem trabalha bem e desconfia de quem fala demais. Quando o assunto chega perto de Cid, ele muda de assunto com a naturalidade de quem já fez isso mil vezes.",
+    "secretsList": [
+      {
+        "id": "thorne-s1",
+        "text": "Camada 1 — Ele não fala de Cid de propósito: Thorne não esqueceu o filho. Cala-se sobre ele porque não quer que a pergunta seja feita — qualquer pergunta. Quem insistir vai encontrar uma parede educada e intransponível. Quem ganhar sua confiança, com tempo e trabalho, pode encontrar um homem que ainda guarda as ferramentas do filho exatamente onde ele as deixou.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      },
+      {
+        "id": "thorne-s2",
+        "text": "Camada 2 — Liris foi levada: dois meses depois da fuga de Cid, A Corrente registrou a esposa de Thorne, Liris Maré, como 'voluntariamente realocada' para as oficinas do Ancoradouro de Latão, onde suas habilidades de tecedora de velas seriam 'mais bem aproveitadas' na produção de velas militares. Ela está lá até hoje, costurando velas de Velmarch. Thorne não tentou ir atrás. Ou não pôde. Os padrões de vela de Liris ainda decoram janelas de outras casas de Aethon.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      },
+      {
+        "id": "thorne-s3",
+        "text": "Camada 3 — O nome de Cid ainda está nos arquivos: 'Cid Maré, navegador de Aethon' consta nos registros portuários do Domínio como 'desertado de recrutamento obrigatório'. A recompensa é pequena demais para que alguém vá atrás — mas os registros d'A Corrente não somem por esquecimento. Qualquer oficial que conecte 'Cid' a 'Aethon' pode confirmar tudo nos arquivos em poucas horas. Thorne sabe que o nome do filho continua ali, esperando.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      },
+      {
+        "id": "thorne-s4",
+        "text": "Camada 4 — Liris ainda não sabe: Thorne morreu em Aethon e a esposa continua no Ancoradouro de Latão, costurando velas militares para Velmarch, sem notícia nenhuma. Não há serviço de correio entre uma ilha ocupada e outra para um carpinteiro morto num incidente que A Corrente vai registrar como resistência armada. Se os jogadores chegarem ao Ancoradouro de Latão — e é exatamente para lá que estão indo — são eles que carregam a notícia. Cid decide se conta, como conta, e se conta antes ou depois de pedir ajuda a ela.",
+        "visibility": {
+          "mode": "hidden",
+          "playerIds": []
+        }
+      }
+    ],
+    "visibility": {
+      "mode": "all",
+      "playerIds": []
+    },
+    "secrets": "SEGREDO DO MESTRE: Thorne Maré morreu em Aethon cobrindo a fuga dos jogadores, depois de lhes dar um barco novo. Liris, no Ancoradouro de Latão, não sabe — e os jogadores são o único canal possível para a notícia. O registro de Cid como desertor de recrutamento obrigatório continua ativo nos arquivos portuários do Domínio, e a morte de Thorne provavelmente entrou nos mesmos arquivos como resistência armada, o que aumenta o preço da cabeça do filho."
+  },
+  {
     "image": "tulo-bresh.jpg",
     "status": "Morto",
     "secretsVisibility": {
@@ -877,155 +1059,47 @@
     "id": "vaelindra-cass"
   },
   {
-    "id": "thorne-mare",
-    "name": "Thorne Maré",
-    "role": "Mestre carpinteiro naval de Aethon",
-    "status": "Morto",
-    "faction": "",
-    "imageUrl": "",
-    "description": "O melhor carpinteiro naval de Aethon — e, segundo muitos, das sete ilhas ao redor. Trabalha nos estaleiros da Costa Norte desde antes de saber ler mapas, com mãos que conhecem a madeira melhor do que conhecem palavras. Os barcos que saem de suas mãos parecem querer flutuar: absorvem tempestades que destroçariam outro casco e resistem ao sal com uma obstinação que alguns marinheiros juram ser magia. Não é magia — é uma vida inteira de ofício passado em silêncio, de pai para filho.\n\nHoje os estaleiros produzem para A Corrente, em cotas que ninguém negociou e ninguém pode recusar. Thorne ainda é o melhor, e por isso A Corrente nunca o tirou de lá. Trabalha. Fala o necessário. E não comenta sobre o rapaz que sumiu num de seus barcos há oito anos.\n\nÉ pai de Cid. O casco da Brisa Vermilha — o barco que o filho roubou ao fugir — saiu das mãos de Thorne; a vela vermelha bordada era da mãe. Oito anos de consertos tornaram o barco outra coisa. A alma, não.\n\nMorreu em Aethon, na noite em que o filho voltou. Deu ao grupo um casco novo — o melhor que suas mãos ainda conseguiam — e ficou para trás cobrindo a saída do porto enquanto A Corrente fechava o cerco. Não disse nada memorável. Não era homem disso. Empurrou o barco, acenou uma vez e voltou a andar em direção às luzes.",
-    "personality": "Calado, preciso, econômico em tudo — em palavras, em gestos, em afeto demonstrado. Não fala mais do que o necessário, e quase nunca fala de si. Não é frieza: é um homem que aprendeu que algumas dores se carregam melhor sem nome. Respeita quem trabalha bem e desconfia de quem fala demais. Quando o assunto chega perto de Cid, ele muda de assunto com a naturalidade de quem já fez isso mil vezes.",
-    "secretsList": [
-      {
-        "id": "thorne-s1",
-        "text": "Camada 1 — Ele não fala de Cid de propósito: Thorne não esqueceu o filho. Cala-se sobre ele porque não quer que a pergunta seja feita — qualquer pergunta. Quem insistir vai encontrar uma parede educada e intransponível. Quem ganhar sua confiança, com tempo e trabalho, pode encontrar um homem que ainda guarda as ferramentas do filho exatamente onde ele as deixou.",
-        "visibility": {
-          "mode": "hidden",
-          "playerIds": []
-        }
-      },
-      {
-        "id": "thorne-s2",
-        "text": "Camada 2 — Liris foi levada: dois meses depois da fuga de Cid, A Corrente registrou a esposa de Thorne, Liris Maré, como 'voluntariamente realocada' para as oficinas do Ancoradouro de Latão, onde suas habilidades de tecedora de velas seriam 'mais bem aproveitadas' na produção de velas militares. Ela está lá até hoje, costurando velas de Velmarch. Thorne não tentou ir atrás. Ou não pôde. Os padrões de vela de Liris ainda decoram janelas de outras casas de Aethon.",
-        "visibility": {
-          "mode": "hidden",
-          "playerIds": []
-        }
-      },
-      {
-        "id": "thorne-s3",
-        "text": "Camada 3 — O nome de Cid ainda está nos arquivos: 'Cid Maré, navegador de Aethon' consta nos registros portuários do Domínio como 'desertado de recrutamento obrigatório'. A recompensa é pequena demais para que alguém vá atrás — mas os registros d'A Corrente não somem por esquecimento. Qualquer oficial que conecte 'Cid' a 'Aethon' pode confirmar tudo nos arquivos em poucas horas. Thorne sabe que o nome do filho continua ali, esperando.",
-        "visibility": {
-          "mode": "hidden",
-          "playerIds": []
-        }
-      },
-      {
-        "id": "thorne-s4",
-        "text": "Camada 4 — Liris ainda não sabe: Thorne morreu em Aethon e a esposa continua no Ancoradouro de Latão, costurando velas militares para Velmarch, sem notícia nenhuma. Não há serviço de correio entre uma ilha ocupada e outra para um carpinteiro morto num incidente que A Corrente vai registrar como resistência armada. Se os jogadores chegarem ao Ancoradouro de Latão — e é exatamente para lá que estão indo — são eles que carregam a notícia. Cid decide se conta, como conta, e se conta antes ou depois de pedir ajuda a ela.",
-        "visibility": {
-          "mode": "hidden",
-          "playerIds": []
-        }
-      }
-    ],
-    "visibility": {
-      "mode": "all",
-      "playerIds": []
-    },
-    "secrets": "SEGREDO DO MESTRE: Thorne Maré morreu em Aethon cobrindo a fuga dos jogadores, depois de lhes dar um barco novo. Liris, no Ancoradouro de Latão, não sabe — e os jogadores são o único canal possível para a notícia. O registro de Cid como desertor de recrutamento obrigatório continua ativo nos arquivos portuários do Domínio, e a morte de Thorne provavelmente entrou nos mesmos arquivos como resistência armada, o que aumenta o preço da cabeça do filho."
-  },
-  {
-    "id": "amelia",
-    "name": "Amelia",
-    "role": "Capitã de extermínio da Corte das Cortesãs",
-    "status": "Desaparecida",
-    "faction": "corte-cortesas",
+    "id": "vargan-drell",
+    "name": "Vargan Drell",
+    "role": "Ferromante antigo / Antagonista do Ancoradouro de Latão",
+    "status": "Vivo",
+    "faction": "velmarch",
     "imageUrl": "",
     "locations": [
-      "kaldera"
+      "ancoradouro-de-latao"
     ],
     "events": [],
-    "description": "Nos arquivos da Corrente ela não existe. Nos de Marvosa, menos ainda. O que existe é uma mulher que esteve no escritório do Governador Tulo Bresh na noite em que ele morreu — que serviu a bebida, que riu na hora certa, e que saiu pela porta lateral enquanto um orc de duzentos quilos ocupava a atenção de todos na sala.\n\nQuem tenta descrevê-la não consegue duas vezes igual. Alta, dizem uns; de estatura comum, dizem outros. Cabelo escuro, ou castanho, ou preso demais para saber. As testemunhas de Kaldera só concordam no detalhe mais inútil possível: ela ouvia. Falava pouco. Ouvia com o corpo inteiro, como quem está trabalhando.\n\nDentro da Corte das Cortesãs, Amelia não é informante. As cortesãs que coletam informação respondem a coordenadoras; as coordenadoras respondem a Marvosa. As que matam respondem a Amelia. Gloria Vittar, quando é obrigada a nomear esse braço, chama-o de 'a última ferramenta' — e Amelia é quem o segura.\n\nDesde a noite de Kaldera, ninguém da Corte a viu.",
-    "personality": "Paciente de um jeito que assusta quem entende o que está vendo. Amelia não improvisa e não se apressa: prepara, observa, e age uma vez só. Trata o próprio ofício como ofício — não sente prazer em matar e não sente culpa, o que a torna bem pior do que alguém que sentisse qualquer um dos dois.\n\nCom as mulheres sob seu comando é generosa e exigente na mesma medida; várias devem a vida a ela e todas sabem disso. Com Gloria Vittar era leal — não por afeto, mas porque Gloria era a única pessoa em Pelágos cujo julgamento ela respeitava mais do que o próprio.\n\nFoi por isso que a noite de Kaldera quebrou alguma coisa. Amelia agiu sem ordem pela primeira vez em vinte anos. E não voltou para explicar.",
+    "description": "Vargan se apresenta por meio de um corpo físico que pode enfrentar os jogadores. Para quem desconhece sua natureza, parece um ferromante a serviço de Velmarch, responsável por manter a produção e os artesãos sob controle.",
+    "personality": "",
     "secretsList": [
       {
-        "id": "amelia-s1",
-        "text": "Camada 1 — Foi Amelia quem matou Tulo Bresh: A cortesã que estava na sala serviu a bebida, esperou o combate começar e saiu pela porta lateral. O veneno já estava no copo havia dez minutos. Qualquer investigação competente do escritório — dosagem, tempo de ação, quem tocou o quê — chega nela e não nos jogadores. O problema é que ninguém em Kaldera está investigando com competência: estão investigando com pressa.",
+        "id": "vargan-s1",
+        "text": "Camada 1 — O carcereiro de Orwin: Vargan mantém Orwin, avô de Bizo, aprisionado e o obriga a trabalhar. A presença do inventor na produção do Domínio não prova lealdade: ele é um prisioneiro.",
         "visibility": {
           "mode": "hidden",
           "playerIds": []
         }
       },
       {
-        "id": "amelia-s2",
-        "text": "Camada 2 — Ela agiu por conta própria: Ninguém mandou matar Tulo. Amelia estava ali para ouvir, e ouviu — quando Soren Mael mencionou o artefato na frente do Governador, ela entendeu na hora o que aquilo significava. Um governador corrupto, endividado e falante que sabe da existência do tomo não é um ativo; é um vazamento com pernas. Ela fechou o vazamento no mesmo expediente. Foi a primeira ordem que deu a si mesma em vinte anos de Corte.",
+        "id": "vargan-s2",
+        "text": "Camada 2 — Vargan é a forja: Vargan é um ferromante antigo que cedeu sua forma física e se fundiu à Grande Forja. Seu corpo aparente é uma manifestação física da entidade; sua verdadeira existência está na própria forja. Enfrentar esse corpo não significa enfrentar a totalidade de Vargan.",
         "visibility": {
           "mode": "hidden",
           "playerIds": []
         }
       },
       {
-        "id": "amelia-s3",
-        "text": "Camada 3 — Gloria perdeu a própria capitã: A acusação contra os jogadores não foi só oportunismo elegante — foi contenção de dano. Se A Corrente investigasse Kaldera a sério, chegaria à Corte; da Corte, a Marvosa. Jogar a culpa em cinco fugitivos comprou tempo. Mas Gloria não sabe onde Amelia está, não sabe o que ela vai fazer com o que ouviu, e não pode mandar a Corte atrás da própria capitã de extermínio sem rachar a Corte ao meio. Ela precisa que alguém descartável encontre Amelia primeiro. Os jogadores são, por acaso, perfeitamente descartáveis — e já estão marcados pelo crime dela.",
-        "visibility": {
-          "mode": "hidden",
-          "playerIds": []
-        }
-      },
-      {
-        "id": "amelia-s4",
-        "text": "Camada 4 — Ela não está fugindo, está na frente: Amelia ouviu na sala de Tulo exatamente o que os jogadores ouviram: que existe um tomo, que a Casa Varek o guarda, que vale mais do que qualquer coisa em Pelágos. Não saiu de Kaldera para se esconder — saiu para chegar primeiro. Onde os jogadores tiveram que descobrir a rota, ela teve vinte anos de rede de informantes em quatro ilhas. Use-a como sombra: um alvo já morto que eles iam interrogar, um nome riscado num registro que deveriam ler, uma porta arrombada antes deles. O mestre decide para quem ela pretende vender o que encontrar — para Gloria (recompra do próprio perdão), para Aldric (o lance mais alto de Pelágos), ou para ninguém.",
+        "id": "vargan-s3",
+        "text": "Camada 3 — A sobrevivência como coleira: O Domínio de Velmarch mantém Vargan trabalhando em troca de continuar vivo. A forja mantém sua alma viva; se ele deixar de cooperar, o Domínio apaga a forja e encerra sua existência. Vargan aprisiona Orwin enquanto ele próprio permanece preso à ameaça de ser extinto.",
         "visibility": {
           "mode": "hidden",
           "playerIds": []
         }
       }
     ],
-    "secrets": "SEGREDO DO MESTRE: Amelia é a assassina de Tulo Bresh e a capitã do braço de extermínio da Corte das Cortesãs. Matou por iniciativa própria ao ouvir Soren falar do artefato — a primeira vez que agiu sem ordem de Gloria Vittar. Está desaparecida desde a noite de Kaldera e não está se escondendo: está indo atrás do tomo com vinte anos de rede de informantes de vantagem. Gloria precisa encontrá-la e não pode usar a própria Corte para isso, o que faz dos jogadores a ferramenta óbvia no Arco 5 — eles carregam a culpa do crime dela e são descartáveis.",
+    "secrets": "SEGREDO DO MESTRE: Vargan é a própria Grande Forja — cedeu a forma física e se fundiu a ela; o corpo que luta é manifestação, não a entidade. Serve a Velmarch para sobreviver: se parar de cooperar, o Domínio apaga a forja e o extingue. É carcereiro de Orwin enquanto é, ele mesmo, prisioneiro de uma sentença suspensa.",
     "visibility": {
-      "mode": "all",
-      "playerIds": []
-    }
-  },
-  {
-    "id": "hitch-fogo-fatuo",
-    "name": "Hitch Fogo-Fátuo",
-    "role": "Imediato de Gangplank a bordo do Dead Pool",
-    "status": "Morto",
-    "faction": "mare-negra",
-    "imageUrl": "",
-    "locations": [],
-    "events": [],
-    "description": "O segundo homem do Dead Pool era baixo, seco e descalço, e nunca vestiu mais do que uma túnica de linho cru num navio onde todo mundo usava couro contra o vento. Movia-se como monge — porque era um, pelo menos no treino: golpeava de mãos abertas, respirava contando, e passava madrugadas inteiras sentado na proa sem piscar.\n\nO que a tripulação não comentava em voz alta é que a madeira ficava morna onde ele pisava. Que ele tirava a túnica quando o mar estava frio demais para os outros. Que a sombra dele, dependendo da luz, caía para o lado errado.\n\nChamavam-no de Fogo-Fátuo pelo nome que os marinheiros dão à luz que aparece nos mastros antes da tempestade — a luz que promete terra e entrega naufrágio. Ninguém lembrava quem tinha dado o apelido. O próprio Hitch atendia por ele com uma paciência quase divertida, do jeito que um adulto atende pelo nome que uma criança inventou.\n\nMorreu duas vezes na mesma noite, nas mãos dos jogadores. A primeira como homem. A segunda como o que era.",
-    "personality": "Cordial, contido, quase gentil — e obediente a Gangplank de um jeito que não combinava com o resto dele. Hitch nunca discutiu uma ordem, nunca hesitou, nunca demonstrou ambição própria. Num navio inteiro de homens que seguiam Gangplank por medo, ele era o único que parecia seguir por outra coisa. Quem reparou concluiu que era devoção, e errou pela metade: não era devoção, era corrente.\n\nSob o autocontrole havia uma pressão constante, perceptível para quem soubesse olhar — como estar perto de um forno fechado. Falava devagar porque falar depressa custava. Sorria pouco pelo mesmo motivo.",
-    "secretsList": [
-      {
-        "id": "hitch-s1",
-        "text": "Camada 1 — A forma humana era a jaula, não um disfarce: Hitch não era um homem com poderes de fogo. Era fogo com forma de homem — e a forma foi imposta, não escolhida. A disciplina monástica não era filosofia: era fechadura. O treino, a respiração contada, a economia de gestos e de palavras, tudo aquilo era o trabalho contínuo de manter comprimido dentro de um corpo alguma coisa que não cabia nele.",
-        "visibility": {
-          "mode": "hidden",
-          "playerIds": []
-        }
-      },
-      {
-        "id": "hitch-s2",
-        "text": "Camada 2 — Quem o prendeu foi Gangplank: Um pirata não faz isso. Gangplank tem, ou teve, um meio de prender uma criatura elemental dentro de uma forma e mantê-la ali por anos — e isso não aparece em lugar nenhum na reputação pública dele. Quem sabe fazer uma vez sabe fazer de novo. A pergunta que fica aberta é o que mais anda no convés do Dead Pool com cara de gente, e o que Gangplank teve que entregar em troca do método.",
-        "visibility": {
-          "mode": "hidden",
-          "playerIds": []
-        }
-      },
-      {
-        "id": "hitch-s3",
-        "text": "Camada 3 — Matá-lo não destruiu; abriu: A primeira morte quebrou a jaula, não o prisioneiro. O que se ergueu do corpo foi o que estava trancado ali dentro havia anos, agora sem forma humana para contê-lo — e sem nada que Gangplank pudesse fazer a respeito. Do ponto de vista de Hitch, os jogadores não o mataram: soltaram-no. A segunda luta foi contra uma coisa livre pela primeira vez em muito tempo e com muito a cobrar.",
-        "visibility": {
-          "mode": "hidden",
-          "playerIds": []
-        }
-      },
-      {
-        "id": "hitch-s4",
-        "text": "Camada 4 — As cinzas desceram: Quando a segunda forma caiu, as cinzas não se dispersaram no vento. Adensaram-se em fumaça pesada e foram puxadas para baixo — contra o vento, contra a corrente, para o fundo. Fogo não afunda. Alguma coisa recolheu. É a primeira evidência sensorial que os jogadores têm de que o fundo do oceano de Pelágos não é fundo: é tampa. O Peso não se alimentou por acaso — uma essência elemental solta perto da água é exatamente o tipo de coisa que o selo de Himmel não foi feito para filtrar.",
-        "visibility": {
-          "mode": "hidden",
-          "playerIds": []
-        }
-      }
-    ],
-    "secrets": "SEGREDO DO MESTRE: Hitch era uma criatura de fogo aprisionada por Gangplank numa forma humana; o treino monástico era o mecanismo da prisão. Morto pelos jogadores, a primeira morte apenas rompeu a jaula e liberou a segunda forma. Ao cair de vez, as cinzas viraram fumaça densa e foram sugadas para o fundo do oceano contra vento e corrente — primeiro sinal concreto de O Peso (Thurvael) para o grupo, e a prova de que Gangplank domina um método de aprisionar elementais que não consta em lugar nenhum da sua reputação.",
-    "visibility": {
-      "mode": "all",
+      "mode": "hidden",
       "playerIds": []
     }
   }
